@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:11:20
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-22 17:40:56
+ * @LastEditTime: 2019-11-23 15:36:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,7 +20,7 @@ export default class WelcomePage extends Component {
     this.timer = setTimeout(() => {
       // 跳转到首页
       NavigationUtil.resetToHomPage(this.props);
-    }, 3000);
+    }, 1000);
   }
 
   componentWillUnmount() {
