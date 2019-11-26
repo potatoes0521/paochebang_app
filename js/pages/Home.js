@@ -1,9 +1,9 @@
 /*
  * @Author: liuYang
- * @description: 请填写描述信息
+ * @description: 首页
  * @Date: 2019-11-22 16:48:04
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-24 09:25:52
+ * @LastEditTime: 2019-11-25 11:21:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,6 +23,7 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    console.disableYellowBox = true;
   }
   _tabNavigator() {
     return createAppContainer(
