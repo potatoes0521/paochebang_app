@@ -3,98 +3,71 @@
  * @description: 首页
  * @Date: 2019-11-22 16:48:04
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-25 11:21:06
+ * @LastEditTime: 2019-11-29 12:12:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {createAppContainer} from 'react-navigation';
-import {createBottomTabNavigator} from 'react-navigation-tabs';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
-import Information from './Information';
-import Offer from './Offer';
-import Order from './Order';
-import Mine from './Mine';
-
+import {NavigationActions} from 'react-navigation';
+import {connect} from 'react-redux';
+import NavigationUtil from '../navigator/NavigationUtils';
+import BottomTabBarNavigator from '../navigator/BottomTabBarNavigator';
+import BackPressComponent from '../components/BackPressComponent/BackPressComponent';
+// import CustomTheme from '../page/CustomTheme';
+import actions from '../store/action';
+import SafeAreaView from '../components/SafeAreaView/SafeAreaView';
 export default class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    // this.backPress = new BackPressComponent({
+    //   backPress: this.onBackPress,
+    // });
     console.disableYellowBox = true;
   }
-  _tabNavigator() {
-    return createAppContainer(
-      createBottomTabNavigator({
-        Information: {
-          screen: Information,
-          navigationOptions: {
-            tabBarLabel: '市场',
-            tabBarIcon: ({tintColor, focused}) => (
-              <MaterialIcons
-                name={'whatshot'}
-                size={26}
-                style={{color: tintColor}}
-              />
-            ),
-          },
-        },
-        Offer: {
-          screen: Offer,
-          navigationOptions: {
-            tabBarLabel: '报价/接单',
-            tabBarIcon: ({tintColor, focused}) => (
-              <MaterialIcons
-                name={'local-offer'}
-                size={26}
-                style={{color: tintColor}}
-              />
-            ),
-          },
-        },
-        Order: {
-          screen: Order,
-          navigationOptions: {
-            tabBarLabel: '订单',
-            tabBarIcon: ({tintColor, focused}) => (
-              <FontAwesome
-                name={'reorder'}
-                size={26}
-                style={{color: tintColor}}
-              />
-            ),
-          },
-        },
-        Mine: {
-          screen: Mine,
-          navigationOptions: {
-            tabBarLabel: '我的',
-            tabBarIcon: ({tintColor, focused}) => (
-              <SimpleLineIcons
-                name={'people'}
-                size={26}
-                style={{color: tintColor}}
-              />
-            ),
-          },
-        },
-      }),
-    );
+
+  componentDidMount() {
+    // this.backPress.componentDidMount();
   }
 
-  componentDidMount() {}
+  componentWillUnmount() {
+    // this.backPress.componentWillUnmount();
+  }
 
-  componentWillUnmount() {}
+  // onBackPress = () => {
+  //   const {dispatch, nav} = this.props;
+  //   //if (nav.index === 0) {
+  //   if (nav.routes[1].index === 0) {
+  //     //如果RootNavigator中的MainNavigator的index为0，则不处理返回事件
+  //     return false;
+  //   }
+  //   dispatch(NavigationActions.back());
+  //   return true;
+  // };
 
   render() {
-    const Tab = this._tabNavigator();
-    return <Tab />;
-    // return (
-    //   <View>
-    //     <Text>安徽几十块的号角</Text>
-    //   </View>
+    // const {theme} = this.props;
+    // NavigationUtil.navigation = this.props.navigation;
+    return <BottomTabBarNavigator />;
+    // (
+    //   <SafeAreaView topColor={theme.themeColor}>
+    //     <BottomTabBarNavigator />
+    //     {/* {this.renderCustomThemeView()} */}
+    //   </SafeAreaView>
     // );
   }
 }
+
+// const mapStateToProps = state => ({
+//   // nav: state.nav,
+//   customThemeViewVisible: state.theme.customThemeViewVisible,
+//   theme: state.theme.theme,
+// });
+
+// const mapDispatchToProps = dispatch => ({
+//   onShowCustomThemeView: show => dispatch(actions.onShowCustomThemeView(show)),
+// });
+
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps,
+// )(Home);
