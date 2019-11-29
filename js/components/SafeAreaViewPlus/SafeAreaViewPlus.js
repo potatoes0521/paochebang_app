@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-29 11:21:26
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-29 16:28:39
+ * @LastEditTime: 2019-11-29 16:37:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,6 @@ import {
   ViewPropTypes,
 } from 'react-native';
 import {PropTypes} from 'prop-types';
-import {connectableObservableDescriptor} from 'rxjs/internal/observable/ConnectableObservable';
 
 export default class SafeAreaViewPlus extends Component {
   static propTypes = {

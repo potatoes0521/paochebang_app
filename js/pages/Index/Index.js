@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-29 15:28:01
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-29 16:04:32
+ * @LastEditTime: 2019-11-29 16:40:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
   swiperWrapper: {
     width: '100%',
     height: 150,
-    backgroundColor: 'red',
   },
 });
 // 如果需要引入store

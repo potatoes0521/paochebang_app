@@ -3,7 +3,7 @@
  * @description: 公共导航
  * @Date: 2019-11-25 10:58:56
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-29 16:11:02
+ * @LastEditTime: 2019-11-29 16:39:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -81,8 +81,9 @@ export default class NavigationBar extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#ffffff',
-    borderBottomColor: '#f5f5f5',
+    borderBottomColor: '#e9e9e9',
     borderBottomWidth: 1,
+    borderStyle: 'solid',
   },
   navBarButton: {
     alignItems: 'center',

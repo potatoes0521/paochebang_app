@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-29 11:38:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-29 15:32:16
+ * @LastEditTime: 2019-11-29 16:37:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,7 +20,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Index from '../pages/Index/Index';
 import Offer from '../pages/Offer';
 import Order from '../pages/Order';
-import Mine from '../pages/Mine';
+import Mine from '../pages/Mine/Mine';
 const TABS = {
   Index: {
     screen: Index,
