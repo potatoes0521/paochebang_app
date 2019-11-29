@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-29 11:21:26
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-29 11:22:20
+ * @LastEditTime: 2019-11-29 16:28:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,6 +16,7 @@ import {
   ViewPropTypes,
 } from 'react-native';
 import {PropTypes} from 'prop-types';
+import {connectableObservableDescriptor} from 'rxjs/internal/observable/ConnectableObservable';
 
 export default class SafeAreaViewPlus extends Component {
   static propTypes = {
@@ -27,7 +28,7 @@ export default class SafeAreaViewPlus extends Component {
     bottomInset: PropTypes.bool,
   };
   static defaultProps = {
-    topColor: 'transparent',
+    topColor: '#ffffff',
     bottomColor: '#f8f8f8',
     enablePlus: true,
     topInset: true,
@@ -35,7 +36,8 @@ export default class SafeAreaViewPlus extends Component {
   };
 
   genSafeAreaViewPlus() {
-    const {children, topColor, bottomColor, topInset, bottomInset} = this.props;
+    const {children, bottomColor, topInset, bottomInset} = this.props;
+    const topColor = '#ffffff';
     return (
       <View style={[styles.container, this.props.style]}>
         {this.getTopArea(topColor, topInset)}

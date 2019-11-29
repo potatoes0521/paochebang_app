@@ -8,8 +8,8 @@
  * @optionalParam: 选传参数
  */
 import AsyncStorage from '@react-native-community/async-storage';
-import {ThemeFlags} from '../res/styles/ThemeFactory';
-import ThemeFactory from '../res/styles/ThemeFactory';
+import {ThemeFlags} from '../assets/css/ThemeFactory';
+import ThemeFactory from '../assets/css/ThemeFactory';
 
 const THEME_KEY = 'theme_key';
 export default class ThemeDao {

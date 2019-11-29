@@ -8,7 +8,7 @@
  * @optionalParam: 选传参数
  */
 import Types from '../../type';
-import ThemeFactory, {ThemeFlags} from '../../../res/styles/ThemeFactory';
+import ThemeFactory, {ThemeFlags} from '../../../assets/css/ThemeFactory';
 
 const defaultState = {
   theme: ThemeFactory.createTheme(ThemeFlags.Default),

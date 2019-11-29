@@ -3,7 +3,7 @@
  * @description: 公共导航
  * @Date: 2019-11-25 10:58:56
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-26 11:05:38
+ * @LastEditTime: 2019-11-29 16:11:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,8 +18,9 @@ import {
   DeviceInfo,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import GlobalStyle from '../../assets/css/GlobalStyles.js';
 
-const NAV_BAR_HEIGHT_IOS = 44; //导航栏在iOS中的高度
+const NAV_BAR_HEIGHT_IOS = 50; //导航栏在iOS中的高度
 const NAV_BAR_HEIGHT_ANDROID = 50; //导航栏在Android中的高度
 const NAV_BAR_HEIGHT =
   Platform.OS === 'ios' ? NAV_BAR_HEIGHT_IOS : NAV_BAR_HEIGHT_ANDROID;
@@ -43,12 +44,6 @@ export default class NavigationBar extends Component {
   componentWillUnmount() {}
 
   render() {
-    let statusBar = !this.props.statusBar.hidden ? (
-      <View style={styles.statusBar}>
-        <StatusBar {...this.props.statusBar} />
-      </View>
-    ) : null;
-
     let titleView = this.props.titleView ? (
       this.props.titleView
     ) : (
@@ -69,7 +64,11 @@ export default class NavigationBar extends Component {
     );
     return (
       <View style={[styles.container, this.props.style]}>
-        {statusBar}
+        {!this.props.statusBar.hidden ? (
+          <View style={styles.statusBar}>
+            <StatusBar {...this.props.statusBar} />
+          </View>
+        ) : null}
         {content}
       </View>
     );
@@ -81,7 +80,9 @@ export default class NavigationBar extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#2196f3',
+    backgroundColor: '#ffffff',
+    borderBottomColor: '#f5f5f5',
+    borderBottomWidth: 1,
   },
   navBarButton: {
     alignItems: 'center',
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    color: 'white',
+    color: GlobalStyle.themeFontColor,
   },
   statusBar: {
     height: STATUS_BAR_HEIGHT,

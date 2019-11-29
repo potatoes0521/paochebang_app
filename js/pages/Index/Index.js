@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-29 15:28:01
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-29 15:33:13
+ * @LastEditTime: 2019-11-29 16:04:32
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,7 +12,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
-
+import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -38,6 +38,7 @@ class Index extends Component {
   render() {
     return (
       <View style={styles.pageWrapper}>
+        <NavigationBar title={'跑车帮'} />
         <View style={styles.swiperWrapper}>
           <Text> 这里是swiper </Text>
         </View>
