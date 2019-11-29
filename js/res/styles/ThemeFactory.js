@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-29 11:09:58
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-29 11:10:28
+ * @LastEditTime: 2019-11-29 15:56:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,7 +15,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 
 export const ThemeFlags = {
-  Default: '#2196F3',
+  Default: '#ffffff',
   Red: '#F44336',
   Pink: '#E91E63',
   Purple: '#9C27B0',
@@ -30,7 +30,7 @@ export const ThemeFlags = {
   Lime: '#CDDC39',
   Yellow: '#FFEB3B',
   Amber: '#FFC107',
-  Orange: '#FF9800',
+  Orange: '#FF9C00',
   DeepOrange: '#FF5722',
   Brown: '#795548',
   Grey: '#9E9E9E',

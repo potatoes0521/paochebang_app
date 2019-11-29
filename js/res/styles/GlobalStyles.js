@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-29 11:50:46
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-29 11:50:52
+ * @LastEditTime: 2019-11-29 16:01:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,4 +29,10 @@ export default {
   nav_bar_height_android: 50,
   backgroundColor: BACKGROUND_COLOR,
   window_height: height,
+  themeColor: '#FF9C00',
+  themeFontColor: '#333333',
+  themeTipColor: '#666666',
+  themeDisabled: '#d2d2d2',
+  themeHColor: '#999999',
+  themeSubColor: '#4E97EF',
 };

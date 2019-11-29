@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-29 11:38:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-29 13:59:04
+ * @LastEditTime: 2019-11-29 15:32:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,13 +17,13 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import Information from '../pages/Information';
+import Index from '../pages/Index/Index';
 import Offer from '../pages/Offer';
 import Order from '../pages/Order';
 import Mine from '../pages/Mine';
 const TABS = {
-  Information: {
-    screen: Information,
+  Index: {
+    screen: Index,
     navigationOptions: {
       tabBarLabel: '市场',
       tabBarIcon: ({tintColor, focused}) => (
@@ -83,7 +83,7 @@ const TABS = {
     },
   },
 };
-export default class BottomTabBarNavigator extends Component {
+class BottomTabBarNavigator extends Component {
   constructor(props) {
     super(props);
     console.disableYellowBox = true;
@@ -93,11 +93,15 @@ export default class BottomTabBarNavigator extends Component {
     if (this.Tabs) {
       return this.Tabs;
     }
-    return createAppContainer(
+    return (this.Tabs = createAppContainer(
       createBottomTabNavigator(TABS, {
-        tabBarComponent: TabBarComponent,
+        tabBarComponent: props => {
+          return (
+            <TabBarComponent {...props} theme={this.props.theme.themeColor} />
+          );
+        },
       }),
-    );
+    ));
   }
 
   render() {
@@ -106,28 +110,16 @@ export default class BottomTabBarNavigator extends Component {
   }
 }
 class TabBarComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.theme = {
-      tintColor: props.activeTintColor,
-      updateTime: new Date().getTime(),
-    };
-  }
-
   render() {
-    const {routes, index} = this.props.navigation.state;
-    if (routes[index].params) {
-      const {theme} = routes[index].params;
-      if (theme && theme.updateTime > this.theme.updateTime) {
-        this.theme = theme;
-      }
-    }
-
-    return (
-      <BottomTabBar
-        {...this.props}
-        activeTintColor={this.theme.tintColor || this.props.activeTintColor}
-      />
-    );
+    return <BottomTabBar {...this.props} activeTintColor={this.props.theme} />;
   }
 }
+
+// 如果需要引入store
+const mapStateToProps = state => {
+  return {
+    // userInfo: state.user_msg.userInfo,
+    theme: state.theme.theme,
+  };
+};
+export default connect(mapStateToProps)(BottomTabBarNavigator);
