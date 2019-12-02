@@ -3,12 +3,13 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-22 16:47:57
+ * @LastEditTime: 2019-11-29 16:37:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 
 export default class Mine extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ export default class Mine extends Component {
   render() {
     return (
       <View style={style.pageWrapper}>
+        <NavigationBar title={'我的'} />
         <Text>Mine</Text>
       </View>
     );
