@@ -8,6 +8,7 @@
  * @optionalParam: 选传参数
  */
 export default {
+  CHANGE_USER_INFO: 'CHANGE_USER_INFO', // 修改用户信息
   THEME_CHANGE: 'THEME_CHANGE',
   THEME_INIT: 'THEME_INIT',
   SHOW_THEME_VIEW: 'SHOW_THEME_VIEW',
