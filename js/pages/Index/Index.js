@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-29 15:28:01
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-02 12:07:21
+ * @LastEditTime: 2019-12-02 14:45:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,12 +13,13 @@ import {connect} from 'react-redux';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
+import SellingItem from './components/SellingItem';
 import api from '../../api';
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      data: [{id: 1}, {id: 3}, {id: 4}],
     };
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
@@ -26,7 +27,8 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    this.login();
+    // this.login();
+    this.getSellingList({});
     this.backPress.componentDidMount();
   }
 
@@ -43,22 +45,50 @@ class Index extends Component {
       console.log(res);
     });
   }
-  _keyExtractor = (item, index) => item.id;
+  /**
+   * 获取卖板详情
+   * @param {Number} pageNum=1 页数
+   * @param {Number} pageSize=10 条数
+   * @return void
+   */
+  getSellingList({
+    pageNum = 1,
+    pageSize = 10,
+    sendCityId = '',
+    receiveCityId = '',
+  }) {
+    this.setState({
+      loadNow: true,
+    });
+    let sendData = {
+      pageNum,
+      pageSize,
+      sendCityId,
+      receiveCityId,
+    };
+    let {sellingList} = this.state;
+    api.selling.getSellingList(sendData, this).then(res => {
+      console.log(res);
+      // if (res && res.length < pageSize) {
+      //   this.sellingFlag = true;
+      // }
+      // this.sellingPage += 1;
+      // if (pageNum === 1) {
+      //   this.setState({
+      //     sellingList: res,
+      //   });
+      // } else {
+      //   this.setState({
+      //     sellingList: [...sellingList, ...res],
+      //   });
+      // }
+    });
+  }
 
-  _onPressItem(id) {
+  onPressItem({item}) {
     // updater functions are preferred for transactional updates
-    console.log('xxxxx');
+    console.log(item);
   }
-
-  _renderItem({item}) {
-    console.log('点击事件');
-  }
-  // <MyListItem
-  //   id={item.id}
-  //   onPressItem={this._onPressItem}
-  //   selected={!!this.state.selected.get(item.id)}
-  //   title={item.title}
-  // />
 
   render() {
     return (
@@ -85,8 +115,15 @@ class Index extends Component {
         <FlatList
           data={this.state.data}
           extraData={this.state}
-          keyExtractor={this._keyExtractor}
-          renderItem={this._renderItem}
+          keyExtractor={item => item.id.toString()}
+          renderItem={item => {
+            return (
+              <SellingItem
+                onPress={this.onPressItem.bind(this)}
+                itemData={item}
+              />
+            );
+          }}
         />
       </View>
     );
