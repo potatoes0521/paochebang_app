@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 14:14:44
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-02 14:53:37
+ * @LastEditTime: 2019-12-02 15:54:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,6 +32,7 @@ export default class SellingItem extends Component {
             <View style={styles.itemMsg}>
               <View style={styles.citys}>
                 <Text style={styles.citysText}>城市</Text>
+                <Text style={styles.icon}>&#xe60f;</Text>
               </View>
             </View>
             <View style={styles.itemBtn}>
@@ -60,6 +61,10 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  icon: {
+    fontSize: 30,
+    fontFamily: 'iconfont',
   },
 });
 
