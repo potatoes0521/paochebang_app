@@ -8,7 +8,7 @@
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
