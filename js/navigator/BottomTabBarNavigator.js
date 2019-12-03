@@ -3,37 +3,35 @@
  * @description: 底部tabBar
  * @Date: 2019-11-29 11:38:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-30 11:23:04
+ * @LastEditTime: 2019-12-03 13:35:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
+import {StyleSheet, Text} from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator, BottomTabBar} from 'react-navigation-tabs';
 import {connect} from 'react-redux';
 // import EventBus from 'react-native-event-bus';
 // import EventTypes from '../util/EventTypes';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import Index from '../pages/Index/Index';
 import Offer from '../pages/Offer';
 import Order from '../pages/Order';
 import Mine from '../pages/Mine/Mine';
+const styles = StyleSheet.create({
+  icon: {
+    fontSize: 28,
+    fontFamily: 'iconfont',
+  },
+});
 const TABS = {
   Index: {
     screen: Index,
     navigationOptions: {
       tabBarLabel: '市场',
       tabBarIcon: ({tintColor, focused}) => (
-        <MaterialIcons
-          name={'whatshot'}
-          size={26}
-          style={{
-            color: tintColor,
-          }}
-        />
+        <Text style={[styles.icon, {color: tintColor}]}>&#xe60a;</Text>
       ),
     },
   },
@@ -42,13 +40,7 @@ const TABS = {
     navigationOptions: {
       tabBarLabel: '报价/接单',
       tabBarIcon: ({tintColor, focused}) => (
-        <MaterialIcons
-          name={'local-offer'}
-          size={26}
-          style={{
-            color: tintColor,
-          }}
-        />
+        <Text style={[styles.icon, {color: tintColor}]}>&#xe607;</Text>
       ),
     },
   },
@@ -57,13 +49,7 @@ const TABS = {
     navigationOptions: {
       tabBarLabel: '订单',
       tabBarIcon: ({tintColor, focused}) => (
-        <FontAwesome
-          name={'reorder'}
-          size={26}
-          style={{
-            color: tintColor,
-          }}
-        />
+        <Text style={[styles.icon, {color: tintColor}]}>&#xe606;</Text>
       ),
     },
   },
@@ -72,13 +58,7 @@ const TABS = {
     navigationOptions: {
       tabBarLabel: '我的',
       tabBarIcon: ({tintColor, focused}) => (
-        <SimpleLineIcons
-          name={'people'}
-          size={26}
-          style={{
-            color: tintColor,
-          }}
-        />
+        <Text style={[styles.icon, {color: tintColor}]}>&#xe605;</Text>
       ),
     },
   },
