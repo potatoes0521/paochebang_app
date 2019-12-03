@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-29 15:28:01
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-03 15:23:27
+ * @LastEditTime: 2019-12-03 16:40:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -78,13 +78,7 @@ class Index extends Component {
   render() {
     let {sellingData} = this.state;
     const sellingList = sellingData.map(item => {
-      return (
-        <SellingItem
-          key={item.saleToPalletId}
-          onPress={this.onPressItem.bind(this)}
-          itemData={item}
-        />
-      );
+      return <SellingItem key={item.saleToPalletId} itemData={item} />;
     });
     return (
       <View style={styles.pageWrapper}>
