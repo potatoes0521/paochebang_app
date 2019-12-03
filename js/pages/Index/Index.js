@@ -3,12 +3,12 @@
  * @description: 首页
  * @Date: 2019-11-29 15:28:01
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-02 14:45:18
+ * @LastEditTime: 2019-12-03 15:23:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
@@ -19,7 +19,7 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [{id: 1}, {id: 3}, {id: 4}],
+      sellingData: [],
     };
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
@@ -57,74 +57,59 @@ class Index extends Component {
     sendCityId = '',
     receiveCityId = '',
   }) {
-    this.setState({
-      loadNow: true,
-    });
     let sendData = {
       pageNum,
       pageSize,
       sendCityId,
       receiveCityId,
     };
-    let {sellingList} = this.state;
     api.selling.getSellingList(sendData, this).then(res => {
-      console.log(res);
-      // if (res && res.length < pageSize) {
-      //   this.sellingFlag = true;
-      // }
-      // this.sellingPage += 1;
-      // if (pageNum === 1) {
-      //   this.setState({
-      //     sellingList: res,
-      //   });
-      // } else {
-      //   this.setState({
-      //     sellingList: [...sellingList, ...res],
-      //   });
-      // }
+      this.setState({
+        sellingData: res.data,
+      });
     });
   }
 
-  onPressItem({item}) {
+  onPressItem(item) {
     // updater functions are preferred for transactional updates
     console.log(item);
   }
 
   render() {
+    let {sellingData} = this.state;
+    const sellingList = sellingData.map(item => {
+      return (
+        <SellingItem
+          key={item.saleToPalletId}
+          onPress={this.onPressItem.bind(this)}
+          itemData={item}
+        />
+      );
+    });
     return (
       <View style={styles.pageWrapper}>
         <NavigationBar title={'跑车帮'} />
-        <View style={styles.swiperWrapper}>
-          <View style={styles.swiper}>
-            <Text> 这里是swiper </Text>
-          </View>
-        </View>
-        <View style={styles.tabs}>
-          <View style={styles.tabWrapper}>
-            <View style={styles.tabItem}>
-              <Text style={styles.tabTitle}>卖板</Text>
-            </View>
-            <View style={styles.tabItem}>
-              <Text style={styles.tabTitle}>空位</Text>
+        <ScrollView>
+          <View style={styles.swiperWrapper}>
+            <View style={styles.swiper}>
+              <Text> 这里是swiper </Text>
             </View>
           </View>
-        </View>
-        <View style={styles.recommend}>
-          <Text style={styles.recommendText}>精选推荐</Text>
-        </View>
-        <FlatList
-          data={this.state.data}
-          extraData={this.state}
-          keyExtractor={item => item.id.toString()}
-          renderItem={item => {
-            return (
-              <SellingItem
-                onPress={this.onPressItem.bind(this)}
-                itemData={item}
-              />
-            );
-          }}
-        />
+          <View style={styles.tabs}>
+            <View style={styles.tabWrapper}>
+              <View style={styles.tabItem}>
+                <Text style={styles.tabTitle}>卖板</Text>
+              </View>
+              <View style={styles.tabItem}>
+                <Text style={styles.tabTitle}>空位</Text>
+              </View>
+            </View>
+          </View>
+          <View style={styles.recommend}>
+            <Text style={styles.recommendText}>精选推荐</Text>
+          </View>
+          <View style={styles.recommendList}>{sellingList}</View>
+        </ScrollView>
       </View>
     );
   }
@@ -172,6 +157,9 @@ const styles = StyleSheet.create({
   },
   recommendText: {
     fontSize: 18,
+  },
+  recommendList: {
+    // padding: 10,
   },
 });
 // 如果需要引入store
