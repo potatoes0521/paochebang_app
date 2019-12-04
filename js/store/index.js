@@ -3,14 +3,14 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-24 10:39:58
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-29 13:26:56
+ * @LastEditTime: 2019-12-03 17:46:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import {applyMiddleware, createStore} from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducer';
-// import {middleware} from '../navigator/AppNavigators';
+import {middleware} from '../navigator/AppNavigators';
 
 /**
  * 自定义log中间件
@@ -28,7 +28,7 @@ const logger = store => next => action => {
   return result;
 };
 
-const middlewares = [logger, thunk];
+const middlewares = [middleware, logger, thunk];
 
 /**
  * 创建store

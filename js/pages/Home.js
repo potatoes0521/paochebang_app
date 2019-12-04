@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-22 16:48:04
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-29 15:46:13
+ * @LastEditTime: 2019-12-03 17:53:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -35,9 +35,7 @@ class Home extends Component {
 
   onBackPress = () => {
     const {dispatch, nav} = this.props;
-    //if (nav.index === 0) {
     if (nav.routes[1].index === 0) {
-      //如果RootNavigator中的MainNavigator的index为0，则不处理返回事件
       return false;
     }
     dispatch(NavigationActions.back());
@@ -50,23 +48,14 @@ class Home extends Component {
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <BottomTabBarNavigator />
-        {/* {this.renderCustomThemeView()} */}
       </SafeAreaViewPlus>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  // nav: state.nav,
-  // customThemeViewVisible: state.theme.customThemeViewVisible,
+  nav: state.nav,
   theme: state.theme.theme,
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   onShowCustomThemeView: show => dispatch(actions.onShowCustomThemeView(show)),
-// });
-
-export default connect(
-  mapStateToProps,
-  // mapDispatchToProps,
-)(Home);
+export default connect(mapStateToProps)(Home);
