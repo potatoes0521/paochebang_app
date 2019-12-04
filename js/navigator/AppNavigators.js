@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:52:09
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-04 09:55:00
+ * @LastEditTime: 2019-12-04 10:24:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,7 +22,8 @@ export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一�
 
 const InitNavigator = createStackNavigator({
   WelcomePage: {
-    screen: WelcomePage,
+    // screen: WelcomePage,
+    screen: OfferDetailPage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
     navigationOptions: {
       header: null, // 隐藏头部
     },
@@ -40,13 +41,13 @@ const MainNavigator = createStackNavigator(
     OfferDetailPage: {
       screen: OfferDetailPage,
       navigationOptions: {
-        header: null, // 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
+        header: null,
       },
     },
   },
   {
     defaultNavigationOptions: {
-      header: null, // 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
+      header: null,
     },
   },
 );
@@ -59,7 +60,7 @@ export const RootNavigator = createAppContainer(
     },
     {
       navigationOptions: {
-        header: null, // 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
+        header: null,
       },
     },
   ),
@@ -73,7 +74,7 @@ export const middleware = createReactNavigationReduxMiddleware(
 const AppWithNavigationState = createReduxContainer(RootNavigator, 'root');
 
 const mapStateToProps = state => ({
-  state: state.nav, //v2
+  state: state.nav,
 });
 
 export default connect(mapStateToProps)(AppWithNavigationState);
