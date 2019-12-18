@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-29 15:28:01
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-03 16:40:23
+ * @LastEditTime: 2019-12-04 14:57:32
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -68,11 +68,6 @@ class Index extends Component {
         sellingData: res.data,
       });
     });
-  }
-
-  onPressItem(item) {
-    // updater functions are preferred for transactional updates
-    console.log(item);
   }
 
   render() {
