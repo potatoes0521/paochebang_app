@@ -16,6 +16,7 @@ import {
   ImageBackground,
   Image,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import {connect} from 'react-redux';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
@@ -97,12 +98,18 @@ class Index extends Component {
           </View>
           <View style={styles.tabs}>
             <View style={styles.tabWrapper}>
-              <View style={styles.tabItem}>
-                <Text style={styles.tabTitle}>卖板</Text>
-              </View>
-              <View style={styles.tabItem}>
-                <Text style={styles.tabTitle}>空位</Text>
-              </View>
+              <LinearGradient
+                colors={['#FFAD33', '#FF9A03', '#FF7800']}
+                style={styles.tabItem}>
+                <Text style={styles.icon}>&#xe67e;</Text>
+                <Text style={styles.tabTitle}>卖板信息</Text>
+              </LinearGradient>
+              <LinearGradient
+                colors={['#92B5FF', '#73A0FF', '#437FFF']}
+                style={styles.tabItem}>
+                <Text style={styles.icon}>&#xe67f;</Text>
+                <Text style={styles.tabTitle}>空位信息</Text>
+              </LinearGradient>
             </View>
           </View>
           <ImageBackground style={styles.recommend} source={recommendBG}>
@@ -125,30 +132,39 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   swiperWrapper: {
-    padding: 12,
+    height: 150,
   },
   swiper: {
     backgroundColor: '#f5f5f5',
     height: 150,
   },
   tabs: {
-    padding: 12,
-    paddingTop: 5,
+    paddingHorizontal: 7,
+    paddingVertical: 16,
   },
   tabWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#f8f8f8',
   },
   tabItem: {
     flex: 1,
     height: 64,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,
+    marginHorizontal: 5,
+  },
+  icon: {
+    fontSize: 34,
+    fontFamily: 'iconfont',
+    marginRight: 6,
+    color: '#ffffff',
   },
   tabTitle: {
-    fontSize: 16,
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: '700',
   },
   recommend: {
     flexDirection: 'row',
