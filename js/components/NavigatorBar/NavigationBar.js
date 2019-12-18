@@ -3,7 +3,7 @@
  * @description: 公共导航
  * @Date: 2019-11-25 10:58:56
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-29 16:39:59
+ * @LastEditTime: 2019-12-04 11:56:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -104,7 +104,8 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
+    fontWeight: '900',
     color: GlobalStyle.themeFontColor,
   },
   statusBar: {
