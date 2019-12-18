@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-12-02 14:14:44
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-04 11:20:19
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-18 16:30:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -40,11 +40,15 @@ export default class SellingItem extends Component {
             <View style={styles.itemMsg}>
               <View style={styles.city}>
                 <Text style={styles.cityText}>
-                  {itemData.sendCityName || ''}
+                  {itemData.sendCityName.length > 5
+                    ? itemData.sendCityName.substr(0, 5) + '...'
+                    : itemData.sendCityName || ''}
                 </Text>
                 <Text style={styles.icon}>&#xe60f;</Text>
                 <Text style={styles.cityText}>
-                  {itemData.receiveCityName || ''}
+                  {itemData.receiveCityName.length > 5
+                    ? itemData.receiveCityName.substr(0, 5) + '...'
+                    : itemData.receiveCityName || ''}
                 </Text>
               </View>
               <View style={styles.itemInfo}>
@@ -97,8 +101,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    fontSize: 16,
-    marginHorizontal: 3,
+    fontSize: 20,
+    marginHorizontal: 2,
     fontFamily: 'iconfont',
   },
   itemMsg: {
@@ -107,11 +111,12 @@ const styles = StyleSheet.create({
   city: {
     flexDirection: 'row',
     alignItems: 'center',
-    fontSize: 16,
-    marginBottom: 6,
+    marginBottom: 4,
     lineHeight: 22,
+    // flexWrap: 'wrap',
   },
   cityText: {
+    fontSize: 18,
     fontWeight: '700',
     color: GlobalStyles.themeFontColor,
   },
@@ -120,13 +125,14 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   carInfo: {
-    fontSize: 14,
+    fontSize: 15,
+    color: GlobalStyles.themeTipColor,
   },
   carNumber: {
     fontWeight: '700',
     fontSize: 18,
     color: GlobalStyles.themeColor,
-    marginRight: 4,
+    marginRight: 2,
   },
   itemBtn: {
     width: 100,

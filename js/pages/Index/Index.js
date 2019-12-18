@@ -2,19 +2,30 @@
  * @Author: liuYang
  * @description: 首页
  * @Date: 2019-11-29 15:28:01
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-04 14:57:32
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-18 17:00:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  ImageBackground,
+  Image,
+} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SellingItem from './components/SellingItem';
 import api from '../../api';
+import recommendBG from '../../assets/image/index/recommend_bg.png';
+import recommendLeftImg from '../../assets/image/index/left.png';
+import recommendRightImg from '../../assets/image/index/right.png';
+
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -94,9 +105,11 @@ class Index extends Component {
               </View>
             </View>
           </View>
-          <View style={styles.recommend}>
+          <ImageBackground style={styles.recommend} source={recommendBG}>
+            <Image style={styles.recommendIcon} source={recommendLeftImg} />
             <Text style={styles.recommendText}>精选推荐</Text>
-          </View>
+            <Image style={styles.recommendIcon} source={recommendRightImg} />
+          </ImageBackground>
           <View style={styles.recommendList}>{sellingList}</View>
         </ScrollView>
       </View>
@@ -138,14 +151,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   recommend: {
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 4,
     height: 44,
     backgroundColor: '#F9F9F9',
   },
+  recommendIcon: {
+    width: 18,
+    height: 14,
+  },
   recommendText: {
-    fontSize: 18,
+    fontSize: 20,
+    fontWeight: '700',
+    marginHorizontal: 7,
   },
   recommendList: {
     // padding: 10,
