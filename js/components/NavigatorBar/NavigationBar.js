@@ -42,7 +42,7 @@ const STATUS_BAR_HEIGHT =
   Platform.OS !== 'ios' || DeviceInfo.isIPhoneX_deprecated ? 0 : 20; //状态栏的高度
 const StatusBarShape = {
   //设置状态栏所接受的属性
-  barStyle: PropTypes.oneOf(['light-content', 'default']),
+  barStyle: PropTypes.oneOf(['light-content', 'default', 'dark-content']),
   hidden: PropTypes.bool,
   backgroundColor: PropTypes.string,
 };
@@ -162,8 +162,10 @@ NavigationBar.defaultProps = {
   leftViewShow: false,
   rightViewShow: false,
   statusBar: {
-    barStyle: 'light-content',
+    barStyle: 'dark-content',
     hidden: false,
+    backgroundColor: '#ffffff',
+    // translucent: true,
   },
   onClick: () => {},
 };
