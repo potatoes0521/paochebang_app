@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-11-29 11:50:46
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-04 11:36:08
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-19 10:57:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -28,6 +28,7 @@ export default {
   nav_bar_height_ios: 44,
   nav_bar_height_android: 50,
   backgroundColor: BACKGROUND_COLOR,
+  window_width: width,
   window_height: height,
   themeColor: '#FF9C00',
   themeFontColor: '#333333',
