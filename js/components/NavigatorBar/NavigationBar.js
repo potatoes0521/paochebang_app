@@ -61,8 +61,7 @@ export default class NavigationBar extends Component {
     if (this.props && this.props.onBackClick) {
       this.props.onBackClick();
     } else {
-      console.log(NavigationUtil);
-      // NavigationUtil.goBack();
+      NavigationUtil.goBack(this.props.navigation);
     }
   }
   share() {}
@@ -167,11 +166,13 @@ NavigationBar.defaultProps = {
     backgroundColor: '#ffffff',
     // translucent: true,
   },
+  navigation: {},
   onClick: () => {},
 };
 //提供属性的类型检查
 NavigationBar.propTypes = {
   title: PropTypes.string,
+  navigation: PropTypes.object,
   leftViewShow: PropTypes.bool,
   rightViewShow: PropTypes.bool,
   statusBar: PropTypes.shape(StatusBarShape),

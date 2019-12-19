@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-12-03 16:47:37
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-04 14:57:48
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-19 11:30:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -34,15 +34,21 @@ class OfferDetails extends Component {
   }
 
   onBackPress() {
+    const {navigation} = this.props;
+    navigation.goBack();
     return true;
   }
 
   render() {
-    const {theme} = this.props;
+    const {theme, navigation} = this.props;
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
-          <NavigationBar leftViewShow={true} title={'报价详情'} />
+          <NavigationBar
+            navigation={navigation}
+            leftViewShow={true}
+            title={'报价详情'}
+          />
           <ScrollView>
             <View style={DetailsStyles.card}>
               <View style={DetailsStyles.formItem}>
