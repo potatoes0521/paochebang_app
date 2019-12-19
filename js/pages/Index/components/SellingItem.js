@@ -23,8 +23,16 @@ export default class SellingItem extends Component {
 
   componentWillUnmount() {}
 
-  handleOnPress(itemData) {
-    NavigationUtil.goPage(itemData, 'OfferDetailPage');
+  navigatorDetails(item) {
+    console.log(item, 'itemData');
+    if ((item.isActive === 2 || item.isActive === 3) && !item.isEdit) {
+      return;
+    }
+    let pageUrl = 'SellingDetailPage';
+    if (item.saleToPalletsType === 2) {
+      pageUrl = 'OfferDetailPage';
+    }
+    NavigationUtil.goPage(item, pageUrl);
   }
   callBtn(e) {
     e.stopPropagation();
@@ -35,7 +43,7 @@ export default class SellingItem extends Component {
     // let {item} = itemData;
     return (
       <View style={styles.itemWrapper}>
-        <TouchableOpacity onPress={this.handleOnPress.bind(this, itemData)}>
+        <TouchableOpacity onPress={this.navigatorDetails.bind(this, itemData)}>
           <View style={styles.item}>
             <View style={styles.itemMsg}>
               <View style={styles.city}>
