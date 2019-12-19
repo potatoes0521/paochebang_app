@@ -53,7 +53,11 @@ export default class SellingItem extends Component {
               </View>
               <View style={styles.itemInfo}>
                 <Text style={styles.carNumber}>{itemData.carAmount || ''}</Text>
-                <Text style={styles.carInfo}>{itemData.carInfo || ''}</Text>
+                <Text style={styles.carInfo}>
+                  {itemData.carInfo.length > 10
+                    ? itemData.carInfo.substr(0, 10) + '...'
+                    : itemData.carInfo || ''}
+                </Text>
               </View>
             </View>
             <TouchableOpacity onPress={this.callBtn}>
@@ -89,12 +93,11 @@ export default class SellingItem extends Component {
 const styles = StyleSheet.create({
   itemWrapper: {
     flex: 1,
-    paddingLeft: 12,
-    paddingRight: 12,
+    paddingHorizontal: 10,
   },
   item: {
     flex: 1,
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
     paddingVertical: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -135,13 +138,13 @@ const styles = StyleSheet.create({
     marginRight: 2,
   },
   itemBtn: {
-    width: 100,
+    width: 80,
     justifyContent: 'flex-end',
     alignItems: 'center',
     flexDirection: 'row',
   },
   quoteBtnWrapper: {
-    width: 84,
+    width: 80,
     height: 30,
     alignItems: 'center',
     justifyContent: 'center',
@@ -152,6 +155,7 @@ const styles = StyleSheet.create({
   quoteBtn: {
     fontSize: 16,
     color: GlobalStyles.themeColor,
+    fontWeight: '700',
   },
   iconPhone: {
     fontSize: 20,

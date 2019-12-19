@@ -3,8 +3,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-12-02 11:52:12
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-02 11:55:31
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-19 09:46:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,15 +13,15 @@ import requestHandle from '../requestHandle';
 export default {
   // code换openID
   codeExchangeOpenID(data, that) {
-    return requestHandle.get('user/getwechatopenid', data, that);
+    return requestHandle.get('user/getwechatopenid', data, that, false);
   },
   // openID登录
   loginUseOpenID(data, that) {
-    return requestHandle.post('user/login', data, that, '加载中...');
+    return requestHandle.post('user/login', data, that, false);
   },
   // 注册
   register(data, that) {
-    return requestHandle.post('user/register', data, that);
+    return requestHandle.post('user/expresslogin', data, that);
   },
   // 换手机号
   codeExchangePhone(data, that) {

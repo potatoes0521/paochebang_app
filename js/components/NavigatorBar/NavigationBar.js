@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 公共导航
  * @Date: 2019-11-25 10:58:56
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-04 16:05:30
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-19 09:39:05
  * @mustParam: 必传参数
  * title: PropTypes.string,
  *  导航栏标题
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: '900',
+    fontWeight: '700',
     color: GlobalStyles.themeFontColor,
   },
   statusBar: {

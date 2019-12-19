@@ -3,8 +3,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-12-02 14:09:39
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-02 14:10:18
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-19 09:45:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -35,5 +35,8 @@ export default {
   // 获取我自己发布的卖板
   getMineSellingList(data, that) {
     return requestHandle.get('saletopallet/mysaletopallet', data, that);
+  },
+  getRecommendSellingList(data, that) {
+    return requestHandle.get('saletopallet/recommend', data, that, false);
   },
 };
