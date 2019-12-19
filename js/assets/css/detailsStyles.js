@@ -14,19 +14,22 @@ export default {
     marginTop: 8,
     borderRadius: 4,
     paddingHorizontal: 8,
+    paddingVertical: 8,
+    backgroundColor: '#ffffff',
   },
   formItem: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingHorizontal: 8,
   },
   formLabel: {
-    width: 100,
+    width: 110,
   },
   labelText: {
     color: GlobalStyles.themeFontColor,
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '700',
   },
   formContent: {
@@ -34,6 +37,9 @@ export default {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
+  },
+  waitColor: {
+    color: GlobalStyles.themeDisabled,
   },
   contentText: {
     fontSize: 15,
@@ -44,5 +50,11 @@ export default {
     color: GlobalStyles.themeDisabled,
     fontFamily: 'iconfont',
     marginLeft: 4,
+  },
+  noOffer: {
+    color: GlobalStyles.themeSubColor,
+  },
+  hasOffer: {
+    color: GlobalStyles.themeColor,
   },
 };

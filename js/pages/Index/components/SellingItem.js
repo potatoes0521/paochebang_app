@@ -82,7 +82,9 @@ export default class SellingItem extends Component {
                 {itemData.isActive === 1 ? (
                   itemData.price ? (
                     <View style={styles.price}>
-                      <Text>{'¥' + itemData.returnPrice}</Text>
+                      <Text style={styles.price}>
+                        {'¥' + itemData.returnPrice}
+                      </Text>
                       <Text style={styles.iconPhone}>&#xe62d;</Text>
                     </View>
                   ) : (
@@ -155,7 +157,7 @@ const styles = StyleSheet.create({
     marginRight: 2,
   },
   itemBtn: {
-    width: 80,
+    width: 100,
     justifyContent: 'flex-end',
     alignItems: 'center',
     flexDirection: 'row',
@@ -174,10 +176,17 @@ const styles = StyleSheet.create({
     color: GlobalStyles.themeColor,
     fontWeight: '700',
   },
+  price: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    fontSize: 15,
+    color: GlobalStyles.themeColor,
+  },
   iconPhone: {
-    fontSize: 20,
-    marginLeft: 7,
+    fontSize: 22,
+    marginLeft: 3,
     fontFamily: 'iconfont',
+    color: GlobalStyles.themeColor,
   },
   line: {
     flex: 1,

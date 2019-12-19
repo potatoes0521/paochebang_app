@@ -9,7 +9,7 @@
  */
 import user from './modules/user.js'; // 用户接口
 import index from './modules/index.js'; // 首页接口
-// import offer from './modules/offer.js'; // 询价接口
+import offer from './modules/offer.js'; // 询价接口
 // import order from './modules/order.js'; // 订单接口
 import selling from './modules/selling.js'; // 卖板接口
 // import vacancy from './modules/vacancy.js'; // 空位接口
@@ -19,7 +19,7 @@ import selling from './modules/selling.js'; // 卖板接口
 export default {
   user,
   index,
-  // offer,
+  offer,
   // order,
   selling,
   // vacancy,

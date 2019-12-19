@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-08-15 15:26:09
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-02 14:02:20
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-19 14:02:39
  */
 
 import Types from '../../type';
@@ -33,10 +33,10 @@ defaultState.userInfo = {
   // openId: "11akshahsdgjhasgk", // 测试环境被添加的客户的openid   手机号是  13312345678
   // userId: 177,
   // userType: 2,
-  userType: 3, // 13121850481
-  openId: 'oLgd75alq00UELpPQBHfad8h6mb0', // 测试环境刘洋的openId
-  userId: 177, // 测试环境刘洋的userId
-  token: '33f73263e9d3fb7a49884c51eef3ab80',
+  userType: 0, // 13121850481
+  openId: 'oLgd75eZdM9Cp-dSE0YpU9gKxJoE', // 测试环境刘洋的openId
+  userId: 93, // 测试环境刘洋的userId
+  token: '006c043c79f7555d1c327ff64ade066c',
   updateTime: '2019-11-28T04:00:09.000+0000',
   userAgent: '',
 };

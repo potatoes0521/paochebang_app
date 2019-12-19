@@ -8,13 +8,14 @@
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, TextInput} from 'react-native';
 import {connect} from 'react-redux';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import DetailsStyles from '../../assets/css/detailsStyles';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
+import api from '../../api';
 
 class OfferDetails extends Component {
   constructor(props) {
@@ -23,9 +24,17 @@ class OfferDetails extends Component {
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
     });
+    this.pageParams = {};
+    this.quotePrice = '';
   }
 
   componentDidMount() {
+    const {navigation} = this.props;
+    const {state} = navigation;
+    const {params} = state;
+    console.log('params', params);
+    this.pageParams = params;
+    this.initData();
     this.backPress.componentDidMount();
   }
 
@@ -38,9 +47,94 @@ class OfferDetails extends Component {
     navigation.goBack();
     return true;
   }
-
+  initData() {
+    this.setState(
+      {
+        status: this.pageParams.offerStatus,
+      },
+      () => {
+        this.getOfferDetails();
+      },
+    );
+  }
+  getOfferDetails() {
+    console.log(this.pageParams.objectId);
+    if (!this.pageParams.objectId && !this.pageParams.inquiryCode) {
+      // Taro.showToast({
+      //   title: '请传入报价单Id或者报价单Code',
+      // });
+      return;
+    }
+    if (this.pageParams.inquiryCode) {
+      let sendData = {
+        inquiryCode: this.pageParams.inquiryCode,
+      };
+      api.offer.getOfferDetailByCode(sendData, this).then(res => {
+        if (!res.data) {
+          return;
+        }
+        this.handleReturnData(res.data);
+      });
+    } else if (this.pageParams.objectId) {
+      let sendData = {
+        inquiryId: this.pageParams.objectId,
+      };
+      api.offer.getOfferDetailById(sendData, this).then(res => {
+        if (!res.data) {
+          return;
+        }
+        this.handleReturnData(res.data);
+      });
+    }
+  }
+  /**
+   * 处理返回的数据
+   * @param {Type} res 返回值
+   * @return void
+   */
+  handleReturnData(res) {
+    this.setState(res, () => {
+      console.log('state', this.state);
+    });
+    this.pageParams.inquiry_code = res.inquiryCode;
+  }
+  offerText(value) {
+    console.log('text', value);
+    this.quotePrice = value;
+  }
   render() {
     const {theme, navigation} = this.props;
+    let {
+      carAmount,
+      carInfo,
+      inquiryTimeDesc,
+      receiveCityName,
+      sendCityName,
+      homeDelivery,
+      homeDeliveryDesc,
+      storePickup,
+      storePickupDesc,
+      sendTimeDesc,
+      dueTime,
+      dueTimerInit,
+      dueTimeDesc,
+      totalPriceDesc,
+      quotedPriceDesc,
+      quotedPrice,
+      statusDesc,
+      quotedTimeDesc,
+      usedType,
+      status,
+      isShow,
+      statusDescs,
+    } = this.state;
+    let statusClassName = [DetailsStyles.contentText];
+    if (status === 10) {
+      statusClassName.push(DetailsStyles.noOffer);
+    } else if (status === 20) {
+      statusClassName.push(DetailsStyles.hasOffer);
+    }
+    const offerWrapperClassName = [DetailsStyles.card, {marginTop: 16}];
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -51,24 +145,197 @@ class OfferDetails extends Component {
           />
           <ScrollView>
             <View style={DetailsStyles.card}>
+              {/* 报价状态 */}
               <View style={DetailsStyles.formItem}>
                 <View style={DetailsStyles.formLabel}>
                   <Text style={DetailsStyles.labelText}>报价状态:</Text>
                 </View>
                 <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>已报价</Text>
+                  <Text style={statusClassName}>{statusDesc || ''}</Text>
                 </View>
               </View>
+              {/* 报价 */}
+              {status === 20 && (
+                <View style={DetailsStyles.formItem}>
+                  <View style={DetailsStyles.formLabel}>
+                    <Text style={DetailsStyles.labelText}>报价:</Text>
+                  </View>
+                  <View style={DetailsStyles.formContent}>
+                    <Text style={DetailsStyles.contentText}>
+                      {quotedPriceDesc || ''} 元/台
+                    </Text>
+                  </View>
+                </View>
+              )}
+              {/* 总价 */}
+              {status === 20 && (
+                <View style={DetailsStyles.formItem}>
+                  <View style={DetailsStyles.formLabel}>
+                    <Text style={DetailsStyles.labelText}>总价:</Text>
+                  </View>
+                  <View style={DetailsStyles.formContent}>
+                    <Text style={DetailsStyles.contentText}>
+                      ￥{totalPriceDesc || ''}
+                    </Text>
+                  </View>
+                </View>
+              )}
+              {/* 报价时间 */}
+              {status === 20 && (
+                <View style={DetailsStyles.formItem}>
+                  <View style={DetailsStyles.formLabel}>
+                    <Text style={DetailsStyles.labelText}>报价时间:</Text>
+                  </View>
+                  <View style={DetailsStyles.formContent}>
+                    <Text style={DetailsStyles.contentText}>
+                      {quotedTimeDesc || ''}
+                    </Text>
+                  </View>
+                </View>
+              )}
+              {/* 有效期至 */}
+              {status === 20 && (
+                <View style={DetailsStyles.formItem}>
+                  <View style={DetailsStyles.formLabel}>
+                    <Text style={DetailsStyles.labelText}>有效期至:</Text>
+                  </View>
+                  <View style={DetailsStyles.formContent}>
+                    <Text style={DetailsStyles.contentText}>
+                      {dueTimeDesc || ''}
+                    </Text>
+                  </View>
+                </View>
+              )}
+              {/* 发车时间 */}
+              <View style={DetailsStyles.formItem}>
+                <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.labelText}>预计发车时间:</Text>
+                </View>
+                <View style={DetailsStyles.formContent}>
+                  <Text style={DetailsStyles.contentText}>
+                    {sendTimeDesc || ''}
+                  </Text>
+                </View>
+              </View>
+              {/* 发车城市 */}
+              <View style={DetailsStyles.formItem}>
+                <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.labelText}>发车城市:</Text>
+                </View>
+                <View style={DetailsStyles.formContent}>
+                  <Text style={DetailsStyles.contentText}>
+                    {sendCityName || ''}
+                  </Text>
+                </View>
+              </View>
+              {/* 收车城市 */}
+              <View style={DetailsStyles.formItem}>
+                <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.labelText}>收车城市:</Text>
+                </View>
+                <View style={DetailsStyles.formContent}>
+                  <Text style={DetailsStyles.contentText}>
+                    {receiveCityName || ''}
+                  </Text>
+                </View>
+              </View>
+              {/* 服务 */}
+              {(storePickup || homeDelivery) && (
+                <View style={DetailsStyles.formItem}>
+                  <View style={DetailsStyles.formLabel}>
+                    <Text style={DetailsStyles.labelText}>服务:</Text>
+                  </View>
+                  <View style={DetailsStyles.formContent}>
+                    <Text style={DetailsStyles.contentText}>
+                      {storePickup ? storePickupDesc : ''}
+                      {storePickup && homeDelivery ? '，' : ''}
+                      {homeDelivery ? homeDeliveryDesc : ''}
+                    </Text>
+                  </View>
+                </View>
+              )}
+              {/* 车辆信息 */}
+              <View style={DetailsStyles.formItem}>
+                <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.labelText}>车辆信息:</Text>
+                </View>
+                <View style={DetailsStyles.formContent}>
+                  <Text style={DetailsStyles.contentText}>{carInfo || ''}</Text>
+                </View>
+              </View>
+              {/* 台数信息 */}
+              <View style={DetailsStyles.formItem}>
+                <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.labelText}>台数:</Text>
+                </View>
+                <View style={DetailsStyles.formContent}>
+                  <Text style={DetailsStyles.contentText}>
+                    {carAmount || ''}台
+                  </Text>
+                </View>
+              </View>
+              {/* 台数信息 */}
+              <View style={DetailsStyles.formItem}>
+                <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.labelText}>询价时间:</Text>
+                </View>
+                <View style={DetailsStyles.formContent}>
+                  <Text style={DetailsStyles.contentText}>
+                    {inquiryTimeDesc || ''}
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View style={offerWrapperClassName}>
+              {/* 报价 */}
               <View style={DetailsStyles.formItem}>
                 <View style={DetailsStyles.formLabel}>
                   <Text style={DetailsStyles.labelText}>报价:</Text>
                 </View>
                 <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>已报价</Text>
+                  <TextInput
+                    style={styles.offerInput}
+                    maxLength={8}
+                    keyboardType={'number-pad'}
+                    onChangeText={this.offerText}
+                  />
+                  <Text style={DetailsStyles.contentText}>元/台</Text>
                 </View>
               </View>
+              {/* 有效期 */}
+              <View style={DetailsStyles.formItem}>
+                <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.labelText}>有效期至:</Text>
+                </View>
+                <View style={DetailsStyles.formContent}>
+                  <Text
+                    style={[
+                      DetailsStyles.contentText,
+                      DetailsStyles.waitColor,
+                    ]}>
+                    请选择
+                    <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                  </Text>
+                </View>
+              </View>
+              {/* 总价 */}
+              {quotedPrice > 0 && (
+                <View style={DetailsStyles.formItem}>
+                  <View style={DetailsStyles.formLabel}>
+                    <Text style={DetailsStyles.labelText}>总价:</Text>
+                  </View>
+                  <View style={DetailsStyles.formContent}>
+                    <Text
+                      style={[
+                        DetailsStyles.contentText,
+                        DetailsStyles.hasOffer,
+                      ]}>
+                      ￥{totalPriceDesc || ''}
+                    </Text>
+                  </View>
+                </View>
+              )}
             </View>
-            {/* <Text style={DetailsStyles.iconRight}>&#xe61d;</Text> */}
           </ScrollView>
         </View>
       </SafeAreaViewPlus>
@@ -79,6 +346,22 @@ class OfferDetails extends Component {
 const styles = StyleSheet.create({
   pageWrapper: {
     flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  offerInput: {
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#f5f5f5',
+    borderRadius: 4,
+    minWidth: 75,
+    padding: 0,
+    paddingHorizontal: 8,
+    height: 30,
+    marginRight: 6,
+    textAlign: 'center',
+    lineHeight: 30,
+    color: GlobalStyles.themeFontColor,
+    fontSize: 15,
   },
 });
 // 如果需要引入store

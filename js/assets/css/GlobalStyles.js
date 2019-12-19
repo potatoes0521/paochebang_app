@@ -30,10 +30,13 @@ export default {
   backgroundColor: BACKGROUND_COLOR,
   window_width: width,
   window_height: height,
-  themeColor: '#FF9C00',
+  themeColor: '#FF9C00', // 主题色
   themeFontColor: '#333333',
   themeTipColor: '#666666',
   themeDisabled: '#d2d2d2',
   themeHColor: '#999999',
   themeSubColor: '#4E97EF',
+  icon: {
+    fontFamily: 'iconfont',
+  },
 };
