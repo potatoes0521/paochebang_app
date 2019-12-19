@@ -8,7 +8,7 @@
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Linking} from 'react-native';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
 import NavigationUtil from '../../../navigator/NavigationUtils';
 import PropTypes from 'prop-types';
@@ -34,9 +34,18 @@ export default class SellingItem extends Component {
     }
     NavigationUtil.goPage(item, pageUrl);
   }
-  callBtn(e) {
+  callBtn(item, e) {
     e.stopPropagation();
-    console.log('打电话');
+    const tel = `tel:${item.mobile}`;
+    Linking.canOpenURL(tel)
+      .then(supported => {
+        if (!supported) {
+          console.log('Can not handle tel:' + tel);
+        } else {
+          return Linking.openURL(tel);
+        }
+      })
+      .catch(error => console.log('tel error', error));
   }
   render() {
     let {itemData} = this.props;
@@ -68,7 +77,7 @@ export default class SellingItem extends Component {
                 </Text>
               </View>
             </View>
-            <TouchableOpacity onPress={this.callBtn}>
+            <TouchableOpacity onPress={this.callBtn.bind(this, itemData)}>
               <View style={styles.itemBtn}>
                 {itemData.isActive === 1 ? (
                   itemData.price ? (
