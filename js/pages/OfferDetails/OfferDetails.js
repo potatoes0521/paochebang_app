@@ -8,7 +8,15 @@
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, TextInput} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TextInput,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
 import {connect} from 'react-redux';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import DetailsStyles from '../../assets/css/detailsStyles';
@@ -16,11 +24,13 @@ import BackPressComponent from '../../components/BackPressComponent/BackPressCom
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import api from '../../api';
-
+import DatePicker from '../../components/DatePicker/datePicker.js';
 class OfferDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      datePickerShow: false,
+    };
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
     });
@@ -58,11 +68,7 @@ class OfferDetails extends Component {
     );
   }
   getOfferDetails() {
-    console.log(this.pageParams.objectId);
     if (!this.pageParams.objectId && !this.pageParams.inquiryCode) {
-      // Taro.showToast({
-      //   title: '请传入报价单Id或者报价单Code',
-      // });
       return;
     }
     if (this.pageParams.inquiryCode) {
@@ -102,6 +108,19 @@ class OfferDetails extends Component {
     console.log('text', value);
     this.quotePrice = value;
   }
+  handleShowDate() {
+    this.setState({
+      datePickerShow: true,
+    });
+  }
+  dateConfirm(time) {
+    this.dateCancel();
+  }
+  dateCancel() {
+    this.setState({
+      datePickerShow: false,
+    });
+  }
   render() {
     const {theme, navigation} = this.props;
     let {
@@ -127,6 +146,7 @@ class OfferDetails extends Component {
       status,
       isShow,
       statusDescs,
+      datePickerShow,
     } = this.state;
     let statusClassName = [DetailsStyles.contentText];
     if (status === 10) {
@@ -307,7 +327,9 @@ class OfferDetails extends Component {
                 <View style={DetailsStyles.formLabel}>
                   <Text style={DetailsStyles.labelText}>有效期至:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
+                <TouchableOpacity
+                  style={DetailsStyles.formContent}
+                  onPress={() => this.handleShowDate()}>
                   <Text
                     style={[
                       DetailsStyles.contentText,
@@ -316,7 +338,7 @@ class OfferDetails extends Component {
                     请选择
                     <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
                   </Text>
-                </View>
+                </TouchableOpacity>
               </View>
               {/* 总价 */}
               {quotedPrice > 0 && (
@@ -336,6 +358,11 @@ class OfferDetails extends Component {
                 </View>
               )}
             </View>
+            <DatePicker
+              isShow={datePickerShow}
+              onConfirm={this.dateConfirm.bind(this)}
+              onCancel={this.dateCancel.bind(this)}
+            />
           </ScrollView>
         </View>
       </SafeAreaViewPlus>
