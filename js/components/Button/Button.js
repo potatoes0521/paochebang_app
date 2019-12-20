@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   textColor: {
     color: GlobalStyles.themeFontColor,
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '700',
   },
 });
