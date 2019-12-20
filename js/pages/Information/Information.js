@@ -25,7 +25,6 @@ class Information extends Component {
 
   render() {
     const {theme} = this.props;
-    console.log(theme, '主题色');
     const NavigatorTab = createAppContainer(
       createMaterialTopTabNavigator({
         SellingTab: {
