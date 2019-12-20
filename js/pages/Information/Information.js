@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   pageWrapper: {
     flex: 1,
   },
+  icon: {},
 });
 
 const mapStateToProps = state => ({

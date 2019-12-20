@@ -4,7 +4,7 @@
  * @description: 报价相关
  * @Date: 2019-10-30 18:17:18
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-19 14:00:29
+ * @LastEditTime : 2019-12-20 16:22:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,6 +26,6 @@ export default {
   },
   //获取待报价列表
   getOfferList(data, that) {
-    return requestHandle.get('price/list', data, that);
+    return requestHandle.get('order/suspenselist', data, that);
   },
 };
