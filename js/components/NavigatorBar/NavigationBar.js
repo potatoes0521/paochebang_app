@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
   leftBackBtn: {
     padding: 8,
     paddingLeft: 12,
+    width: 50,
   },
   iconLeft: {
     color: GlobalStyles.themeFontColor,
