@@ -114,6 +114,9 @@ class OfferDetails extends Component {
     });
   }
   dateConfirm(time) {
+    this.setState({
+      dueTime: time && time.split(' ')[0],
+    });
     this.dateCancel();
   }
   dateCancel() {
@@ -144,7 +147,6 @@ class OfferDetails extends Component {
       quotedTimeDesc,
       usedType,
       status,
-      isShow,
       statusDescs,
       datePickerShow,
     } = this.state;
@@ -283,6 +285,17 @@ class OfferDetails extends Component {
                   <Text style={DetailsStyles.contentText}>{carInfo || ''}</Text>
                 </View>
               </View>
+              {/* 车辆类型 */}
+              <View style={DetailsStyles.formItem}>
+                <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.labelText}>车辆类型:</Text>
+                </View>
+                <View style={DetailsStyles.formContent}>
+                  <Text style={DetailsStyles.contentText}>
+                    {usedType === 1 ? '新车' : '二手车'}
+                  </Text>
+                </View>
+              </View>
               {/* 台数信息 */}
               <View style={DetailsStyles.formItem}>
                 <View style={DetailsStyles.formLabel}>
@@ -330,14 +343,21 @@ class OfferDetails extends Component {
                 <TouchableOpacity
                   style={DetailsStyles.formContent}
                   onPress={() => this.handleShowDate()}>
-                  <Text
-                    style={[
-                      DetailsStyles.contentText,
-                      DetailsStyles.waitColor,
-                    ]}>
-                    请选择
-                    <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
-                  </Text>
+                  {dueTime ? (
+                    <Text style={DetailsStyles.contentText}>
+                      {dueTime}
+                      <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                    </Text>
+                  ) : (
+                    <Text
+                      style={[
+                        DetailsStyles.contentText,
+                        DetailsStyles.waitColor,
+                      ]}>
+                      请选择
+                      <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                    </Text>
+                  )}
                 </TouchableOpacity>
               </View>
               {/* 总价 */}
@@ -360,6 +380,7 @@ class OfferDetails extends Component {
             </View>
             <DatePicker
               isShow={datePickerShow}
+              chooseBeforeTime={false}
               onConfirm={this.dateConfirm.bind(this)}
               onCancel={this.dateCancel.bind(this)}
             />
