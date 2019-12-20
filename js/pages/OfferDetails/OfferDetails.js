@@ -34,8 +34,8 @@ class OfferDetails extends Component {
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
     });
-    this.pageParams = {};
     this.quotePrice = '';
+    this.pageParams = {};
   }
 
   componentDidMount() {
@@ -105,7 +105,6 @@ class OfferDetails extends Component {
     this.pageParams.inquiry_code = res.inquiryCode;
   }
   offerText(value) {
-    console.log('text', value);
     this.quotePrice = value;
   }
   handleShowDate() {
@@ -330,7 +329,7 @@ class OfferDetails extends Component {
                     style={styles.offerInput}
                     maxLength={8}
                     keyboardType={'number-pad'}
-                    onChangeText={this.offerText}
+                    onChangeText={this.offerText.bind(this)}
                   />
                   <Text style={DetailsStyles.contentText}>元/台</Text>
                 </View>
@@ -407,7 +406,6 @@ const styles = StyleSheet.create({
     height: 30,
     marginRight: 6,
     textAlign: 'center',
-    lineHeight: 30,
     color: GlobalStyles.themeFontColor,
     fontSize: 15,
   },

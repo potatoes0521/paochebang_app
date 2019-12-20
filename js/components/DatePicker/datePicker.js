@@ -58,7 +58,7 @@ export default class DatePicker extends Component {
           cancelTextIOS={'取消'}
           confirmTextIOS={'确定'}
         />
-        <Toast ref="toast" position={'center'} />
+        <Toast ref="toast" position={'center'} defaultCloseDelay={3000} />
       </>
     );
   }
