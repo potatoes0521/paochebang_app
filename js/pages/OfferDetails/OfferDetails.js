@@ -1,3 +1,4 @@
+/* eslint-disable react/no-string-refs */
 /*
  * @Author: liuYang
  * @description: 请填写描述信息
@@ -14,28 +15,56 @@ import {
   View,
   ScrollView,
   TextInput,
-  Button,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 import {connect} from 'react-redux';
+import api from '../../api';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import DetailsStyles from '../../assets/css/detailsStyles';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
-import api from '../../api';
 import DatePicker from '../../components/DatePicker/datePicker.js';
+import Button from '../../components/Button/Button.js';
+import {handleMoney} from '../../utils/patter.js';
+import Toast from 'react-native-easy-toast';
+
 class OfferDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       datePickerShow: false,
+      quotedPrice: '',
+      dueTime: '',
+      isShow: false,
+      inquiryCode: '',
+      inquiryId: '',
+      carAmount: '',
+      carInfo: '',
+      inquiryTimeDesc: '',
+      receiveCityName: '',
+      sendCityName: '', // 发车城市
+      sendTimeDesc: '', // 发车时间
+      dueTimeDesc: '', //有效期
+      homeDelivery: '0', //送车上门 0否 1是
+      homeDeliveryDesc: '', //含送
+      storePickup: '0',
+      storePickupDesc: '',
+      totalPriceDesc: '',
+      quotedPriceDesc: '',
+      quotedTimeDesc: '',
+      statusDesc: '',
+      orderCode: '',
+      usedType: '1',
+      status: '10',
+      statusDescs: [],
     };
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
     });
-    this.quotePrice = '';
     this.pageParams = {};
+    this.mobile = '';
   }
 
   componentDidMount() {
@@ -58,14 +87,10 @@ class OfferDetails extends Component {
     return true;
   }
   initData() {
-    this.setState(
-      {
-        status: this.pageParams.offerStatus,
-      },
-      () => {
-        this.getOfferDetails();
-      },
-    );
+    this.getOfferDetails();
+    this.setState({
+      status: this.pageParams.status || 10,
+    });
   }
   getOfferDetails() {
     if (!this.pageParams.objectId && !this.pageParams.inquiryCode) {
@@ -99,13 +124,73 @@ class OfferDetails extends Component {
    * @return void
    */
   handleReturnData(res) {
-    this.setState(res, () => {
-      console.log('state', this.state);
-    });
+    this.setState(res);
+    this.mobile = res.mobile;
     this.pageParams.inquiry_code = res.inquiryCode;
   }
+  /**
+   * 输入报价
+   * @param {String} value 输入框内容
+   * @return void
+   */
   offerText(value) {
-    this.quotePrice = value;
+    value = handleMoney(value);
+    let {carAmount} = this.state;
+    this.setState({
+      quotedPrice: value,
+      totalPriceDesc: value * carAmount,
+    });
+  }
+  call() {
+    const tel = `tel:${this.mobile}`;
+    Linking.canOpenURL(tel)
+      .then(supported => {
+        if (!supported) {
+          console.log('Can not handle tel:' + tel);
+        } else {
+          return Linking.openURL(tel);
+        }
+      })
+      .catch(error => console.log('tel error', error));
+  }
+  quote() {
+    let {inquiryCode, inquiryId, quotedPrice, dueTime} = this.state;
+    // if (+this.props.userInfo.realNameAuthStatus < 1) {
+    //   this.setState({
+    //     isShow: true,
+    //   });
+    //   return;
+    // }
+    if (!Number(quotedPrice)) {
+      this.refs.toast.show('请输入正确的金额格式');
+      return;
+    }
+    if (!quotedPrice) {
+      this.refs.toast.show('报价金额不能为空');
+      return;
+    }
+    if (quotedPrice <= 0) {
+      this.refs.toast.show('报价金额不能小于或等于0');
+      return;
+    }
+    if (!dueTime) {
+      this.refs.toast.show('请选择报价有效期');
+      return;
+    }
+    let sendData = {
+      inquiryCode,
+      inquiryId,
+      quotedPrice: quotedPrice * 100,
+      dueTime,
+    };
+    console.log('sendData', sendData);
+    api.offer.submitOfferData(sendData, this).then(res => {
+      if (!res) {
+        return;
+      }
+      this.refs.toast.show('提交成功');
+      this.getOfferDetails();
+    });
   }
   handleShowDate() {
     this.setState({
@@ -137,7 +222,6 @@ class OfferDetails extends Component {
       storePickupDesc,
       sendTimeDesc,
       dueTime,
-      dueTimerInit,
       dueTimeDesc,
       totalPriceDesc,
       quotedPriceDesc,
@@ -146,7 +230,6 @@ class OfferDetails extends Component {
       quotedTimeDesc,
       usedType,
       status,
-      statusDescs,
       datePickerShow,
     } = this.state;
     let statusClassName = [DetailsStyles.contentText];
@@ -156,6 +239,10 @@ class OfferDetails extends Component {
       statusClassName.push(DetailsStyles.hasOffer);
     }
     const offerWrapperClassName = [DetailsStyles.card, {marginTop: 16}];
+    let btnStyle = [];
+    if (status === 10) {
+      btnStyle = [DetailsStyles.btnLeft];
+    }
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -261,7 +348,7 @@ class OfferDetails extends Component {
                 </View>
               </View>
               {/* 服务 */}
-              {(storePickup || homeDelivery) && (
+              {storePickup || homeDelivery ? (
                 <View style={DetailsStyles.formItem}>
                   <View style={DetailsStyles.formLabel}>
                     <Text style={DetailsStyles.labelText}>服务:</Text>
@@ -274,7 +361,7 @@ class OfferDetails extends Component {
                     </Text>
                   </View>
                 </View>
-              )}
+              ) : null}
               {/* 车辆信息 */}
               <View style={DetailsStyles.formItem}>
                 <View style={DetailsStyles.formLabel}>
@@ -328,6 +415,7 @@ class OfferDetails extends Component {
                   <TextInput
                     style={styles.offerInput}
                     maxLength={8}
+                    value={quotedPrice}
                     keyboardType={'number-pad'}
                     onChangeText={this.offerText.bind(this)}
                   />
@@ -383,7 +471,24 @@ class OfferDetails extends Component {
               onConfirm={this.dateConfirm.bind(this)}
               onCancel={this.dateCancel.bind(this)}
             />
+            <View style={DetailsStyles.btnWrapper}>
+              <Button
+                type={'plain'}
+                btnStyle={btnStyle}
+                text={'电话联系'}
+                onClick={this.call.bind(this)}
+              />
+              {status === 10 && (
+                <Button
+                  btnStyle={[DetailsStyles.btnRight]}
+                  text={'报价'}
+                  type={'round'}
+                  onClick={this.quote.bind(this)}
+                />
+              )}
+            </View>
           </ScrollView>
+          <Toast ref="toast" position={'center'} defaultCloseDelay={3000} />
         </View>
       </SafeAreaViewPlus>
     );

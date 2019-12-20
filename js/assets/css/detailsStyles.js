@@ -57,4 +57,17 @@ export default {
   hasOffer: {
     color: GlobalStyles.themeColor,
   },
+  btnWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 12,
+    marginTop: 28,
+  },
+  btnLeft: {
+    marginRight: 9,
+  },
+  btnRight: {
+    marginLeft: 9,
+  },
 };

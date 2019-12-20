@@ -11,6 +11,7 @@
  *  text 要展示的文字 字符串
  *  fontStyles 文字样式 数组 数组里是类名或者是个对象
  *  onClick 被点击的时候
+ *  emitData 要传递的参数 一般是帮忙吧这个参数传进去
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
@@ -28,7 +29,12 @@ export default class Button extends Component {
 
   componentWillUnmount() {}
   handleClick() {
-    this.props.onClick();
+    let {emitData} = this.props;
+    if (emitData) {
+      this.props.onClick(emitData);
+    } else {
+      this.props.onClick();
+    }
   }
   render() {
     const {btnStyle, text, type, fontStyles} = this.props;
@@ -91,6 +97,7 @@ Button.defaultProps = {
   btnStyle: [],
   text: '按钮',
   fontStyle: [],
+  emitData: null,
   onClick: () => {},
 };
 
@@ -99,5 +106,6 @@ Button.propTypes = {
   btnStyle: PropTypes.array.isRequired,
   text: PropTypes.string.isRequired,
   fontStyle: PropTypes.array,
+  emitData: PropTypes.any,
   onClick: PropTypes.func.isRequired,
 };
