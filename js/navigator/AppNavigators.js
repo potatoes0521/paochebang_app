@@ -1,30 +1,25 @@
 /*
  * @Author: liuYang
- * @description: 请填写描述信息
+ * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
- * @LastEditors: guorui
- * @LastEditTime: 2019-12-04 12:03:44
+ * @LastEditors  : guorui
+ * @LastEditTime : 2019-12-20 14:24:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import {connect} from 'react-redux';
-import {
-  createReactNavigationReduxMiddleware,
-  createReduxContainer,
-} from 'react-navigation-redux-helpers';
 import WelcomePage from '../pages/WelcomePage';
 import HomePage from '../pages/Home';
 import OfferDetailPage from '../pages/OfferDetails/OfferDetails';
-import RegisterPage from '../pages/Register/Register';
+import InformationPage from '../pages/Information/Information';
 
 export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一个初始化的路由名
 
 const InitNavigator = createStackNavigator({
   WelcomePage: {
-    // screen: WelcomePage,
-    screen: RegisterPage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
+    screen: WelcomePage,
+    // screen: OfferDetailPage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
     navigationOptions: {
       header: null, // 隐藏头部
     },
@@ -45,8 +40,8 @@ const MainNavigator = createStackNavigator(
         header: null,
       },
     },
-    RegisterPage: {
-      screen: RegisterPage,
+    InformationPage: {
+      screen: InformationPage,
       navigationOptions: {
         header: null,
       },
@@ -59,7 +54,7 @@ const MainNavigator = createStackNavigator(
   },
 );
 
-export const RootNavigator = createAppContainer(
+export default createAppContainer(
   createSwitchNavigator(
     {
       [rootCom]: InitNavigator,
@@ -72,16 +67,3 @@ export const RootNavigator = createAppContainer(
     },
   ),
 );
-
-export const middleware = createReactNavigationReduxMiddleware(
-  state => state.nav,
-  'root',
-);
-
-const AppWithNavigationState = createReduxContainer(RootNavigator, 'root');
-
-const mapStateToProps = state => ({
-  state: state.nav,
-});
-
-export default connect(mapStateToProps)(AppWithNavigationState);

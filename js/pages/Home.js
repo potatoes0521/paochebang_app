@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-22 16:48:04
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-03 17:53:04
+ * @LastEditTime: 2019-12-10 17:53:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,8 +13,7 @@ import {connect} from 'react-redux';
 import NavigationUtil from '../navigator/NavigationUtils';
 import BottomTabBarNavigator from '../navigator/BottomTabBarNavigator';
 import BackPressComponent from '../components/BackPressComponent/BackPressComponent';
-// import CustomTheme from '../page/CustomTheme';
-import actions from '../store/action';
+// import actions from '../store/action';
 import SafeAreaViewPlus from '../components/SafeAreaViewPlus/SafeAreaViewPlus';
 class Home extends Component {
   constructor(props) {
@@ -34,10 +33,7 @@ class Home extends Component {
   }
 
   onBackPress = () => {
-    const {dispatch, nav} = this.props;
-    if (nav.routes[1].index === 0) {
-      return false;
-    }
+    const {dispatch} = this.props;
     dispatch(NavigationActions.back());
     return true;
   };
@@ -54,7 +50,6 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  nav: state.nav,
   theme: state.theme.theme,
 });
 

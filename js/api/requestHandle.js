@@ -3,8 +3,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-12-02 10:21:17
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-03 14:57:50
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-19 10:41:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -82,14 +82,15 @@ class HttpRequest {
     instance.interceptors.response.use(
       res => {
         const {data} = res;
-        if (+data.code === 200) {
+        if (!+data.code || +data.code === 200002 || +data.code === 200) {
+          console.log('data', data);
           return data;
         } else if (+data.code === 200003) {
           console.log('token shixiao');
           return data;
         } else {
           console.error('error 接口错误');
-          return data;
+          return Promise.reject('error 接口错误');
         }
       },
       error => {
