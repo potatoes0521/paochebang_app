@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-10 17:51:59
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-20 13:56:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,6 +12,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 import WelcomePage from '../pages/WelcomePage';
 import HomePage from '../pages/Home';
 import OfferDetailPage from '../pages/OfferDetails/OfferDetails';
+import InformationPage from '../pages/Information/Information';
 
 export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一个初始化的路由名
 
@@ -35,6 +36,12 @@ const MainNavigator = createStackNavigator(
     },
     OfferDetailPage: {
       screen: OfferDetailPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    InformationPage: {
+      screen: InformationPage,
       navigationOptions: {
         header: null,
       },

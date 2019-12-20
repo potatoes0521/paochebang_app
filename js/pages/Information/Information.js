@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:11:20
- * @LastEditors: liuYang
- * @LastEditTime: 2019-11-29 15:47:19
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-20 13:57:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,7 +11,6 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import {createAppContainer} from 'react-navigation';
-import Actions from '../store/action';
 import {connect} from 'react-redux';
 
 class Information extends Component {
@@ -77,15 +76,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  theme: state.theme.theme,
+  userInfo: state.user_info.userInfo,
 });
-// 如果需要引入actions
-const mapDispatchToProps = dispatch => {
-  return {
-    onThemeChange: theme => dispatch(Actions.onThemeChange),
-  };
-};
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Information);
+export default connect(mapStateToProps)(Information);
