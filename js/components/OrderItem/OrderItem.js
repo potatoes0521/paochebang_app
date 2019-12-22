@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-20 16:38:16
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-20 18:11:50
+ * @LastEditTime : 2019-12-22 17:09:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,10 +32,8 @@ export default class OrderItem extends Component {
     } else if (type === 'order') {
       time = item.inquiryTimeDesc;
     }
-    console.log('type', type);
-    console.log('this.props', this.props);
     return (
-      <View style={styles.pageWrapper}>
+      <View style={styles.itemWrapper}>
         <View style={styles.title}>
           <Text style={styles.time}>{time || ''}</Text>
           <Text style={styles.status}>{item.statusDesc || ''}</Text>
@@ -73,11 +71,12 @@ export default class OrderItem extends Component {
 }
 
 const styles = StyleSheet.create({
-  pageWrapper: {
+  itemWrapper: {
     flex: 1,
     backgroundColor: '#ffffff',
     paddingHorizontal: 12,
     paddingBottom: 7,
+    marginBottom: 10,
   },
   title: {
     paddingHorizontal: 12,
