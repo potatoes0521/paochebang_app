@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-29 15:28:01
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-18 17:00:09
+ * @LastEditTime : 2019-12-23 14:47:32
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -97,7 +97,10 @@ class Index extends Component {
         });
       });
   }
-
+  navigatorTo(type) {
+    console.log('type', type);
+    NavigationUtil.goPage(type, 'InformationPage');
+  }
   render() {
     let {bannerListData, recommendData, failLoading} = this.state;
     const bannerList = bannerListData.map(item => {
@@ -143,18 +146,26 @@ class Index extends Component {
           </Swiper>
           <View style={styles.tabs}>
             <View style={styles.tabWrapper}>
-              <LinearGradient
-                colors={['#FFAD33', '#FF9A03', '#FF7800']}
+              <TouchableOpacity
+                onPress={this.navigatorTo.bind(this, 'selling')}
                 style={styles.tabItem}>
-                <Text style={styles.icon}>&#xe67e;</Text>
-                <Text style={styles.tabTitle}>卖板信息</Text>
-              </LinearGradient>
-              <LinearGradient
-                colors={['#92B5FF', '#73A0FF', '#437FFF']}
+                <LinearGradient
+                  style={styles.tab}
+                  colors={['#FFAD33', '#FF9A03', '#FF7800']}>
+                  <Text style={styles.icon}>&#xe67e;</Text>
+                  <Text style={styles.tabTitle}>卖板信息</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={this.navigatorTo.bind(this, 'vacancy')}
                 style={styles.tabItem}>
-                <Text style={styles.icon}>&#xe67f;</Text>
-                <Text style={styles.tabTitle}>空位信息</Text>
-              </LinearGradient>
+                <LinearGradient
+                  style={styles.tab}
+                  colors={['#92B5FF', '#73A0FF', '#437FFF']}>
+                  <Text style={styles.icon}>&#xe67f;</Text>
+                  <Text style={styles.tabTitle}>空位信息</Text>
+                </LinearGradient>
+              </TouchableOpacity>
             </View>
           </View>
           <ImageBackground style={styles.recommend} source={recommendBG}>
@@ -228,12 +239,18 @@ const styles = StyleSheet.create({
   },
   tabItem: {
     flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 5,
+  },
+  tab: {
+    flex: 1,
     height: 64,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,
-    marginHorizontal: 5,
   },
   icon: {
     fontSize: 34,
