@@ -3,7 +3,7 @@
  * @description: 详情通用css
  * @Date: 2019-12-04 11:36:02
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-18 17:31:14
+ * @LastEditTime : 2019-12-23 10:56:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,6 +23,9 @@ export default {
     justifyContent: 'space-between',
     paddingVertical: 8,
     paddingHorizontal: 8,
+  },
+  moreTextFormItem: {
+    alignItems: 'stretch',
   },
   formLabel: {
     width: 110,
