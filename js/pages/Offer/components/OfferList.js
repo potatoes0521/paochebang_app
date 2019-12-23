@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-22 16:58:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 10:37:32
+ * @LastEditTime : 2019-12-23 15:46:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -41,13 +41,15 @@ class OfferList extends Component {
   }) {
     if (refresh) {
       this.offerFlag = false;
+      this.offerPage = 1;
+      pageNum = 1;
+      this.setState({
+        isLoading: true,
+      });
     }
     if (this.offerFlag && !refresh) {
       return;
     }
-    this.setState({
-      isLoading: true,
-    });
     let sendData = {
       pageNum,
       pageSize,
@@ -80,7 +82,9 @@ class OfferList extends Component {
   }
   genIndicator() {
     let {offerData} = this.state;
-    return offerData && offerData.length > 10 ? <BottomLoading /> : null;
+    return offerData && offerData.length > 10 && !this.offerFlag ? (
+      <BottomLoading />
+    ) : null;
   }
   render() {
     return (

@@ -1,70 +1,73 @@
 /*
  * @Author: liuYang
- * @description: 订单列表
+ * @description: 请填写描述信息
  * @path: 引入路径
- * @Date: 2019-12-23 11:30:10
+ * @Date: 2019-12-23 14:53:33
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 15:47:32
+ * @LastEditTime : 2019-12-23 15:57:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
 import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
-import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
-import OrderItem from '../../../components/OrderItem/OrderItem';
-import BottomLoading from '../../../components/BottomLoading/BottomLoading.js';
-import EmptyList from '../../../components/EmptyList/EmptyList.js';
 import api from '../../../api/index';
+import BottomLoading from '../../../components/BottomLoading/BottomLoading.js';
+import VacancyItem from './VacancyItem.js';
 
-class OrderList extends Component {
+class VacancyList extends Component {
   constructor(props) {
     super(props);
+    this.state = {};
     this.state = {
-      orderData: [],
+      listData: [],
       isLoading: false,
     };
-    this.orderPage = 1;
-    this.orderFlag = false;
+    this.pageNum = 1;
+    this.loadingFlag = false;
   }
 
   componentDidMount() {
-    this.getOrderList({refresh: true});
+    this.getVacancyList({});
   }
 
   componentWillUnmount() {}
-
   /**
-   * 函数功能描述
-   * @param {String} status 状态
-   * @param {Number} pageNum 页数
-   * @param {Number} pageSize 条数
+   * 获取卖板详情
+   * @param {Number} pageNum=1 页数
+   * @param {Number} pageSize=10 条数
    * @return void
    */
-  getOrderList({
-    status = this.props.status,
-    pageNum = this.orderPage,
+  getVacancyList({
+    pageNum = this.pageNum,
     pageSize = 10,
+    sendCityId = this.sendCityId,
+    receiveCityId = this.receiveCityId,
     refresh = false,
   }) {
+    console.log('aaaa');
     if (refresh) {
-      this.orderFlag = false;
-      this.orderPage = 1;
+      this.loadingFlag = false;
+      this.pageNum = 1;
       pageNum = 1;
       this.setState({
         isLoading: true,
       });
     }
-    if (this.orderFlag && !refresh) {
+    if (this.loadingFlag && !refresh) {
+      console.log('loadMore');
       return;
     }
     let sendData = {
-      status,
       pageNum,
       pageSize,
+      sendCityId,
+      receiveCityId,
     };
-    api.order.getOrdersList(sendData, this).then(res => {
+    let {listData} = this.state;
+    api.vacancy.getVacancyList(sendData, this).then(res => {
       this.setState({
         isLoading: false,
       });
@@ -73,49 +76,47 @@ class OrderList extends Component {
         return;
       }
       if (data && data.length < pageSize) {
-        this.orderFlag = true;
+        this.loadingFlag = true;
       }
-      let {orderData} = this.state;
-      this.orderPage += 1;
+      this.pageNum += 1;
       if (pageNum === 1) {
         this.setState({
-          orderData: [...data],
+          listData: data,
         });
       } else {
         this.setState({
-          orderData: [...orderData, ...data],
+          listData: [...listData, ...data],
         });
       }
     });
   }
   genIndicator() {
-    let {orderData} = this.state;
-    return orderData && orderData.length > 10 && !this.orderFlag ? (
+    let {listData} = this.state;
+    return listData && listData.length >= 10 && !this.loadingFlag ? (
       <BottomLoading />
     ) : null;
   }
   render() {
     return (
-      <View style={styles.listWrapper}>
+      <View style={styles.pageWrapper}>
         <FlatList
-          data={this.state.orderData}
-          renderItem={data => <OrderItem type={'offer'} item={data} />}
+          data={this.state.listData}
+          renderItem={data => <VacancyItem itemData={data.item} />}
           refreshControl={
             <RefreshControl
               title="Loading..."
               colors={[GlobalStyles.themeColor]}
               refreshing={this.state.isLoading}
-              onRefresh={() => this.getOrderList({refresh: true})}
+              onRefresh={() => this.getVacancyList({refresh: true})}
               tintColor={GlobalStyles.themeColor}
             />
           }
           ListFooterComponent={() => this.genIndicator()}
           onEndReached={() => {
-            this.getOrderList.bind(this, {});
+            this.getVacancyList(this, {});
           }}
-          ListEmptyComponent={() => <EmptyList />}
           keyExtractor={data => {
-            return data.orderCode + 'order';
+            return data.vacantPalletId + 'vacancy';
           }}
         />
       </View>
@@ -124,24 +125,23 @@ class OrderList extends Component {
 }
 
 const styles = StyleSheet.create({
-  listWrapper: {
+  pageWrapper: {
     flex: 1,
   },
 });
 
-OrderList.defaultProps = {
-  status: '',
+VacancyList.defaultProps = {
   onClick: () => {},
 };
 
-OrderList.propTypes = {
-  status: PropTypes.any,
+VacancyList.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
+// 如果需要引入store
 const mapStateToProps = state => {
   return {
     userInfo: state.user_info.userInfo,
   };
 };
-export default connect(mapStateToProps)(OrderList);
+export default connect(mapStateToProps)(VacancyList);
