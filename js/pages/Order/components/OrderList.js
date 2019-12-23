@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 11:30:10
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 13:58:10
+ * @LastEditTime : 2019-12-23 15:24:32
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -44,19 +44,21 @@ class OrderList extends Component {
    */
   getOrderList({
     status = this.props.status,
-    pageNum = 1,
+    pageNum = this.orderPage,
     pageSize = 10,
     refresh = false,
   }) {
     if (refresh) {
       this.orderFlag = false;
+      this.orderPage = 1;
+      pageNum = 1;
+      this.setState({
+        isLoading: true,
+      });
     }
     if (this.orderFlag && !refresh) {
       return;
     }
-    this.setState({
-      isLoading: true,
-    });
     let sendData = {
       status,
       pageNum,

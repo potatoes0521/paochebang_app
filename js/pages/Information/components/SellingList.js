@@ -4,12 +4,12 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:53:33
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 15:21:47
+ * @LastEditTime : 2019-12-23 15:25:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, FlatList, RefreshControl} from 'react-native';
+import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
