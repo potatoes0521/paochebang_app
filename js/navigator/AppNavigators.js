@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
- * @LastEditors  : guorui
- * @LastEditTime : 2019-12-20 14:24:43
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-23 14:36:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,7 +11,7 @@ import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import WelcomePage from '../pages/WelcomePage';
 import HomePage from '../pages/Home';
-import OfferDetailPage from '../pages/OfferDetails/OfferDetails';
+import OfferDetailsPage from '../pages/OfferDetails/OfferDetails';
 import InformationPage from '../pages/Information/Information';
 
 export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一个初始化的路由名
@@ -34,8 +34,8 @@ const MainNavigator = createStackNavigator(
         header: null, // 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
       },
     },
-    OfferDetailPage: {
-      screen: OfferDetailPage,
+    OfferDetailsPage: {
+      screen: OfferDetailsPage,
       navigationOptions: {
         header: null,
       },

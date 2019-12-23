@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-20 16:38:16
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 14:06:00
+ * @LastEditTime : 2019-12-23 14:36:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,9 +26,9 @@ export default class OrderItem extends Component {
     let {item} = this.props.item;
     let {type} = this.props;
     if (type === 'offer') {
-      let pageUrl = 'OfferDetailPage';
+      let pageUrl = 'OfferDetailsPage';
       if (item.orderCode) {
-        pageUrl = 'OrderDetailPage';
+        pageUrl = 'OrderDetailsPage';
       }
       NavigationUtil.goPage(item, pageUrl);
     }
