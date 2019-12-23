@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 15:52:50
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 16:56:30
+ * @LastEditTime : 2019-12-23 17:03:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,11 +30,7 @@ export default class VacancyItem extends Component {
     ) {
       return;
     }
-    if (itemData.saleToPalletsType === 2) {
-      NavigationUtil.goPage(itemData, 'OfferDetailsPage');
-    } else {
-      NavigationUtil.goPage(itemData, 'SellingDetailsPage');
-    }
+    NavigationUtil.goPage(itemData, 'VacancyDetailsPage');
   }
   /**
    * 打电话
