@@ -4,12 +4,12 @@
  * @path: 引入路径
  * @Date: 2019-12-20 16:38:16
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-22 17:09:50
+ * @LastEditTime : 2019-12-23 09:52:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 
@@ -22,49 +22,79 @@ export default class OrderItem extends Component {
   componentDidMount() {}
 
   componentWillUnmount() {}
-
+  navigatorTo() {
+    console.log('navigatorTo');
+  }
   render() {
     let {item} = this.props.item;
     let {type} = this.props;
     let time = '';
+    let statusClassNames = [styles.status];
+    let itemTextClassNames = [styles.itemText];
+    let cityTextClassNames = [styles.cityText];
+    let iconClassName = [GlobalStyles.icon, styles.icon];
+    let timeClassName = [styles.time];
     if (type === 'offer') {
       time = item.inquiryTimeDesc;
+      if (item.status === 10 || item.takeStatus === 10) {
+        statusClassNames.push(styles.themeSubColor);
+      } else if (item.status === 20 || item.takeStatus === 20) {
+        statusClassNames.push(styles.themeColor);
+      }
     } else if (type === 'order') {
       time = item.inquiryTimeDesc;
     }
+    if (
+      item.status === 30 ||
+      item.status === 40 ||
+      item.takeStatus === 30 ||
+      item.takeStatus === 40
+    ) {
+      statusClassNames.push(styles.themeDisabled);
+      itemTextClassNames.push(styles.themeDisabled);
+      cityTextClassNames.push(styles.themeDisabled);
+      iconClassName.push(styles.themeDisabled);
+      timeClassName.push(styles.themeDisabled);
+    }
     return (
       <View style={styles.itemWrapper}>
-        <View style={styles.title}>
-          <Text style={styles.time}>{time || ''}</Text>
-          <Text style={styles.status}>{item.statusDesc || ''}</Text>
-        </View>
-        <View style={styles.main}>
-          <View style={styles.city}>
-            <Text style={styles.cityText}>{item.sendCityName || ''}</Text>
-            <Text style={[GlobalStyles.icon, styles.icon]}>&#xe60f;</Text>
-            <Text style={styles.cityText}>{item.receiveCityName || ''}</Text>
+        <TouchableOpacity onPress={this.navigatorTo}>
+          <View style={styles.title}>
+            <Text style={timeClassName}>{time || ''}</Text>
+            <Text style={statusClassNames}>{item.statusDesc || ''}</Text>
           </View>
-          <View style={styles.item}>
-            <Text style={styles.itemText}>车辆信息:{item.carInfo || ''}</Text>
-          </View>
-          {!item.storePickup && !item.homeDelivery ? null : (
-            <View style={styles.item}>
-              <Text style={styles.itemText}>
-                服务：
-                {item.storePickup ? item.storePickupDesc : ''}
-                {item.storePickup && item.homeDelivery ? '，' : ''}
-                {item.homeDelivery ? item.homeDeliveryDesc : ''}
+          <View style={styles.main}>
+            <View style={styles.city}>
+              <Text style={cityTextClassNames}>{item.sendCityName || ''}</Text>
+              <Text style={iconClassName}>&#xe60f;</Text>
+              <Text style={cityTextClassNames}>
+                {item.receiveCityName || ''}
               </Text>
             </View>
-          )}
-          {item.transferSettlePriceDesc ? (
             <View style={styles.item}>
-              <Text style={styles.itemText}>
-                报价(元)：￥{item.transferSettlePriceDesc || ''}元
+              <Text style={itemTextClassNames}>
+                车辆信息:{item.carInfo || ''}
               </Text>
             </View>
-          ) : null}
-        </View>
+            {!item.storePickup && !item.homeDelivery ? null : (
+              <View style={styles.item}>
+                <Text style={itemTextClassNames}>
+                  服务：
+                  {item.storePickup ? item.storePickupDesc : ''}
+                  {item.storePickup && item.homeDelivery ? '，' : ''}
+                  {item.homeDelivery ? item.homeDeliveryDesc : ''}
+                </Text>
+              </View>
+            )}
+            {item.transferSettlePriceDesc ? (
+              <View style={styles.item}>
+                <Text style={itemTextClassNames}>
+                  报价(元)：￥{item.transferSettlePriceDesc || ''}元
+                </Text>
+              </View>
+            ) : null}
+          </View>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -91,6 +121,11 @@ const styles = StyleSheet.create({
     color: GlobalStyles.themeFontColor,
     fontSize: 14,
   },
+  status: {
+    color: GlobalStyles.themeFontColor,
+    fontSize: 16,
+    fontWeight: '700',
+  },
   main: {
     paddingHorizontal: 12,
   },
@@ -116,6 +151,15 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 14,
     color: GlobalStyles.themeFontColor,
+  },
+  themeColor: {
+    color: GlobalStyles.themeColor,
+  },
+  themeSubColor: {
+    color: GlobalStyles.themeSubColor,
+  },
+  themeDisabled: {
+    color: GlobalStyles.themeDisabled,
   },
 });
 
