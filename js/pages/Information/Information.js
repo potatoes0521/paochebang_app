@@ -3,7 +3,7 @@
  * @description: 市场
  * @Date: 2019-11-22 16:11:20
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 17:01:09
+ * @LastEditTime : 2019-12-23 17:09:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -75,7 +75,15 @@ class Information extends Component {
           navigation={navigation}
           title={'市场信息'}
         />
-        <NavigatorTab />
+        <View style={styles.tabWrapper}>
+          <NavigatorTab />
+          <View style={styles.select}>
+            <View style={styles.line} />
+            <View style={styles.selectMain}>
+              <Text>筛选</Text>
+            </View>
+          </View>
+        </View>
       </SafeAreaViewPlus>
     );
   }
@@ -86,9 +94,35 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
+  tabWrapper: {
+    flex: 1,
+  },
+  select: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    zIndex: 2,
+    width: 70,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+    height: 44,
+    flexDirection: 'row',
+  },
+  line: {
+    width: 1,
+    height: 26,
+    backgroundColor: '#f5f5f5',
+  },
+  selectMain: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   tabStyle: {
     borderBottomColor: GlobalStyles.themeColor,
     borderBottomWidth: 2,
+    width: 150,
     height: 44,
   },
   labelStyle: {
@@ -97,8 +131,8 @@ const styles = StyleSheet.create({
   },
   indicatorStyle: {
     height: 3,
-    // width: 60,
-    // marginHorizontal: 30,
+    width: 80,
+    marginLeft: 35,
     backgroundColor: GlobalStyles.themeColor,
   },
 });
