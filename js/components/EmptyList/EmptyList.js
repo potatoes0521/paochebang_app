@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 11:47:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 13:25:18
+ * @LastEditTime : 2019-12-23 13:41:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,7 +29,6 @@ export default class EmptyList extends Component {
   navigatorTo() {}
   render() {
     let {pageType} = this.props;
-    console.log('pageType', pageType);
     let imgSrc = noOrderImage;
     let text = '立即发布';
     let tips = '亲，您还未发布任何消息哦～';
@@ -80,7 +79,7 @@ export default class EmptyList extends Component {
         </View>
         <Text style={styles.tips}>{tips}</Text>
         <Button
-          text={'报价'}
+          text={text}
           type={'round'}
           btnStyle={[styles.btn]}
           onClick={this.navigatorTo.bind(this)}
