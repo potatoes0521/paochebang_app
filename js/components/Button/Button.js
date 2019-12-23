@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-20 11:47:21
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 13:15:49
+ * @LastEditTime : 2019-12-23 13:42:21
  * @mustParam: 必传参数
  *  btnStyle 样式 数组 数组里是类名或者是个对象
  *  type plain 镂空 round 充满
@@ -38,7 +38,6 @@ export default class Button extends Component {
   }
   render() {
     const {btnStyle, text, type, fontStyles} = this.props;
-    console.log(btnStyle, text, type, fontStyles);
     let btnStyles = [styles.btnDefault];
     let textStyle = [styles.textColor];
     if (type === 'plain') {
