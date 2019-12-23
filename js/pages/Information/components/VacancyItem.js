@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 15:52:50
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 16:42:15
+ * @LastEditTime : 2019-12-23 16:56:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,7 +12,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Linking} from 'react-native';
 import PropTypes from 'prop-types';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
-
+import NavigationUtil from '../../../navigator/NavigationUtils.js';
 export default class VacancyItem extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +22,20 @@ export default class VacancyItem extends Component {
   componentDidMount() {}
 
   componentWillUnmount() {}
-  navigatorDetails() {}
+  navigatorDetails() {
+    let {itemData} = this.props;
+    if (
+      (itemData.isActive === 2 || itemData.isActive === 3) &&
+      !itemData.isEdit
+    ) {
+      return;
+    }
+    if (itemData.saleToPalletsType === 2) {
+      NavigationUtil.goPage(itemData, 'OfferDetailsPage');
+    } else {
+      NavigationUtil.goPage(itemData, 'SellingDetailsPage');
+    }
+  }
   /**
    * 打电话
    * @param {Object} item 订单信息
@@ -31,6 +44,9 @@ export default class VacancyItem extends Component {
   callBtn(item, e) {
     e.stopPropagation();
     const tel = `tel:${item.mobile}`;
+    if (item.isActive !== 1) {
+      return;
+    }
     Linking.canOpenURL(tel)
       .then(supported => {
         if (!supported) {

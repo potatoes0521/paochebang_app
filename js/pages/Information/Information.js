@@ -3,7 +3,7 @@
  * @description: 市场
  * @Date: 2019-11-22 16:11:20
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 15:50:11
+ * @LastEditTime : 2019-12-23 17:01:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,7 +29,9 @@ class Information extends Component {
 
   render() {
     const {theme, navigation} = this.props;
-
+    const {state} = navigation;
+    const {params} = state;
+    console.log('params', params);
     const NavigatorTab = createAppContainer(
       createMaterialTopTabNavigator(
         {
@@ -47,6 +49,7 @@ class Information extends Component {
           },
         },
         {
+          initialRouteName: params.type,
           tabBarOptions: {
             tabStyle: styles.tabStyle,
             activeTintColor: GlobalStyles.themeColor,

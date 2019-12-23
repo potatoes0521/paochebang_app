@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-29 15:28:01
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 15:09:08
+ * @LastEditTime : 2019-12-23 17:01:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -99,7 +99,7 @@ class Index extends Component {
   }
   navigatorTo(type) {
     console.log('type', type);
-    NavigationUtil.goPage(type, 'InformationPage');
+    NavigationUtil.goPage({type: type}, 'InformationPage');
   }
   render() {
     let {bannerListData, recommendData, failLoading} = this.state;
@@ -147,7 +147,7 @@ class Index extends Component {
           <View style={styles.tabs}>
             <View style={styles.tabWrapper}>
               <TouchableOpacity
-                onPress={this.navigatorTo.bind(this, 'selling')}
+                onPress={this.navigatorTo.bind(this, 'SellingTab')}
                 style={styles.tabItem}>
                 <LinearGradient
                   style={styles.tab}
@@ -157,7 +157,7 @@ class Index extends Component {
                 </LinearGradient>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={this.navigatorTo.bind(this, 'vacancy')}
+                onPress={this.navigatorTo.bind(this, 'VacancyTab')}
                 style={styles.tabItem}>
                 <LinearGradient
                   style={styles.tab}

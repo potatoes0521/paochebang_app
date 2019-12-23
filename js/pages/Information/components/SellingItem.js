@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 14:14:44
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 15:55:33
+ * @LastEditTime : 2019-12-23 16:57:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -42,6 +42,9 @@ export default class SellingItem extends Component {
   callBtn(item, e) {
     e.stopPropagation();
     const tel = `tel:${item.mobile}`;
+    if (item.isActive !== 1) {
+      return;
+    }
     Linking.canOpenURL(tel)
       .then(supported => {
         if (!supported) {
@@ -54,20 +57,37 @@ export default class SellingItem extends Component {
   }
   render() {
     let {itemData} = this.props;
-    // let {item} = itemData;
+    let cityClassName = [styles.cityText];
+    let iconClassName = [styles.icon];
+    let carInfoClassName = [styles.carInfo];
+    let carNumberClassName = [styles.carNumber];
+    let iconPhoneClassName = [styles.iconPhone];
+    let priceClassName = [styles.price];
+    let quoteBtnClassName = [styles.quoteBtn];
+    let quoteBtnWrapperClassName = [styles.quoteBtnWrapper];
+    if (itemData.isActive !== 1) {
+      cityClassName.push(styles.disabledFontColor);
+      iconClassName.push(styles.disabledFontColor);
+      carInfoClassName.push(styles.disabledFontColor);
+      carNumberClassName.push(styles.disabledFontColor);
+      iconPhoneClassName.push(styles.disabledFontColor);
+      priceClassName.push(styles.disabledFontColor);
+      quoteBtnClassName.push(styles.disabledFontColor);
+      quoteBtnWrapperClassName.push(styles.disabledQuoteBtnWrapper);
+    }
     return (
       <View style={styles.itemWrapper}>
         <TouchableOpacity onPress={this.navigatorDetails.bind(this, itemData)}>
           <View style={styles.item}>
             <View style={styles.itemMsg}>
               <View style={styles.city}>
-                <Text style={styles.cityText}>
+                <Text style={cityClassName}>
                   {itemData.sendCityName && itemData.sendCityName.length > 5
                     ? itemData.sendCityName.substr(0, 5) + '...'
                     : itemData.sendCityName || ''}
                 </Text>
-                <Text style={styles.icon}>&#xe60f;</Text>
-                <Text style={styles.cityText}>
+                <Text style={iconClassName}>&#xe60f;</Text>
+                <Text style={cityClassName}>
                   {itemData.receiveCityName &&
                   itemData.receiveCityName.length > 5
                     ? itemData.receiveCityName.substr(0, 5) + '...'
@@ -75,11 +95,14 @@ export default class SellingItem extends Component {
                 </Text>
               </View>
               <View style={styles.itemInfo}>
-                <Text style={styles.carNumber}>{itemData.carAmount || ''}</Text>
-                <Text style={styles.carInfo}>
-                  {itemData.carInfo && itemData.carInfo.length > 10
-                    ? itemData.carInfo.substr(0, 10) + '...'
+                <Text style={carNumberClassName}>
+                  {itemData.carAmount || ''}
+                </Text>
+                <Text style={carInfoClassName}>
+                  {itemData.carInfo && itemData.carInfo.length > 12
+                    ? itemData.carInfo.substr(0, 12) + '...'
                     : itemData.carInfo || ''}
+                  待发
                 </Text>
               </View>
             </View>
@@ -88,10 +111,10 @@ export default class SellingItem extends Component {
                 {itemData.isActive === 1 ? (
                   itemData.price ? (
                     <View style={styles.price}>
-                      <Text style={styles.price}>
+                      <Text style={priceClassName}>
                         {'¥' + itemData.returnPrice}
                       </Text>
-                      <Text style={styles.iconPhone}>&#xe62d;</Text>
+                      <Text style={iconPhoneClassName}>&#xe62d;</Text>
                     </View>
                   ) : (
                     <View style={styles.quoteBtnWrapper}>
@@ -99,8 +122,8 @@ export default class SellingItem extends Component {
                     </View>
                   )
                 ) : (
-                  <View style={styles.quoteBtnWrapper}>
-                    <Text style={styles.quoteBtn}>
+                  <View style={quoteBtnWrapperClassName}>
+                    <Text style={quoteBtnClassName}>
                       {itemData.statusOfSaleToPalletList}
                     </Text>
                   </View>
@@ -177,6 +200,9 @@ const styles = StyleSheet.create({
     borderColor: GlobalStyles.themeColor,
     borderRadius: 4,
   },
+  disabledQuoteBtnWrapper: {
+    borderColor: GlobalStyles.themeDisabled,
+  },
   quoteBtn: {
     fontSize: 16,
     color: GlobalStyles.themeColor,
@@ -198,6 +224,9 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 1,
     backgroundColor: '#f5f5f5',
+  },
+  disabledFontColor: {
+    color: GlobalStyles.themeDisabled,
   },
 });
 
