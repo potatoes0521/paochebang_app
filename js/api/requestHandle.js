@@ -4,7 +4,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 10:21:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-20 16:32:50
+ * @LastEditTime : 2019-12-23 13:23:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,7 +23,7 @@ class HttpRequest {
   request(options) {
     const instance = axios.create();
     options = Object.assign(this.getInsideConfig(options), options);
-    this.interceptors(instance, options.url);
+    this.interceptors(instance, options.url, options.that);
     return instance(options);
   }
   getInsideConfig(options) {
@@ -67,7 +67,7 @@ class HttpRequest {
     }
     return config;
   }
-  interceptors(instance, url) {
+  interceptors(instance, url, that) {
     // 请求拦截
     instance.interceptors.request.use(
       config => {
@@ -83,14 +83,20 @@ class HttpRequest {
       res => {
         const {data} = res;
         if (!+data.code || +data.code === 200002 || +data.code === 200) {
-          console.log('data', data);
+          console.log('data' + url, data);
           return data;
         } else if (+data.code === 200003) {
           console.log('token shixiao');
+          that.setState({
+            isLoading: false,
+          });
           return data;
         } else {
           console.error('error 接口错误');
-          return Promise.reject('error 接口错误');
+          that.setState({
+            isLoading: false,
+          });
+          return data;
         }
       },
       error => {
