@@ -4,22 +4,16 @@
  * @path: 引入路径
  * @Date: 2019-12-22 16:58:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-22 17:14:44
+ * @LastEditTime : 2019-12-23 10:40:35
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  RefreshControl,
-  ActivityIndicator,
-} from 'react-native';
+import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import OrderItem from '../../../components/OrderItem/OrderItem';
+import BottomLoading from '../../../components/BottomLoading/BottomLoading.js';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
 import api from '../../../api/index';
 
@@ -35,15 +29,21 @@ class OrderList extends Component {
     this.receiveCityId = '';
   }
   componentDidMount() {
-    this.getOrderList({});
+    this.getOrderList({refresh: true});
   }
   getOrderList({
     pageNum = this.orderPage,
     pageSize = 10,
     sendCityId = this.sendCityId,
     receiveCityId = this.receiveCityId,
+    refresh = false,
   }) {
-    console.log('object2');
+    if (refresh) {
+      this.offerFlag = false;
+    }
+    if (this.offerFlag && !refresh) {
+      return;
+    }
     this.setState({
       isLoading: true,
     });
@@ -82,22 +82,25 @@ class OrderList extends Component {
         };
         return itemData;
       });
-      this.setState({
-        orderData: data,
-      });
+      if (data && data.length < pageSize) {
+        this.orderFlag = true;
+      }
+      this.orderPage += 1;
+      if (pageNum === 1) {
+        this.setState({
+          orderData: data,
+        });
+      } else {
+        let {orderData} = this.state;
+        this.setState({
+          orderData: [...orderData, ...data],
+        });
+      }
     });
   }
   genIndicator() {
-    return (
-      <View style={styles.indicatorContainer}>
-        {/* <ActivityIndicator
-          style={styles.indicator}
-          size="large"
-          animating={true}
-        /> */}
-        <Text>正在加载更多</Text>
-      </View>
-    );
+    let {orderData} = this.state;
+    return orderData && orderData.length > 10 ? <BottomLoading /> : null;
   }
   render() {
     return (
@@ -108,10 +111,10 @@ class OrderList extends Component {
           refreshControl={
             <RefreshControl
               title="Loading..."
-              colors={['red']}
+              colors={[GlobalStyles.themeColor]}
               refreshing={this.state.isLoading}
-              onRefresh={() => this.getOrderList(this, {})}
-              tintColor={'orange'}
+              onRefresh={() => this.getOrderList({refresh: true})}
+              tintColor={GlobalStyles.themeColor}
             />
           }
           ListFooterComponent={() => this.genIndicator()}
@@ -119,7 +122,7 @@ class OrderList extends Component {
             this.getOrderList.bind(this, {});
           }}
           keyExtractor={data => {
-            return data.inquiryId;
+            return data.inquiryId + 'order';
           }}
         />
       </View>

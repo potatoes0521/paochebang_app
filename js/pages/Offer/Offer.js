@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:46:56
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-22 17:13:15
+ * @LastEditTime : 2019-12-22 17:15:46
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,7 +15,6 @@ import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import {createAppContainer} from 'react-navigation';
 import GlobalStyles from '../../assets/css/GlobalStyles';
-import api from '../../api/index';
 import OfferList from './components/OfferList.js';
 import OrderList from './components/OrderList.js';
 class Offer extends Component {
