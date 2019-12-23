@@ -4,13 +4,13 @@
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-23 14:50:16
+ * @LastEditTime : 2019-12-23 15:25:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, Image, View, TextInput} from 'react-native';
+import {StyleSheet, Image, View, TextInput, Text} from 'react-native';
 import {connect} from 'react-redux';
 import api from '../../api';
 import Actions from '../../store/action/index.js';
@@ -21,11 +21,14 @@ import NavigationUtil from '../../navigator/NavigationUtils';
 import LoginLogo from '../../assets/image/register/paoche_logo.png';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 // import NavigationBar from '../../components/NavigatorBar/NavigationBar';
+import Toast from 'react-native-easy-toast';
 
 class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      countDown: 90,
+      timerFlag: false,
       phoneNumber: '', //手机号
       verificationCode: '', //验证码
     };
@@ -70,6 +73,55 @@ class Register extends Component {
    */
   getVerificationCode() {
     console.log(1);
+    let {countDown, timerFlag, phoneNumber} = this.state;
+    if (timerFlag) {
+      return;
+    }
+    if (!phoneNumberPatter.test(phoneNumber)) {
+      this.refs.toast.show('手机号输入格式有误');
+      return;
+    }
+    let sendData = {
+      mobile: phoneNumber,
+    };
+    this.setState({
+      timerFlag: true,
+    });
+    this.handleCountDown(countDown, timerFlag);
+    api.user.getVerificationCode(sendData, this).then(() => {
+      this.refs.toast.show('验证码已发送');
+    });
+  }
+  /**
+   * 倒计时
+   * @param {Number} countDown 倒计时的数字
+   * @param {Boolean} timerFlag 倒计时的开关
+   * @return void
+   */
+  handleCountDown(countDown, timerFlag) {
+    if (timerFlag) {
+      return;
+    }
+    clearInterval(this.timer);
+    this.timer = setInterval(() => {
+      countDown -= 1;
+      if (countDown <= 0) {
+        countDown = 0;
+        clearInterval(this.timer);
+        this.setState({
+          timerFlag: false,
+        });
+        setTimeout(() => {
+          this.setState({
+            countDown: 90,
+          });
+        }, 1000);
+      } else {
+        this.setState({
+          countDown,
+        });
+      }
+    }, 1000);
   }
   /**
    * 提交注册
@@ -100,9 +152,10 @@ class Register extends Component {
       openId: this.props.userInfo.openId,
     };
     api.user.register(sendData, this).then(res => {
-      let resData = Object.assign({}, res.userInfo, res.userInfoExt);
-      Actions.changeUserInfo(resData);
-      this.login(this.props.userInfo.openId);
+      console.log(res, '1111');
+      // let resData = Object.assign({}, res.userInfo, res.userInfoExt);
+      // Actions.changeUserInfo(resData);
+      // this.login(this.props.userInfo.openId);
     });
   }
   /**
@@ -117,10 +170,11 @@ class Register extends Component {
     };
     api.user.loginUseOpenID(sendData, this).then(res => {
       if (res) {
+        console.log(res, 'res');
         let resData = Object.assign({}, res);
-        if (!sendData.token || sendData.token !== resData.token) {
-          // refreshToken.setNewToken(resData.token);
-        }
+        // if (!sendData.token || sendData.token !== resData.token) {
+        //   // refreshToken.setNewToken(resData.token);
+        // }
         Actions.changeUserInfo(resData);
         // 给redux一个反应时间
         // setTimeout(() => {
@@ -131,7 +185,7 @@ class Register extends Component {
   }
 
   render() {
-    let {phoneNumber, verificationCode} = this.state;
+    let {phoneNumber, verificationCode, timerFlag, countDown} = this.state;
     return (
       <View style={styles.pageWrapper}>
         <View style={styles.imgWrapper}>
@@ -155,13 +209,20 @@ class Register extends Component {
               onChangeText={this.inputVerificationCode.bind(this)}
               value={verificationCode}
             />
-            <Button
+            {/* <Button
               btnStyle={[styles.codeBtn]}
               fontStyles={[styles.codeColor]}
               type={'plain'}
               text={'获取验证码'}
               onClick={this.getVerificationCode.bind(this)}
-            />
+            /> */}
+            <View
+              style={styles.codeBtn}
+              onClick={this.getVerificationCode.bind(this)}>
+              <Text style={styles.codeColor}>
+                {!timerFlag ? '获取验证码' : `${countDown}S后重试`}
+              </Text>
+            </View>
           </View>
         </View>
         <View style={styles.registerBtn}>
@@ -172,6 +233,7 @@ class Register extends Component {
             onClick={this.submitRegister.bind(this)}
           />
         </View>
+        <Toast ref="toast" position={'center'} defaultCloseDelay={3000} />
       </View>
     );
   }
