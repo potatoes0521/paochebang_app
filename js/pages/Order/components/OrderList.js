@@ -1,10 +1,10 @@
 /*
  * @Author: liuYang
- * @description: 请填写描述信息
+ * @description: 订单列表
  * @path: 引入路径
- * @Date: 2019-12-22 16:58:23
+ * @Date: 2019-12-23 11:30:10
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 11:50:09
+ * @LastEditTime : 2019-12-23 13:58:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,10 +12,10 @@ import React, {Component} from 'react';
 import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import GlobalStyles from '../../../assets/css/GlobalStyles';
 import OrderItem from '../../../components/OrderItem/OrderItem';
 import BottomLoading from '../../../components/BottomLoading/BottomLoading.js';
 import EmptyList from '../../../components/EmptyList/EmptyList.js';
-import GlobalStyles from '../../../assets/css/GlobalStyles';
 import api from '../../../api/index';
 
 class OrderList extends Component {
@@ -27,17 +27,25 @@ class OrderList extends Component {
     };
     this.orderPage = 1;
     this.orderFlag = false;
-    this.sendCityId = '';
-    this.receiveCityId = '';
   }
+
   componentDidMount() {
     this.getOrderList({refresh: true});
   }
+
+  componentWillUnmount() {}
+
+  /**
+   * 函数功能描述
+   * @param {String} status 状态
+   * @param {Number} pageNum 页数
+   * @param {Number} pageSize 条数
+   * @return void
+   */
   getOrderList({
-    pageNum = this.orderPage,
+    status = this.props.status,
+    pageNum = 1,
     pageSize = 10,
-    sendCityId = this.sendCityId,
-    receiveCityId = this.receiveCityId,
     refresh = false,
   }) {
     if (refresh) {
@@ -50,50 +58,28 @@ class OrderList extends Component {
       isLoading: true,
     });
     let sendData = {
+      status,
       pageNum,
       pageSize,
-      sendCityId,
-      receiveCityId,
     };
-    api.order.getReceiptOrderList(sendData, this).then(res => {
+    api.order.getOrdersList(sendData, this).then(res => {
       this.setState({
         isLoading: false,
       });
-      if (!res.data) {
+      let data = res.data;
+      if (!data) {
         return;
       }
-      const data = res.data.map(item => {
-        const obj = Object.assign({}, item, item.inquiryOrder);
-        delete obj.inquiryOrder;
-        const itemData = {
-          orderCode: obj.orderCode,
-          statusDesc: obj.statusDesc,
-          status: obj.status,
-          inquiryTimeDesc: obj.inquiryTimeDesc,
-          sendCityId: obj.sendCityId,
-          sendCityName: obj.sendCityName,
-          receiveCityId: obj.receiveCityId,
-          receiveCityName: obj.receiveCityName,
-          carInfo: obj.carInfo,
-          homeDelivery: obj.homeDelivery,
-          storePickup: obj.storePickup,
-          storePickupDesc: obj.storePickupDesc,
-          homeDeliveryDesc: obj.homeDeliveryDesc,
-          quotedPriceDesc: obj.quotedPriceDesc,
-          transferSettlePriceDesc: obj.transferSettlePriceDesc,
-        };
-        return itemData;
-      });
       if (data && data.length < pageSize) {
         this.orderFlag = true;
       }
+      let {orderData} = this.state;
       this.orderPage += 1;
       if (pageNum === 1) {
         this.setState({
-          orderData: data,
+          orderData: [...data],
         });
       } else {
-        let {orderData} = this.state;
         this.setState({
           orderData: [...orderData, ...data],
         });
@@ -123,11 +109,9 @@ class OrderList extends Component {
           onEndReached={() => {
             this.getOrderList.bind(this, {});
           }}
-          ListEmptyComponent={() => {
-            return <EmptyList />;
-          }}
+          ListEmptyComponent={() => <EmptyList />}
           keyExtractor={data => {
-            return data.inquiryId + 'order';
+            return data.orderCode + 'order';
           }}
         />
       </View>
@@ -142,14 +126,15 @@ const styles = StyleSheet.create({
 });
 
 OrderList.defaultProps = {
+  status: '',
   onClick: () => {},
 };
 
 OrderList.propTypes = {
+  status: PropTypes.any,
   onClick: PropTypes.func.isRequired,
 };
 
-// 如果需要引入store
 const mapStateToProps = state => {
   return {
     userInfo: state.user_info.userInfo,

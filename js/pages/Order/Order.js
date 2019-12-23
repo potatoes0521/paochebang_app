@@ -1,22 +1,22 @@
 /*
  * @Author: liuYang
  * @description: 请填写描述信息
- * @Date: 2019-11-22 16:46:56
+ * @Date: 2019-11-22 16:47:02
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 13:46:24
+ * @LastEditTime : 2019-12-23 13:57:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import {createAppContainer} from 'react-navigation';
 import GlobalStyles from '../../assets/css/GlobalStyles';
-import OfferList from './components/OfferList.js';
 import OrderList from './components/OrderList.js';
-class Offer extends Component {
+
+class Order extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -30,16 +30,22 @@ class Offer extends Component {
     const NavigatorTab = createAppContainer(
       createMaterialTopTabNavigator(
         {
-          SellingTab: {
-            screen: props => <OfferList {...props} />,
+          WaitingOrderTab: {
+            screen: props => <OrderList {...props} status={10} />,
             navigationOptions: {
-              title: '报价',
+              title: '待提车',
             },
           },
-          VacancyTab: {
+          PendingOrderTab: {
+            screen: props => <OrderList {...props} status={20} />,
+            navigationOptions: {
+              title: '待交车',
+            },
+          },
+          AllOrderTab: {
             screen: props => <OrderList {...props} />,
             navigationOptions: {
-              title: '接单',
+              title: '全部',
             },
           },
         },
@@ -64,16 +70,8 @@ class Offer extends Component {
     );
     return (
       <View style={styles.pageWrapper}>
-        <NavigationBar title={'报价/接单'} />
-        <View style={styles.tabWrapper}>
-          <NavigatorTab />
-          <View style={styles.select}>
-            <View style={styles.line} />
-            <View style={styles.selectMain}>
-              <Text>筛选</Text>
-            </View>
-          </View>
-        </View>
+        <NavigationBar title={'我的订单'} />
+        <NavigatorTab />
       </View>
     );
   }
@@ -84,35 +82,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
-  tabWrapper: {
-    flex: 1,
-  },
-  select: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    zIndex: 2,
-    width: 70,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    height: 44,
-    flexDirection: 'row',
-  },
-  line: {
-    width: 1,
-    height: 26,
-    backgroundColor: '#f5f5f5',
-  },
-  selectMain: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   tabStyle: {
     borderBottomColor: GlobalStyles.themeColor,
     borderBottomWidth: 2,
-    width: 150,
     height: 44,
   },
   labelStyle: {
@@ -121,8 +93,8 @@ const styles = StyleSheet.create({
   },
   indicatorStyle: {
     height: 3,
-    width: 60,
-    marginLeft: 45,
+    // width: 60,
+    // marginHorizontal: 30,
     backgroundColor: GlobalStyles.themeColor,
   },
 });
@@ -132,4 +104,4 @@ const mapStateToProps = state => {
     userInfo: state.user_info.userInfo,
   };
 };
-export default connect(mapStateToProps)(Offer);
+export default connect(mapStateToProps)(Order);
