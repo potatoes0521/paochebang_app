@@ -4,13 +4,20 @@
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-23 15:25:42
+ * @LastEditTime : 2019-12-23 15:34:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, Image, View, TextInput, Text} from 'react-native';
+import {
+  StyleSheet,
+  Image,
+  View,
+  TextInput,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {connect} from 'react-redux';
 import api from '../../api';
 import Actions from '../../store/action/index.js';
@@ -72,7 +79,6 @@ class Register extends Component {
    * @return void
    */
   getVerificationCode() {
-    console.log(1);
     let {countDown, timerFlag, phoneNumber} = this.state;
     if (timerFlag) {
       return;
@@ -209,20 +215,13 @@ class Register extends Component {
               onChangeText={this.inputVerificationCode.bind(this)}
               value={verificationCode}
             />
-            {/* <Button
-              btnStyle={[styles.codeBtn]}
-              fontStyles={[styles.codeColor]}
-              type={'plain'}
-              text={'获取验证码'}
-              onClick={this.getVerificationCode.bind(this)}
-            /> */}
-            <View
-              style={styles.codeBtn}
-              onClick={this.getVerificationCode.bind(this)}>
-              <Text style={styles.codeColor}>
-                {!timerFlag ? '获取验证码' : `${countDown}S后重试`}
-              </Text>
-            </View>
+            <TouchableOpacity onPress={this.getVerificationCode.bind(this)}>
+              <View style={styles.codeBtn}>
+                <Text style={styles.codeColor}>
+                  {!timerFlag ? '获取验证码' : `${countDown}S后重试`}
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.registerBtn}>
@@ -272,17 +271,22 @@ const styles = StyleSheet.create({
     borderBottomColor: '#F5F5F5',
   },
   codeInput: {
-    width: 195,
+    flex: 1,
   },
   codeBtn: {
     width: 104,
     height: 36,
     marginTop: 15,
     marginLeft: 10,
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderColor: GlobalStyles.themeDisabled,
     borderRadius: 18,
   },
   codeColor: {
+    fontSize: 14,
     color: GlobalStyles.themeDisabled,
   },
   registerBtn: {
