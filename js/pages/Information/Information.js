@@ -3,7 +3,7 @@
  * @description: 市场
  * @Date: 2019-11-22 16:11:20
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 15:03:25
+ * @LastEditTime : 2019-12-23 15:50:11
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,6 +16,7 @@ import GlobalStyles from '../../assets/css/GlobalStyles';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import SellingList from './components/SellingList.js';
+import VacancyList from './components/VacancyList.js';
 class Information extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +40,7 @@ class Information extends Component {
             },
           },
           VacancyTab: {
-            screen: SellingList,
+            screen: props => <VacancyList {...props} />,
             navigationOptions: {
               title: '空位信息',
             },

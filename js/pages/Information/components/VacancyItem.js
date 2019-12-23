@@ -1,19 +1,19 @@
 /*
  * @Author: liuYang
  * @description: 请填写描述信息
- * @Date: 2019-12-02 14:14:44
+ * @path: 引入路径
+ * @Date: 2019-12-23 15:52:50
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 15:55:33
+ * @LastEditTime : 2019-12-23 16:42:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Linking} from 'react-native';
-import GlobalStyles from '../../../assets/css/GlobalStyles';
-import NavigationUtil from '../../../navigator/NavigationUtils';
 import PropTypes from 'prop-types';
+import GlobalStyles from '../../../assets/css/GlobalStyles';
 
-export default class SellingItem extends Component {
+export default class VacancyItem extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -22,18 +22,7 @@ export default class SellingItem extends Component {
   componentDidMount() {}
 
   componentWillUnmount() {}
-
-  navigatorDetails(item) {
-    console.log(item, 'itemData');
-    if ((item.isActive === 2 || item.isActive === 3) && !item.isEdit) {
-      return;
-    }
-    let pageUrl = 'SellingDetailsPage';
-    if (item.saleToPalletsType === 2) {
-      pageUrl = 'OfferDetailsPage';
-    }
-    NavigationUtil.goPage(item, pageUrl);
-  }
+  navigatorDetails() {}
   /**
    * 打电话
    * @param {Object} item 订单信息
@@ -54,20 +43,33 @@ export default class SellingItem extends Component {
   }
   render() {
     let {itemData} = this.props;
-    // let {item} = itemData;
+    let cityClassName = [styles.cityText];
+    let iconClassName = [styles.icon];
+    let carInfoClassName = [styles.carInfo];
+    let carNumberClassName = [styles.carNumber];
+    let iconPhoneClassName = [styles.iconPhone];
+    let priceClassName = [styles.price];
+    if (itemData.isActive !== 1) {
+      cityClassName.push(styles.disabledFontColor);
+      iconClassName.push(styles.disabledFontColor);
+      carInfoClassName.push(styles.disabledFontColor);
+      carNumberClassName.push(styles.disabledFontColor);
+      iconPhoneClassName.push(styles.disabledFontColor);
+      priceClassName.push(styles.disabledFontColor);
+    }
     return (
       <View style={styles.itemWrapper}>
         <TouchableOpacity onPress={this.navigatorDetails.bind(this, itemData)}>
           <View style={styles.item}>
             <View style={styles.itemMsg}>
               <View style={styles.city}>
-                <Text style={styles.cityText}>
+                <Text style={cityClassName}>
                   {itemData.sendCityName && itemData.sendCityName.length > 5
                     ? itemData.sendCityName.substr(0, 5) + '...'
                     : itemData.sendCityName || ''}
                 </Text>
-                <Text style={styles.icon}>&#xe60f;</Text>
-                <Text style={styles.cityText}>
+                <Text style={iconClassName}>&#xe60f;</Text>
+                <Text style={cityClassName}>
                   {itemData.receiveCityName &&
                   itemData.receiveCityName.length > 5
                     ? itemData.receiveCityName.substr(0, 5) + '...'
@@ -75,36 +77,31 @@ export default class SellingItem extends Component {
                 </Text>
               </View>
               <View style={styles.itemInfo}>
-                <Text style={styles.carNumber}>{itemData.carAmount || ''}</Text>
-                <Text style={styles.carInfo}>
-                  {itemData.carInfo && itemData.carInfo.length > 10
-                    ? itemData.carInfo.substr(0, 10) + '...'
-                    : itemData.carInfo || ''}
+                <Text style={carInfoClassName}>余</Text>
+                <Text style={carNumberClassName}>
+                  {itemData.vacantAmount || ''}
+                </Text>
+              </View>
+              <View style={styles.itemInfo}>
+                <Text style={carInfoClassName}>
+                  {(itemData.startTime && itemData.startTime.split('T')[0]) ||
+                    ''}
+                  发车
                 </Text>
               </View>
             </View>
             <TouchableOpacity onPress={this.callBtn.bind(this, itemData)}>
               <View style={styles.itemBtn}>
-                {itemData.isActive === 1 ? (
-                  itemData.price ? (
-                    <View style={styles.price}>
-                      <Text style={styles.price}>
-                        {'¥' + itemData.returnPrice}
-                      </Text>
-                      <Text style={styles.iconPhone}>&#xe62d;</Text>
-                    </View>
-                  ) : (
-                    <View style={styles.quoteBtnWrapper}>
-                      <Text style={styles.quoteBtn}>报价</Text>
-                    </View>
-                  )
-                ) : (
-                  <View style={styles.quoteBtnWrapper}>
-                    <Text style={styles.quoteBtn}>
-                      {itemData.statusOfSaleToPalletList}
-                    </Text>
-                  </View>
-                )}
+                <View style={styles.price}>
+                  <Text style={priceClassName}>
+                    {itemData.isActive === 1
+                      ? itemData.price
+                        ? '¥' + itemData.returnPrice
+                        : itemData.returnPrice
+                      : itemData.statusOfVacantPalletList}
+                  </Text>
+                  <Text style={iconPhoneClassName}>&#xe62d;</Text>
+                </View>
               </View>
             </TouchableOpacity>
           </View>
@@ -150,7 +147,7 @@ const styles = StyleSheet.create({
   },
   itemInfo: {
     flexDirection: 'row',
-    alignItems: 'flex-end',
+    alignItems: 'center',
   },
   carInfo: {
     fontSize: 15,
@@ -160,7 +157,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 18,
     color: GlobalStyles.themeColor,
-    marginRight: 2,
+    marginLeft: 3,
   },
   itemBtn: {
     width: 100,
@@ -187,6 +184,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 15,
     color: GlobalStyles.themeColor,
+    fontWeight: '700',
   },
   iconPhone: {
     fontSize: 22,
@@ -199,12 +197,15 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#f5f5f5',
   },
+  disabledFontColor: {
+    color: GlobalStyles.themeDisabled,
+  },
 });
 
-SellingItem.defaultProps = {
-  itemData: {},
+VacancyItem.defaultProps = {
+  onClick: () => {},
 };
 
-SellingItem.propTypes = {
-  itemData: PropTypes.object,
+VacancyItem.propTypes = {
+  onClick: PropTypes.func.isRequired,
 };
