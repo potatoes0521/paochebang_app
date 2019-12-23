@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-20 13:56:52
+ * @LastEditors  : guorui
+ * @LastEditTime : 2019-12-20 14:24:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
