@@ -3,7 +3,7 @@
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-20 14:24:43
+ * @LastEditTime : 2019-12-23 11:29:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,13 +13,14 @@ import WelcomePage from '../pages/WelcomePage';
 import HomePage from '../pages/Home';
 import OfferDetailPage from '../pages/OfferDetails/OfferDetails';
 import InformationPage from '../pages/Information/Information';
+import RegisterPage from '../pages/Register/Register';
 
 export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一个初始化的路由名
 
 const InitNavigator = createStackNavigator({
   WelcomePage: {
-    screen: WelcomePage,
-    // screen: OfferDetailPage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
+    // screen: WelcomePage,
+    screen: RegisterPage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
     navigationOptions: {
       header: null, // 隐藏头部
     },
@@ -42,6 +43,12 @@ const MainNavigator = createStackNavigator(
     },
     InformationPage: {
       screen: InformationPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    RegisterPage: {
+      screen: RegisterPage,
       navigationOptions: {
         header: null,
       },
