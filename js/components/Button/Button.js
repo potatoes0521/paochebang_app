@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-20 11:47:21
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 12:01:27
+ * @LastEditTime : 2019-12-23 13:15:49
  * @mustParam: 必传参数
  *  btnStyle 样式 数组 数组里是类名或者是个对象
  *  type plain 镂空 round 充满
@@ -38,6 +38,7 @@ export default class Button extends Component {
   }
   render() {
     const {btnStyle, text, type, fontStyles} = this.props;
+    console.log(btnStyle, text, type, fontStyles);
     let btnStyles = [styles.btnDefault];
     let textStyle = [styles.textColor];
     if (type === 'plain') {
@@ -60,6 +61,24 @@ export default class Button extends Component {
     );
   }
 }
+
+Button.defaultProps = {
+  type: '',
+  btnStyle: [],
+  text: '按钮',
+  fontStyle: [],
+  emitData: null,
+  onClick: () => {},
+};
+
+Button.propTypes = {
+  type: PropTypes.string,
+  btnStyle: PropTypes.array,
+  text: PropTypes.string.isRequired,
+  fontStyle: PropTypes.array,
+  emitData: PropTypes.any,
+  onClick: PropTypes.func.isRequired,
+};
 
 const styles = StyleSheet.create({
   btnDefault: {
@@ -91,21 +110,3 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 });
-
-Button.defaultProps = {
-  type: '',
-  btnStyle: [],
-  text: '按钮',
-  fontStyle: [],
-  emitData: null,
-  onClick: () => {},
-};
-
-Button.propTypes = {
-  type: PropTypes.string,
-  btnStyle: PropTypes.array,
-  text: PropTypes.string.isRequired,
-  fontStyle: PropTypes.array,
-  emitData: PropTypes.any,
-  onClick: PropTypes.func.isRequired,
-};
