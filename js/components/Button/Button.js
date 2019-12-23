@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-20 11:47:21
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-20 11:47:48
+ * @LastEditTime : 2019-12-23 12:01:27
  * @mustParam: 必传参数
  *  btnStyle 样式 数组 数组里是类名或者是个对象
  *  type plain 镂空 round 充满
@@ -103,7 +103,7 @@ Button.defaultProps = {
 
 Button.propTypes = {
   type: PropTypes.string,
-  btnStyle: PropTypes.array.isRequired,
+  btnStyle: PropTypes.array,
   text: PropTypes.string.isRequired,
   fontStyle: PropTypes.array,
   emitData: PropTypes.any,
