@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 11:30:10
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 15:24:32
+ * @LastEditTime : 2019-12-23 15:47:32
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -90,7 +90,9 @@ class OrderList extends Component {
   }
   genIndicator() {
     let {orderData} = this.state;
-    return orderData && orderData.length > 10 ? <BottomLoading /> : null;
+    return orderData && orderData.length > 10 && !this.orderFlag ? (
+      <BottomLoading />
+    ) : null;
   }
   render() {
     return (

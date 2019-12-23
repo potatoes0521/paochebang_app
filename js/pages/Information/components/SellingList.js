@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:53:33
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 15:25:16
+ * @LastEditTime : 2019-12-23 15:45:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -92,7 +92,9 @@ class SellingList extends Component {
   }
   genIndicator() {
     let {listData} = this.state;
-    return listData && listData.length >= 10 ? <BottomLoading /> : null;
+    return listData && listData.length >= 10 && !this.loadingFlag ? (
+      <BottomLoading />
+    ) : null;
   }
   render() {
     return (
