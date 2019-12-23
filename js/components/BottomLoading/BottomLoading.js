@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 10:05:26
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 10:21:41
+ * @LastEditTime : 2019-12-23 16:32:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -43,10 +43,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bottomIndicator: {
-    margin: 10,
+    marginVertical: 10,
   },
   text: {
     fontSize: 14,
     color: GlobalStyles.themeFontColor,
+    marginBottom: 10,
   },
 });
