@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 14:14:44
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 14:36:39
+ * @LastEditTime : 2019-12-23 15:15:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -57,13 +57,14 @@ export default class SellingItem extends Component {
             <View style={styles.itemMsg}>
               <View style={styles.city}>
                 <Text style={styles.cityText}>
-                  {itemData.sendCityName.length > 5
+                  {itemData.sendCityName && itemData.sendCityName.length > 5
                     ? itemData.sendCityName.substr(0, 5) + '...'
                     : itemData.sendCityName || ''}
                 </Text>
                 <Text style={styles.icon}>&#xe60f;</Text>
                 <Text style={styles.cityText}>
-                  {itemData.receiveCityName.length > 5
+                  {itemData.receiveCityName &&
+                  itemData.receiveCityName.length > 5
                     ? itemData.receiveCityName.substr(0, 5) + '...'
                     : itemData.receiveCityName || ''}
                 </Text>
@@ -71,7 +72,7 @@ export default class SellingItem extends Component {
               <View style={styles.itemInfo}>
                 <Text style={styles.carNumber}>{itemData.carAmount || ''}</Text>
                 <Text style={styles.carInfo}>
-                  {itemData.carInfo.length > 10
+                  {itemData.carInfo && itemData.carInfo.length > 10
                     ? itemData.carInfo.substr(0, 10) + '...'
                     : itemData.carInfo || ''}
                 </Text>

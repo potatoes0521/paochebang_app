@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-29 15:28:01
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 14:47:32
+ * @LastEditTime : 2019-12-23 15:09:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,7 +23,7 @@ import {connect} from 'react-redux';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
-import SellingItem from './components/SellingItem';
+import SellingItem from '../Information/components/SellingItem';
 import api from '../../api';
 import recommendBG from '../../assets/image/index/recommend_bg.png';
 import recommendLeftImg from '../../assets/image/index/left.png';
