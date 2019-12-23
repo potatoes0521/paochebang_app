@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 14:14:44
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-18 16:30:20
+ * @LastEditTime : 2019-12-23 14:36:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -28,9 +28,9 @@ export default class SellingItem extends Component {
     if ((item.isActive === 2 || item.isActive === 3) && !item.isEdit) {
       return;
     }
-    let pageUrl = 'SellingDetailPage';
+    let pageUrl = 'SellingDetailsPage';
     if (item.saleToPalletsType === 2) {
-      pageUrl = 'OfferDetailPage';
+      pageUrl = 'OfferDetailsPage';
     }
     NavigationUtil.goPage(item, pageUrl);
   }

@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-20 11:47:21
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-20 11:47:48
+ * @LastEditTime : 2019-12-23 13:42:21
  * @mustParam: 必传参数
  *  btnStyle 样式 数组 数组里是类名或者是个对象
  *  type plain 镂空 round 充满
@@ -61,6 +61,24 @@ export default class Button extends Component {
   }
 }
 
+Button.defaultProps = {
+  type: '',
+  btnStyle: [],
+  text: '按钮',
+  fontStyle: [],
+  emitData: null,
+  onClick: () => {},
+};
+
+Button.propTypes = {
+  type: PropTypes.string,
+  btnStyle: PropTypes.array,
+  text: PropTypes.string.isRequired,
+  fontStyle: PropTypes.array,
+  emitData: PropTypes.any,
+  onClick: PropTypes.func.isRequired,
+};
+
 const styles = StyleSheet.create({
   btnDefault: {
     flex: 1,
@@ -91,21 +109,3 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 });
-
-Button.defaultProps = {
-  type: '',
-  btnStyle: [],
-  text: '按钮',
-  fontStyle: [],
-  emitData: null,
-  onClick: () => {},
-};
-
-Button.propTypes = {
-  type: PropTypes.string,
-  btnStyle: PropTypes.array.isRequired,
-  text: PropTypes.string.isRequired,
-  fontStyle: PropTypes.array,
-  emitData: PropTypes.any,
-  onClick: PropTypes.func.isRequired,
-};

@@ -4,7 +4,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-03 16:47:37
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-19 11:30:05
+ * @LastEditTime : 2019-12-23 10:57:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -363,7 +363,11 @@ class OfferDetails extends Component {
                 </View>
               ) : null}
               {/* 车辆信息 */}
-              <View style={DetailsStyles.formItem}>
+              <View
+                style={[
+                  DetailsStyles.formItem,
+                  DetailsStyles.moreTextFormItem,
+                ]}>
                 <View style={DetailsStyles.formLabel}>
                   <Text style={DetailsStyles.labelText}>车辆信息:</Text>
                 </View>
@@ -405,66 +409,68 @@ class OfferDetails extends Component {
                 </View>
               </View>
             </View>
-            <View style={offerWrapperClassName}>
-              {/* 报价 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>报价:</Text>
-                </View>
-                <View style={DetailsStyles.formContent}>
-                  <TextInput
-                    style={styles.offerInput}
-                    maxLength={8}
-                    value={quotedPrice}
-                    keyboardType={'number-pad'}
-                    onChangeText={this.offerText.bind(this)}
-                  />
-                  <Text style={DetailsStyles.contentText}>元/台</Text>
-                </View>
-              </View>
-              {/* 有效期 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>有效期至:</Text>
-                </View>
-                <TouchableOpacity
-                  style={DetailsStyles.formContent}
-                  onPress={() => this.handleShowDate()}>
-                  {dueTime ? (
-                    <Text style={DetailsStyles.contentText}>
-                      {dueTime}
-                      <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
-                    </Text>
-                  ) : (
-                    <Text
-                      style={[
-                        DetailsStyles.contentText,
-                        DetailsStyles.waitColor,
-                      ]}>
-                      请选择
-                      <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
-                    </Text>
-                  )}
-                </TouchableOpacity>
-              </View>
-              {/* 总价 */}
-              {quotedPrice > 0 && (
+            {status === 10 && (
+              <View style={offerWrapperClassName}>
+                {/* 报价 */}
                 <View style={DetailsStyles.formItem}>
                   <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>总价:</Text>
+                    <Text style={DetailsStyles.labelText}>报价:</Text>
                   </View>
                   <View style={DetailsStyles.formContent}>
-                    <Text
-                      style={[
-                        DetailsStyles.contentText,
-                        DetailsStyles.hasOffer,
-                      ]}>
-                      ￥{totalPriceDesc || ''}
-                    </Text>
+                    <TextInput
+                      style={styles.offerInput}
+                      maxLength={8}
+                      value={quotedPrice}
+                      keyboardType={'number-pad'}
+                      onChangeText={this.offerText.bind(this)}
+                    />
+                    <Text style={DetailsStyles.contentText}>元/台</Text>
                   </View>
                 </View>
-              )}
-            </View>
+                {/* 有效期 */}
+                <View style={DetailsStyles.formItem}>
+                  <View style={DetailsStyles.formLabel}>
+                    <Text style={DetailsStyles.labelText}>有效期至:</Text>
+                  </View>
+                  <TouchableOpacity
+                    style={DetailsStyles.formContent}
+                    onPress={() => this.handleShowDate()}>
+                    {dueTime ? (
+                      <Text style={DetailsStyles.contentText}>
+                        {dueTime}
+                        <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                      </Text>
+                    ) : (
+                      <Text
+                        style={[
+                          DetailsStyles.contentText,
+                          DetailsStyles.waitColor,
+                        ]}>
+                        请选择
+                        <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+                </View>
+                {/* 总价 */}
+                {quotedPrice > 0 && (
+                  <View style={DetailsStyles.formItem}>
+                    <View style={DetailsStyles.formLabel}>
+                      <Text style={DetailsStyles.labelText}>总价:</Text>
+                    </View>
+                    <View style={DetailsStyles.formContent}>
+                      <Text
+                        style={[
+                          DetailsStyles.contentText,
+                          DetailsStyles.hasOffer,
+                        ]}>
+                        ￥{totalPriceDesc || ''}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+              </View>
+            )}
             <DatePicker
               isShow={datePickerShow}
               chooseBeforeTime={false}

@@ -3,7 +3,7 @@
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-23 11:29:40
+ * @LastEditTime : 2019-12-23 14:51:41
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,7 +11,8 @@ import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import WelcomePage from '../pages/WelcomePage';
 import HomePage from '../pages/Home';
-import OfferDetailPage from '../pages/OfferDetails/OfferDetails';
+import OfferDetailsPage from '../pages/OfferDetails/OfferDetails';
+import OrderDetailsPage from '../pages/OrderDetails/OrderDetails';
 import InformationPage from '../pages/Information/Information';
 import RegisterPage from '../pages/Register/Register';
 
@@ -35,8 +36,8 @@ const MainNavigator = createStackNavigator(
         header: null, // 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
       },
     },
-    OfferDetailPage: {
-      screen: OfferDetailPage,
+    OfferDetailsPage: {
+      screen: OfferDetailsPage,
       navigationOptions: {
         header: null,
       },

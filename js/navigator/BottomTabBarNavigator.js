@@ -3,7 +3,7 @@
  * @description: 底部tabBar
  * @Date: 2019-11-29 11:38:36
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-20 14:07:31
+ * @LastEditTime : 2019-12-23 11:06:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,7 +17,7 @@ import {connect} from 'react-redux';
 
 import Index from '../pages/Index/Index';
 import Offer from '../pages/Offer/Offer';
-import Order from '../pages/Order';
+import Order from '../pages/Order/Order';
 import Mine from '../pages/Mine/Mine';
 const styles = StyleSheet.create({
   icon: {

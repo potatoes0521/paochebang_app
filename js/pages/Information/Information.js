@@ -1,9 +1,9 @@
 /*
  * @Author: liuYang
- * @description: 请填写描述信息
+ * @description: 市场
  * @Date: 2019-11-22 16:11:20
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-20 14:16:40
+ * @LastEditTime : 2019-12-23 14:41:11
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   pageWrapper: {
     flex: 1,
   },
+  icon: {},
 });
 
 const mapStateToProps = state => ({
