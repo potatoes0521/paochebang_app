@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-20 16:38:16
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 09:52:02
+ * @LastEditTime : 2019-12-23 14:06:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,7 +12,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import GlobalStyles from '../../assets/css/GlobalStyles';
-
+import NavigationUtil from '../../navigator/NavigationUtils.js';
 export default class OrderItem extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +23,15 @@ export default class OrderItem extends Component {
 
   componentWillUnmount() {}
   navigatorTo() {
-    console.log('navigatorTo');
+    let {item} = this.props.item;
+    let {type} = this.props;
+    if (type === 'offer') {
+      let pageUrl = 'OfferDetailPage';
+      if (item.orderCode) {
+        pageUrl = 'OrderDetailPage';
+      }
+      NavigationUtil.goPage(item, pageUrl);
+    }
   }
   render() {
     let {item} = this.props.item;
@@ -58,7 +66,7 @@ export default class OrderItem extends Component {
     }
     return (
       <View style={styles.itemWrapper}>
-        <TouchableOpacity onPress={this.navigatorTo}>
+        <TouchableOpacity onPress={this.navigatorTo.bind(this)}>
           <View style={styles.title}>
             <Text style={timeClassName}>{time || ''}</Text>
             <Text style={statusClassNames}>{item.statusDesc || ''}</Text>
