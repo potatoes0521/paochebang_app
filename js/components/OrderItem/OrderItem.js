@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-20 16:38:16
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 14:36:49
+ * @LastEditTime : 2019-12-24 16:33:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,6 +13,7 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import NavigationUtil from '../../navigator/NavigationUtils.js';
+import DetailsStyles from '../../assets/css/DetailsStyles';
 export default class OrderItem extends Component {
   constructor(props) {
     super(props);
@@ -58,11 +59,11 @@ export default class OrderItem extends Component {
       item.takeStatus === 30 ||
       item.takeStatus === 40
     ) {
-      statusClassNames.push(styles.themeDisabled);
-      itemTextClassNames.push(styles.themeDisabled);
-      cityTextClassNames.push(styles.themeDisabled);
-      iconClassName.push(styles.themeDisabled);
-      timeClassName.push(styles.themeDisabled);
+      statusClassNames.push(DetailsStyles.textThemeDisabled);
+      itemTextClassNames.push(DetailsStyles.textThemeDisabled);
+      cityTextClassNames.push(DetailsStyles.textThemeDisabled);
+      iconClassName.push(DetailsStyles.textThemeDisabled);
+      timeClassName.push(DetailsStyles.textThemeDisabled);
     }
     return (
       <View style={styles.itemWrapper}>
@@ -165,9 +166,6 @@ const styles = StyleSheet.create({
   },
   themeSubColor: {
     color: GlobalStyles.themeSubColor,
-  },
-  themeDisabled: {
-    color: GlobalStyles.themeDisabled,
   },
 });
 

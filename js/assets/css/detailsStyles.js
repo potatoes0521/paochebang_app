@@ -3,7 +3,7 @@
  * @description: 详情通用css
  * @Date: 2019-12-04 11:36:02
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 10:56:04
+ * @LastEditTime : 2019-12-24 16:31:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -72,5 +72,8 @@ export default {
   },
   btnRight: {
     marginLeft: 9,
+  },
+  textThemeDisabled: {
+    color: GlobalStyles.themeDisabled,
   },
 };

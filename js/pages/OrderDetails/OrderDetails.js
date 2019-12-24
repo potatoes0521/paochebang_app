@@ -4,8 +4,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
- * @LastEditors  : guorui
- * @LastEditTime : 2019-12-23 17:55:47
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-24 16:34:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,7 +15,7 @@ import {connect} from 'react-redux';
 import api from '../../api';
 import Button from '../../components/Button/Button.js';
 import GlobalStyles from '../../assets/css/GlobalStyles';
-import DetailsStyles from '../../assets/css/detailsStyles';
+import DetailsStyles from '../../assets/css/DetailsStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';

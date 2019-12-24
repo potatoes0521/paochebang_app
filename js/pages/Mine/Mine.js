@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
- * @LastEditors  : guorui
- * @LastEditTime : 2019-12-23 11:27:07
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-24 16:34:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,7 +19,7 @@ import {
 import {appVersion} from '../../api/requestHandle.js';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
-import DetailsStyles from '../../assets/css/detailsStyles';
+import DetailsStyles from '../../assets/css/DetailsStyles';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import accountImage from '../../assets/image/mine/account.png';
 import lineImage from '../../assets/image/mine/line.png';
