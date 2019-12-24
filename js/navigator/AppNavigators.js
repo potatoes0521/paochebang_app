@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 14:39:30
+ * @LastEditors  : guorui
+ * @LastEditTime : 2019-12-23 18:40:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,15 +12,15 @@ import {createStackNavigator} from 'react-navigation-stack';
 import WelcomePage from '../pages/WelcomePage';
 import HomePage from '../pages/Home';
 import OfferDetailsPage from '../pages/OfferDetails/OfferDetails';
-import OrderDetailsPage from '../pages/OrderDetails/OrderDetails';
+import DriverPage from '../pages/Driver/Driver';
 import InformationPage from '../pages/Information/Information';
 
 export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一个初始化的路由名
 
 const InitNavigator = createStackNavigator({
   WelcomePage: {
-    screen: WelcomePage,
-    // screen: OfferDetailPage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
+    // screen: WelcomePage,
+    screen: OfferDetailsPage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
     navigationOptions: {
       header: null, // 隐藏头部
     },
@@ -47,8 +47,8 @@ const MainNavigator = createStackNavigator(
         header: null,
       },
     },
-    OrderDetailsPage: {
-      screen: OrderDetailsPage,
+    DriverPage: {
+      screen: DriverPage,
       navigationOptions: {
         header: null,
       },
