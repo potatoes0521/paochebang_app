@@ -1,4 +1,3 @@
-/* eslint-disable react/no-string-refs */
 /*
  * @Author: liuYang
  * @description: 请填写描述信息
