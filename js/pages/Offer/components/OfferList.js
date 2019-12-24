@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-22 16:58:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 15:46:53
+ * @LastEditTime : 2019-12-24 17:18:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,6 +15,7 @@ import {connect} from 'react-redux';
 import OrderItem from '../../../components/OrderItem/OrderItem';
 import BottomLoading from '../../../components/BottomLoading/BottomLoading.js';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
+import EmptyList from '../../../components/EmptyList/EmptyList.js';
 import api from '../../../api/index';
 
 class OfferList extends Component {
@@ -106,6 +107,7 @@ class OfferList extends Component {
           onEndReached={() => {
             this.getOfferList.bind(this, {});
           }}
+          ListEmptyComponent={() => <EmptyList pageType={'offer'} />}
           keyExtractor={data => {
             return data.inquiryId + 'offer';
           }}

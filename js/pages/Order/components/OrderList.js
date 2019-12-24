@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 11:30:10
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 15:47:32
+ * @LastEditTime : 2019-12-24 17:22:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -113,7 +113,7 @@ class OrderList extends Component {
           onEndReached={() => {
             this.getOrderList.bind(this, {});
           }}
-          ListEmptyComponent={() => <EmptyList />}
+          ListEmptyComponent={() => <EmptyList pageType={'order'} />}
           keyExtractor={data => {
             return data.orderCode + 'order';
           }}

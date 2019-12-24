@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-22 16:58:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 15:47:14
+ * @LastEditTime : 2019-12-24 17:22:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -128,7 +128,7 @@ class OrderList extends Component {
             this.getOrderList.bind(this, {});
           }}
           ListEmptyComponent={() => {
-            return <EmptyList />;
+            return <EmptyList pageType={'offer'} />;
           }}
           keyExtractor={data => {
             return data.inquiryId + 'order';
