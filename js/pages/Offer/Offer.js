@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:46:56
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 13:46:24
+ * @LastEditTime : 2019-12-24 10:53:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -78,7 +78,7 @@ class Offer extends Component {
     );
   }
 }
-
+const itemWidth = (GlobalStyles.window_width - 70) / 2;
 const styles = StyleSheet.create({
   pageWrapper: {
     flex: 1,
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   tabStyle: {
     borderBottomColor: GlobalStyles.themeColor,
     borderBottomWidth: 2,
-    width: 150,
+    width: itemWidth,
     height: 44,
   },
   labelStyle: {
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   indicatorStyle: {
     height: 3,
     width: 60,
-    marginLeft: 45,
+    marginLeft: itemWidth - itemWidth / 2 - 30,
     backgroundColor: GlobalStyles.themeColor,
   },
 });

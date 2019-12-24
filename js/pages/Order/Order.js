@@ -3,12 +3,12 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:02
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 13:57:51
+ * @LastEditTime : 2019-12-24 10:52:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
@@ -25,7 +25,9 @@ class Order extends Component {
   componentDidMount() {}
 
   componentWillUnmount() {}
-
+  na(a) {
+    console.log('a', a);
+  }
   render() {
     const NavigatorTab = createAppContainer(
       createMaterialTopTabNavigator(
@@ -52,6 +54,7 @@ class Order extends Component {
         {
           tabBarOptions: {
             tabStyle: styles.tabStyle,
+            showLabel: true,
             activeTintColor: GlobalStyles.themeColor,
             inactiveTintColor: GlobalStyles.themeFontColor,
             style: {
@@ -64,6 +67,7 @@ class Order extends Component {
             indicatorStyle: styles.indicatorStyle, //标签指示器的样式
             labelStyle: styles.labelStyle, //文字的样式
             lazy: true,
+            // renderIndicator: props => <TabBarBottomLine {...props} />,
           },
         },
       ),
@@ -76,7 +80,7 @@ class Order extends Component {
     );
   }
 }
-
+const itemWidth = GlobalStyles.window_width / 3;
 const styles = StyleSheet.create({
   pageWrapper: {
     flex: 1,
@@ -86,14 +90,17 @@ const styles = StyleSheet.create({
     borderBottomColor: GlobalStyles.themeColor,
     borderBottomWidth: 2,
     height: 44,
+    width: itemWidth,
   },
   labelStyle: {
     fontSize: 16,
     fontWeight: '700',
   },
   indicatorStyle: {
+    marginTop: 41,
     height: 3,
-    // width: 60,
+    width: 74,
+    marginLeft: itemWidth - itemWidth / 2 - 37,
     // marginHorizontal: 30,
     backgroundColor: GlobalStyles.themeColor,
   },

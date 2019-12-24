@@ -3,7 +3,7 @@
  * @description: 市场
  * @Date: 2019-11-22 16:11:20
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 17:09:10
+ * @LastEditTime : 2019-12-24 10:54:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -88,7 +88,7 @@ class Information extends Component {
     );
   }
 }
-
+const itemWidth = (GlobalStyles.window_width - 70) / 2;
 const styles = StyleSheet.create({
   pageWrapper: {
     flex: 1,
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   tabStyle: {
     borderBottomColor: GlobalStyles.themeColor,
     borderBottomWidth: 2,
-    width: 150,
+    width: itemWidth,
     height: 44,
   },
   labelStyle: {
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   indicatorStyle: {
     height: 3,
     width: 80,
-    marginLeft: 35,
+    marginLeft: itemWidth - itemWidth / 2 - 40,
     backgroundColor: GlobalStyles.themeColor,
   },
 });
