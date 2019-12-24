@@ -4,7 +4,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-03 16:47:37
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 16:29:38
+ * @LastEditTime : 2019-12-24 17:15:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -65,6 +65,7 @@ class OfferDetails extends Component {
     });
     this.pageParams = {};
     this.mobile = '';
+    this.toastRef = React.createRef();
   }
 
   componentDidMount() {
@@ -98,7 +99,7 @@ class OfferDetails extends Component {
       !this.pageParams.objectId &&
       !this.pageParams.inquiryCode
     ) {
-      this.refs.toast.show('缺少objectId或inquiryCode');
+      this.toastRef.current.show('缺少objectId或inquiryCode');
       return;
     }
     if (this.pageParams.inquiryCode) {
@@ -167,19 +168,19 @@ class OfferDetails extends Component {
     //   return;
     // }
     if (!Number(quotedPrice)) {
-      this.refs.toast.show('请输入正确的金额格式');
+      this.toastRef.current.show('请输入正确的金额格式');
       return;
     }
     if (!quotedPrice) {
-      this.refs.toast.show('报价金额不能为空');
+      this.toastRef.current.show('报价金额不能为空');
       return;
     }
     if (quotedPrice <= 0) {
-      this.refs.toast.show('报价金额不能小于或等于0');
+      this.toastRef.current.show('报价金额不能小于或等于0');
       return;
     }
     if (!dueTime) {
-      this.refs.toast.show('请选择报价有效期');
+      this.toastRef.current.show('请选择报价有效期');
       return;
     }
     let sendData = {
@@ -193,7 +194,7 @@ class OfferDetails extends Component {
       if (!res) {
         return;
       }
-      this.refs.toast.show('提交成功');
+      this.toastRef.current.show('提交成功');
       this.getOfferDetails();
     });
   }
@@ -499,7 +500,11 @@ class OfferDetails extends Component {
               )}
             </View>
           </ScrollView>
-          <Toast ref="toast" position={'center'} defaultCloseDelay={3000} />
+          <Toast
+            ref={this.toastRef}
+            position={'center'}
+            defaultCloseDelay={3000}
+          />
         </View>
       </SafeAreaViewPlus>
     );

@@ -5,7 +5,7 @@
  * @path: components/DatePicker/datePicker.js
  * @Date: 2019-12-19 15:49:52
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 14:24:29
+ * @LastEditTime : 2019-12-24 17:14:34
  * @mustParam: 必传参数
  *  isShow 是否展示
  *  onConfirm 当提交的时候
@@ -25,6 +25,7 @@ import {
 export default class DatePicker extends Component {
   constructor(props) {
     super(props);
+    this.toastRef = React.createRef();
   }
 
   componentDidMount() {}
@@ -36,7 +37,7 @@ export default class DatePicker extends Component {
     let nowTimer = getTimeDate(timestampOfDay());
     let chooseTimer = getTimeDate(date);
     if (!chooseBeforeTime && nowTimer > chooseTimer) {
-      this.refs.toast.show('请选择正确的有效时间');
+      this.toastRef.current.show('请选择正确的有效时间');
       this.props.onCancel();
       return;
     }
@@ -58,7 +59,11 @@ export default class DatePicker extends Component {
           cancelTextIOS={'取消'}
           confirmTextIOS={'确定'}
         />
-        <Toast ref="toast" position={'center'} defaultCloseDelay={3000} />
+        <Toast
+          ref={this.toastRef}
+          position={'center'}
+          defaultCloseDelay={3000}
+        />
       </>
     );
   }

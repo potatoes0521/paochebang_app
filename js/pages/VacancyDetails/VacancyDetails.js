@@ -1,17 +1,17 @@
 /*
  * @Author: liuYang
- * @description: 请填写描述信息
+ * @description: 空位详情
  * @path: 引入路径
  * @Date: 2019-12-24 11:48:37
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 17:00:01
+ * @LastEditTime : 2019-12-24 17:13:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, Linking} from 'react-native';
 import {connect} from 'react-redux';
-import GlobalStyles from '../../assets/css/GlobalStyles';
+// import GlobalStyles from '../../assets/css/GlobalStyles';
 import DetailsStyles from '../../assets/css/DetailsStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
@@ -43,6 +43,7 @@ class VacancyDetsils extends Component {
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
     });
+    this.toastRef = React.createRef();
   }
 
   componentDidMount() {
@@ -69,7 +70,7 @@ class VacancyDetsils extends Component {
    */
   getVacancyDetail() {
     if (!this.pageParams.vacantPalletId) {
-      this.refs.toast.show('缺少vacantPalletId或vacantPalletCode');
+      this.toastRef.current.show('缺少vacantPalletId或vacantPalletCode');
       return;
     }
     let sendData = {
@@ -121,7 +122,7 @@ class VacancyDetsils extends Component {
       saleToPalletId: this.state.saleToPalletId,
     };
     api.vacancy.sellingDataPullOff(sendData, this).then(() => {
-      this.refs.toast.show('下架成功');
+      this.toastRef.current.show('下架成功');
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);
@@ -135,7 +136,7 @@ class VacancyDetsils extends Component {
     let {
       vacantAmount,
       dueTime,
-      isActive,
+      // isActive,
       returnPrice,
       throughCitys,
       receiveCityName,
@@ -277,7 +278,11 @@ class VacancyDetsils extends Component {
               )}
             </View>
           </ScrollView>
-          <Toast ref="toast" position={'center'} defaultCloseDelay={3000} />
+          <Toast
+            ref={this.toastRef}
+            position={'center'}
+            defaultCloseDelay={3000}
+          />
         </View>
       </SafeAreaViewPlus>
     );
