@@ -4,7 +4,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-03 16:47:37
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 10:57:36
+ * @LastEditTime : 2019-12-24 10:59:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -72,7 +72,7 @@ class OfferDetails extends Component {
     const {state} = navigation;
     const {params} = state;
     console.log('params', params);
-    this.pageParams = params;
+    this.pageParams = params || {};
     this.initData();
     this.backPress.componentDidMount();
   }
@@ -93,7 +93,12 @@ class OfferDetails extends Component {
     });
   }
   getOfferDetails() {
-    if (!this.pageParams.objectId && !this.pageParams.inquiryCode) {
+    if (
+      this.pageParams &&
+      !this.pageParams.objectId &&
+      !this.pageParams.inquiryCode
+    ) {
+      this.refs.toast.show('缺少objectId或inquiryCode');
       return;
     }
     if (this.pageParams.inquiryCode) {
