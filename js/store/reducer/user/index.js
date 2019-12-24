@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-08-15 15:26:09
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 09:56:16
+ * @LastEditTime : 2019-12-24 11:47:13
  */
 
 import Types from '../../type';
@@ -35,10 +35,10 @@ defaultState.userInfo = {
   // userType: 2,
   userType: 0, // 13121850481
   openId: 'oLgd75eZdM9Cp-dSE0YpU9gKxJoE', // 测试环境刘洋的openId
-  // userId: 93, // 正式刘洋的userId
-  // token: '006c043c79f7555d1c327ff64ade066c', // 正式token
-  userId: 250, // 测试刘洋的userId
-  token: '1d30ce249869f6efce7b0a8303064c21', // 测试token
+  userId: 93, // 正式刘洋的userId
+  token: '006c043c79f7555d1c327ff64ade066c', // 正式token
+  // userId: 250, // 测试刘洋的userId
+  // token: '1d30ce249869f6efce7b0a8303064c21', // 测试token
   updateTime: '2019-11-28T04:00:09.000+0000',
   userAgent: '',
 };

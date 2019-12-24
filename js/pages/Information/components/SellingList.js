@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:53:33
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 15:45:43
+ * @LastEditTime : 2019-12-24 11:47:32
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -47,7 +47,6 @@ class SellingList extends Component {
     receiveCityId = this.receiveCityId,
     refresh = false,
   }) {
-    console.log('aaaa');
     if (refresh) {
       this.loadingFlag = false;
       this.pageNum = 1;
