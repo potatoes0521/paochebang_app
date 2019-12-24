@@ -3,12 +3,12 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:02
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 10:52:49
+ * @LastEditTime : 2019-12-24 11:19:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
