@@ -4,14 +4,14 @@
  * @path: 引入路径
  * @Date: 2019-12-24 11:45:16
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 17:00:15
+ * @LastEditTime : 2019-12-24 17:07:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, Linking} from 'react-native';
 import {connect} from 'react-redux';
-import GlobalStyles from '../../assets/css/GlobalStyles';
+// import GlobalStyles from '../../assets/css/GlobalStyles';
 import DetailsStyles from '../../assets/css/DetailsStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
@@ -45,6 +45,7 @@ class SellingDetails extends Component {
       backPress: () => this.onBackPress(),
     });
     this.pageParams = {};
+    this.toastRef = React.createRef();
   }
 
   componentDidMount() {
@@ -72,7 +73,7 @@ class SellingDetails extends Component {
    */
   getSellingDetail() {
     if (!this.pageParams.saleToPalletId) {
-      this.refs.toast.show('缺少saleToPalletId或saleToPalletCode');
+      this.toastRef.current.show('缺少saleToPalletId或saleToPalletCode');
       return;
     }
     let sendData = {
@@ -117,7 +118,7 @@ class SellingDetails extends Component {
       saleToPalletId: this.state.saleToPalletId,
     };
     api.selling.sellingDataPullOff(sendData, this).then(() => {
-      this.refs.toast.show('下架成功');
+      this.toastRef.current.show('下架成功');
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);
@@ -317,7 +318,11 @@ class SellingDetails extends Component {
               )}
             </View>
           </ScrollView>
-          <Toast ref="toast" position={'center'} defaultCloseDelay={3000} />
+          <Toast
+            ref={this.toastRef}
+            position={'center'}
+            defaultCloseDelay={3000}
+          />
         </View>
       </SafeAreaViewPlus>
     );
