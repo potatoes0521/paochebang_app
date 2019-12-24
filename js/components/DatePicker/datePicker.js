@@ -1,11 +1,10 @@
-/* eslint-disable react/no-string-refs */
 /*
  * @Author: liuYang
  * @description: 时间选择器
  * @path: components/DatePicker/datePicker.js
  * @Date: 2019-12-19 15:49:52
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 17:14:34
+ * @LastEditTime : 2019-12-24 17:15:44
  * @mustParam: 必传参数
  *  isShow 是否展示
  *  onConfirm 当提交的时候

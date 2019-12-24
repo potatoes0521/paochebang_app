@@ -1,10 +1,9 @@
-/* eslint-disable react/no-string-refs */
 /*
  * @Author: guorui
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
- * @LastEditors  : guorui
- * @LastEditTime : 2019-12-23 15:34:50
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-24 17:15:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
