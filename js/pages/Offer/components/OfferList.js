@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-22 16:58:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 17:55:11
+ * @LastEditTime : 2019-12-25 15:22:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -31,7 +31,7 @@ class OfferList extends Component {
     this.receiveCityId = '';
   }
   componentDidMount() {
-    this.getOfferList({refresh: true});
+    this.getOfferList({});
   }
   getOfferList({
     pageNum = this.offerPage,
