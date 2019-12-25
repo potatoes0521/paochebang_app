@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:46:56
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 10:53:31
+ * @LastEditTime : 2019-12-25 10:19:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -31,13 +31,13 @@ class Offer extends Component {
       createMaterialTopTabNavigator(
         {
           SellingTab: {
-            screen: props => <OfferList {...props} />,
+            screen: props => <OfferList {...this.props} />,
             navigationOptions: {
               title: '报价',
             },
           },
           VacancyTab: {
-            screen: props => <OrderList {...props} />,
+            screen: props => <OrderList {...this.props} />,
             navigationOptions: {
               title: '接单',
             },
