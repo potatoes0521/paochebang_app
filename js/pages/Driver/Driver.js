@@ -3,7 +3,7 @@
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-24 17:10:58
+ * @LastEditTime : 2019-12-25 13:13:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,7 +12,7 @@ import {StyleSheet, View, TextInput} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import GlobalStyles from '../../assets/css/GlobalStyles';
-import DetailsStyles from '../../assets/css/detailsStyles';
+import DetailsStyles from '../../assets/css/DetailsStyles';
 // import {TextInput} from 'react-native-gesture-handler';
 
 class Order extends Component {
