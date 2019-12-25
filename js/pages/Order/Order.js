@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:02
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 11:19:59
+ * @LastEditTime : 2019-12-25 10:02:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -25,27 +25,24 @@ class Order extends Component {
   componentDidMount() {}
 
   componentWillUnmount() {}
-  na(a) {
-    console.log('a', a);
-  }
   render() {
     const NavigatorTab = createAppContainer(
       createMaterialTopTabNavigator(
         {
           WaitingOrderTab: {
-            screen: props => <OrderList {...props} status={10} />,
+            screen: props => <OrderList {...this.props} status={10} />,
             navigationOptions: {
               title: '待提车',
             },
           },
           PendingOrderTab: {
-            screen: props => <OrderList {...props} status={20} />,
+            screen: props => <OrderList {...this.props} status={20} />,
             navigationOptions: {
               title: '待交车',
             },
           },
           AllOrderTab: {
-            screen: props => <OrderList {...props} />,
+            screen: props => <OrderList {...this.props} />,
             navigationOptions: {
               title: '全部',
             },
