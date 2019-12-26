@@ -3,7 +3,7 @@
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-26 11:48:06
+ * @LastEditTime : 2019-12-26 14:00:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,6 +21,7 @@ import MineDetailsPage from '../pages/MineDetails/MineDetails';
 import InformationPage from '../pages/Information/Information';
 import SellingDetailsPage from '../pages/SellingDetails/SellingDetails';
 import VacancyDetailsPage from '../pages/VacancyDetails/VacancyDetails';
+import ChooseCityPage from '../pages/ChooseCity/ChooseCity';
 
 export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一个初始化的路由名
 

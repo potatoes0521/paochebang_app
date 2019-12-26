@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-25 16:42:43
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-26 09:08:21
+ * @LastEditTime : 2019-12-26 09:43:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,11 +29,9 @@ export default class Drawer extends Component {
 
   componentWillUnmount() {}
   stopPropagation(e) {
-    console.log('22222222', 22222222);
     e.stopPropagation();
   }
   handleClickModel() {
-    console.log('11111111', 11111111);
     this.props.onClickModel();
   }
   render() {
