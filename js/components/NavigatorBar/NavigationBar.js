@@ -3,7 +3,7 @@
  * @description: 公共导航
  * @Date: 2019-11-25 10:58:56
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-19 09:39:05
+ * @LastEditTime : 2019-12-26 16:09:33
  * @mustParam: 必传参数
  * title: PropTypes.string,
  *  导航栏标题
@@ -22,7 +22,6 @@
 import React, {Component} from 'react';
 import {
   Text,
-  StatusBar,
   StyleSheet,
   View,
   Platform,
@@ -69,9 +68,6 @@ export default class NavigationBar extends Component {
     let {leftViewShow, rightViewShow, title} = this.props;
     return (
       <View style={[styles.container, this.props.style]}>
-        <View style={styles.statusBar}>
-          <StatusBar {...this.props.statusBar} />
-        </View>
         <View style={styles.navBar}>
           <View style={styles.leftBackBtn}>
             {leftViewShow && (
