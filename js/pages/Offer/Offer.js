@@ -3,12 +3,12 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:46:56
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-25 10:19:37
+ * @LastEditTime : 2019-12-25 18:10:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
@@ -16,16 +16,30 @@ import {createAppContainer} from 'react-navigation';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import OfferList from './components/OfferList.js';
 import OrderList from './components/OrderList.js';
+import Drawer from '../../components/Drawer/Drawer';
+import Button from '../../components/Button/Button';
+import DetailsStyles from '../../assets/css/DetailsStyles.js';
 class Offer extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      visible: false,
+    };
   }
 
   componentDidMount() {}
 
   componentWillUnmount() {}
-
+  begin() {
+    this.setState({
+      visible: true,
+    });
+  }
+  close() {
+    this.setState({
+      visible: false,
+    });
+  }
   render() {
     const NavigatorTab = createAppContainer(
       createMaterialTopTabNavigator(
@@ -67,13 +81,52 @@ class Offer extends Component {
         <NavigationBar title={'报价/接单'} />
         <View style={styles.tabWrapper}>
           <NavigatorTab />
-          <View style={styles.select}>
+          <TouchableOpacity
+            style={styles.select}
+            onPress={this.begin.bind(this)}>
             <View style={styles.line} />
             <View style={styles.selectMain}>
               <Text>筛选</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
+        <Drawer
+          visible={this.state.visible}
+          onClickModel={this.close.bind(this)}>
+          <View style={styles.drawerList}>
+            <View
+              style={[styles.drawerItem, DetailsStyles.formItem]}
+              onPress={this.close.bind(this)}>
+              <View style={DetailsStyles.formLabel}>
+                <Text style={DetailsStyles.labelText}>发车地点:</Text>
+              </View>
+              <TouchableOpacity style={DetailsStyles.formContent}>
+                <Text style={DetailsStyles.contentText}>元/台</Text>
+                <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={[styles.drawerItem, DetailsStyles.formItem]}
+              onPress={this.close.bind(this)}>
+              <View style={DetailsStyles.formLabel}>
+                <Text style={DetailsStyles.labelText}>发车地点:</Text>
+              </View>
+              <TouchableOpacity style={DetailsStyles.formContent}>
+                <Text style={DetailsStyles.contentText}>元/台</Text>
+                <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.drawerBtn}>
+            <Button
+              text={'重置'}
+              btnStyle={[styles.btn, styles.btnReset]}
+              fontStyles={[styles.btnResetText]}
+              type={'plain'}
+            />
+            <Button text={'提交'} btnStyle={[styles.btn]} type={'round'} />
+          </View>
+        </Drawer>
       </View>
     );
   }
@@ -124,6 +177,30 @@ const styles = StyleSheet.create({
     width: 60,
     marginLeft: itemWidth - itemWidth / 2 - 30,
     backgroundColor: GlobalStyles.themeColor,
+  },
+  drawerList: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  drawerItem: {
+    paddingVertical: 8,
+  },
+  drawerBtn: {
+    height: 40,
+    flexDirection: 'row',
+    overflow: 'hidden',
+    alignItems: 'center',
+  },
+  btn: {
+    borderRadius: 0,
+    height: 40,
+  },
+  btnReset: {
+    borderColor: '#f5f5f5',
+  },
+  btnResetText: {
+    color: GlobalStyles.themeHColor,
   },
 });
 // 如果需要引入store

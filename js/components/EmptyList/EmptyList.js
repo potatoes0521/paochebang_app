@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 11:47:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-25 10:16:20
+ * @LastEditTime : 2019-12-25 10:35:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,6 @@ import noOrderImage from '../../assets/image/no_data/no_order.png';
 import noLineImage from '../../assets/image/no_data/no_line.png';
 import noCustomer from '../../assets/image/no_data/no_customer.png';
 import Button from '../Button/Button.js';
-import NavigationUtils from '../../navigator/NavigationUtils';
 
 export default class EmptyList extends Component {
   constructor(props) {
@@ -40,7 +39,8 @@ export default class EmptyList extends Component {
         break;
       case 'order':
       case 'offer':
-        NavigationUtils.goPage(this.props, 'Index');
+        let {navigation} = this.props;
+        navigation.navigate('Index');
         break;
       case 'login_offer':
         break;
