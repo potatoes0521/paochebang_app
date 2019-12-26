@@ -3,7 +3,7 @@
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-24 17:22:56
+ * @LastEditTime : 2019-12-26 10:18:35
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,7 +26,7 @@ import GlobalStyles from '../../assets/css/GlobalStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import LoginLogo from '../../assets/image/register/paoche_logo.png';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
-// import NavigationBar from '../../components/NavigatorBar/NavigationBar';
+import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import Toast from 'react-native-easy-toast';
 
 class Register extends Component {
@@ -192,8 +192,14 @@ class Register extends Component {
 
   render() {
     let {phoneNumber, verificationCode, timerFlag, countDown} = this.state;
+    const {navigation} = this.props;
     return (
       <View style={styles.pageWrapper}>
+        <NavigationBar
+          navigation={navigation}
+          leftViewShow={true}
+          title={'跑车帮'}
+        />
         <View style={styles.imgWrapper}>
           <Image source={LoginLogo} style={styles.imgStyle} />
         </View>

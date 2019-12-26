@@ -3,7 +3,7 @@
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-25 13:18:41
+ * @LastEditTime : 2019-12-26 11:48:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,6 +13,11 @@ import WelcomePage from '../pages/WelcomePage';
 import HomePage from '../pages/Home';
 import OfferDetailsPage from '../pages/OfferDetails/OfferDetails';
 import DriverPage from '../pages/Driver/Driver';
+import DriverDetailsPage from '../pages/DriverDetails/DriverDetails';
+import DriverEditPage from '../pages/DriverEdit/DriverEdit';
+import MineEditPage from '../pages/MineEdit/MineEdit';
+import RegisterPage from '../pages/Register/Register';
+import MineDetailsPage from '../pages/MineDetails/MineDetails';
 import InformationPage from '../pages/Information/Information';
 import SellingDetailsPage from '../pages/SellingDetails/SellingDetails';
 import VacancyDetailsPage from '../pages/VacancyDetails/VacancyDetails';
@@ -21,8 +26,8 @@ export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一�
 
 const InitNavigator = createStackNavigator({
   WelcomePage: {
-    // screen: WelcomePage,
-    screen: DriverPage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
+    screen: WelcomePage,
+    // screen: MineDetailsPage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
     navigationOptions: {
       header: null, // 隐藏头部
     },
@@ -65,8 +70,44 @@ const MainNavigator = createStackNavigator(
         header: null,
       },
     },
+    //注册页
+    RegisterPage: {
+      screen: RegisterPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    //司机信息
+    DriverDetailsPage: {
+      screen: DriverDetailsPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    //添加、编辑司机信息
+    DriverEditPage: {
+      screen: DriverEditPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    //司机列表
     DriverPage: {
       screen: DriverPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    //我的基本信息
+    MineDetailsPage: {
+      screen: MineDetailsPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    //我的基本信息编辑
+    MineEditPage: {
+      screen: MineEditPage,
       navigationOptions: {
         header: null,
       },

@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-24 17:21:44
+ * @LastEditTime : 2019-12-25 15:09:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -241,8 +241,8 @@ class OrderDetails extends Component {
       vins,
       transferSettlePriceDesc,
       buttons,
-      isShow,
-      statusDescs,
+      // isShow,
+      // statusDescs,
     } = this.state;
     const buttonsList =
       buttons &&

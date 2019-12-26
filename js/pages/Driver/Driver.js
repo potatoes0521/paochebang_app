@@ -3,11 +3,7 @@
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
  * @LastEditors  : guorui
-<<<<<<< Updated upstream
- * @LastEditTime : 2019-12-25 13:17:48
-=======
- * @LastEditTime : 2019-12-25 11:52:31
->>>>>>> Stashed changes
+ * @LastEditTime : 2019-12-26 10:35:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,13 +15,17 @@ import {
   Text,
   FlatList,
   RefreshControl,
+  TouchableOpacity,
 } from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
+import NavigationUtil from '../../navigator/NavigationUtils';
+import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import DetailsStyles from '../../assets/css/DetailsStyles';
-// import DriverItem from './components/DriverItem.js';
+import DriverItem from './components/DriverItem.js';
+import EmptyList from '../../components/EmptyList/EmptyList.js';
 import api from '../../api/index';
 import BottomLoading from '../../components/BottomLoading/BottomLoading.js';
 import Toast from 'react-native-easy-toast';
@@ -42,13 +42,23 @@ class Driver extends Component {
     this.driverPage = 1;
     this.driverFlag = false;
     this.toastRef = React.createRef();
+    this.backPress = new BackPressComponent({
+      backPress: () => this.onBackPress(),
+    });
   }
 
   componentDidMount() {
     this.getAllDriverList();
+    this.backPress.componentDidMount();
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.backPress.componentWillUnmount();
+  }
+  onBackPress() {
+    NavigationUtil.goBack(this.props.navigation);
+    return true;
+  }
   /**
    * 获取司机列表
    * @param {String} selectParam 根据什么查询
@@ -65,29 +75,28 @@ class Driver extends Component {
     };
     let {driverListData} = this.state;
     api.driver.getDriverList(sendData, this).then(res => {
-      console.log(res, 'driver');
-      // const data = res.data;
-      // if (!data) {
-      //   return;
-      // }
-      // if (!data && selectParam) {
-      //   this.toastRef.current.show('没搜索到结果');
-      //   return;
-      // }
-      // if (data && data.length < pageSize) {
-      //   this.driverFlag = true;
-      // }
-      // this.driverPage += 1;
-      // if (pageNum === 1) {
-      //   this.setState({
-      //     driverListData: [...data],
-      //     totalCount: res.totalCount,
-      //   });
-      // } else {
-      //   this.setState({
-      //     driverListData: [...driverListData, ...data],
-      //   });
-      // }
+      const data = res.data;
+      if (!data) {
+        return;
+      }
+      if (!data && selectParam) {
+        this.toastRef.current.show('没搜索到结果');
+        return;
+      }
+      if (data && data.length < pageSize) {
+        this.driverFlag = true;
+      }
+      this.driverPage += 1;
+      if (pageNum === 1) {
+        this.setState({
+          driverListData: [...data],
+          totalCount: res.totalCount,
+        });
+      } else {
+        this.setState({
+          driverListData: [...driverListData, ...data],
+        });
+      }
     });
   }
   /**
@@ -95,15 +104,45 @@ class Driver extends Component {
    * @param {Type} e 输入的值
    * @return void
    */
-  searchInput(e) {
-    console.log(e);
+  searchInput(value) {
+    this.setState({
+      selectParam: value,
+    });
   }
-  // genIndicator() {
-  //   let {driverListData} = this.state;
-  //   return driverListData && driverListData.length >= 10 && !this.driverFlag ? (
-  //     <BottomLoading />
-  //   ) : null;
-  // }
+  /**
+   * 提交搜索
+   * @return void
+   */
+  submitSearch() {
+    this.driverPage = 1;
+    this.driverFlag = false;
+    this.getAllDriverList(this.state.selectParam, this.driverPage);
+  }
+  /**
+   * 清除输入框内容
+   * @return void
+   */
+  clearSearchInput() {
+    this.setState({
+      selectParam: '',
+    });
+    this.driverPage = 1;
+    this.driverFlag = false;
+    this.getAllDriverList('', this.driverPage);
+  }
+  genIndicator() {
+    let {driverListData} = this.state;
+    return driverListData && driverListData.length >= 10 && !this.driverFlag ? (
+      <BottomLoading />
+    ) : null;
+  }
+  /**
+   * 跳转我的基本信息页面
+   * @return void
+   */
+  navigationToMine(e) {
+    NavigationUtil.goPage(e, 'MineDetailsPage');
+  }
 
   render() {
     const {navigation} = this.props;
@@ -120,31 +159,38 @@ class Driver extends Component {
             <View style={styles.searchIcon}>
               <Text style={styles.iconStyle}>&#xe604;</Text>
             </View>
-            <View>
+            <View style={styles.searchInput}>
               <TextInput
                 style={styles.input}
                 placeholder="输入姓名/联系方式进行搜索"
+                onSubmitEditing={this.submitSearch.bind(this)}
                 // placeholderTextColor={styles.placeholderStyle}
                 // inlineImageLeft
                 onChangeText={this.searchInput.bind(this)}
                 value={selectParam}
               />
             </View>
-            <View style={styles.closeIcon}>
-              <Text style={styles.closeStyle}>&#xe614;</Text>
-            </View>
+            {selectParam ? (
+              <TouchableOpacity onPress={() => this.clearSearchInput()}>
+                <View style={styles.closeIcon}>
+                  <Text style={styles.closeStyle}>&#xe614;</Text>
+                </View>
+              </TouchableOpacity>
+            ) : null}
           </View>
           <View style={styles.numWrapper}>
             <Text style={styles.fontStyle}>共</Text>
             <Text style={styles.numStyle}>{totalCount}</Text>
             <Text style={styles.fontStyle}>个司机</Text>
           </View>
-          <View style={styles.mineWrapper}>
-            <Text style={DetailsStyles.labelText}>我的名片</Text>
-            <Text style={styles.icon}>&#xe61d;</Text>
-          </View>
+          <TouchableOpacity onPress={this.navigationToMine.bind(this)}>
+            <View style={styles.mineWrapper}>
+              <Text style={DetailsStyles.labelText}>我的名片</Text>
+              <Text style={styles.icon}>&#xe61d;</Text>
+            </View>
+          </TouchableOpacity>
         </View>
-        {/* <View style={styles.bottomWrapper}>
+        <View style={styles.bottomWrapper}>
           <FlatList
             data={this.state.driverListData}
             renderItem={data => <DriverItem itemData={data.item} />}
@@ -161,11 +207,14 @@ class Driver extends Component {
             onEndReached={() => {
               this.getAllDriverList(this, {});
             }}
-            // keyExtractor={data => {
-            //   return data.saleToPalletId + 'driver';
-            // }}
+            ListEmptyComponent={() => (
+              <EmptyList {...this.props} pageType={'driver'} />
+            )}
+            keyExtractor={data => {
+              return data.driverId + 'driver';
+            }}
           />
-        </View> */}
+        </View>
         <Toast
           ref={this.toastRef}
           position={'center'}
@@ -183,12 +232,13 @@ const styles = StyleSheet.create({
   searchWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     height: 40,
     backgroundColor: '#F5F5F5',
     marginHorizontal: 12,
     marginVertical: 8,
     borderRadius: 4,
-    paddingLeft: 13,
+    paddingLeft: 12,
   },
   searchIcon: {
     width: 16,
@@ -205,11 +255,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'right',
+    marginRight: 12,
   },
   closeStyle: {
     fontSize: 20,
     fontFamily: 'iconfont',
     color: GlobalStyles.themeHColor,
+  },
+  searchInput: {
+    flex: 1,
+    textAlign: 'left',
   },
   input: {
     flex: 1,
@@ -252,13 +307,14 @@ const styles = StyleSheet.create({
   },
 });
 
-// Driver.defaultProps = {
-//   onClick: () => {},
-// };
+Driver.defaultProps = {
+  onClick: () => {},
+};
 
-// Driver.propTypes = {
-//   onClick: PropTypes.func.isRequired,
-// };
+Driver.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
+
 // 如果需要引入store
 const mapStateToProps = state => {
   return {
