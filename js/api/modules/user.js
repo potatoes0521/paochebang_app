@@ -4,7 +4,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 11:52:12
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-19 09:46:53
+ * @LastEditTime : 2019-12-26 09:56:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,7 +32,7 @@ export default {
     return requestHandle.post('user/refreshtoken', data, that);
   },
   // 获取城市信息
-  getLocationMsg(data, that) {
+  getCityList(data, that) {
     return requestHandle.get('location/cities', data, that);
   },
   // 获取手机验证码

@@ -3,7 +3,7 @@
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 11:53:35
+ * @LastEditTime : 2019-12-26 09:28:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,6 +16,7 @@ import DriverPage from '../pages/Driver/Driver';
 import InformationPage from '../pages/Information/Information';
 import SellingDetailsPage from '../pages/SellingDetails/SellingDetails';
 import VacancyDetailsPage from '../pages/VacancyDetails/VacancyDetails';
+import ChooseCityPage from '../pages/ChooseCity/ChooseCity';
 
 export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一个初始化的路由名
 
@@ -67,6 +68,12 @@ const MainNavigator = createStackNavigator(
     },
     DriverPage: {
       screen: DriverPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    ChooseCityPage: {
+      screen: ChooseCityPage,
       navigationOptions: {
         header: null,
       },
