@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-25 16:42:43
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-25 18:44:52
+ * @LastEditTime : 2019-12-26 09:08:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,7 +17,6 @@ import {
   View,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import GlobalStyles from '../../assets/css/GlobalStyles';
 // import GlobalStyles from '../../assets/css/GlobalStyles';
 
 export default class Drawer extends Component {
