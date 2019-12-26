@@ -17,8 +17,9 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
-import GlobalStyles from '../../assets/css/GlobalStyles';
 import DetailsStyles from '../../assets/css/DetailsStyles';
+import GlobalStyles from '../../assets/css/GlobalStyles';
+import ItemStyles from '../../assets/css/ItemStyles';
 import Button from '../../components/Button/Button.js';
 import api from '../../api';
 
@@ -117,10 +118,10 @@ class DriverEdit extends Component {
           leftViewShow={true}
           title={'添加司机'}
         />
-        <View style={DetailsStyles.itemWrapper}>
-          <View style={[DetailsStyles.itemStyle, DetailsStyles.line]}>
+        <View style={ItemStyles.itemWrapper}>
+          <View style={[ItemStyles.itemStyle, ItemStyles.line]}>
             <Text style={styles.iconStyle}>*</Text>
-            <Text style={DetailsStyles.titleStyle}>姓名</Text>
+            <Text style={ItemStyles.titleStyle}>姓名</Text>
             <TextInput
               style={styles.input}
               placeholder="请输入司机姓名"
@@ -129,9 +130,9 @@ class DriverEdit extends Component {
               value={remarkName}
             />
           </View>
-          <View style={[DetailsStyles.itemStyle, DetailsStyles.line]}>
+          <View style={[ItemStyles.itemStyle, ItemStyles.line]}>
             <Text style={styles.iconStyle}>*</Text>
-            <Text style={DetailsStyles.titleStyle}>联系方式</Text>
+            <Text style={ItemStyles.titleStyle}>联系方式</Text>
             <TextInput
               style={styles.input}
               placeholder="请输入司机联系方式"
@@ -140,9 +141,9 @@ class DriverEdit extends Component {
               value={mobile}
             />
           </View>
-          <View style={[DetailsStyles.itemStyle, DetailsStyles.line]}>
+          <View style={[ItemStyles.itemStyle, ItemStyles.line]}>
             <Text style={styles.iconStyle}>*</Text>
-            <Text style={DetailsStyles.titleStyle}>身份证号</Text>
+            <Text style={ItemStyles.titleStyle}>身份证号</Text>
             <TextInput
               style={styles.input}
               placeholder="请输入司机身份证号"
@@ -151,9 +152,9 @@ class DriverEdit extends Component {
               value={idCard}
             />
           </View>
-          <View style={[DetailsStyles.itemStyle, DetailsStyles.line]}>
+          <View style={[ItemStyles.itemStyle, ItemStyles.line]}>
             <Text style={styles.iconStyle} />
-            <Text style={DetailsStyles.titleStyle}>车牌号</Text>
+            <Text style={ItemStyles.titleStyle}>车牌号</Text>
             <TextInput
               style={styles.input}
               placeholder="请输入车牌号"
@@ -162,9 +163,9 @@ class DriverEdit extends Component {
               value={carNum}
             />
           </View>
-          <View style={[DetailsStyles.itemStyle, DetailsStyles.line]}>
+          <View style={[ItemStyles.itemStyle, ItemStyles.line]}>
             <Text style={styles.iconStyle} />
-            <Text style={DetailsStyles.titleStyle}>所属物流公司</Text>
+            <Text style={ItemStyles.titleStyle}>所属物流公司</Text>
             <TextInput
               style={styles.input}
               placeholder="请输入所属物流公司"
@@ -174,13 +175,13 @@ class DriverEdit extends Component {
             />
           </View>
           <TouchableOpacity onPress={this.chooseCarType.bind(this)}>
-            <View style={DetailsStyles.itemStyle}>
+            <View style={ItemStyles.itemStyle}>
               <Text style={styles.iconStyle} />
-              <Text style={DetailsStyles.titleStyle}>车辆信息</Text>
+              <Text style={ItemStyles.titleStyle}>车辆信息</Text>
               {carTypeDesc ? (
-                <Text style={DetailsStyles.textStyle}>{carTypeDesc}</Text>
+                <Text style={ItemStyles.textStyle}>{carTypeDesc}</Text>
               ) : (
-                <Text style={DetailsStyles.textStyle}>请选择车辆类型</Text>
+                <Text style={ItemStyles.textStyle}>请选择车辆类型</Text>
               )}
             </View>
           </TouchableOpacity>

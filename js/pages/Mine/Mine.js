@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-26 10:20:26
+ * @LastEditTime : 2019-12-26 14:10:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -63,14 +63,13 @@ export default class Mine extends Component {
    * @return void
    */
   navigatorPage(pageName) {
-    console.log(pageName, 'e');
     if (!pageName) {
       return;
     }
     let pageUrl = '';
     switch (pageName) {
       case 'account':
-        pageUrl = '';
+        pageUrl = 'AccountPage';
         break;
       case 'driver':
         pageUrl = 'DriverPage';

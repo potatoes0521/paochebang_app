@@ -3,7 +3,7 @@
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-26 14:00:18
+ * @LastEditTime : 2019-12-26 18:09:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,6 +12,8 @@ import {createStackNavigator} from 'react-navigation-stack';
 import WelcomePage from '../pages/WelcomePage';
 import HomePage from '../pages/Home';
 import OfferDetailsPage from '../pages/OfferDetails/OfferDetails';
+import AccountPage from '../pages/Account/Account';
+import CashPage from '../pages/Cash/Cash';
 import DriverPage from '../pages/Driver/Driver';
 import DriverDetailsPage from '../pages/DriverDetails/DriverDetails';
 import DriverEditPage from '../pages/DriverEdit/DriverEdit';
@@ -27,8 +29,8 @@ export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一�
 
 const InitNavigator = createStackNavigator({
   WelcomePage: {
-    screen: WelcomePage,
-    // screen: MineDetailsPage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
+    // screen: WelcomePage,
+    screen: CashPage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
     navigationOptions: {
       header: null, // 隐藏头部
     },
@@ -109,6 +111,20 @@ const MainNavigator = createStackNavigator(
     //我的基本信息编辑
     MineEditPage: {
       screen: MineEditPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    //账户体系
+    AccountPage: {
+      screen: AccountPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    //提现
+    CashPage: {
+      screen: CashPage,
       navigationOptions: {
         header: null,
       },
