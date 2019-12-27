@@ -3,7 +3,7 @@
  * @description: 我发布的卖板和空位
  * @Date: 2019-12-27 11:21:19
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 15:16:41
+ * @LastEditTime : 2019-12-27 17:44:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,6 +14,7 @@ import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import BottomLoading from '../../components/BottomLoading/BottomLoading.js';
 import EmptyList from '../../components/EmptyList/EmptyList.js';
+import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import ListItem from './components/ListItem';
 import PropTypes from 'prop-types';
 import api from '../../api/index';
@@ -153,76 +154,78 @@ class MainPublish extends Component {
     ) : null;
   }
   render() {
-    const {navigation} = this.props;
+    const {theme, navigation} = this.props;
     return (
-      <View style={styles.pageWrapper}>
-        {this.pageParams.pageName === 'selling' ? (
-          <NavigationBar
-            navigation={navigation}
-            leftViewShow={true}
-            title={'卖板信息'}
-          />
-        ) : (
-          <NavigationBar
-            navigation={navigation}
-            leftViewShow={true}
-            title={'空位信息'}
-          />
-        )}
-        {this.pageParams.pageName === 'selling' ? (
-          <View style={styles.listWrapper}>
-            <FlatList
-              data={this.state.sellingData}
-              renderItem={data => <ListItem type={'selling'} item={data} />}
-              refreshControl={
-                <RefreshControl
-                  title="Loading..."
-                  colors={[GlobalStyles.themeColor]}
-                  refreshing={this.state.isLoading}
-                  onRefresh={() => this.getSellingList({refresh: true})}
-                  tintColor={GlobalStyles.themeColor}
-                />
-              }
-              ListFooterComponent={() => this.sellingGenIndicator()}
-              onEndReached={() => {
-                this.getSellingList.bind(this, {});
-              }}
-              ListEmptyComponent={() => {
-                return <EmptyList {...this.props} pageType={'selling'} />;
-              }}
-              keyExtractor={data => {
-                return data.saleToPalletId + 'selling';
-              }}
+      <SafeAreaViewPlus topColor={theme.themeColor}>
+        <View style={styles.pageWrapper}>
+          {this.pageParams.pageName === 'selling' ? (
+            <NavigationBar
+              navigation={navigation}
+              leftViewShow={true}
+              title={'卖板信息'}
             />
-          </View>
-        ) : (
-          <View style={styles.listWrapper}>
-            <FlatList
-              data={this.state.vacancyData}
-              renderItem={data => <ListItem type={'vacancy'} item={data} />}
-              refreshControl={
-                <RefreshControl
-                  title="Loading..."
-                  colors={[GlobalStyles.themeColor]}
-                  refreshing={this.state.isLoading}
-                  onRefresh={() => this.getVacancyList({refresh: true})}
-                  tintColor={GlobalStyles.themeColor}
-                />
-              }
-              ListFooterComponent={() => this.vacancyGenIndicator()}
-              onEndReached={() => {
-                this.getVacancyList.bind(this, {});
-              }}
-              ListEmptyComponent={() => {
-                return <EmptyList {...this.props} pageType={'vacancy'} />;
-              }}
-              keyExtractor={data => {
-                return data.vacantPalletId + 'vacancy';
-              }}
+          ) : (
+            <NavigationBar
+              navigation={navigation}
+              leftViewShow={true}
+              title={'空位信息'}
             />
-          </View>
-        )}
-      </View>
+          )}
+          {this.pageParams.pageName === 'selling' ? (
+            <View style={styles.listWrapper}>
+              <FlatList
+                data={this.state.sellingData}
+                renderItem={data => <ListItem type={'selling'} item={data} />}
+                refreshControl={
+                  <RefreshControl
+                    title="Loading..."
+                    colors={[GlobalStyles.themeColor]}
+                    refreshing={this.state.isLoading}
+                    onRefresh={() => this.getSellingList({refresh: true})}
+                    tintColor={GlobalStyles.themeColor}
+                  />
+                }
+                ListFooterComponent={() => this.sellingGenIndicator()}
+                onEndReached={() => {
+                  this.getSellingList.bind(this, {});
+                }}
+                ListEmptyComponent={() => {
+                  return <EmptyList {...this.props} pageType={'selling'} />;
+                }}
+                keyExtractor={data => {
+                  return data.saleToPalletId + 'selling';
+                }}
+              />
+            </View>
+          ) : (
+            <View style={styles.listWrapper}>
+              <FlatList
+                data={this.state.vacancyData}
+                renderItem={data => <ListItem type={'vacancy'} item={data} />}
+                refreshControl={
+                  <RefreshControl
+                    title="Loading..."
+                    colors={[GlobalStyles.themeColor]}
+                    refreshing={this.state.isLoading}
+                    onRefresh={() => this.getVacancyList({refresh: true})}
+                    tintColor={GlobalStyles.themeColor}
+                  />
+                }
+                ListFooterComponent={() => this.vacancyGenIndicator()}
+                onEndReached={() => {
+                  this.getVacancyList.bind(this, {});
+                }}
+                ListEmptyComponent={() => {
+                  return <EmptyList {...this.props} pageType={'vacancy'} />;
+                }}
+                keyExtractor={data => {
+                  return data.vacantPalletId + 'vacancy';
+                }}
+              />
+            </View>
+          )}
+        </View>
+      </SafeAreaViewPlus>
     );
   }
 }
@@ -244,6 +247,7 @@ MainPublish.propTypes = {
 const mapStateToProps = state => {
   return {
     userInfo: state.user_info.userInfo,
+    theme: state.theme.theme,
   };
 };
 export default connect(mapStateToProps)(MainPublish);

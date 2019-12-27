@@ -3,7 +3,7 @@
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 11:14:40
+ * @LastEditTime : 2019-12-27 17:35:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,6 +13,7 @@ import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
+import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import MainStyles from '../../assets/css/MainStyles';
 import Button from '../../components/Button/Button.js';
 import api from '../../api';
@@ -72,66 +73,68 @@ class MineDetails extends Component {
   }
   render() {
     let {userDetailsInfo} = this.state;
-    const {navigation} = this.props;
+    const {theme, navigation} = this.props;
     return (
-      <View style={styles.pageWrapper}>
-        <NavigationBar
-          navigation={navigation}
-          leftViewShow={true}
-          title={'我的基本信息'}
-        />
-        <View style={MainStyles.itemWrapper}>
-          <View style={[MainStyles.itemStyle, MainStyles.line]}>
-            <Text style={MainStyles.titleStyle}>姓名</Text>
-            <Text style={MainStyles.textStyle}>
-              {userDetailsInfo.realName || ''}
-            </Text>
-          </View>
-          <View style={[MainStyles.itemStyle, MainStyles.line]}>
-            <Text style={MainStyles.titleStyle}>联系方式</Text>
-            <Text style={MainStyles.textStyle}>
-              {userDetailsInfo.mobile || ''}
-            </Text>
-          </View>
-          <View style={[MainStyles.itemStyle, MainStyles.line]}>
-            <Text style={MainStyles.titleStyle}>身份证号</Text>
-            <Text style={MainStyles.textStyle}>
-              {userDetailsInfo.idCard || ''}
-            </Text>
-          </View>
-          <View style={[MainStyles.itemStyle, MainStyles.line]}>
-            <Text style={MainStyles.titleStyle}>所属物流公司</Text>
-            <Text style={MainStyles.textStyle}>
-              {userDetailsInfo.merchantName || ''}
-            </Text>
-          </View>
-          <View style={[MainStyles.itemStyle, MainStyles.line]}>
-            <Text style={MainStyles.titleStyle}>车牌号</Text>
-            <Text style={MainStyles.textStyle}>
-              {userDetailsInfo.carNum || ''}
-            </Text>
-          </View>
-          <View style={[MainStyles.itemStyle, MainStyles.line]}>
-            <Text style={MainStyles.titleStyle}>车辆信息</Text>
-            <Text style={MainStyles.textStyle}>
-              {userDetailsInfo.carTypeDesc || ''}
-            </Text>
-          </View>
-          <View style={MainStyles.itemStyle}>
-            <Text style={MainStyles.titleStyle}>注册时间</Text>
-            <Text style={MainStyles.textStyle}>
-              {userDetailsInfo.createTimeDesc || ''}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.btnWrapper}>
-          <Button
-            text={'修改'}
-            type={'round'}
-            onClick={this.navigationEdit.bind(this)}
+      <SafeAreaViewPlus topColor={theme.themeColor}>
+        <View style={styles.pageWrapper}>
+          <NavigationBar
+            navigation={navigation}
+            leftViewShow={true}
+            title={'我的基本信息'}
           />
+          <View style={MainStyles.itemWrapper}>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={MainStyles.titleStyle}>姓名</Text>
+              <Text style={MainStyles.textStyle}>
+                {userDetailsInfo.realName || ''}
+              </Text>
+            </View>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={MainStyles.titleStyle}>联系方式</Text>
+              <Text style={MainStyles.textStyle}>
+                {userDetailsInfo.mobile || ''}
+              </Text>
+            </View>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={MainStyles.titleStyle}>身份证号</Text>
+              <Text style={MainStyles.textStyle}>
+                {userDetailsInfo.idCard || ''}
+              </Text>
+            </View>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={MainStyles.titleStyle}>所属物流公司</Text>
+              <Text style={MainStyles.textStyle}>
+                {userDetailsInfo.merchantName || ''}
+              </Text>
+            </View>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={MainStyles.titleStyle}>车牌号</Text>
+              <Text style={MainStyles.textStyle}>
+                {userDetailsInfo.carNum || ''}
+              </Text>
+            </View>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={MainStyles.titleStyle}>车辆信息</Text>
+              <Text style={MainStyles.textStyle}>
+                {userDetailsInfo.carTypeDesc || ''}
+              </Text>
+            </View>
+            <View style={MainStyles.itemStyle}>
+              <Text style={MainStyles.titleStyle}>注册时间</Text>
+              <Text style={MainStyles.textStyle}>
+                {userDetailsInfo.createTimeDesc || ''}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.btnWrapper}>
+            <Button
+              text={'修改'}
+              type={'round'}
+              onClick={this.navigationEdit.bind(this)}
+            />
+          </View>
         </View>
-      </View>
+      </SafeAreaViewPlus>
     );
   }
 }

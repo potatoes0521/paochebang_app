@@ -3,7 +3,7 @@
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-26 10:18:35
+ * @LastEditTime : 2019-12-27 17:44:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,6 +26,7 @@ import GlobalStyles from '../../assets/css/GlobalStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import LoginLogo from '../../assets/image/register/paoche_logo.png';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
+import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import Toast from 'react-native-easy-toast';
 
@@ -192,58 +193,60 @@ class Register extends Component {
 
   render() {
     let {phoneNumber, verificationCode, timerFlag, countDown} = this.state;
-    const {navigation} = this.props;
+    const {theme, navigation} = this.props;
     return (
-      <View style={styles.pageWrapper}>
-        <NavigationBar
-          navigation={navigation}
-          leftViewShow={true}
-          title={'跑车帮'}
-        />
-        <View style={styles.imgWrapper}>
-          <Image source={LoginLogo} style={styles.imgStyle} />
-        </View>
-        <View style={styles.registerWrapper}>
-          <View style={styles.inputStyle}>
-            <TextInput
-              style={styles.input}
-              keyboardType={'number-pad'}
-              placeholder="请输入手机号"
-              onChangeText={this.inputPhoneNumber.bind(this)}
-              value={phoneNumber}
+      <SafeAreaViewPlus topColor={theme.themeColor}>
+        <View style={styles.pageWrapper}>
+          <NavigationBar
+            navigation={navigation}
+            leftViewShow={true}
+            title={'跑车帮'}
+          />
+          <View style={styles.imgWrapper}>
+            <Image source={LoginLogo} style={styles.imgStyle} />
+          </View>
+          <View style={styles.registerWrapper}>
+            <View style={styles.inputStyle}>
+              <TextInput
+                style={styles.input}
+                keyboardType={'number-pad'}
+                placeholder="请输入手机号"
+                onChangeText={this.inputPhoneNumber.bind(this)}
+                value={phoneNumber}
+              />
+            </View>
+            <View style={styles.inputWrapper}>
+              <TextInput
+                style={[styles.codeInput, styles.input]}
+                keyboardType={'number-pad'}
+                placeholder="请输入验证码"
+                onChangeText={this.inputVerificationCode.bind(this)}
+                value={verificationCode}
+              />
+              <TouchableOpacity onPress={this.getVerificationCode.bind(this)}>
+                <View style={styles.codeBtn}>
+                  <Text style={styles.codeColor}>
+                    {!timerFlag ? '获取验证码' : `${countDown}S后重试`}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.registerBtn}>
+            <Button
+              btnStyle={[styles.btnWrapper]}
+              type={'round'}
+              text={'注册'}
+              onClick={this.submitRegister.bind(this)}
             />
           </View>
-          <View style={styles.inputWrapper}>
-            <TextInput
-              style={[styles.codeInput, styles.input]}
-              keyboardType={'number-pad'}
-              placeholder="请输入验证码"
-              onChangeText={this.inputVerificationCode.bind(this)}
-              value={verificationCode}
-            />
-            <TouchableOpacity onPress={this.getVerificationCode.bind(this)}>
-              <View style={styles.codeBtn}>
-                <Text style={styles.codeColor}>
-                  {!timerFlag ? '获取验证码' : `${countDown}S后重试`}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.registerBtn}>
-          <Button
-            btnStyle={[styles.btnWrapper]}
-            type={'round'}
-            text={'注册'}
-            onClick={this.submitRegister.bind(this)}
+          <Toast
+            ref={this.toastRef}
+            position={'center'}
+            defaultCloseDelay={3000}
           />
         </View>
-        <Toast
-          ref={this.toastRef}
-          position={'center'}
-          defaultCloseDelay={3000}
-        />
-      </View>
+      </SafeAreaViewPlus>
     );
   }
 }
@@ -316,6 +319,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     userInfo: state.user_info.userInfo,
+    theme: state.theme.theme,
   };
 };
 export default connect(mapStateToProps)(Register);

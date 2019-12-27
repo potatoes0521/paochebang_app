@@ -3,7 +3,7 @@
  * @description: 账户体系
  * @Date: 2019-12-25 15:25:16
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-26 17:03:42
+ * @LastEditTime : 2019-12-27 17:23:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,6 +16,7 @@ import GlobalStyles from '../../assets/css/GlobalStyles';
 import EmptyList from '../../components/EmptyList/EmptyList.js';
 import BottomLoading from '../../components/BottomLoading/BottomLoading.js';
 import NavigationUtil from '../../navigator/NavigationUtils';
+import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import api from '../../api';
 import Toast from 'react-native-easy-toast';
@@ -113,78 +114,82 @@ class AccountDetails extends Component {
     ) : null;
   }
   render() {
-    const {navigation} = this.props;
+    const {theme, navigation} = this.props;
     let {totalIncomeDesc, withdrawAmountDesc, blockedAmountDesc} = this.state;
     return (
-      <View style={styles.pageWrapper}>
-        <NavigationBar
-          navigation={navigation}
-          leftViewShow={true}
-          title={'账户体系'}
-        />
-        <View style={styles.accountWrapper}>
-          <View style={styles.accountCard}>
-            <View style={styles.cardTitle}>
-              <Text style={styles.titleStyle}>总收入</Text>
-              <Text
-                style={styles.titleStyle}
-                onPress={this.applyCash.bind(this)}>
-                申请提现
-              </Text>
+      <SafeAreaViewPlus topColor={theme.themeColor}>
+        <View style={styles.pageWrapper}>
+          <NavigationBar
+            navigation={navigation}
+            leftViewShow={true}
+            title={'账户体系'}
+          />
+          <View style={styles.accountWrapper}>
+            <View style={styles.accountCard}>
+              <View style={styles.cardTitle}>
+                <Text style={styles.titleStyle}>总收入</Text>
+                <Text
+                  style={styles.titleStyle}
+                  onPress={this.applyCash.bind(this)}>
+                  申请提现
+                </Text>
+              </View>
+              <View style={styles.cardMoney}>
+                <Text style={styles.iconStyle}>￥</Text>
+                <Text style={styles.moneyStyle}>{totalIncomeDesc}</Text>
+              </View>
+              <View style={styles.cardTips}>
+                <Text style={[styles.tipsStyle, styles.marginRight]}>余额</Text>
+                <Text style={styles.tipsStyle}>￥</Text>
+                <Text style={[styles.tipsStyle, styles.marginRight]}>
+                  {withdrawAmountDesc}
+                </Text>
+                <Text style={[styles.tipsStyle, styles.marginRight]}>
+                  其中冻结金额
+                </Text>
+                <Text style={styles.tipsStyle}>￥</Text>
+                <Text style={styles.tipsStyle}>{blockedAmountDesc}</Text>
+              </View>
             </View>
-            <View style={styles.cardMoney}>
-              <Text style={styles.iconStyle}>￥</Text>
-              <Text style={styles.moneyStyle}>{totalIncomeDesc}</Text>
+            <View style={styles.accountTitle}>
+              <Text style={styles.detailsTitle}>收支明细</Text>
             </View>
-            <View style={styles.cardTips}>
-              <Text style={[styles.tipsStyle, styles.marginRight]}>余额</Text>
-              <Text style={styles.tipsStyle}>￥</Text>
-              <Text style={[styles.tipsStyle, styles.marginRight]}>
-                {withdrawAmountDesc}
-              </Text>
-              <Text style={[styles.tipsStyle, styles.marginRight]}>
-                其中冻结金额
-              </Text>
-              <Text style={styles.tipsStyle}>￥</Text>
-              <Text style={styles.tipsStyle}>{blockedAmountDesc}</Text>
+            <View style={styles.cashDetails}>
+              <FlatList
+                data={this.state.accountList}
+                renderItem={data => (
+                  <AccountItem type={'account'} item={data} />
+                )}
+                refreshControl={
+                  <RefreshControl
+                    title="Loading..."
+                    colors={[GlobalStyles.themeColor]}
+                    refreshing={this.state.isLoading}
+                    onRefresh={() => this.getAccountList({refresh: true})}
+                    tintColor={GlobalStyles.themeColor}
+                    titleColor={GlobalStyles.themeTipColor}
+                  />
+                }
+                ListFooterComponent={() => this.genIndicator()}
+                onEndReached={() => {
+                  this.getAccountList.bind(this, {});
+                }}
+                ListEmptyComponent={() => (
+                  <EmptyList {...this.props} pageType={'account'} />
+                )}
+                keyExtractor={data => {
+                  return data.accountId + 'account';
+                }}
+              />
             </View>
           </View>
-          <View style={styles.accountTitle}>
-            <Text style={styles.detailsTitle}>收支明细</Text>
-          </View>
-          <View style={styles.cashDetails}>
-            <FlatList
-              data={this.state.accountList}
-              renderItem={data => <AccountItem type={'account'} item={data} />}
-              refreshControl={
-                <RefreshControl
-                  title="Loading..."
-                  colors={[GlobalStyles.themeColor]}
-                  refreshing={this.state.isLoading}
-                  onRefresh={() => this.getAccountList({refresh: true})}
-                  tintColor={GlobalStyles.themeColor}
-                  titleColor={GlobalStyles.themeTipColor}
-                />
-              }
-              ListFooterComponent={() => this.genIndicator()}
-              onEndReached={() => {
-                this.getAccountList.bind(this, {});
-              }}
-              ListEmptyComponent={() => (
-                <EmptyList {...this.props} pageType={'account'} />
-              )}
-              keyExtractor={data => {
-                return data.accountId + 'account';
-              }}
-            />
-          </View>
+          <Toast
+            ref={this.toastRef}
+            position={'center'}
+            defaultCloseDelay={3000}
+          />
         </View>
-        <Toast
-          ref={this.toastRef}
-          position={'center'}
-          defaultCloseDelay={3000}
-        />
-      </View>
+      </SafeAreaViewPlus>
     );
   }
 }

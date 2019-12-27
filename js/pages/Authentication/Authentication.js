@@ -3,7 +3,7 @@
  * @description: 实名认证
  * @Date: 2019-12-26 18:17:17
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 11:12:08
+ * @LastEditTime : 2019-12-27 17:43:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,6 +14,7 @@ import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import DetailsStyles from '../../assets/css/DetailsStyles';
 import Button from '../../components/Button/Button.js';
+import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import api from '../../api/index';
 class Authentication extends Component {
   constructor(props) {
@@ -78,154 +79,156 @@ class Authentication extends Component {
     });
   }
   render() {
-    const {navigation} = this.props;
+    const {theme, navigation} = this.props;
     let {realName, idCard, accountHolder, accountNum, bankName} = this.state;
     return (
-      <View style={styles.pageWrapper}>
-        <NavigationBar
-          navigation={navigation}
-          leftViewShow={true}
-          title={'实名认证'}
-        />
-        <View style={styles.topWrapper}>
-          <View style={styles.tipsWrapper}>
-            <Text style={styles.tipsStyle}>
-              拍摄二代身份证原件，请确保图片清晰，四角完整
-            </Text>
-          </View>
-          <View style={styles.imageWrapper}>
-            <View style={[styles.imageStyle, styles.marginRight]}>
-              <View style={styles.bgStyle}>
-                <ImageBackground
-                  style={styles.bgImgStyle}
-                  source={{
-                    uri:
-                      'https://resource.paoche56.com/paochebang/mp_img/id_card/id_card_before.png',
-                  }}
-                />
-              </View>
-              <View style={styles.bgWrapper}>
-                <View style={styles.bgIcon}>
-                  <Text style={styles.iconStyle}>&#xe668;</Text>
+      <SafeAreaViewPlus topColor={theme.themeColor}>
+        <View style={styles.pageWrapper}>
+          <NavigationBar
+            navigation={navigation}
+            leftViewShow={true}
+            title={'实名认证'}
+          />
+          <View style={styles.topWrapper}>
+            <View style={styles.tipsWrapper}>
+              <Text style={styles.tipsStyle}>
+                拍摄二代身份证原件，请确保图片清晰，四角完整
+              </Text>
+            </View>
+            <View style={styles.imageWrapper}>
+              <View style={[styles.imageStyle, styles.marginRight]}>
+                <View style={styles.bgStyle}>
+                  <ImageBackground
+                    style={styles.bgImgStyle}
+                    source={{
+                      uri:
+                        'https://resource.paoche56.com/paochebang/mp_img/id_card/id_card_before.png',
+                    }}
+                  />
                 </View>
-                <Text style={styles.textStyle}>拍摄人像页</Text>
+                <View style={styles.bgWrapper}>
+                  <View style={styles.bgIcon}>
+                    <Text style={styles.iconStyle}>&#xe668;</Text>
+                  </View>
+                  <Text style={styles.textStyle}>拍摄人像页</Text>
+                </View>
+              </View>
+              <View style={styles.imageStyle}>
+                <View style={styles.bgStyle}>
+                  <ImageBackground
+                    style={styles.bgImgStyle}
+                    source={{
+                      uri:
+                        'https://resource.paoche56.com/paochebang/mp_img/id_card/id_card_after.png',
+                    }}
+                  />
+                </View>
+                <View style={styles.bgWrapper}>
+                  <View style={styles.bgIcon}>
+                    <Text style={styles.iconStyle}>&#xe668;</Text>
+                  </View>
+                  <Text style={styles.textStyle}>拍摄国徽页</Text>
+                </View>
               </View>
             </View>
-            <View style={styles.imageStyle}>
-              <View style={styles.bgStyle}>
-                <ImageBackground
-                  style={styles.bgImgStyle}
-                  source={{
-                    uri:
-                      'https://resource.paoche56.com/paochebang/mp_img/id_card/id_card_after.png',
-                  }}
+            <View style={styles.idCardWrapper}>
+              <View style={[styles.cardItem, styles.line]}>
+                <Text style={DetailsStyles.contentText}>真实姓名</Text>
+                <TextInput
+                  style={[styles.input, DetailsStyles.contentText]}
+                  placeholder="请输入真实姓名"
+                  onChangeText={this.realNameOnInput.bind(this)}
+                  value={realName}
                 />
               </View>
-              <View style={styles.bgWrapper}>
-                <View style={styles.bgIcon}>
-                  <Text style={styles.iconStyle}>&#xe668;</Text>
-                </View>
-                <Text style={styles.textStyle}>拍摄国徽页</Text>
+              <View style={styles.cardItem}>
+                <Text style={DetailsStyles.contentText}>身份证号</Text>
+                <TextInput
+                  style={[styles.input, DetailsStyles.contentText]}
+                  placeholder="请输入身份证号"
+                  onChangeText={this.idCardOnInput.bind(this)}
+                  value={idCard}
+                />
               </View>
             </View>
           </View>
-          <View style={styles.idCardWrapper}>
+          <View style={styles.middleWrapper}>
+            <View style={styles.tipsWrapper}>
+              <Text style={styles.tipsStyle}>
+                拍摄驾驶证原件，请确保图片清晰，四角完整
+              </Text>
+            </View>
+            <View style={styles.imageWrapper}>
+              <View style={[styles.imageStyle, styles.marginRight]}>
+                <View style={styles.bgStyle}>
+                  <ImageBackground
+                    style={styles.bgImgStyle}
+                    source={{
+                      uri:
+                        'https://resource.paoche56.com/paochebang/mp_img/id_card/id_card_before_license.png',
+                    }}
+                  />
+                </View>
+                <View style={styles.bgWrapper}>
+                  <View style={styles.bgIcon}>
+                    <Text style={styles.iconStyle}>&#xe668;</Text>
+                  </View>
+                  <Text style={styles.textStyle}>拍摄驾驶证正面</Text>
+                </View>
+              </View>
+              <View style={styles.imageStyle}>
+                <View style={styles.bgStyle}>
+                  <ImageBackground
+                    style={styles.bgImgStyle}
+                    source={{
+                      uri:
+                        'https://resource.paoche56.com/paochebang/mp_img/id_card/id_card_after_license.png',
+                    }}
+                  />
+                </View>
+                <View style={styles.bgWrapper}>
+                  <View style={styles.bgIcon}>
+                    <Text style={styles.iconStyle}>&#xe668;</Text>
+                  </View>
+                  <Text style={styles.textStyle}>拍摄驾驶证副页</Text>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={styles.bottomWrapper}>
             <View style={[styles.cardItem, styles.line]}>
-              <Text style={DetailsStyles.contentText}>真实姓名</Text>
+              <Text style={DetailsStyles.contentText}>收款人姓名</Text>
               <TextInput
                 style={[styles.input, DetailsStyles.contentText]}
-                placeholder="请输入真实姓名"
-                onChangeText={this.realNameOnInput.bind(this)}
-                value={realName}
+                placeholder="请输入收款人姓名"
+                onChangeText={this.accountHolderOnInput.bind(this)}
+                value={accountHolder}
+              />
+            </View>
+            <View style={[styles.cardItem, styles.line]}>
+              <Text style={DetailsStyles.contentText}>银行卡号</Text>
+              <TextInput
+                style={[styles.input, DetailsStyles.contentText]}
+                placeholder="请输入银行卡号"
+                onChangeText={this.accountNumOnInput.bind(this)}
+                value={accountNum}
               />
             </View>
             <View style={styles.cardItem}>
-              <Text style={DetailsStyles.contentText}>身份证号</Text>
+              <Text style={DetailsStyles.contentText}>银行类型</Text>
               <TextInput
                 style={[styles.input, DetailsStyles.contentText]}
-                placeholder="请输入身份证号"
-                onChangeText={this.idCardOnInput.bind(this)}
-                value={idCard}
+                placeholder="请输入银行类型"
+                onChangeText={this.bankNameOnInput.bind(this)}
+                value={bankName}
               />
             </View>
           </View>
-        </View>
-        <View style={styles.middleWrapper}>
-          <View style={styles.tipsWrapper}>
-            <Text style={styles.tipsStyle}>
-              拍摄驾驶证原件，请确保图片清晰，四角完整
-            </Text>
-          </View>
-          <View style={styles.imageWrapper}>
-            <View style={[styles.imageStyle, styles.marginRight]}>
-              <View style={styles.bgStyle}>
-                <ImageBackground
-                  style={styles.bgImgStyle}
-                  source={{
-                    uri:
-                      'https://resource.paoche56.com/paochebang/mp_img/id_card/id_card_before_license.png',
-                  }}
-                />
-              </View>
-              <View style={styles.bgWrapper}>
-                <View style={styles.bgIcon}>
-                  <Text style={styles.iconStyle}>&#xe668;</Text>
-                </View>
-                <Text style={styles.textStyle}>拍摄驾驶证正面</Text>
-              </View>
-            </View>
-            <View style={styles.imageStyle}>
-              <View style={styles.bgStyle}>
-                <ImageBackground
-                  style={styles.bgImgStyle}
-                  source={{
-                    uri:
-                      'https://resource.paoche56.com/paochebang/mp_img/id_card/id_card_after_license.png',
-                  }}
-                />
-              </View>
-              <View style={styles.bgWrapper}>
-                <View style={styles.bgIcon}>
-                  <Text style={styles.iconStyle}>&#xe668;</Text>
-                </View>
-                <Text style={styles.textStyle}>拍摄驾驶证副页</Text>
-              </View>
-            </View>
+          <View style={styles.btnWrapper}>
+            <Button text={'提交'} type={'round'} />
           </View>
         </View>
-        <View style={styles.bottomWrapper}>
-          <View style={[styles.cardItem, styles.line]}>
-            <Text style={DetailsStyles.contentText}>收款人姓名</Text>
-            <TextInput
-              style={[styles.input, DetailsStyles.contentText]}
-              placeholder="请输入收款人姓名"
-              onChangeText={this.accountHolderOnInput.bind(this)}
-              value={accountHolder}
-            />
-          </View>
-          <View style={[styles.cardItem, styles.line]}>
-            <Text style={DetailsStyles.contentText}>银行卡号</Text>
-            <TextInput
-              style={[styles.input, DetailsStyles.contentText]}
-              placeholder="请输入银行卡号"
-              onChangeText={this.accountNumOnInput.bind(this)}
-              value={accountNum}
-            />
-          </View>
-          <View style={styles.cardItem}>
-            <Text style={DetailsStyles.contentText}>银行类型</Text>
-            <TextInput
-              style={[styles.input, DetailsStyles.contentText]}
-              placeholder="请输入银行类型"
-              onChangeText={this.bankNameOnInput.bind(this)}
-              value={bankName}
-            />
-          </View>
-        </View>
-        <View style={styles.btnWrapper}>
-          <Button text={'提交'} type={'round'} />
-        </View>
-      </View>
+      </SafeAreaViewPlus>
     );
   }
 }
@@ -339,6 +342,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     userInfo: state.user_info.userInfo,
+    theme: state.theme.theme,
   };
 };
 export default connect(mapStateToProps)(Authentication);

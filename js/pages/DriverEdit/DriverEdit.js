@@ -3,7 +3,7 @@
  * @description: 编辑、添加司机信息
  * @Date: 2019-12-26 10:36:06
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 11:14:15
+ * @LastEditTime : 2019-12-27 17:30:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,6 +21,7 @@ import DetailsStyles from '../../assets/css/DetailsStyles';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import MainStyles from '../../assets/css/MainStyles';
 import Button from '../../components/Button/Button.js';
+import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import api from '../../api';
 
 class DriverEdit extends Component {
@@ -110,91 +111,93 @@ class DriverEdit extends Component {
       carNum,
       carTypeDesc,
     } = this.state;
-    const {navigation} = this.props;
+    const {theme, navigation} = this.props;
     return (
-      <View style={styles.pageWrapper}>
-        <NavigationBar
-          navigation={navigation}
-          leftViewShow={true}
-          title={'添加司机'}
-        />
-        <View style={MainStyles.itemWrapper}>
-          <View style={[MainStyles.itemStyle, MainStyles.line]}>
-            <Text style={styles.iconStyle}>*</Text>
-            <Text style={MainStyles.titleStyle}>姓名</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="请输入司机姓名"
-              maxLength="8"
-              onChangeText={this.inputRemarkName.bind(this)}
-              value={remarkName}
-            />
-          </View>
-          <View style={[MainStyles.itemStyle, MainStyles.line]}>
-            <Text style={styles.iconStyle}>*</Text>
-            <Text style={MainStyles.titleStyle}>联系方式</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="请输入司机联系方式"
-              maxLength="11"
-              onChangeText={this.inputMobile.bind(this)}
-              value={mobile}
-            />
-          </View>
-          <View style={[MainStyles.itemStyle, MainStyles.line]}>
-            <Text style={styles.iconStyle}>*</Text>
-            <Text style={MainStyles.titleStyle}>身份证号</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="请输入司机身份证号"
-              maxLength="20"
-              onChangeText={this.inputIdCard.bind(this)}
-              value={idCard}
-            />
-          </View>
-          <View style={[MainStyles.itemStyle, MainStyles.line]}>
-            <Text style={styles.iconStyle} />
-            <Text style={MainStyles.titleStyle}>车牌号</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="请输入车牌号"
-              maxLength="20"
-              onChangeText={this.inputCarNum.bind(this)}
-              value={carNum}
-            />
-          </View>
-          <View style={[MainStyles.itemStyle, MainStyles.line]}>
-            <Text style={styles.iconStyle} />
-            <Text style={MainStyles.titleStyle}>所属物流公司</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="请输入所属物流公司"
-              maxLength="20"
-              onChangeText={this.inputMerchantName.bind(this)}
-              value={merchantName}
-            />
-          </View>
-          <TouchableOpacity onPress={this.chooseCarType.bind(this)}>
-            <View style={MainStyles.itemStyle}>
-              <Text style={styles.iconStyle} />
-              <Text style={MainStyles.titleStyle}>车辆信息</Text>
-              {carTypeDesc ? (
-                <Text style={MainStyles.textStyle}>{carTypeDesc}</Text>
-              ) : (
-                <Text style={MainStyles.textStyle}>请选择车辆类型</Text>
-              )}
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.btnWrapper}>
-          <Button
-            btnStyle={[styles.btnStyle, DetailsStyles.btnLeft]}
-            text={'取消'}
-            type={'plain'}
+      <SafeAreaViewPlus topColor={theme.themeColor}>
+        <View style={styles.pageWrapper}>
+          <NavigationBar
+            navigation={navigation}
+            leftViewShow={true}
+            title={'添加司机'}
           />
-          <Button btnStyle={[styles.btnStyle]} text={'保存'} type={'round'} />
+          <View style={MainStyles.itemWrapper}>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={styles.iconStyle}>*</Text>
+              <Text style={MainStyles.titleStyle}>姓名</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="请输入司机姓名"
+                maxLength="8"
+                onChangeText={this.inputRemarkName.bind(this)}
+                value={remarkName}
+              />
+            </View>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={styles.iconStyle}>*</Text>
+              <Text style={MainStyles.titleStyle}>联系方式</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="请输入司机联系方式"
+                maxLength="11"
+                onChangeText={this.inputMobile.bind(this)}
+                value={mobile}
+              />
+            </View>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={styles.iconStyle}>*</Text>
+              <Text style={MainStyles.titleStyle}>身份证号</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="请输入司机身份证号"
+                maxLength="20"
+                onChangeText={this.inputIdCard.bind(this)}
+                value={idCard}
+              />
+            </View>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={styles.iconStyle} />
+              <Text style={MainStyles.titleStyle}>车牌号</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="请输入车牌号"
+                maxLength="20"
+                onChangeText={this.inputCarNum.bind(this)}
+                value={carNum}
+              />
+            </View>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={styles.iconStyle} />
+              <Text style={MainStyles.titleStyle}>所属物流公司</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="请输入所属物流公司"
+                maxLength="20"
+                onChangeText={this.inputMerchantName.bind(this)}
+                value={merchantName}
+              />
+            </View>
+            <TouchableOpacity onPress={this.chooseCarType.bind(this)}>
+              <View style={MainStyles.itemStyle}>
+                <Text style={styles.iconStyle} />
+                <Text style={MainStyles.titleStyle}>车辆信息</Text>
+                {carTypeDesc ? (
+                  <Text style={MainStyles.textStyle}>{carTypeDesc}</Text>
+                ) : (
+                  <Text style={MainStyles.textStyle}>请选择车辆类型</Text>
+                )}
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.btnWrapper}>
+            <Button
+              btnStyle={[styles.btnStyle, DetailsStyles.btnLeft]}
+              text={'取消'}
+              type={'plain'}
+            />
+            <Button btnStyle={[styles.btnStyle]} text={'保存'} type={'round'} />
+          </View>
         </View>
-      </View>
+      </SafeAreaViewPlus>
     );
   }
 }

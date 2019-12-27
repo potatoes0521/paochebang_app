@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 17:13:31
+ * @LastEditTime : 2019-12-27 17:46:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,6 +17,7 @@ import {
   Linking,
 } from 'react-native';
 import {appVersion} from '../../api/requestHandle.js';
+import {connect} from 'react-redux';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
@@ -30,7 +31,7 @@ import sellingImage from '../../assets/image/mine/selling_new.png';
 import vacancyImage from '../../assets/image/mine/vacancy_new.png';
 import defaultImage from '../../assets/image/mine/default_icon.png';
 
-export default class Mine extends Component {
+class Mine extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -317,3 +318,10 @@ const styles = StyleSheet.create({
     color: GlobalStyles.themeHColor,
   },
 });
+// 如果需要引入store
+const mapStateToProps = state => {
+  return {
+    userInfo: state.user_info.userInfo,
+  };
+};
+export default connect(mapStateToProps)(Mine);
