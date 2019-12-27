@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-29 15:28:01
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 09:38:19
+ * @LastEditTime : 2019-12-27 12:04:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -284,6 +284,7 @@ const styles = StyleSheet.create({
   recommendText: {
     fontSize: 20,
     fontWeight: '700',
+    color: GlobalStyles.themeFontColor,
     marginHorizontal: 7,
   },
   recommendList: {
