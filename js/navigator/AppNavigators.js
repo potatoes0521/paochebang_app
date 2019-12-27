@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 09:44:02
+ * @LastEditors  : guorui
+ * @LastEditTime : 2019-12-27 10:57:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,6 +20,7 @@ import DriverDetailsPage from '../pages/DriverDetails/DriverDetails';
 import DriverEditPage from '../pages/DriverEdit/DriverEdit';
 import MineEditPage from '../pages/MineEdit/MineEdit';
 import RegisterPage from '../pages/Register/Register';
+import AuthenticationPage from '../pages/Authentication/Authentication';
 import MineDetailsPage from '../pages/MineDetails/MineDetails';
 import InformationPage from '../pages/Information/Information';
 import SellingDetailsPage from '../pages/SellingDetails/SellingDetails';
@@ -133,6 +134,13 @@ const MainNavigator = createStackNavigator(
     //提现
     CashPage: {
       screen: CashPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    //实名认证
+    AuthenticationPage: {
+      screen: AuthenticationPage,
       navigationOptions: {
         header: null,
       },
