@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 15:31:36
+ * @LastEditTime : 2019-12-27 15:45:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -171,6 +171,7 @@ class OrderDetails extends Component {
    */
   buttonsHandle(key) {
     console.log('key', key);
+    let {orderCode} = this.state;
     switch (key) {
       case 'receiptOrder': // 接单
         this.receiptOrder();
@@ -179,12 +180,40 @@ class OrderDetails extends Component {
         this.cancelOrder();
         break;
       case 'pickUpListEdit': //上传提车单
+        NavigationUtil.goPage(
+          {
+            type: 'upload-pick',
+            orderCode,
+          },
+          'UploadImagePage',
+        );
         break;
       case 'pickUpListSee': //查看提车单
+        NavigationUtil.goPage(
+          {
+            type: 'see-pick',
+            orderCode,
+          },
+          'UploadImagePage',
+        );
         break;
       case 'deliveryListEdit': //上传交车单
+        NavigationUtil.goPage(
+          {
+            type: 'upload-delivery',
+            orderCode,
+          },
+          'UploadImagePage',
+        );
         break;
       case 'deliveryListSee': //查看交车单
+        NavigationUtil.goPage(
+          {
+            type: 'see-delivery',
+            orderCode,
+          },
+          'UploadImagePage',
+        );
         break;
       case 'confirmDriverInfo': //确认司机信息
         break;

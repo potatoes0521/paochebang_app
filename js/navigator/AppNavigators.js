@@ -3,7 +3,7 @@
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 11:16:34
+ * @LastEditTime : 2019-12-27 15:34:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -25,6 +25,7 @@ import InformationPage from '../pages/Information/Information';
 import SellingDetailsPage from '../pages/SellingDetails/SellingDetails';
 import VacancyDetailsPage from '../pages/VacancyDetails/VacancyDetails';
 // import ChooseCityPage from '../pages/ChooseCity/ChooseCity';
+import UploadImagePage from '../pages/UploadImage/UploadImage.js';
 
 export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一个初始化的路由名
 
@@ -133,6 +134,12 @@ const MainNavigator = createStackNavigator(
     //提现
     CashPage: {
       screen: CashPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    UploadImagePage: {
+      screen: UploadImagePage,
       navigationOptions: {
         header: null,
       },

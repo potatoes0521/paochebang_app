@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 10:51:34
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 15:31:49
+ * @LastEditTime : 2019-12-27 15:55:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
 import ButtonItem from '../../OrderDetails/components/Buttons';
 import {handleOrderButtons} from '../../../config/button_config.js';
-import NavigationUtils from '../../../navigator/NavigationUtils';
+import NavigationUtil from '../../../navigator/NavigationUtils';
 export default class OrderItem extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +30,7 @@ export default class OrderItem extends Component {
    * @return void
    */
   navigatorToDetails(item) {
-    NavigationUtils.goPage(item, 'OrderDetailsPage');
+    NavigationUtil.goPage(item, 'OrderDetailsPage');
   }
   /**
    * 按钮事件
@@ -38,8 +38,7 @@ export default class OrderItem extends Component {
    * @return void
    */
   buttonsHandle(key) {
-    console.log('key', key);
-    console.log(this.props);
+    let orderData = this.props.itemData.item;
     switch (key) {
       case 'receiptOrder': // 接单
         this.receiptOrder();
@@ -48,12 +47,44 @@ export default class OrderItem extends Component {
         this.cancelOrder();
         break;
       case 'pickUpListEdit': //上传提车单
+        NavigationUtil.goPage(
+          {
+            type: 'upload',
+            pageType: 'pick',
+            orderCode: orderData.orderCode,
+          },
+          'UploadImagePage',
+        );
         break;
       case 'pickUpListSee': //查看提车单
+        NavigationUtil.goPage(
+          {
+            type: 'see',
+            pageType: 'pick',
+            orderCode: orderData.orderCode,
+          },
+          'UploadImagePage',
+        );
         break;
       case 'deliveryListEdit': //上传交车单
+        NavigationUtil.goPage(
+          {
+            type: 'upload',
+            pageType: 'delivery',
+            orderCode: orderData.orderCode,
+          },
+          'UploadImagePage',
+        );
         break;
       case 'deliveryListSee': //查看交车单
+        NavigationUtil.goPage(
+          {
+            type: 'see',
+            pageType: 'delivery',
+            orderCode: orderData.orderCode,
+          },
+          'UploadImagePage',
+        );
         break;
       case 'confirmDriverInfo': //确认司机信息
         break;
@@ -159,7 +190,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 6,
+    paddingVertical: 3,
   },
   city: {
     flex: 1,
