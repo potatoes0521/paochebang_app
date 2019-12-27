@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 16:34:43
+ * @LastEditors  : guorui
+ * @LastEditTime : 2019-12-26 14:10:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,6 +19,7 @@ import {
 import {appVersion} from '../../api/requestHandle.js';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
+import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import DetailsStyles from '../../assets/css/DetailsStyles';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import accountImage from '../../assets/image/mine/account.png';
@@ -33,40 +34,48 @@ export default class Mine extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.backPress = new BackPressComponent({
+      backPress: () => this.onBackPress(),
+    });
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.backPress.componentDidMount();
+  }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.backPress.componentWillUnmount();
+  }
+  onBackPress() {
+    NavigationUtil.goBack(this.props.navigation);
+    return true;
+  }
   /**
    * 跳转注册页
    * @return void
    */
   navigatorRegister(e) {
     e.stopPropagation();
-    console.log(1);
-    // const {navigation} = e;
-    // navigation.navigate('Register');
+    NavigationUtil.goPage(e, 'RegisterPage');
   }
   /**
    * 跳转页面
    * @return void
    */
   navigatorPage(pageName) {
-    console.log(pageName, 'e');
     if (!pageName) {
       return;
     }
     let pageUrl = '';
     switch (pageName) {
       case 'account':
-        pageUrl = '';
+        pageUrl = 'AccountPage';
         break;
       case 'driver':
-        pageUrl = '';
+        pageUrl = 'DriverPage';
         break;
       case 'mine':
-        pageUrl = '';
+        pageUrl = 'MineDetailsPage';
         break;
       case 'name':
         pageUrl = '';
@@ -108,39 +117,37 @@ export default class Mine extends Component {
         <NavigationBar title={'我的'} />
         <TouchableOpacity onPress={() => this.navigatorPage('mine')}>
           <View style={styles.userWrapper}>
-            <View style={styles.left}>
-              <View style={styles.userImage}>
-                <Image style={styles.imageStyle} source={defaultImage} />
-              </View>
-              {/* <View style={styles.userInfo}>
-                <View style={styles.userName}>
-                  <Text style={DetailsStyles.labelText}>郭仨心</Text>
+            <TouchableOpacity onPress={this.navigatorRegister.bind(this)}>
+              <View style={styles.left}>
+                <View style={styles.userImage}>
+                  <Image style={styles.imageStyle} source={defaultImage} />
                 </View>
-                <View style={styles.certification}> */}
-              {/* <Image
-                    style={styles.certificationImage}
-                    source={{
-                      uri:
-                        'https://resource.paoche56.com/paochebang/mp_img/mine/already.png',
-                    }}
-                  /> */}
-              {/* <Image
-                    style={styles.certificationImage}
-                    source={{
-                      uri:
-                        'https://resource.paoche56.com/paochebang/mp_img/mine/never.png',
-                    }}
-                  />
+                {/* <View style={styles.userInfo}>
+                  <View style={styles.userName}>
+                    <Text style={DetailsStyles.labelText}>郭仨心</Text>
+                  </View>
+                  <View style={styles.certification}> */}
+                {/* <Image
+                      style={styles.certificationImage}
+                      source={{
+                        uri:
+                          'https://resource.paoche56.com/paochebang/mp_img/mine/already.png',
+                      }}
+                    /> */}
+                {/* <Image
+                      style={styles.certificationImage}
+                      source={{
+                        uri:
+                          'https://resource.paoche56.com/paochebang/mp_img/mine/never.png',
+                      }}
+                    />
+                  </View>
+                </View> */}
+                <View style={styles.userInfo}>
+                  <Text style={DetailsStyles.labelText}>注册/登录</Text>
                 </View>
-              </View> */}
-              <View style={styles.userInfo}>
-                <Text
-                  style={DetailsStyles.labelText}
-                  onPress={this.navigatorRegister.bind(this)}>
-                  注册/登录
-                </Text>
               </View>
-            </View>
+            </TouchableOpacity>
             <View style={styles.right}>
               <Text style={styles.icon}>&#xe61d;</Text>
             </View>

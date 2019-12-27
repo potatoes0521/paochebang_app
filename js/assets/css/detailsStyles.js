@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 详情通用css
  * @Date: 2019-12-04 11:36:02
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 16:31:52
+ * @LastEditors  : guorui
+ * @LastEditTime : 2019-12-26 15:38:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */

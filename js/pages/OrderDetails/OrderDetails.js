@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 16:34:59
+ * @LastEditors  : guorui
+ * @LastEditTime : 2019-12-25 15:09:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -56,6 +56,7 @@ class OrderDetails extends Component {
       backPress: () => this.onBackPress(),
     });
     this.pageParams = {};
+    this.toastRef = React.createRef();
   }
 
   componentDidMount() {
@@ -144,7 +145,7 @@ class OrderDetails extends Component {
       orderCode: this.state.orderCode,
     };
     api.order.receiptOrderData(sendData, this).then(() => {
-      this.refs.toast.show('接单成功');
+      this.toastRef.current.show('接单成功');
       setTimeout(() => {
         this.getOrderDetails();
       }, 1800);
@@ -162,7 +163,7 @@ class OrderDetails extends Component {
       orderCode: this.state.orderCode,
     };
     api.order.abandonOrderData(sendData, this).then(() => {
-      this.refs.toast.show('放弃接单成功');
+      this.toastRef.current.show('放弃接单成功');
       setTimeout(() => {
         this.getOrderDetails();
       }, 1800);
@@ -240,8 +241,8 @@ class OrderDetails extends Component {
       vins,
       transferSettlePriceDesc,
       buttons,
-      isShow,
-      statusDescs,
+      // isShow,
+      // statusDescs,
     } = this.state;
     const buttonsList =
       buttons &&
@@ -475,7 +476,11 @@ class OrderDetails extends Component {
                 /> */}
             </View>
           ) : null}
-          <Toast ref="toast" position={'center'} defaultCloseDelay={3000} />
+          <Toast
+            ref={this.toastRef}
+            position={'center'}
+            defaultCloseDelay={3000}
+          />
         </View>
       </SafeAreaViewPlus>
     );

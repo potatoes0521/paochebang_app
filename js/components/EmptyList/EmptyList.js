@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-23 11:47:17
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-25 10:35:17
+ * @LastEditors  : guorui
+ * @LastEditTime : 2019-12-26 15:17:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,7 +27,7 @@ export default class EmptyList extends Component {
 
   componentWillUnmount() {}
   navigatorTo() {
-    let {pageType} = this.props;
+    let {pageType, navigation} = this.props;
     switch (pageType) {
       case 'selling':
       case 'selling_index':
@@ -36,10 +36,10 @@ export default class EmptyList extends Component {
       case 'vacancy_index':
         break;
       case 'driver':
+        navigation.navigate('DriverEdit');
         break;
       case 'order':
       case 'offer':
-        let {navigation} = this.props;
         navigation.navigate('Index');
         break;
       case 'login_offer':
@@ -101,12 +101,14 @@ export default class EmptyList extends Component {
           <Image style={styles.image} source={imgSrc} />
         </View>
         <Text style={styles.tips}>{tips}</Text>
-        <Button
-          text={text}
-          type={'round'}
-          btnStyle={[styles.btn]}
-          onClick={this.navigatorTo.bind(this)}
-        />
+        {text ? (
+          <Button
+            text={text}
+            type={'round'}
+            btnStyle={[styles.btn]}
+            onClick={this.navigatorTo.bind(this)}
+          />
+        ) : null}
       </View>
     );
   }

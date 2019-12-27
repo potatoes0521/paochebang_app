@@ -3,33 +3,222 @@
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-23 18:14:47
+ * @LastEditTime : 2019-12-26 10:35:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Text,
+  FlatList,
+  RefreshControl,
+  TouchableOpacity,
+} from 'react-native';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
+import NavigationUtil from '../../navigator/NavigationUtils';
+import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
+import GlobalStyles from '../../assets/css/GlobalStyles';
+import DetailsStyles from '../../assets/css/DetailsStyles';
+import DriverItem from './components/DriverItem.js';
+import EmptyList from '../../components/EmptyList/EmptyList.js';
+import api from '../../api/index';
+import BottomLoading from '../../components/BottomLoading/BottomLoading.js';
+import Toast from 'react-native-easy-toast';
 
-class Order extends Component {
+class Driver extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      selectParam: '',
+      totalCount: 0,
+      driverListData: [],
+      isLoading: false,
+    };
+    this.driverPage = 1;
+    this.driverFlag = false;
+    this.toastRef = React.createRef();
+    this.backPress = new BackPressComponent({
+      backPress: () => this.onBackPress(),
+    });
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.getAllDriverList();
+    this.backPress.componentDidMount();
+  }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.backPress.componentWillUnmount();
+  }
+  onBackPress() {
+    NavigationUtil.goBack(this.props.navigation);
+    return true;
+  }
+  /**
+   * 获取司机列表
+   * @param {String} selectParam 根据什么查询
+   * @param {Number} pageNum 页数
+   * @param {Number} pageSize 条数
+   * @return void
+   */
+  getAllDriverList(selectParam = '', pageNum = 1, pageSize = 10) {
+    let sendData = {
+      userId: this.props.userInfo.userId,
+      selectParam,
+      pageNum,
+      pageSize,
+    };
+    let {driverListData} = this.state;
+    api.driver.getDriverList(sendData, this).then(res => {
+      const data = res.data;
+      if (!data) {
+        return;
+      }
+      if (!data && selectParam) {
+        this.toastRef.current.show('没搜索到结果');
+        return;
+      }
+      if (data && data.length < pageSize) {
+        this.driverFlag = true;
+      }
+      this.driverPage += 1;
+      if (pageNum === 1) {
+        this.setState({
+          driverListData: [...data],
+          totalCount: res.totalCount,
+        });
+      } else {
+        this.setState({
+          driverListData: [...driverListData, ...data],
+        });
+      }
+    });
+  }
+  /**
+   * 搜索框
+   * @param {Type} e 输入的值
+   * @return void
+   */
+  searchInput(value) {
+    this.setState({
+      selectParam: value,
+    });
+  }
+  /**
+   * 提交搜索
+   * @return void
+   */
+  submitSearch() {
+    this.driverPage = 1;
+    this.driverFlag = false;
+    this.getAllDriverList(this.state.selectParam, this.driverPage);
+  }
+  /**
+   * 清除输入框内容
+   * @return void
+   */
+  clearSearchInput() {
+    this.setState({
+      selectParam: '',
+    });
+    this.driverPage = 1;
+    this.driverFlag = false;
+    this.getAllDriverList('', this.driverPage);
+  }
+  genIndicator() {
+    let {driverListData} = this.state;
+    return driverListData && driverListData.length >= 10 && !this.driverFlag ? (
+      <BottomLoading />
+    ) : null;
+  }
+  /**
+   * 跳转我的基本信息页面
+   * @return void
+   */
+  navigationToMine(e) {
+    NavigationUtil.goPage(e, 'MineDetailsPage');
+  }
 
   render() {
     const {navigation} = this.props;
+    let {selectParam, totalCount} = this.state;
     return (
       <View style={styles.pageWrapper}>
         <NavigationBar
           navigation={navigation}
           leftViewShow={true}
           title={'司机信息列表'}
+        />
+        <View style={styles.topWrapper}>
+          <View style={styles.searchWrapper}>
+            <View style={styles.searchIcon}>
+              <Text style={styles.iconStyle}>&#xe604;</Text>
+            </View>
+            <View style={styles.searchInput}>
+              <TextInput
+                style={styles.input}
+                placeholder="输入姓名/联系方式进行搜索"
+                onSubmitEditing={this.submitSearch.bind(this)}
+                // placeholderTextColor={styles.placeholderStyle}
+                // inlineImageLeft
+                onChangeText={this.searchInput.bind(this)}
+                value={selectParam}
+              />
+            </View>
+            {selectParam ? (
+              <TouchableOpacity onPress={() => this.clearSearchInput()}>
+                <View style={styles.closeIcon}>
+                  <Text style={styles.closeStyle}>&#xe614;</Text>
+                </View>
+              </TouchableOpacity>
+            ) : null}
+          </View>
+          <View style={styles.numWrapper}>
+            <Text style={styles.fontStyle}>共</Text>
+            <Text style={styles.numStyle}>{totalCount}</Text>
+            <Text style={styles.fontStyle}>个司机</Text>
+          </View>
+          <TouchableOpacity onPress={this.navigationToMine.bind(this)}>
+            <View style={styles.mineWrapper}>
+              <Text style={DetailsStyles.labelText}>我的名片</Text>
+              <Text style={styles.icon}>&#xe61d;</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.bottomWrapper}>
+          <FlatList
+            data={this.state.driverListData}
+            renderItem={data => <DriverItem itemData={data.item} />}
+            refreshControl={
+              <RefreshControl
+                title="Loading..."
+                colors={[GlobalStyles.themeColor]}
+                refreshing={this.state.isLoading}
+                onRefresh={() => this.getAllDriverList({refresh: true})}
+                tintColor={GlobalStyles.themeColor}
+              />
+            }
+            ListFooterComponent={() => this.genIndicator()}
+            onEndReached={() => {
+              this.getAllDriverList(this, {});
+            }}
+            ListEmptyComponent={() => (
+              <EmptyList {...this.props} pageType={'driver'} />
+            )}
+            keyExtractor={data => {
+              return data.driverId + 'driver';
+            }}
+          />
+        </View>
+        <Toast
+          ref={this.toastRef}
+          position={'center'}
+          defaultCloseDelay={3000}
         />
       </View>
     );
@@ -39,13 +228,97 @@ class Order extends Component {
 const styles = StyleSheet.create({
   pageWrapper: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+  },
+  searchWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 40,
+    backgroundColor: '#F5F5F5',
+    marginHorizontal: 12,
+    marginVertical: 8,
+    borderRadius: 4,
+    paddingLeft: 12,
+  },
+  searchIcon: {
+    width: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  iconStyle: {
+    fontSize: 14,
+    fontFamily: 'iconfont',
+    color: GlobalStyles.themeHColor,
+  },
+  closeIcon: {
+    width: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'right',
+    marginRight: 12,
+  },
+  closeStyle: {
+    fontSize: 20,
+    fontFamily: 'iconfont',
+    color: GlobalStyles.themeHColor,
+  },
+  searchInput: {
+    flex: 1,
+    textAlign: 'left',
+  },
+  input: {
+    flex: 1,
+  },
+  placeholderStyle: {
+    fontSize: 14,
+    color: GlobalStyles.themeDisabled,
+  },
+  numWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingRight: 24,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f5f5f5',
+    paddingTop: 4,
+    paddingBottom: 10,
+  },
+  fontStyle: {
+    fontSize: 16,
+    color: GlobalStyles.themeFontColor,
+  },
+  numStyle: {
+    fontSize: 20,
+    color: GlobalStyles.themeColor,
+  },
+  mineWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+    borderBottomWidth: 10,
+    borderBottomColor: '#F5F5F5',
+  },
+  icon: {
+    fontSize: 16,
+    fontFamily: 'iconfont',
+    color: GlobalStyles.themeHColor,
   },
 });
+
+Driver.defaultProps = {
+  onClick: () => {},
+};
+
+Driver.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
+
 // 如果需要引入store
 const mapStateToProps = state => {
   return {
     userInfo: state.user_info.userInfo,
   };
 };
-export default connect(mapStateToProps)(Order);
+export default connect(mapStateToProps)(Driver);

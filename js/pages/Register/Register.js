@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 17:15:51
+ * @LastEditors  : guorui
+ * @LastEditTime : 2019-12-26 10:18:35
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,7 +26,7 @@ import GlobalStyles from '../../assets/css/GlobalStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import LoginLogo from '../../assets/image/register/paoche_logo.png';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
-// import NavigationBar from '../../components/NavigatorBar/NavigationBar';
+import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import Toast from 'react-native-easy-toast';
 
 class Register extends Component {
@@ -41,6 +41,7 @@ class Register extends Component {
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
     });
+    this.toastRef = React.createRef();
   }
 
   componentDidMount() {
@@ -83,7 +84,7 @@ class Register extends Component {
       return;
     }
     if (!phoneNumberPatter.test(phoneNumber)) {
-      this.refs.toast.show('手机号输入格式有误');
+      this.toastRef.current.show('手机号输入格式有误');
       return;
     }
     let sendData = {
@@ -94,7 +95,7 @@ class Register extends Component {
     });
     this.handleCountDown(countDown, timerFlag);
     api.user.getVerificationCode(sendData, this).then(() => {
-      this.refs.toast.show('验证码已发送');
+      this.toastRef.current.show('验证码已发送');
     });
   }
   /**
@@ -135,11 +136,11 @@ class Register extends Component {
   submitRegister() {
     let {phoneNumber, verificationCode} = this.state;
     if (!phoneNumberPatter.test(phoneNumber)) {
-      this.refs.toast.show('手机号输入格式有误');
+      this.toastRef.current.show('手机号输入格式有误');
       return;
     }
     if (!verificationCodePatter.test(verificationCode)) {
-      this.refs.toast.show('验证码格式有误');
+      this.toastRef.current.show('验证码格式有误');
       return;
     }
     this.handleRegister(phoneNumber, verificationCode);
@@ -191,8 +192,14 @@ class Register extends Component {
 
   render() {
     let {phoneNumber, verificationCode, timerFlag, countDown} = this.state;
+    const {navigation} = this.props;
     return (
       <View style={styles.pageWrapper}>
+        <NavigationBar
+          navigation={navigation}
+          leftViewShow={true}
+          title={'跑车帮'}
+        />
         <View style={styles.imgWrapper}>
           <Image source={LoginLogo} style={styles.imgStyle} />
         </View>
@@ -231,7 +238,11 @@ class Register extends Component {
             onClick={this.submitRegister.bind(this)}
           />
         </View>
-        <Toast ref="toast" position={'center'} defaultCloseDelay={3000} />
+        <Toast
+          ref={this.toastRef}
+          position={'center'}
+          defaultCloseDelay={3000}
+        />
       </View>
     );
   }
