@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-20 16:38:16
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 10:50:29
+ * @LastEditTime : 2019-12-27 10:56:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
 import NavigationUtil from '../../../navigator/NavigationUtils.js';
 import DetailsStyles from '../../../assets/css/DetailsStyles';
+import CardListItemStyles from '../../../assets/css/CardListItemStyle';
 export default class OrderItem extends Component {
   constructor(props) {
     super(props);
@@ -109,65 +110,7 @@ export default class OrderItem extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  itemWrapper: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-    paddingHorizontal: 12,
-    paddingBottom: 7,
-    marginBottom: 10,
-  },
-  title: {
-    paddingHorizontal: 12,
-    height: 40,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderBottomColor: '#f5f5f5',
-    borderBottomWidth: 1,
-  },
-  time: {
-    color: GlobalStyles.themeFontColor,
-    fontSize: 14,
-  },
-  status: {
-    color: GlobalStyles.themeFontColor,
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  main: {
-    paddingHorizontal: 12,
-  },
-  city: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingTop: 10,
-    paddingBottom: 3,
-  },
-  cityText: {
-    color: GlobalStyles.themeFontColor,
-    fontSize: 16,
-    lineHeight: 22,
-    fontWeight: '700',
-  },
-  icon: {
-    fontSize: 20,
-    marginHorizontal: 2,
-  },
-  item: {
-    paddingVertical: 3,
-  },
-  itemText: {
-    fontSize: 14,
-    color: GlobalStyles.themeFontColor,
-  },
-  themeColor: {
-    color: GlobalStyles.themeColor,
-  },
-  themeSubColor: {
-    color: GlobalStyles.themeSubColor,
-  },
-});
+const styles = StyleSheet.create(CardListItemStyles);
 
 OrderItem.defaultProps = {
   item: {},
