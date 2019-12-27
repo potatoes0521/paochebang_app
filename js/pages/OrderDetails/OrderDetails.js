@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
- * @LastEditors  : guorui
- * @LastEditTime : 2019-12-25 15:09:03
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-27 09:51:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -60,11 +60,11 @@ class OrderDetails extends Component {
   }
 
   componentDidMount() {
-    // const {navigation} = this.props;
-    // const {state} = navigation;
-    // const {params} = state;
-    // this.pageParams = params;
-    // this.initData();
+    const {navigation} = this.props;
+    const {state} = navigation;
+    const {params} = state;
+    this.pageParams = params;
+    this.getOrderDetail();
     this.backPress.componentDidMount();
   }
 
@@ -77,9 +77,6 @@ class OrderDetails extends Component {
     return true;
   }
 
-  initData() {
-    // this.getOrderDetail();
-  }
   /**
    * 获取订单详情
    * @return void
@@ -93,35 +90,36 @@ class OrderDetails extends Component {
         orderCode: this.pageParams.orderCode,
       };
       api.order.getOrderDetail(sendData, this).then(res => {
-        if (!res.data) {
+        let data = res.data;
+        if (!data) {
           return;
         }
         this.setState({
-          orderCode: res.orderCode,
-          abandonTimeDesc: res.abandonTimeDesc,
-          sendCityName: res.inquiryOrder.sendCityName,
-          sendAddress: res.inquiryOrder.sendAddress,
-          sendPerson: res.orderCarriagePerson.sendPerson,
-          sendMobile: res.orderCarriagePerson.sendMobile,
-          sendCardNo: res.orderCarriagePerson.sendCardNo,
-          receiveCityName: res.inquiryOrder.receiveCityName,
-          receiveAddress: res.inquiryOrder.receiveAddress,
-          receivePerson: res.orderCarriagePerson.receivePerson,
-          receiveMobile: res.orderCarriagePerson.receiveMobile,
-          receiveCardNo: res.orderCarriagePerson.receiveCardNo,
-          homeDelivery: res.inquiryOrder.homeDelivery,
-          homeDeliveryDesc: res.inquiryOrder.homeDeliveryDesc,
-          storePickup: res.inquiryOrder.storePickup,
-          storePickupDesc: res.inquiryOrder.storePickupDesc,
-          sendTimeDesc: res.inquiryOrder.sendTimeDesc,
-          carInfo: res.inquiryOrder.carInfo,
-          carAmount: res.inquiryOrder.carAmount,
-          usedType: res.inquiryOrder.usedType,
-          vins: res.vins,
-          transferSettlePriceDesc: res.transferSettlePriceDesc,
-          isActive: res.isActive,
-          buttons: res.buttons,
-          statusDescs: res.statusDescs,
+          orderCode: data.orderCode,
+          abandonTimeDesc: data.abandonTimeDesc,
+          sendCityName: data.inquiryOrder.sendCityName,
+          sendAddress: data.inquiryOrder.sendAddress,
+          sendPerson: data.orderCarriagePerson.sendPerson,
+          sendMobile: data.orderCarriagePerson.sendMobile,
+          sendCardNo: data.orderCarriagePerson.sendCardNo,
+          receiveCityName: data.inquiryOrder.receiveCityName,
+          receiveAddress: data.inquiryOrder.receiveAddress,
+          receivePerson: data.orderCarriagePerson.receivePerson,
+          receiveMobile: data.orderCarriagePerson.receiveMobile,
+          receiveCardNo: data.orderCarriagePerson.receiveCardNo,
+          homeDelivery: data.inquiryOrder.homeDelivery,
+          homeDeliveryDesc: data.inquiryOrder.homeDeliveryDesc,
+          storePickup: data.inquiryOrder.storePickup,
+          storePickupDesc: data.inquiryOrder.storePickupDesc,
+          sendTimeDesc: data.inquiryOrder.sendTimeDesc,
+          carInfo: data.inquiryOrder.carInfo,
+          carAmount: data.inquiryOrder.carAmount,
+          usedType: data.inquiryOrder.usedType,
+          vins: data.vins,
+          transferSettlePriceDesc: data.transferSettlePriceDesc,
+          isActive: data.isActive,
+          buttons: data.buttons,
+          statusDescs: data.statusDescs,
         });
       });
     }
@@ -244,6 +242,7 @@ class OrderDetails extends Component {
       // isShow,
       // statusDescs,
     } = this.state;
+    console.log('this,state', this.state);
     const buttonsList =
       buttons &&
       buttons.map(item => {
@@ -281,7 +280,11 @@ class OrderDetails extends Component {
                     </Text>
                   </View>
                 </View>
-                <View style={DetailsStyles.formItem}>
+                <View
+                  style={[
+                    DetailsStyles.formItem,
+                    DetailsStyles.moreTextFormItem,
+                  ]}>
                   <View style={DetailsStyles.formLabel}>
                     <Text style={DetailsStyles.labelText}>详细地址:</Text>
                   </View>
@@ -334,7 +337,11 @@ class OrderDetails extends Component {
                     </Text>
                   </View>
                 </View>
-                <View style={DetailsStyles.formItem}>
+                <View
+                  style={[
+                    DetailsStyles.formItem,
+                    DetailsStyles.moreTextFormItem,
+                  ]}>
                   <View style={DetailsStyles.formLabel}>
                     <Text style={DetailsStyles.labelText}>详细地址:</Text>
                   </View>
@@ -399,7 +406,11 @@ class OrderDetails extends Component {
                     </Text>
                   </View>
                 </View>
-                <View style={DetailsStyles.formItem}>
+                <View
+                  style={[
+                    DetailsStyles.formItem,
+                    DetailsStyles.moreTextFormItem,
+                  ]}>
                   <View style={DetailsStyles.formLabel}>
                     <Text style={DetailsStyles.labelText}>车辆信息:</Text>
                   </View>
@@ -451,30 +462,7 @@ class OrderDetails extends Component {
             </View>
           </ScrollView>
           {buttons && buttons.length ? (
-            <View style={styles.btnWrapper}>
-              {buttonsList}
-              {/* <Button
-                  btnStyle={[styles.btnStyle]}
-                  fontStyles={[styles.fontStyle]}
-                  type={'plain'}
-                  text={'上传交车单'}
-                  // onClick={this.submitRegister.bind(this)}
-                />
-                <Button
-                  btnStyle={[styles.btnStyle, styles.btnLeft]}
-                  fontStyles={[styles.fontStyle]}
-                  type={'plain'}
-                  text={'上传提车单'}
-                  // onClick={this.submitRegister.bind(this)}
-                />
-                <Button
-                  btnStyle={[styles.btnStyle, styles.btnLeft]}
-                  fontStyles={[styles.fontStyle]}
-                  type={'plain'}
-                  text={'确认司机信息'}
-                  // onClick={this.submitRegister.bind(this)}
-                /> */}
-            </View>
+            <View style={styles.btnWrapper}>{buttonsList}</View>
           ) : null}
           <Toast
             ref={this.toastRef}
@@ -495,7 +483,7 @@ const styles = StyleSheet.create({
   line: {
     paddingBottom: 16,
     borderBottomWidth: 1,
-    borderBottomColor: GlobalStyles.themeDisabled,
+    borderBottomColor: '#f5f5f5',
   },
   marginBottom: {
     marginBottom: 16,

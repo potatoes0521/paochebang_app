@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
- * @LastEditors  : guorui
- * @LastEditTime : 2019-12-26 18:09:34
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-27 09:44:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,6 +12,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 import WelcomePage from '../pages/WelcomePage';
 import HomePage from '../pages/Home';
 import OfferDetailsPage from '../pages/OfferDetails/OfferDetails';
+import OrderDetailsPage from '../pages/OrderDetails/OrderDetails';
 import AccountPage from '../pages/Account/Account';
 import CashPage from '../pages/Cash/Cash';
 import DriverPage from '../pages/Driver/Driver';
@@ -23,14 +24,14 @@ import MineDetailsPage from '../pages/MineDetails/MineDetails';
 import InformationPage from '../pages/Information/Information';
 import SellingDetailsPage from '../pages/SellingDetails/SellingDetails';
 import VacancyDetailsPage from '../pages/VacancyDetails/VacancyDetails';
-import ChooseCityPage from '../pages/ChooseCity/ChooseCity';
+// import ChooseCityPage from '../pages/ChooseCity/ChooseCity';
 
 export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一个初始化的路由名
 
 const InitNavigator = createStackNavigator({
   WelcomePage: {
-    // screen: WelcomePage,
-    screen: CashPage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
+    screen: WelcomePage,
+    // screen: CashPage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
     navigationOptions: {
       header: null, // 隐藏头部
     },
@@ -48,6 +49,13 @@ const MainNavigator = createStackNavigator(
     // 询价/报价详情
     OfferDetailsPage: {
       screen: OfferDetailsPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    // 询价/报价详情
+    OrderDetailsPage: {
+      screen: OrderDetailsPage,
       navigationOptions: {
         header: null,
       },

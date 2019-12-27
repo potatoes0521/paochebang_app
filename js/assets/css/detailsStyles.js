@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 详情通用css
  * @Date: 2019-12-04 11:36:02
- * @LastEditors  : guorui
- * @LastEditTime : 2019-12-26 15:38:08
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-27 09:52:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,6 +23,7 @@ export default {
     justifyContent: 'space-between',
     paddingVertical: 8,
     paddingHorizontal: 8,
+    lineHeight: 21,
   },
   moreTextFormItem: {
     alignItems: 'stretch',
