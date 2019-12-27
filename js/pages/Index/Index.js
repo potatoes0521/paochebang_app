@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-29 15:28:01
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 17:01:39
+ * @LastEditTime : 2019-12-27 09:36:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -73,6 +73,7 @@ class Index extends Component {
     api.index.getBannerList(sendData, this).then(res => {
       this.setState({
         bannerListData: res.data || [],
+        autoplay: true,
       });
     });
   }
@@ -103,18 +104,20 @@ class Index extends Component {
   }
   render() {
     let {bannerListData, recommendData, failLoading} = this.state;
-    const bannerList = bannerListData.map(item => {
-      return (
-        <TouchableOpacity style={styles.swiperItem} key={item.id}>
-          <Image
-            style={styles.swiperItemImage}
-            source={{
-              uri: item.img,
-            }}
-          />
-        </TouchableOpacity>
-      );
-    });
+    const bannerList =
+      bannerListData &&
+      bannerListData.map(item => {
+        return (
+          <TouchableOpacity style={styles.swiperItem} key={item.id}>
+            <Image
+              style={styles.swiperItemImage}
+              source={{
+                uri: item.img,
+              }}
+            />
+          </TouchableOpacity>
+        );
+      });
     const recommendList = recommendData.map(item => {
       return <SellingItem key={item.saleToPalletId} itemData={item} />;
     });
@@ -122,16 +125,19 @@ class Index extends Component {
       <View style={styles.pageWrapper}>
         <NavigationBar title={'跑车帮'} />
         <ScrollView>
-          <Swiper
-            style={styles.swiperWrapper}
-            autoplay={true}
-            autoplayTimeout={3}
-            dot={<View style={styles.swiperDot} />}
-            activeDot={
-              <View style={[styles.swiperDot, styles.ActiveSwiperDot]} />
-            }>
+          <View style={styles.swiperWrapper}>
             {bannerListData && bannerListData.length ? (
-              bannerList
+              <Swiper
+                style={styles.swiperWrapper}
+                key={item => item.id + ''}
+                autoplay={this.state.autoplay}
+                autoplayTimeout={3}
+                dot={<View style={styles.swiperDot} />}
+                activeDot={
+                  <View style={[styles.swiperDot, styles.ActiveSwiperDot]} />
+                }>
+                {bannerList}
+              </Swiper>
             ) : (
               <View style={styles.swiperItem}>
                 <ImageBackground
@@ -143,7 +149,7 @@ class Index extends Component {
                 />
               </View>
             )}
-          </Swiper>
+          </View>
           <View style={styles.tabs}>
             <View style={styles.tabWrapper}>
               <TouchableOpacity
