@@ -3,7 +3,7 @@
  * @description: 公共api接口
  * @Date: 2019-12-02 11:49:37
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-25 11:36:11
+ * @LastEditTime : 2019-12-27 17:11:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,6 +15,7 @@ import selling from './modules/selling.js'; // 卖板接口
 import vacancy from './modules/vacancy.js'; // 空位接口
 import driver from './modules/driver.js'; // 司机接口
 import account from './modules/account.js'; // 账户接口
+import line from './modules/line.js'; //线路接口
 
 export default {
   user,
@@ -25,4 +26,5 @@ export default {
   vacancy,
   driver,
   account,
+  line,
 };
