@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-22 16:58:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-25 15:22:06
+ * @LastEditTime : 2019-12-27 10:50:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,7 +12,7 @@ import React, {Component} from 'react';
 import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import OrderItem from '../../../components/OrderItem/OrderItem';
+import ListItem from './ListItem';
 import BottomLoading from '../../../components/BottomLoading/BottomLoading.js';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
 import EmptyList from '../../../components/EmptyList/EmptyList.js';
@@ -92,7 +92,7 @@ class OfferList extends Component {
       <View style={styles.listWrapper}>
         <FlatList
           data={this.state.offerData}
-          renderItem={data => <OrderItem type={'offer'} item={data} />}
+          renderItem={data => <ListItem type={'offer'} item={data} />}
           refreshControl={
             <RefreshControl
               title="Loading..."

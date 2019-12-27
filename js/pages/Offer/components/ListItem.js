@@ -4,16 +4,16 @@
  * @path: 引入路径
  * @Date: 2019-12-20 16:38:16
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 16:33:04
+ * @LastEditTime : 2019-12-27 10:50:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
-import GlobalStyles from '../../assets/css/GlobalStyles';
-import NavigationUtil from '../../navigator/NavigationUtils.js';
-import DetailsStyles from '../../assets/css/DetailsStyles';
+import GlobalStyles from '../../../assets/css/GlobalStyles';
+import NavigationUtil from '../../../navigator/NavigationUtils.js';
+import DetailsStyles from '../../../assets/css/DetailsStyles';
 export default class OrderItem extends Component {
   constructor(props) {
     super(props);
