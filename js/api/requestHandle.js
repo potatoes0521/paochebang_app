@@ -4,7 +4,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 10:21:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 13:23:17
+ * @LastEditTime : 2019-12-27 14:28:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -50,10 +50,13 @@ class HttpRequest {
         'content-type': contentType,
         'user-login': headerUserLogin,
         sign: sign || '',
+        // 'terminal-type': 3, // 终端类型  1 小程序   2 H5  3 APP 4 运营后台
         'terminal-type': 1, // 终端类型  1 小程序   2 H5  3 APP 4 运营后台
+        // 'source-id': 2, // 1 跑车帮小程序 2 跑车帮app 3 跑车物流小程序 4 跑车物流运营平台
         'source-id': 1, // 1 跑车帮小程序 2 跑车帮app 3 跑车物流小程序 4 跑车物流运营平台
         'system-info': userInfo.userAgent || '', // 系统信息
         'app-version': appVersion, // 版本号
+        // 'app-type': 4, // 1 微信小程序 2 支付宝小程序  3 PC运营后台
         'app-type': 1, // 1 微信小程序 2 支付宝小程序  3 PC运营后台
         'system-id': 1, // 1 跑车帮   2 跑车物流  3 运营后台
       },

@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 10:26:39
+ * @LastEditTime : 2019-12-27 15:31:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,8 +12,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import api from '../../api';
-import Button from '../../components/Button/Button.js';
-import GlobalStyles from '../../assets/css/GlobalStyles';
+// import GlobalStyles from '../../assets/css/GlobalStyles';
 import DetailsStyles from '../../assets/css/DetailsStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
@@ -21,7 +20,7 @@ import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import Toast from 'react-native-easy-toast';
 import {handleOrderButtons} from '../../config/button_config.js';
-
+import ButtonItem from './components/Buttons';
 class OrderDetails extends Component {
   constructor(props) {
     super(props);
@@ -170,7 +169,8 @@ class OrderDetails extends Component {
    * @param {Type} e 参数描述
    * @return void
    */
-  buttonsFun(key) {
+  buttonsHandle(key) {
+    console.log('key', key);
     switch (key) {
       case 'receiptOrder': // 接单
         this.receiptOrder();
@@ -228,26 +228,11 @@ class OrderDetails extends Component {
       buttons &&
       buttons.map(item => {
         const key = item.key;
-        let btnType = 'plain';
-        let fontStyles = [styles.fontStyle];
-        let btnStyle = [styles.btnStyle, styles.btnRight, styles.btnBorder];
-        if (item.key === 'receiptOrder') {
-          btnType = 'round';
-          btnStyle = [styles.btnStyle];
-          fontStyles = [];
-        }
-        if (item.key === 'confirmDriverInfo') {
-          btnStyle = [styles.btnStyle, styles.btnBorder];
-        }
         return (
-          <Button
+          <ButtonItem
+            onClick={this.buttonsHandle.bind(this)}
             key={key}
-            btnStyle={btnStyle}
-            fontStyles={fontStyles}
-            type={btnType}
-            text={item.name}
-            notFlex={true}
-            onClick={this.buttonsFun.bind(this, item.key)}
+            item={item}
           />
         );
       });
@@ -495,24 +480,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-  },
-  btnStyle: {
-    width: 100,
-    height: 32,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  btnBorder: {
-    borderWidth: 1,
-    borderColor: GlobalStyles.themeDisabled,
-  },
-  fontStyle: {
-    color: GlobalStyles.themeFontColor,
-    fontSize: 14,
-  },
-  btnRight: {
-    marginRight: 16,
   },
 });
 // 如果需要引入store
