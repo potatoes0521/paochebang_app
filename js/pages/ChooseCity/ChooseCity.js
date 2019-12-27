@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-26 09:24:29
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-26 18:59:59
+ * @LastEditTime : 2019-12-27 11:03:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,7 @@ import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
-import Indexes from '../../components/Indexes/Indexes';
+// import Indexes from '../../components/Indexes/Indexes';
 import _flattenDeep from 'lodash/flattenDeep';
 import api from '../../api/index';
 import {TextInput} from 'react-native-gesture-handler';
@@ -94,7 +94,7 @@ class ChooseCity extends Component {
   }
   render() {
     const {theme, navigation} = this.props;
-    const {allCity} = this.state;
+    // const {allCity} = this.state;
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
