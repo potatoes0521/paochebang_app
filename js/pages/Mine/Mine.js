@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-26 14:10:47
+ * @LastEditTime : 2019-12-27 11:17:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -78,7 +78,7 @@ export default class Mine extends Component {
         pageUrl = 'MineDetailsPage';
         break;
       case 'name':
-        pageUrl = '';
+        pageUrl = 'AuthenticationPage';
         break;
       case 'selling':
         pageUrl = '';

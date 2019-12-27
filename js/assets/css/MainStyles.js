@@ -1,12 +1,13 @@
 /*
- * @Author: liuYang
- * @description: 详情通用css
- * @Date: 2019-12-04 11:36:02
+ * @Author: guorui
+ * @description: 请填写描述信息
+ * @Date: 2019-12-26 16:32:40
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-25 16:05:52
+ * @LastEditTime : 2019-12-27 10:57:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
+
 import GlobalStyles from './GlobalStyles';
 export default {
   itemWrapper: {

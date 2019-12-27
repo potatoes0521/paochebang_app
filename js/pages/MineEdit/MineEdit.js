@@ -3,7 +3,7 @@
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-26 15:38:16
+ * @LastEditTime : 2019-12-27 11:14:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,7 +12,7 @@ import {StyleSheet, Text, View, TextInput} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import DetailsStyles from '../../assets/css/DetailsStyles';
-import ItemStyles from '../../assets/css/ItemStyles';
+import MainStyles from '../../assets/css/MainStyles';
 import Button from '../../components/Button/Button.js';
 import api from '../../api';
 
@@ -64,21 +64,21 @@ class MineEdit extends Component {
           leftViewShow={true}
           title={'我的基本信息'}
         />
-        <View style={ItemStyles.itemWrapper}>
-          <View style={[ItemStyles.itemStyle, ItemStyles.line]}>
-            <Text style={ItemStyles.titleStyle}>姓名</Text>
-            <Text style={ItemStyles.textStyle}>{realName || ''}</Text>
+        <View style={MainStyles.itemWrapper}>
+          <View style={[MainStyles.itemStyle, MainStyles.line]}>
+            <Text style={MainStyles.titleStyle}>姓名</Text>
+            <Text style={MainStyles.textStyle}>{realName || ''}</Text>
           </View>
-          <View style={[ItemStyles.itemStyle, ItemStyles.line]}>
-            <Text style={ItemStyles.titleStyle}>联系方式</Text>
-            <Text style={ItemStyles.textStyle}>{mobile || ''}</Text>
+          <View style={[MainStyles.itemStyle, MainStyles.line]}>
+            <Text style={MainStyles.titleStyle}>联系方式</Text>
+            <Text style={MainStyles.textStyle}>{mobile || ''}</Text>
           </View>
-          <View style={[ItemStyles.itemStyle, ItemStyles.line]}>
-            <Text style={ItemStyles.titleStyle}>身份证号</Text>
-            <Text style={ItemStyles.textStyle}>{idCard || ''}</Text>
+          <View style={[MainStyles.itemStyle, MainStyles.line]}>
+            <Text style={MainStyles.titleStyle}>身份证号</Text>
+            <Text style={MainStyles.textStyle}>{idCard || ''}</Text>
           </View>
-          <View style={[ItemStyles.itemStyle, ItemStyles.line]}>
-            <Text style={ItemStyles.titleStyle}>车牌号</Text>
+          <View style={[MainStyles.itemStyle, MainStyles.line]}>
+            <Text style={MainStyles.titleStyle}>车牌号</Text>
             <TextInput
               style={styles.input}
               placeholder="请输入车牌号"
@@ -86,9 +86,9 @@ class MineEdit extends Component {
               value={carNum}
             />
           </View>
-          <View style={ItemStyles.itemStyle}>
-            <Text style={ItemStyles.titleStyle}>车辆信息</Text>
-            <Text style={ItemStyles.textStyle}>
+          <View style={MainStyles.itemStyle}>
+            <Text style={MainStyles.titleStyle}>车辆信息</Text>
+            <Text style={MainStyles.textStyle}>
               {carTypeDesc || '请选择车辆类型'}
             </Text>
           </View>
