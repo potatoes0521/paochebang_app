@@ -5362,11 +5362,6 @@ react-native-gesture-handler@^1.5.1:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
-react-native-image-picker@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.npm.taobao.org/react-native-image-picker/download/react-native-image-picker-1.1.0.tgz#c2a0523886edb4cf2cdc008ad0a71433142a4d53"
-  integrity sha1-wqBSOIbttM8s3ACK0KcUMxQqTVM=
-
 react-native-linear-gradient@^2.5.6:
   version "2.5.6"
   resolved "https://registry.npm.taobao.org/react-native-linear-gradient/download/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"

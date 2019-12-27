@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 10:52:36
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 10:54:24
+ * @LastEditTime : 2019-12-27 13:26:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -37,7 +37,7 @@ export default {
     fontWeight: '700',
   },
   main: {
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
   },
   city: {
     flexDirection: 'row',
@@ -54,9 +54,10 @@ export default {
   icon: {
     fontSize: 20,
     marginHorizontal: 2,
+    color: GlobalStyles.themeFontColor,
   },
   item: {
-    paddingVertical: 3,
+    paddingVertical: 2,
   },
   itemText: {
     fontSize: 14,

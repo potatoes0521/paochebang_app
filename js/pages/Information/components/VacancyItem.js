@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 20,
     marginHorizontal: 2,
+    color: GlobalStyles.themeFontColor,
     fontFamily: 'iconfont',
   },
   itemMsg: {

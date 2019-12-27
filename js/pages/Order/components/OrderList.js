@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 11:30:10
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 10:51:22
+ * @LastEditTime : 2019-12-27 11:28:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,7 +30,7 @@ class OrderList extends Component {
   }
 
   componentDidMount() {
-    this.getOrderList({refresh: true});
+    this.getOrderList({});
   }
 
   componentWillUnmount() {}
@@ -100,7 +100,9 @@ class OrderList extends Component {
       <View style={styles.listWrapper}>
         <FlatList
           data={this.state.orderData}
-          renderItem={data => <OrderItem type={'order'} item={data} />}
+          renderItem={data => (
+            <OrderItem {...this.props} type={'order'} itemData={data} />
+          )}
           refreshControl={
             <RefreshControl
               title="Loading..."

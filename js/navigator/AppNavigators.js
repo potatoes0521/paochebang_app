@@ -3,7 +3,7 @@
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 14:36:53
+ * @LastEditTime : 2019-12-27 17:02:41
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,6 +27,7 @@ import SellingDetailsPage from '../pages/SellingDetails/SellingDetails';
 import VacancyDetailsPage from '../pages/VacancyDetails/VacancyDetails';
 import MainPublishPage from '../pages/MainPublish/MainPublish';
 // import ChooseCityPage from '../pages/ChooseCity/ChooseCity';
+import UploadImagePage from '../pages/UploadImage/UploadImage.js';
 
 export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一个初始化的路由名
 
@@ -139,6 +140,7 @@ const MainNavigator = createStackNavigator(
         header: null,
       },
     },
+<<<<<<< HEAD
     //实名认证
     AuthenticationPage: {
       screen: AuthenticationPage,
@@ -149,6 +151,10 @@ const MainNavigator = createStackNavigator(
     //我的卖板、空位
     MainPublishPage: {
       screen: MainPublishPage,
+=======
+    UploadImagePage: {
+      screen: UploadImagePage,
+>>>>>>> 78dca8882e8482f957edd1e57528ddb794a743c8
       navigationOptions: {
         header: null,
       },

@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 14:14:44
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 16:57:48
+ * @LastEditTime : 2019-12-27 12:04:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 20,
     marginHorizontal: 2,
+    color: GlobalStyles.themeFontColor,
     fontFamily: 'iconfont',
   },
   itemMsg: {
