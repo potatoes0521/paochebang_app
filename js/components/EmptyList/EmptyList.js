@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-23 11:47:17
- * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 17:15:37
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-27 17:21:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   pageWrapper: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
   },
   imageWrapper: {
     marginTop: 162,
