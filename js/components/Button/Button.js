@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-20 11:47:21
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 10:24:47
+ * @LastEditTime : 2019-12-27 10:31:19
  * @mustParam: 必传参数
  *  btnStyle 样式 数组 数组里是类名或者是个对象
  *  type plain 镂空 round 充满
@@ -56,7 +56,6 @@ export default class Button extends Component {
     if (fontStyles) {
       textStyle = [...textStyle, ...fontStyles];
     }
-    console.log('btn', btnStyles);
     return (
       <TouchableOpacity style={btnStyles} onPress={this.handleClick.bind(this)}>
         <Text style={textStyle}>{text}</Text>
