@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 11:17:20
+ * @LastEditTime : 2019-12-27 15:08:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -81,10 +81,10 @@ export default class Mine extends Component {
         pageUrl = 'AuthenticationPage';
         break;
       case 'selling':
-        pageUrl = '';
+        pageUrl = 'MainPublishPage';
         break;
       case 'vacancy':
-        pageUrl = '';
+        pageUrl = 'MainPublishPage';
         break;
       case 'line':
         pageUrl = '';
@@ -92,7 +92,7 @@ export default class Mine extends Component {
       default:
         return;
     }
-    NavigationUtil.goPage(pageName, pageUrl);
+    NavigationUtil.goPage({pageName: pageName}, pageUrl);
   }
   /**
    * 联系客服
