@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-29 15:28:01
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 09:36:23
+ * @LastEditTime : 2019-12-27 09:38:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -38,6 +38,7 @@ class Index extends Component {
       bannerListData: [],
       recommendData: [],
       failLoading: false, // 是否加载失败
+      autoplay: false,
     };
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
