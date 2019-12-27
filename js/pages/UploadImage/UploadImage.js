@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 15:33:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 16:21:28
+ * @LastEditTime : 2019-12-27 16:44:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,6 +16,7 @@ import {
   Image,
   PixelRatio,
   TouchableOpacity,
+  DatePickerAndroid,
 } from 'react-native';
 import {connect} from 'react-redux';
 // import GlobalStyles from '../../assets/css/GlobalStyles';
