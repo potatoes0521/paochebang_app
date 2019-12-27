@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-20 11:47:21
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 13:42:21
+ * @LastEditTime : 2019-12-27 10:24:47
  * @mustParam: 必传参数
  *  btnStyle 样式 数组 数组里是类名或者是个对象
  *  type plain 镂空 round 充满
@@ -37,9 +37,12 @@ export default class Button extends Component {
     }
   }
   render() {
-    const {btnStyle, text, type, fontStyles} = this.props;
+    const {btnStyle, text, type, fontStyles, notFlex} = this.props;
     let btnStyles = [styles.btnDefault];
     let textStyle = [styles.textColor];
+    if (!notFlex) {
+      btnStyles.push(styles.btnFlex);
+    }
     if (type === 'plain') {
       btnStyles.push(styles.plain);
       textStyle.push(styles.textColorPlain);
@@ -53,6 +56,7 @@ export default class Button extends Component {
     if (fontStyles) {
       textStyle = [...textStyle, ...fontStyles];
     }
+    console.log('btn', btnStyles);
     return (
       <TouchableOpacity style={btnStyles} onPress={this.handleClick.bind(this)}>
         <Text style={textStyle}>{text}</Text>
@@ -81,11 +85,13 @@ Button.propTypes = {
 
 const styles = StyleSheet.create({
   btnDefault: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
     borderRadius: 4,
+  },
+  btnFlex: {
+    flex: 1,
   },
   plain: {
     borderWidth: 1,

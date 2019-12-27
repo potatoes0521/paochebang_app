@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 09:51:18
+ * @LastEditTime : 2019-12-27 10:23:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,6 +20,7 @@ import BackPressComponent from '../../components/BackPressComponent/BackPressCom
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import Toast from 'react-native-easy-toast';
+import {handleOrderButtons} from '../../config/button_config.js';
 
 class OrderDetails extends Component {
   constructor(props) {
@@ -118,7 +119,7 @@ class OrderDetails extends Component {
           vins: data.vins,
           transferSettlePriceDesc: data.transferSettlePriceDesc,
           isActive: data.isActive,
-          buttons: data.buttons,
+          buttons: handleOrderButtons(res.data.buttons),
           statusDescs: data.statusDescs,
         });
       });
@@ -133,20 +134,19 @@ class OrderDetails extends Component {
     if (this.state.isActive !== 1) {
       return;
     }
-    if (+this.props.userInfo.realNameAuthStatus < 2) {
-      this.setState({
-        isShow: true,
-      });
-      return;
-    }
+    // if (+this.props.userInfo.realNameAuthStatus < 2) {
+    //   this.setState({
+    //     isShow: true,
+    //   });
+    //   return;
+    // }
     let sendData = {
       orderCode: this.state.orderCode,
     };
     api.order.receiptOrderData(sendData, this).then(() => {
       this.toastRef.current.show('接单成功');
-      setTimeout(() => {
-        this.getOrderDetails();
-      }, 1800);
+      console.log('this', this);
+      this.getOrderDetails();
     });
   }
   /**
@@ -162,9 +162,7 @@ class OrderDetails extends Component {
     };
     api.order.abandonOrderData(sendData, this).then(() => {
       this.toastRef.current.show('放弃接单成功');
-      setTimeout(() => {
-        this.getOrderDetails();
-      }, 1800);
+      this.getOrderDetails();
     });
   }
   /**
@@ -172,43 +170,27 @@ class OrderDetails extends Component {
    * @param {Type} e 参数描述
    * @return void
    */
-  buttonsFun(e) {
-    switch (e) {
-      case 'receiptOrder':
+  buttonsFun(key) {
+    switch (key) {
+      case 'receiptOrder': // 接单
         this.receiptOrder();
         break;
-      case 'abandonReceiptOrder':
+      case 'abandonReceiptOrder': // 放弃接单
         this.cancelOrder();
         break;
       case 'pickUpListEdit': //上传提车单
-        // Taro.navigateTo({
-        //   url: `/pages/upload_img/index?pageType=pickUp&order_code=${this.state.orderCode}&type=edit`
-        // })
         break;
       case 'pickUpListSee': //查看提车单
-        // Taro.navigateTo({
-        //   url: `/pages/upload_img/index?pageType=pickUp&order_code=${this.state.orderCode}&type=see`
-        // })
         break;
       case 'deliveryListEdit': //上传交车单
-        // Taro.navigateTo({
-        //   url: `/pages/upload_img/index?pageType=delivery&order_code=${this.state.orderCode}&type=edit`
-        // })
         break;
       case 'deliveryListSee': //查看交车单
-        // Taro.navigateTo({
-        //   url: `/pages/upload_img/index?pageType=delivery&order_code=${this.state.orderCode}&type=see`
-        // })
         break;
       case 'confirmDriverInfo': //确认司机信息
-        // Taro.navigateTo({
-        //   url: `/pages/confirm_driver/index?order_code=${this.state.orderCode}&type=edit`
-        // })
         break;
       case 'seeDriverInfo': //查看司机信息
-        // Taro.navigateTo({
-        //   url: `/pages/confirm_driver/index?order_code=${this.state.orderCode}&type=see`
-        // })
+        break;
+      case 'confirmLocation':
         break;
       default:
         return;
@@ -242,19 +224,30 @@ class OrderDetails extends Component {
       // isShow,
       // statusDescs,
     } = this.state;
-    console.log('this,state', this.state);
     const buttonsList =
       buttons &&
       buttons.map(item => {
         const key = item.key;
+        let btnType = 'plain';
+        let fontStyles = [styles.fontStyle];
+        let btnStyle = [styles.btnStyle, styles.btnRight, styles.btnBorder];
+        if (item.key === 'receiptOrder') {
+          btnType = 'round';
+          btnStyle = [styles.btnStyle];
+          fontStyles = [];
+        }
+        if (item.key === 'confirmDriverInfo') {
+          btnStyle = [styles.btnStyle, styles.btnBorder];
+        }
         return (
           <Button
             key={key}
-            btnStyle={[styles.btnStyle, styles.btnLeft]}
-            fontStyles={[styles.fontStyle]}
-            type={'plain'}
+            btnStyle={btnStyle}
+            fontStyles={fontStyles}
+            type={btnType}
             text={item.name}
-            // onClick={this.buttonsFun(item.key)}
+            notFlex={true}
+            onClick={this.buttonsFun.bind(this, item.key)}
           />
         );
       });
@@ -492,13 +485,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   btnWrapper: {
-    flex: 1,
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 2,
-    backgroundColor: GlobalStyles.backgroundColor,
+    backgroundColor: '#fff',
     paddingHorizontal: 12,
     paddingVertical: 16,
     flexDirection: 'row',
@@ -511,14 +498,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  btnBorder: {
     borderWidth: 1,
     borderColor: GlobalStyles.themeDisabled,
   },
   fontStyle: {
     color: GlobalStyles.themeFontColor,
+    fontSize: 14,
   },
-  btnLeft: {
-    marginLeft: 16,
+  btnRight: {
+    marginRight: 16,
   },
 });
 // 如果需要引入store
