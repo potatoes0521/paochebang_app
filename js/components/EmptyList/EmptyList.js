@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 11:47:17
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-26 15:17:54
+ * @LastEditTime : 2019-12-27 17:15:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -106,6 +106,7 @@ export default class EmptyList extends Component {
             text={text}
             type={'round'}
             btnStyle={[styles.btn]}
+            notFlex={true}
             onClick={this.navigatorTo.bind(this)}
           />
         ) : null}
