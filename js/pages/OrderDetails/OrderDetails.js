@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 10:23:09
+ * @LastEditTime : 2019-12-27 10:26:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -307,16 +307,18 @@ class OrderDetails extends Component {
                     </Text>
                   </View>
                 </View>
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>身份证号:</Text>
+                {sendCardNo ? (
+                  <View style={DetailsStyles.formItem}>
+                    <View style={DetailsStyles.formLabel}>
+                      <Text style={DetailsStyles.labelText}>身份证号:</Text>
+                    </View>
+                    <View style={DetailsStyles.formContent}>
+                      <Text style={DetailsStyles.contentText}>
+                        {sendCardNo || ''}
+                      </Text>
+                    </View>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
-                      {sendCardNo || ''}
-                    </Text>
-                  </View>
-                </View>
+                ) : null}
               </View>
               {/* 收车城市 */}
               <View style={[styles.line, styles.paddingTop]}>
@@ -364,16 +366,18 @@ class OrderDetails extends Component {
                     </Text>
                   </View>
                 </View>
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>身份证号:</Text>
+                {receiveCardNo ? (
+                  <View style={DetailsStyles.formItem}>
+                    <View style={DetailsStyles.formLabel}>
+                      <Text style={DetailsStyles.labelText}>身份证号:</Text>
+                    </View>
+                    <View style={DetailsStyles.formContent}>
+                      <Text style={DetailsStyles.contentText}>
+                        {receiveCardNo || ''}
+                      </Text>
+                    </View>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
-                      {receiveCardNo || ''}
-                    </Text>
-                  </View>
-                </View>
+                ) : null}
               </View>
               {/* 服务信息 */}
               <View style={[styles.line, styles.paddingTop]}>
