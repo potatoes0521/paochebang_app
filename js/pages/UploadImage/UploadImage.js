@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 15:33:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 16:44:24
+ * @LastEditTime : 2019-12-29 10:52:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,6 @@ import {
   Image,
   PixelRatio,
   TouchableOpacity,
-  DatePickerAndroid,
 } from 'react-native';
 import {connect} from 'react-redux';
 // import GlobalStyles from '../../assets/css/GlobalStyles';
@@ -24,6 +23,7 @@ import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
+import ImagePicker from 'react-native-image-crop-picker';
 class UploadImage extends Component {
   constructor(props) {
     super(props);
@@ -50,6 +50,18 @@ class UploadImage extends Component {
     return true;
   }
 
+  pickImage() {
+    ImagePicker.openPicker({
+      multiple: true,
+    })
+      .then(images => {
+        console.log(images);
+      })
+      .catch(error => {
+        console.log('error', error);
+      });
+  }
+
   render() {
     const {theme, navigation} = this.props;
     return (
@@ -60,6 +72,17 @@ class UploadImage extends Component {
             leftViewShow={true}
             title={'UploadImage'}
           />
+          <TouchableOpacity
+            onPress={this.pickImage.bind(this)}
+            style={{
+              width: 100,
+              height: 100,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#f7f7f7',
+            }}>
+            <Text>choose image</Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaViewPlus>
     );
