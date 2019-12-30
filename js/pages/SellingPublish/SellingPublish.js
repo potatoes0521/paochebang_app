@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-30 13:59:22
+ * @LastEditTime : 2019-12-30 15:14:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,7 +30,10 @@ import Toast from 'react-native-easy-toast';
 import {payWey, carNatureList} from '../../config/text_config.js';
 import {handleMoney} from '../../utils/patter.js';
 import Radio from '../../components/Radio/Radio';
-import ActionSheet from '../../components/ActionSheet/actionSheet1';
+import ActionSheet from '../../components/ActionSheet/ActionSheet';
+import NumberInput from '../../components/NumberInput/NumberInput';
+import DatePicker from '../../components/DatePicker/datePicker.js';
+
 class SellingPublish extends Component {
   constructor(props) {
     super(props);
@@ -56,6 +59,7 @@ class SellingPublish extends Component {
       backPress: () => this.onBackPress(),
     });
     this.pageParams = {};
+    this.dateChooseType = '';
   }
 
   componentDidMount() {
@@ -124,6 +128,47 @@ class SellingPublish extends Component {
       payType: payWey[index].id,
     });
   }
+  numberInputChange(value) {
+    this.setState({
+      carAmount: value,
+    });
+  }
+  /**
+   * 显示时间选择框
+   * @return void
+   */
+  handleShowDate(type) {
+    this.dateChooseType = type;
+    this.setState({
+      datePickerShow: true,
+    });
+  }
+  /**
+   * 选择了时间
+   * @param {String} time 参数描述
+   * @return void
+   */
+  dateConfirm(time) {
+    time = time && time.split(' ')[0];
+    if (!time) {
+      return;
+    }
+    let data = {};
+    data[this.dateChooseType] = time;
+    this.setState(data);
+    this.dateCancel();
+  }
+  /**
+   * 取消了选择
+   * @param {String} time 参数描述
+   * @return void
+   */
+  dateCancel() {
+    this.dateChooseType = '';
+    this.setState({
+      datePickerShow: false,
+    });
+  }
   render() {
     const {theme, navigation} = this.props;
     let {
@@ -140,7 +185,7 @@ class SellingPublish extends Component {
       sendTime,
       radioActiveIndex,
       price,
-      isEdit,
+      datePickerShow,
     } = this.state;
     const payWeyText = payWey.filter(item => {
       return +item.id === +payType;
@@ -193,7 +238,9 @@ class SellingPublish extends Component {
                 <View style={DetailsStyles.formLabel}>
                   <Text style={DetailsStyles.labelText}>预计发车时间:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
+                <TouchableOpacity
+                  onPress={this.handleShowDate.bind(this, 'sendTime')}
+                  style={DetailsStyles.formContent}>
                   <Text
                     style={
                       sendTime.split('T')[0] ? textClassName : textThemeDisabled
@@ -201,7 +248,7 @@ class SellingPublish extends Component {
                     {sendTime.split('T')[0] || '请选择发车时间'}
                   </Text>
                   <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
-                </View>
+                </TouchableOpacity>
               </View>
               {/* 车辆信息 */}
               <View style={DetailsStyles.formItem}>
@@ -238,9 +285,11 @@ class SellingPublish extends Component {
                   <Text style={DetailsStyles.labelText}>台数:</Text>
                 </View>
                 <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>
-                    {carAmount || '0'}
-                  </Text>
+                  <NumberInput
+                    initNumber={carAmount}
+                    onInputTextChange={this.numberInputChange.bind(this)}
+                  />
+                  <Text style={DetailsStyles.unit}>台</Text>
                 </View>
               </View>
               {/* 结算方式 */}
@@ -272,7 +321,7 @@ class SellingPublish extends Component {
                     style={DetailsStyles.textInput}
                     maxLength={8}
                     value={price}
-                    keyboardType={'number-pad'}
+                    keyboardType={'numeric'}
                     placeholderTextColor={GlobalStyles.themeDisabled}
                     placeholder={'请填写报价，不填默认私聊'}
                     onChangeText={this.priceInput.bind(this)}
@@ -284,7 +333,9 @@ class SellingPublish extends Component {
                 <View style={DetailsStyles.formLabel}>
                   <Text style={DetailsStyles.labelText}>有效期至:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
+                <TouchableOpacity
+                  onPress={this.handleShowDate.bind(this, 'dueTime')}
+                  style={DetailsStyles.formContent}>
                   <Text
                     style={
                       dueTime.split('T')[0] ? textClassName : textThemeDisabled
@@ -292,7 +343,7 @@ class SellingPublish extends Component {
                     {dueTime.split('T')[0] || '请选择发车时间'}
                   </Text>
                   <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
-                </View>
+                </TouchableOpacity>
               </View>
               <View style={DetailsStyles.formItem}>
                 <View style={DetailsStyles.formLabel}>
@@ -317,6 +368,12 @@ class SellingPublish extends Component {
               tintColor={GlobalStyles.themeFontColor}
               cancelButtonIndex={payWeyList.length - 1}
               onPress={this.chooseActionSheet.bind(this)}
+            />
+            <DatePicker
+              isShow={datePickerShow}
+              chooseBeforeTime={false}
+              onConfirm={this.dateConfirm.bind(this)}
+              onCancel={this.dateCancel.bind(this)}
             />
           </ScrollView>
         </View>

@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-30 14:00:52
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-30 14:55:37
+ * @LastEditTime : 2019-12-30 15:04:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,7 +27,12 @@ export default class NumberInput extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({
+      number: this.props.initNumber || '1',
+    });
+  }
 
   componentWillUnmount() {}
   input(value) {
@@ -133,6 +138,7 @@ const styles = StyleSheet.create({
 });
 
 NumberInput.defaultProps = {
+  initNumber: '',
   onInputTextChange: () => {},
 };
 

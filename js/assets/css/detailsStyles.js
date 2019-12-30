@@ -3,7 +3,7 @@
  * @description: 详情通用css
  * @Date: 2019-12-04 11:36:02
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-30 09:37:50
+ * @LastEditTime : 2019-12-30 14:51:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -41,6 +41,11 @@ export default {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
+  },
+  unit: {
+    color: GlobalStyles.themeFontColor,
+    fontSize: 15,
+    marginLeft: 10,
   },
   waitColor: {
     color: GlobalStyles.themeDisabled,
