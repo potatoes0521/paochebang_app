@@ -3,7 +3,7 @@
  * @description: 添加编辑路线
  * @Date: 2019-12-30 09:35:08
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 11:04:10
+ * @LastEditTime : 2019-12-30 16:05:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -37,6 +37,11 @@ class LineEdit extends Component {
   }
 
   componentDidMount() {
+    const {navigation} = this.props;
+    const {state} = navigation;
+    const {params} = state;
+    console.log('params', params);
+    this.pageParams = params || {};
     this.backPress.componentDidMount();
   }
 
@@ -75,6 +80,9 @@ class LineEdit extends Component {
         this.toastRef.current.show('编辑成功');
       }
       this.toastRef.current.show('添加成功');
+      setTimeout(() => {
+        NavigationUtil.goBack(this.props.navigation);
+      }, 1800);
     });
   }
 

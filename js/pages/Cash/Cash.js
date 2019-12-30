@@ -3,7 +3,7 @@
  * @description: 提现页面
  * @Date: 2019-12-26 17:05:08
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 14:50:52
+ * @LastEditTime : 2019-12-30 15:27:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -198,6 +198,9 @@ class CashDetails extends Component {
     };
     api.account.getWithdrawData(sendData, this).then(() => {
       this.toastRef.current.show('提现申请成功');
+      setTimeout(() => {
+        NavigationUtil.goBack(this.props.navigation);
+      }, 1800);
     });
   }
   render() {
