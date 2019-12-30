@@ -3,12 +3,12 @@
  * @description: 市场
  * @Date: 2019-11-22 16:11:20
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 10:54:55
+ * @LastEditTime : 2019-12-30 16:25:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import {createAppContainer} from 'react-navigation';
 import {connect} from 'react-redux';
@@ -17,6 +17,7 @@ import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import SellingList from './components/SellingList.js';
 import VacancyList from './components/VacancyList.js';
+import NavigationUtils from '../../navigator/NavigationUtils';
 class Information extends Component {
   constructor(props) {
     super(props);
@@ -79,9 +80,13 @@ class Information extends Component {
           <NavigatorTab />
           <View style={styles.select}>
             <View style={styles.line} />
-            <View style={styles.selectMain}>
+            <TouchableOpacity
+              onPress={() => {
+                NavigationUtils.goPage({}, 'SellingPublishPage');
+              }}
+              style={styles.selectMain}>
               <Text>筛选</Text>
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
       </SafeAreaViewPlus>
