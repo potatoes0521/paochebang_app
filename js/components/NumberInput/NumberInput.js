@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-30 14:00:52
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-30 14:49:02
+ * @LastEditTime : 2019-12-30 14:55:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -39,6 +39,7 @@ export default class NumberInput extends Component {
     this.setState({
       number: value,
     });
+    this.props.onInputTextChange(value);
   }
   handleClick(type) {
     let {number} = this.state;
@@ -55,6 +56,7 @@ export default class NumberInput extends Component {
     this.setState({
       number: number + '',
     });
+    this.props.onInputTextChange(number);
   }
   render() {
     let {number} = this.state;
@@ -131,9 +133,9 @@ const styles = StyleSheet.create({
 });
 
 NumberInput.defaultProps = {
-  onClick: () => {},
+  onInputTextChange: () => {},
 };
 
 NumberInput.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onInputTextChange: PropTypes.func.isRequired,
 };
