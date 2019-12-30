@@ -4,12 +4,19 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-30 10:26:36
+ * @LastEditTime : 2019-12-30 13:59:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, TextInput} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import {connect} from 'react-redux';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import DetailsStyles from '../../assets/css/DetailsStyles';
@@ -23,7 +30,7 @@ import Toast from 'react-native-easy-toast';
 import {payWey, carNatureList} from '../../config/text_config.js';
 import {handleMoney} from '../../utils/patter.js';
 import Radio from '../../components/Radio/Radio';
-
+import ActionSheet from '../../components/ActionSheet/actionSheet1';
 class SellingPublish extends Component {
   constructor(props) {
     super(props);
@@ -71,21 +78,50 @@ class SellingPublish extends Component {
     return true;
   }
   getSellingDetail() {}
+  /**
+   * 输入车辆信息
+   * @return void
+   */
   carInfoInput(value) {
     this.setState({
       carInfo: value,
     });
   }
+  /**
+   * 输入报价信息
+   * @return void
+   */
   priceInput(value) {
     value = handleMoney(value);
     this.setState({
       price: value,
     });
   }
+  /**
+   * 单选按钮
+   * @param {Object} value 选择的哪一项
+   * @param {Number} index 选的第几项下标
+   * @return void
+   */
   chooseRadio(value, index) {
     this.setState({
       usedType: value.id,
       radioActiveIndex: index,
+    });
+  }
+  /**
+   * 显示actionSheet
+   * @return void
+   */
+  showActionSheet() {
+    this.ActionSheet.show();
+  }
+  chooseActionSheet(index) {
+    if (index === payWey.length) {
+      return;
+    }
+    this.setState({
+      payType: payWey[index].id,
     });
   }
   render() {
@@ -109,6 +145,8 @@ class SellingPublish extends Component {
     const payWeyText = payWey.filter(item => {
       return +item.id === +payType;
     })[0];
+    let payWeyList = payWey.map(item => item.name);
+    payWeyList.push('取消');
     let textClassName = [DetailsStyles.contentText];
     let textThemeDisabled = [
       DetailsStyles.contentText,
@@ -210,11 +248,19 @@ class SellingPublish extends Component {
                 <View style={DetailsStyles.formLabel}>
                   <Text style={DetailsStyles.labelText}>结算方式:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>
-                    {payWeyText ? payWeyText.name : ''}
+                <TouchableOpacity
+                  onPress={this.showActionSheet.bind(this)}
+                  style={DetailsStyles.formContent}>
+                  <Text
+                    style={
+                      payWeyText && payWeyText.name
+                        ? textClassName
+                        : textThemeDisabled
+                    }>
+                    {payWeyText ? payWeyText.name : '请选择结算方式'}
                   </Text>
-                </View>
+                  <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                </TouchableOpacity>
               </View>
               {/* 报价 */}
               <View style={DetailsStyles.formItem}>
@@ -264,6 +310,14 @@ class SellingPublish extends Component {
                 </View>
               </View>
             </View>
+            <ActionSheet
+              ref={o => (this.ActionSheet = o)}
+              title={'请选择结算方式'}
+              options={payWeyList}
+              tintColor={GlobalStyles.themeFontColor}
+              cancelButtonIndex={payWeyList.length - 1}
+              onPress={this.chooseActionSheet.bind(this)}
+            />
           </ScrollView>
         </View>
       </SafeAreaViewPlus>
