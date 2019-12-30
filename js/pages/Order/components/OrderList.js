@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 11:30:10
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 11:28:58
+ * @LastEditTime : 2019-12-30 09:22:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -120,7 +120,7 @@ class OrderList extends Component {
             <EmptyList {...this.props} pageType={'order'} />
           )}
           keyExtractor={data => {
-            return data.orderCode + 'order';
+            return data.orderCode + this.props.status + 'order';
           }}
         />
       </View>
