@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-30 15:59:52
+ * @LastEditTime : 2019-12-30 16:03:32
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,7 +30,7 @@ import Toast from 'react-native-easy-toast';
 import {payWey, carNatureList} from '../../config/text_config.js';
 import {handleMoney} from '../../utils/patter.js';
 import Radio from '../../components/Radio/Radio';
-import ActionSheet from '../../components/actionSheet1/ActionSheet';
+import ActionSheet from '../../components/ActionSheet/ActionSheet';
 import NumberInput from '../../components/NumberInput/NumberInput';
 import DatePicker from '../../components/DatePicker/datePicker.js';
 
@@ -169,6 +169,8 @@ class SellingPublish extends Component {
       datePickerShow: false,
     });
   }
+  cancel() {}
+  submit() {}
   render() {
     const {theme, navigation} = this.props;
     let {
@@ -361,6 +363,22 @@ class SellingPublish extends Component {
                 </View>
               </View>
             </View>
+            {/* button */}
+            <View style={DetailsStyles.btnWrapper}>
+              <Button
+                type={'plain'}
+                btnStyle={[DetailsStyles.btnLeft]}
+                text={'取消'}
+                onClick={this.cancel.bind(this)}
+              />
+              <Button
+                btnStyle={[DetailsStyles.btnRight]}
+                text={'提交'}
+                type={'round'}
+                onClick={this.submit.bind(this)}
+              />
+            </View>
+            {/* 动作指示器 */}
             <ActionSheet
               ref={o => (this.ActionSheet = o)}
               title={'请选择结算方式'}
@@ -369,6 +387,7 @@ class SellingPublish extends Component {
               cancelButtonIndex={payWeyList.length - 1}
               onPress={this.chooseActionSheet.bind(this)}
             />
+            {/* 时间组件 */}
             <DatePicker
               isShow={datePickerShow}
               chooseBeforeTime={false}
