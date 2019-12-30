@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-30 15:14:27
+ * @LastEditTime : 2019-12-30 15:59:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,7 +30,7 @@ import Toast from 'react-native-easy-toast';
 import {payWey, carNatureList} from '../../config/text_config.js';
 import {handleMoney} from '../../utils/patter.js';
 import Radio from '../../components/Radio/Radio';
-import ActionSheet from '../../components/ActionSheet/ActionSheet';
+import ActionSheet from '../../components/actionSheet1/ActionSheet';
 import NumberInput from '../../components/NumberInput/NumberInput';
 import DatePicker from '../../components/DatePicker/datePicker.js';
 
