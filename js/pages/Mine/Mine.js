@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 17:46:02
+ * @LastEditTime : 2019-12-30 14:41:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -67,33 +67,31 @@ class Mine extends Component {
     if (!pageName) {
       return;
     }
-    let pageUrl = '';
     switch (pageName) {
       case 'account':
-        pageUrl = 'AccountPage';
+        NavigationUtil.goPage(pageName, 'AccountPage');
         break;
       case 'driver':
-        pageUrl = 'DriverPage';
+        NavigationUtil.goPage(pageName, 'DriverPage');
         break;
       case 'mine':
-        pageUrl = 'MineDetailsPage';
+        NavigationUtil.goPage(pageName, 'MineDetailsPage');
         break;
       case 'name':
-        pageUrl = 'AuthenticationPage';
+        NavigationUtil.goPage(pageName, 'AuthenticationPage');
         break;
       case 'selling':
-        pageUrl = 'MainPublishPage';
+        NavigationUtil.goPage({pageType: pageName}, 'MainPublishPage');
         break;
       case 'vacancy':
-        pageUrl = 'MainPublishPage';
+        NavigationUtil.goPage({pageType: pageName}, 'MainPublishPage');
         break;
       case 'line':
-        pageUrl = 'LinePage';
+        NavigationUtil.goPage(pageName, 'LinePage');
         break;
       default:
         return;
     }
-    NavigationUtil.goPage({pageName: pageName}, pageUrl);
   }
   /**
    * 联系客服

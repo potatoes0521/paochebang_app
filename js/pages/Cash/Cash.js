@@ -3,7 +3,7 @@
  * @description: 提现页面
  * @Date: 2019-12-26 17:05:08
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 17:26:54
+ * @LastEditTime : 2019-12-30 14:50:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -225,6 +225,7 @@ class CashDetails extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="请输入提现金额"
+                keyboardType={'numeric'}
                 onChangeText={this.cashAmountInput.bind(this)}
                 value={amount}
               />
@@ -244,6 +245,7 @@ class CashDetails extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="请输入收款人姓名"
+                maxLength={8}
                 onChangeText={this.accountNameInput.bind(this)}
                 value={otherSideAccountName}
               />
@@ -254,6 +256,7 @@ class CashDetails extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="请输入银行卡号"
+                maxLength={20}
                 onChangeText={this.bankCardInput.bind(this)}
                 value={otherSideAccount}
               />
@@ -264,6 +267,7 @@ class CashDetails extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="请输入银行类型"
+                maxLength={20}
                 onChangeText={this.bankNameInput.bind(this)}
                 value={otherSideBank}
               />
@@ -274,6 +278,7 @@ class CashDetails extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="请输入支行名称"
+                maxLength={20}
                 onChangeText={this.branchBankNameInput.bind(this)}
                 value={otherSideBranchBank}
               />

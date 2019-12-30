@@ -3,7 +3,7 @@
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 17:37:21
+ * @LastEditTime : 2019-12-30 14:51:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -84,6 +84,7 @@ class MineEdit extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="请输入车牌号"
+                maxLength={20}
                 onChangeText={this.inputCarNum.bind(this)}
                 value={carNum}
               />

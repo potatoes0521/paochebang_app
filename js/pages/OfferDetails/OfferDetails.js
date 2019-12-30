@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-12-03 16:47:37
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 17:15:13
+ * @LastEditors  : guorui
+ * @LastEditTime : 2019-12-30 14:52:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -426,7 +426,7 @@ class OfferDetails extends Component {
                       style={styles.offerInput}
                       maxLength={8}
                       value={quotedPrice}
-                      keyboardType={'number-pad'}
+                      keyboardType={'numeric'}
                       onChangeText={this.offerText.bind(this)}
                     />
                     <Text style={DetailsStyles.contentText}>元/台</Text>

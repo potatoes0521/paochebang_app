@@ -3,7 +3,7 @@
  * @description: 实名认证
  * @Date: 2019-12-26 18:17:17
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 17:43:22
+ * @LastEditTime : 2019-12-30 14:48:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -137,6 +137,7 @@ class Authentication extends Component {
                 <TextInput
                   style={[styles.input, DetailsStyles.contentText]}
                   placeholder="请输入真实姓名"
+                  maxLength={8}
                   onChangeText={this.realNameOnInput.bind(this)}
                   value={realName}
                 />
@@ -146,6 +147,7 @@ class Authentication extends Component {
                 <TextInput
                   style={[styles.input, DetailsStyles.contentText]}
                   placeholder="请输入身份证号"
+                  maxLength={20}
                   onChangeText={this.idCardOnInput.bind(this)}
                   value={idCard}
                 />
@@ -201,6 +203,7 @@ class Authentication extends Component {
               <TextInput
                 style={[styles.input, DetailsStyles.contentText]}
                 placeholder="请输入收款人姓名"
+                maxLength={8}
                 onChangeText={this.accountHolderOnInput.bind(this)}
                 value={accountHolder}
               />
@@ -210,6 +213,8 @@ class Authentication extends Component {
               <TextInput
                 style={[styles.input, DetailsStyles.contentText]}
                 placeholder="请输入银行卡号"
+                maxLength={20}
+                keyboardType={'number-pad'}
                 onChangeText={this.accountNumOnInput.bind(this)}
                 value={accountNum}
               />
@@ -219,6 +224,7 @@ class Authentication extends Component {
               <TextInput
                 style={[styles.input, DetailsStyles.contentText]}
                 placeholder="请输入银行类型"
+                maxLength={20}
                 onChangeText={this.bankNameOnInput.bind(this)}
                 value={bankName}
               />

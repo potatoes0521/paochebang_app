@@ -3,7 +3,7 @@
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 17:44:56
+ * @LastEditTime : 2019-12-30 14:52:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -210,6 +210,7 @@ class Register extends Component {
               <TextInput
                 style={styles.input}
                 keyboardType={'number-pad'}
+                maxLength={11}
                 placeholder="请输入手机号"
                 onChangeText={this.inputPhoneNumber.bind(this)}
                 value={phoneNumber}
@@ -220,6 +221,7 @@ class Register extends Component {
                 style={[styles.codeInput, styles.input]}
                 keyboardType={'number-pad'}
                 placeholder="请输入验证码"
+                maxLength={6}
                 onChangeText={this.inputVerificationCode.bind(this)}
                 value={verificationCode}
               />

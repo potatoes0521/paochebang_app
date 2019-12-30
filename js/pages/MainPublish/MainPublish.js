@@ -3,7 +3,7 @@
  * @description: 我发布的卖板和空位
  * @Date: 2019-12-27 11:21:19
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 17:44:04
+ * @LastEditTime : 2019-12-30 14:38:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -39,7 +39,7 @@ class MainPublish extends Component {
     const {params} = state;
     console.log('params', params);
     this.pageParams = params || {};
-    if (this.pageParams.pageName === 'selling') {
+    if (this.pageParams.pageType === 'selling') {
       this.getSellingList({});
     } else {
       this.getVacancyList({});
@@ -158,7 +158,7 @@ class MainPublish extends Component {
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
-          {this.pageParams.pageName === 'selling' ? (
+          {this.pageParams.pageType === 'selling' ? (
             <NavigationBar
               navigation={navigation}
               leftViewShow={true}
@@ -171,7 +171,7 @@ class MainPublish extends Component {
               title={'空位信息'}
             />
           )}
-          {this.pageParams.pageName === 'selling' ? (
+          {this.pageParams.pageType === 'selling' ? (
             <View style={styles.listWrapper}>
               <FlatList
                 data={this.state.sellingData}

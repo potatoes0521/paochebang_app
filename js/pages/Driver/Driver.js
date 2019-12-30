@@ -3,7 +3,7 @@
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 17:43:39
+ * @LastEditTime : 2019-12-30 14:51:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -165,9 +165,6 @@ class Driver extends Component {
                 <TextInput
                   style={styles.input}
                   placeholder="输入姓名/联系方式进行搜索"
-                  onSubmitEditing={this.submitSearch.bind(this)}
-                  // placeholderTextColor={styles.placeholderStyle}
-                  // inlineImageLeft
                   onChangeText={this.searchInput.bind(this)}
                   value={selectParam}
                 />

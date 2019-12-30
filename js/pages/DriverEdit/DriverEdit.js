@@ -3,7 +3,7 @@
  * @description: 编辑、添加司机信息
  * @Date: 2019-12-26 10:36:06
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 17:30:14
+ * @LastEditTime : 2019-12-30 14:51:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -127,7 +127,7 @@ class DriverEdit extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="请输入司机姓名"
-                maxLength="8"
+                maxLength={8}
                 onChangeText={this.inputRemarkName.bind(this)}
                 value={remarkName}
               />
@@ -138,7 +138,8 @@ class DriverEdit extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="请输入司机联系方式"
-                maxLength="11"
+                maxLength={11}
+                keyboardType={'number-pad'}
                 onChangeText={this.inputMobile.bind(this)}
                 value={mobile}
               />
@@ -149,7 +150,7 @@ class DriverEdit extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="请输入司机身份证号"
-                maxLength="20"
+                maxLength={20}
                 onChangeText={this.inputIdCard.bind(this)}
                 value={idCard}
               />
@@ -160,7 +161,7 @@ class DriverEdit extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="请输入车牌号"
-                maxLength="20"
+                maxLength={20}
                 onChangeText={this.inputCarNum.bind(this)}
                 value={carNum}
               />
@@ -171,7 +172,7 @@ class DriverEdit extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="请输入所属物流公司"
-                maxLength="20"
+                maxLength={20}
                 onChangeText={this.inputMerchantName.bind(this)}
                 value={merchantName}
               />

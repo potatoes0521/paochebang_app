@@ -3,7 +3,7 @@
  * @description: 常跑线路
  * @Date: 2019-12-27 15:19:24
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 17:31:27
+ * @LastEditTime : 2019-12-30 10:53:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -78,7 +78,7 @@ class Line extends Component {
    * @return void
    */
   addLine() {
-    console.log('add');
+    NavigationUtil.goPage({}, 'LineEditPage');
   }
   /**
    * 删除线路

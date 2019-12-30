@@ -3,7 +3,7 @@
  * @description: 司机详情
  * @Date: 2019-12-25 15:23:46
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 17:29:10
+ * @LastEditTime : 2019-12-30 13:33:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,18 +12,69 @@ import {StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
+import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
+import MainStyles from '../../assets/css/MainStyles';
+import Button from '../../components/Button/Button.js';
+import NavigationUtil from '../../navigator/NavigationUtils';
 import api from '../../api';
 
 class DriverDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      driverInfo: {},
+    };
+    this.backPress = new BackPressComponent({
+      backPress: () => this.onBackPress(),
+    });
   }
 
-  componentDidMount() {}
-  componentWillUnmount() {}
+  componentDidMount() {
+    const {navigation} = this.props;
+    const {state} = navigation;
+    const {params} = state;
+    console.log('params', params);
+    // this.getDriverDetails();
+    this.backPress.componentDidMount();
+  }
+  componentWillUnmount() {
+    this.backPress.componentWillUnmount();
+  }
+  onBackPress() {
+    NavigationUtil.goBack(this.props.navigation);
+    return true;
+  }
+  /**
+   * 获取司机信息详情
+   * @return void
+   */
+  getDriverDetails() {
+    if (!this.pageParams.userId) {
+      return;
+    }
+    let sendData = {
+      userId: this.pageParams.userId,
+      createUserId: this.props.userInfo.userId,
+    };
+    api.driver.getDriverDetail(sendData, this).then(res => {
+      if (!res) {
+        return;
+      }
+      this.setState({
+        driverInfo: res,
+      });
+    });
+  }
+  /**
+   * 导航到客户详情
+   * @return void
+   */
+  navigationEdit() {
+    NavigationUtil.goPage({pageType: 'edit'}, 'DriverEditPage');
+  }
   render() {
     const {theme, navigation} = this.props;
+    let {driverInfo} = this.state;
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -32,7 +83,63 @@ class DriverDetails extends Component {
             leftViewShow={true}
             title={'司机信息'}
           />
-          <Text>司机信息</Text>
+          <View style={MainStyles.itemWrapper}>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={MainStyles.titleStyle}>姓名</Text>
+              <Text style={MainStyles.textStyle}>
+                {driverInfo.remarkName || ''}
+              </Text>
+            </View>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={MainStyles.titleStyle}>联系方式</Text>
+              <Text style={MainStyles.textStyle}>
+                {driverInfo.mobile || ''}
+              </Text>
+            </View>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={MainStyles.titleStyle}>身份证号</Text>
+              <Text style={MainStyles.textStyle}>
+                {driverInfo.idCard || ''}
+              </Text>
+            </View>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={MainStyles.titleStyle}>车牌号</Text>
+              <Text style={MainStyles.textStyle}>
+                {driverInfo.carNum || ''}
+              </Text>
+            </View>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={MainStyles.titleStyle}>车辆信息</Text>
+              <Text style={MainStyles.textStyle}>
+                {driverInfo.carTypeDesc || ''}
+              </Text>
+            </View>
+            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+              <Text style={MainStyles.titleStyle}>所属物流公司</Text>
+              <Text style={MainStyles.textStyle}>
+                {driverInfo.merchantName || ''}
+              </Text>
+            </View>
+            <View style={MainStyles.itemStyle}>
+              <Text style={MainStyles.titleStyle}>添加时间</Text>
+              <Text style={MainStyles.textStyle}>
+                {driverInfo.createTimeDesc || ''}
+              </Text>
+            </View>
+            <View style={MainStyles.itemStyle}>
+              <Text style={MainStyles.titleStyle}>最后更新时间</Text>
+              <Text style={MainStyles.textStyle}>
+                {driverInfo.updateTimeDesc || ''}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.btnWrapper}>
+            <Button
+              text={'修改'}
+              type={'round'}
+              onClick={this.navigationEdit.bind(this)}
+            />
+          </View>
         </View>
       </SafeAreaViewPlus>
     );
@@ -42,6 +149,11 @@ class DriverDetails extends Component {
 const styles = StyleSheet.create({
   pageWrapper: {
     flex: 1,
+  },
+  btnWrapper: {
+    marginHorizontal: 12,
+    marginTop: 35,
+    height: 40,
   },
 });
 
