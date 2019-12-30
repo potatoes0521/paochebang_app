@@ -3,7 +3,7 @@
  * @description: 常跑线路
  * @Date: 2019-12-27 15:19:24
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 17:02:11
+ * @LastEditTime : 2019-12-30 10:53:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,6 +19,7 @@ import Button from '../../components/Button/Button.js';
 import Toast from 'react-native-easy-toast';
 import ArrowImage from '../../assets/image/line/arrow.png';
 import EmptyList from '../../components/EmptyList/EmptyList.js';
+import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import api from '../../api';
 
 class Line extends Component {
@@ -77,7 +78,7 @@ class Line extends Component {
    * @return void
    */
   addLine() {
-    console.log('add');
+    NavigationUtil.goPage({}, 'LineEditPage');
   }
   /**
    * 删除线路
@@ -87,7 +88,7 @@ class Line extends Component {
     console.log('delete');
   }
   render() {
-    const {navigation} = this.props;
+    const {theme, navigation} = this.props;
     let {routeNumber, lineList} = this.state;
     const lineListData =
       lineList &&
@@ -115,49 +116,51 @@ class Line extends Component {
         );
       });
     return (
-      <View style={styles.pageWrapper}>
-        <NavigationBar
-          navigation={navigation}
-          leftViewShow={true}
-          title={'常跑线路'}
-        />
-        {lineList.length ? (
-          <View style={styles.lineWrapper}>
-            <View style={styles.lineTitle}>
-              <View style={styles.lineStyle} />
-              <View>
-                <Text style={DetailsStyles.contentText}>
-                  我的线路（{routeNumber}/3）
-                </Text>
+      <SafeAreaViewPlus topColor={theme.themeColor}>
+        <View style={styles.pageWrapper}>
+          <NavigationBar
+            navigation={navigation}
+            leftViewShow={true}
+            title={'常跑线路'}
+          />
+          {lineList.length ? (
+            <View style={styles.lineWrapper}>
+              <View style={styles.lineTitle}>
+                <View style={styles.lineStyle} />
+                <View>
+                  <Text style={DetailsStyles.contentText}>
+                    我的线路（{routeNumber}/3）
+                  </Text>
+                </View>
               </View>
+              <View style={styles.listWrapper}>{lineListData}</View>
+              {routeNumber < 3 ? (
+                <View style={styles.btnWrapper}>
+                  <Button
+                    btnStyle={[styles.btnStyle]}
+                    text={'新增线路'}
+                    type={'round'}
+                    onClick={this.addLine.bind(this)}
+                  />
+                </View>
+              ) : (
+                <View style={styles.tipsWrapper}>
+                  <Text style={styles.tipsStyle}>
+                    点击线路中城市即可完成线路修改或删除线路中任意一条进行添加线路
+                  </Text>
+                </View>
+              )}
             </View>
-            <View style={styles.listWrapper}>{lineListData}</View>
-            {routeNumber < 3 ? (
-              <View style={styles.btnWrapper}>
-                <Button
-                  btnStyle={[styles.btnStyle]}
-                  text={'新增线路'}
-                  type={'round'}
-                  onClick={this.addLine.bind(this)}
-                />
-              </View>
-            ) : (
-              <View style={styles.tipsWrapper}>
-                <Text style={styles.tipsStyle}>
-                  点击线路中城市即可完成线路修改或删除线路中任意一条进行添加线路
-                </Text>
-              </View>
-            )}
-          </View>
-        ) : (
-          <EmptyList {...this.props} pageType={'line'} />
-        )}
-        <Toast
-          ref={this.toastRef}
-          position={'center'}
-          defaultCloseDelay={3000}
-        />
-      </View>
+          ) : (
+            <EmptyList {...this.props} pageType={'line'} />
+          )}
+          <Toast
+            ref={this.toastRef}
+            position={'center'}
+            defaultCloseDelay={3000}
+          />
+        </View>
+      </SafeAreaViewPlus>
     );
   }
 }

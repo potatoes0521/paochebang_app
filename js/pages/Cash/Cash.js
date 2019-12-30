@@ -3,7 +3,7 @@
  * @description: 提现页面
  * @Date: 2019-12-26 17:05:08
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-26 18:11:56
+ * @LastEditTime : 2019-12-30 14:50:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,6 +17,7 @@ import NavigationUtil from '../../navigator/NavigationUtils';
 import {handleMoney, realNamePatter} from '../../utils/patter';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import Button from '../../components/Button/Button.js';
+import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import Toast from 'react-native-easy-toast';
 import api from '../../api';
 
@@ -208,89 +209,96 @@ class CashDetails extends Component {
       otherSideBranchBank,
       otherSideAccount,
     } = this.state;
-    const {navigation} = this.props;
+    const {theme, navigation} = this.props;
     return (
-      <View style={styles.pageWrapper}>
-        <NavigationBar
-          navigation={navigation}
-          leftViewShow={true}
-          title={'提现'}
-        />
-        <View style={styles.cashWrapper}>
-          <View style={styles.cashDetails}>
-            <Text style={styles.iconStyle}>*</Text>
-            <Text style={DetailsStyles.contentText}>提现金额</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="请输入提现金额"
-              onChangeText={this.cashAmountInput.bind(this)}
-              value={amount}
+      <SafeAreaViewPlus topColor={theme.themeColor}>
+        <View style={styles.pageWrapper}>
+          <NavigationBar
+            navigation={navigation}
+            leftViewShow={true}
+            title={'提现'}
+          />
+          <View style={styles.cashWrapper}>
+            <View style={styles.cashDetails}>
+              <Text style={styles.iconStyle}>*</Text>
+              <Text style={DetailsStyles.contentText}>提现金额</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="请输入提现金额"
+                keyboardType={'numeric'}
+                onChangeText={this.cashAmountInput.bind(this)}
+                value={amount}
+              />
+              <Text style={DetailsStyles.contentText}>元</Text>
+            </View>
+            <View style={styles.tipsWrapper}>
+              <Text style={styles.tipsText}>
+                账户余额{withdrawAmountDesc || 0}元
+              </Text>
+              <Text style={styles.tipsBtn}>全部提现</Text>
+            </View>
+          </View>
+          <View style={styles.bankWrapper}>
+            <View style={styles.cashDetails}>
+              <Text style={styles.iconStyle}>*</Text>
+              <Text style={DetailsStyles.contentText}>收款人姓名</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="请输入收款人姓名"
+                maxLength={8}
+                onChangeText={this.accountNameInput.bind(this)}
+                value={otherSideAccountName}
+              />
+            </View>
+            <View style={styles.cashDetails}>
+              <Text style={styles.iconStyle}>*</Text>
+              <Text style={DetailsStyles.contentText}>银行卡号</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="请输入银行卡号"
+                maxLength={20}
+                onChangeText={this.bankCardInput.bind(this)}
+                value={otherSideAccount}
+              />
+            </View>
+            <View style={styles.cashDetails}>
+              <Text style={styles.iconStyle}>*</Text>
+              <Text style={DetailsStyles.contentText}>银行类型</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="请输入银行类型"
+                maxLength={20}
+                onChangeText={this.bankNameInput.bind(this)}
+                value={otherSideBank}
+              />
+            </View>
+            <View style={styles.cashDetails}>
+              <Text style={styles.iconStyle} />
+              <Text style={DetailsStyles.contentText}>支行名称</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="请输入支行名称"
+                maxLength={20}
+                onChangeText={this.branchBankNameInput.bind(this)}
+                value={otherSideBranchBank}
+              />
+            </View>
+          </View>
+          <View style={styles.btnWrapper}>
+            <Button
+              btnStyle={[styles.btnStyle]}
+              text={'提交'}
+              type={'round'}
+              onClick={this.cashSubmit.bind(this)}
             />
-            <Text style={DetailsStyles.contentText}>元</Text>
           </View>
-          <View style={styles.tipsWrapper}>
-            <Text style={styles.tipsText}>
-              账户余额{withdrawAmountDesc || 0}元
-            </Text>
-            <Text style={styles.tipsBtn}>全部提现</Text>
-          </View>
-        </View>
-        <View style={styles.bankWrapper}>
-          <View style={styles.cashDetails}>
-            <Text style={styles.iconStyle}>*</Text>
-            <Text style={DetailsStyles.contentText}>收款人姓名</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="请输入收款人姓名"
-              onChangeText={this.accountNameInput.bind(this)}
-              value={otherSideAccountName}
-            />
-          </View>
-          <View style={styles.cashDetails}>
-            <Text style={styles.iconStyle}>*</Text>
-            <Text style={DetailsStyles.contentText}>银行卡号</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="请输入银行卡号"
-              onChangeText={this.bankCardInput.bind(this)}
-              value={otherSideAccount}
-            />
-          </View>
-          <View style={styles.cashDetails}>
-            <Text style={styles.iconStyle}>*</Text>
-            <Text style={DetailsStyles.contentText}>银行类型</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="请输入银行类型"
-              onChangeText={this.bankNameInput.bind(this)}
-              value={otherSideBank}
-            />
-          </View>
-          <View style={styles.cashDetails}>
-            <Text style={styles.iconStyle} />
-            <Text style={DetailsStyles.contentText}>支行名称</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="请输入支行名称"
-              onChangeText={this.branchBankNameInput.bind(this)}
-              value={otherSideBranchBank}
-            />
-          </View>
-        </View>
-        <View style={styles.btnWrapper}>
-          <Button
-            btnStyle={[styles.btnStyle]}
-            text={'提交'}
-            type={'round'}
-            onClick={this.cashSubmit.bind(this)}
+          <Toast
+            ref={this.toastRef}
+            position={'center'}
+            defaultCloseDelay={3000}
           />
         </View>
-        <Toast
-          ref={this.toastRef}
-          position={'center'}
-          defaultCloseDelay={3000}
-        />
-      </View>
+      </SafeAreaViewPlus>
     );
   }
 }

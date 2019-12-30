@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-23 11:47:17
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 17:21:12
+ * @LastEditors  : guorui
+ * @LastEditTime : 2019-12-30 11:06:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,6 +15,7 @@ import GlobalStyles from '../../assets/css/GlobalStyles';
 import noOrderImage from '../../assets/image/no_data/no_order.png';
 import noLineImage from '../../assets/image/no_data/no_line.png';
 import noCustomer from '../../assets/image/no_data/no_customer.png';
+import NavigationUtil from '../../navigator/NavigationUtils';
 import Button from '../Button/Button.js';
 
 export default class EmptyList extends Component {
@@ -37,6 +38,7 @@ export default class EmptyList extends Component {
         break;
       case 'driver':
         navigation.navigate('DriverEdit');
+        // NavigationUtil.goPage({}, 'DriverEditPage');
         break;
       case 'order':
       case 'offer':
@@ -45,6 +47,7 @@ export default class EmptyList extends Component {
       case 'login_offer':
         break;
       case 'line':
+        navigation.navigate('LineEdit');
         break;
       case 'login_order':
         break;

@@ -3,7 +3,7 @@
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-30 15:33:31
+ * @LastEditTime : 2019-12-30 16:04:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,6 +27,7 @@ import SellingDetailsPage from '../pages/SellingDetails/SellingDetails';
 import VacancyDetailsPage from '../pages/VacancyDetails/VacancyDetails';
 import MainPublishPage from '../pages/MainPublish/MainPublish';
 import LinePage from '../pages/Line/Line';
+import LineEditPage from '../pages/LineEdit/LineEdit';
 // import ChooseCityPage from '../pages/ChooseCity/ChooseCity';
 import UploadImagePage from '../pages/UploadImage/UploadImage.js';
 import SellingPublishPage from '../pages/SellingPublish/SellingPublish.js';
@@ -181,6 +182,12 @@ const MainNavigator = createStackNavigator(
     //常跑线路
     UploadImagePage: {
       screen: UploadImagePage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    LineEditPage: {
+      screen: LineEditPage,
       navigationOptions: {
         header: null,
       },

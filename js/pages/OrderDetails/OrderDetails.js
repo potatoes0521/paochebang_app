@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 15:45:12
+ * @LastEditors  : guorui
+ * @LastEditTime : 2019-12-30 14:11:41
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,6 +21,7 @@ import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus
 import Toast from 'react-native-easy-toast';
 import {handleOrderButtons} from '../../config/button_config.js';
 import ButtonItem from './components/Buttons';
+import GlobalStyles from '../../assets/css/GlobalStyles';
 class OrderDetails extends Component {
   constructor(props) {
     super(props);
@@ -64,7 +65,7 @@ class OrderDetails extends Component {
     const {state} = navigation;
     const {params} = state;
     this.pageParams = params;
-    this.getOrderDetail();
+    // this.getOrderDetail();
     this.backPress.componentDidMount();
   }
 
@@ -249,9 +250,10 @@ class OrderDetails extends Component {
       usedType,
       vins,
       transferSettlePriceDesc,
+      abandonTimeDesc,
       buttons,
       // isShow,
-      // statusDescs,
+      statusDescs,
     } = this.state;
     const buttonsList =
       buttons &&
@@ -265,6 +267,12 @@ class OrderDetails extends Component {
           />
         );
       });
+    const giveUp =
+      statusDescs && statusDescs.some(item => item.key === 'abandonOrder');
+    const pending =
+      statusDescs && statusDescs.some(item => item.key === 'pendingCar');
+    const waiting =
+      statusDescs && statusDescs.some(item => item.key === 'waitingPickUp');
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -274,6 +282,29 @@ class OrderDetails extends Component {
             title={'订单详情'}
           />
           <ScrollView>
+            {statusDescs.length ? (
+              <View style={styles.statusWrapper}>
+                <View style={styles.statusInfo}>
+                  {pending || waiting ? (
+                    <Text style={styles.iconStyle}>&#xe65c;</Text>
+                  ) : null}
+                  {giveUp ? (
+                    <Text style={styles.iconStyle}>&#xe66d;</Text>
+                  ) : null}
+                  <Text style={styles.statusTitle}>
+                    {/* {statusDescs && statusDescs[0].name} */}
+                    待交车
+                  </Text>
+                </View>
+                {giveUp ? (
+                  <View style={styles.timeWrapper}>
+                    <Text style={styles.statusTime}>
+                      放弃时间：{abandonTimeDesc}
+                    </Text>
+                  </View>
+                ) : null}
+              </View>
+            ) : null}
             <View style={[DetailsStyles.card, styles.marginBottom]}>
               {/* 发车城市 */}
               <View style={styles.line}>
@@ -490,6 +521,34 @@ const styles = StyleSheet.create({
   pageWrapper: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+  },
+  statusWrapper: {
+    paddingTop: 20,
+    paddingLeft: 28,
+  },
+  statusInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  iconStyle: {
+    fontFamily: 'iconfont',
+    fontSize: 20,
+    color: GlobalStyles.themeSubColor,
+    marginRight: 8,
+  },
+  statusTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: GlobalStyles.themeFontColor,
+  },
+  timeWrapper: {
+    marginTop: 2,
+  },
+  statusTime: {
+    fontSize: 15,
+    paddingLeft: 30,
+    color: GlobalStyles.themeHColor,
   },
   line: {
     paddingBottom: 16,

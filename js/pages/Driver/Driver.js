@@ -3,7 +3,7 @@
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-26 10:35:13
+ * @LastEditTime : 2019-12-30 14:51:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -28,6 +28,7 @@ import DriverItem from './components/DriverItem.js';
 import EmptyList from '../../components/EmptyList/EmptyList.js';
 import api from '../../api/index';
 import BottomLoading from '../../components/BottomLoading/BottomLoading.js';
+import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import Toast from 'react-native-easy-toast';
 
 class Driver extends Component {
@@ -145,82 +146,81 @@ class Driver extends Component {
   }
 
   render() {
-    const {navigation} = this.props;
+    const {theme, navigation} = this.props;
     let {selectParam, totalCount} = this.state;
     return (
-      <View style={styles.pageWrapper}>
-        <NavigationBar
-          navigation={navigation}
-          leftViewShow={true}
-          title={'司机信息列表'}
-        />
-        <View style={styles.topWrapper}>
-          <View style={styles.searchWrapper}>
-            <View style={styles.searchIcon}>
-              <Text style={styles.iconStyle}>&#xe604;</Text>
+      <SafeAreaViewPlus topColor={theme.themeColor}>
+        <View style={styles.pageWrapper}>
+          <NavigationBar
+            navigation={navigation}
+            leftViewShow={true}
+            title={'司机信息列表'}
+          />
+          <View style={styles.topWrapper}>
+            <View style={styles.searchWrapper}>
+              <View style={styles.searchIcon}>
+                <Text style={styles.iconStyle}>&#xe604;</Text>
+              </View>
+              <View style={styles.searchInput}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="输入姓名/联系方式进行搜索"
+                  onChangeText={this.searchInput.bind(this)}
+                  value={selectParam}
+                />
+              </View>
+              {selectParam ? (
+                <TouchableOpacity onPress={() => this.clearSearchInput()}>
+                  <View style={styles.closeIcon}>
+                    <Text style={styles.closeStyle}>&#xe614;</Text>
+                  </View>
+                </TouchableOpacity>
+              ) : null}
             </View>
-            <View style={styles.searchInput}>
-              <TextInput
-                style={styles.input}
-                placeholder="输入姓名/联系方式进行搜索"
-                onSubmitEditing={this.submitSearch.bind(this)}
-                // placeholderTextColor={styles.placeholderStyle}
-                // inlineImageLeft
-                onChangeText={this.searchInput.bind(this)}
-                value={selectParam}
-              />
+            <View style={styles.numWrapper}>
+              <Text style={styles.fontStyle}>共</Text>
+              <Text style={styles.numStyle}>{totalCount}</Text>
+              <Text style={styles.fontStyle}>个司机</Text>
             </View>
-            {selectParam ? (
-              <TouchableOpacity onPress={() => this.clearSearchInput()}>
-                <View style={styles.closeIcon}>
-                  <Text style={styles.closeStyle}>&#xe614;</Text>
-                </View>
-              </TouchableOpacity>
-            ) : null}
+            <TouchableOpacity onPress={this.navigationToMine.bind(this)}>
+              <View style={styles.mineWrapper}>
+                <Text style={DetailsStyles.labelText}>我的名片</Text>
+                <Text style={styles.icon}>&#xe61d;</Text>
+              </View>
+            </TouchableOpacity>
           </View>
-          <View style={styles.numWrapper}>
-            <Text style={styles.fontStyle}>共</Text>
-            <Text style={styles.numStyle}>{totalCount}</Text>
-            <Text style={styles.fontStyle}>个司机</Text>
+          <View style={styles.bottomWrapper}>
+            <FlatList
+              data={this.state.driverListData}
+              renderItem={data => <DriverItem itemData={data.item} />}
+              refreshControl={
+                <RefreshControl
+                  title="Loading..."
+                  colors={[GlobalStyles.themeColor]}
+                  refreshing={this.state.isLoading}
+                  onRefresh={() => this.getAllDriverList({refresh: true})}
+                  tintColor={GlobalStyles.themeColor}
+                />
+              }
+              ListFooterComponent={() => this.genIndicator()}
+              onEndReached={() => {
+                this.getAllDriverList(this, {});
+              }}
+              ListEmptyComponent={() => (
+                <EmptyList {...this.props} pageType={'driver'} />
+              )}
+              keyExtractor={data => {
+                return data.driverId + 'driver';
+              }}
+            />
           </View>
-          <TouchableOpacity onPress={this.navigationToMine.bind(this)}>
-            <View style={styles.mineWrapper}>
-              <Text style={DetailsStyles.labelText}>我的名片</Text>
-              <Text style={styles.icon}>&#xe61d;</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.bottomWrapper}>
-          <FlatList
-            data={this.state.driverListData}
-            renderItem={data => <DriverItem itemData={data.item} />}
-            refreshControl={
-              <RefreshControl
-                title="Loading..."
-                colors={[GlobalStyles.themeColor]}
-                refreshing={this.state.isLoading}
-                onRefresh={() => this.getAllDriverList({refresh: true})}
-                tintColor={GlobalStyles.themeColor}
-              />
-            }
-            ListFooterComponent={() => this.genIndicator()}
-            onEndReached={() => {
-              this.getAllDriverList(this, {});
-            }}
-            ListEmptyComponent={() => (
-              <EmptyList {...this.props} pageType={'driver'} />
-            )}
-            keyExtractor={data => {
-              return data.driverId + 'driver';
-            }}
+          <Toast
+            ref={this.toastRef}
+            position={'center'}
+            defaultCloseDelay={3000}
           />
         </View>
-        <Toast
-          ref={this.toastRef}
-          position={'center'}
-          defaultCloseDelay={3000}
-        />
-      </View>
+      </SafeAreaViewPlus>
     );
   }
 }
@@ -319,6 +319,7 @@ Driver.propTypes = {
 const mapStateToProps = state => {
   return {
     userInfo: state.user_info.userInfo,
+    theme: state.theme.theme,
   };
 };
 export default connect(mapStateToProps)(Driver);

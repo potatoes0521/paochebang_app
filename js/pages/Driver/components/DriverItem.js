@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-25 11:00:24
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-26 10:09:26
+ * @LastEditTime : 2019-12-30 13:31:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -34,7 +34,7 @@ export default class DriverItem extends Component {
   navigatorDetails(item) {
     console.log(item, 'itemData');
     let pageUrl = 'DriverDetailsPage';
-    NavigationUtil.goPage(item, pageUrl);
+    NavigationUtil.goPage({userId: item.userId}, pageUrl);
   }
   render() {
     let {itemData} = this.props;
