@@ -13,7 +13,7 @@ import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
-import MainStyles from '../../assets/css/MainStyles';
+import MineStyles from '../../assets/css/MineStyles';
 import Button from '../../components/Button/Button.js';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import Toast from 'react-native-easy-toast';
@@ -139,10 +139,10 @@ class DriverConfirm extends Component {
             leftViewShow={true}
             title={'司机信息'}
           />
-          <View style={MainStyles.itemWrapper}>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
-              <Text style={MainStyles.titleStyle}>司机信息</Text>
-              <Text style={MainStyles.textStyle}>
+          <View style={MineStyles.itemWrapper}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
+              <Text style={MineStyles.titleStyle}>司机信息</Text>
+              <Text style={MineStyles.textStyle}>
                 {realName || '请选择司机信息'}
               </Text>
               {this.pageParams.type !== 'see' ? (
@@ -151,14 +151,14 @@ class DriverConfirm extends Component {
                 <Text style={styles.selectIcon} />
               )}
             </View>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
-              <Text style={MainStyles.titleStyle}>联系方式</Text>
-              <Text style={MainStyles.textStyle}>{mobile || ''}</Text>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
+              <Text style={MineStyles.titleStyle}>联系方式</Text>
+              <Text style={MineStyles.textStyle}>{mobile || ''}</Text>
               <Text style={styles.selectIcon} />
             </View>
-            <View style={MainStyles.itemStyle}>
-              <Text style={MainStyles.titleStyle}>身份证号码</Text>
-              <Text style={MainStyles.textStyle}>{idCard || ''}</Text>
+            <View style={MineStyles.itemStyle}>
+              <Text style={MineStyles.titleStyle}>身份证号码</Text>
+              <Text style={MineStyles.textStyle}>{idCard || ''}</Text>
               <Text style={styles.selectIcon} />
             </View>
           </View>
