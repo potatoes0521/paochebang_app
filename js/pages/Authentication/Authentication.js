@@ -12,7 +12,7 @@ import {StyleSheet, View, Text, ImageBackground, TextInput} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import GlobalStyles from '../../assets/css/GlobalStyles';
-import DetailsStyles from '../../assets/css/DetailsStyles';
+import MineStyles from '../../assets/css/MineStyles';
 import Button from '../../components/Button/Button.js';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import api from '../../api/index';
@@ -133,9 +133,9 @@ class Authentication extends Component {
             </View>
             <View style={styles.idCardWrapper}>
               <View style={[styles.cardItem, styles.line]}>
-                <Text style={DetailsStyles.contentText}>真实姓名</Text>
+                <Text style={MineStyles.contentText}>真实姓名</Text>
                 <TextInput
-                  style={[styles.input, DetailsStyles.contentText]}
+                  style={[styles.input, MineStyles.contentText]}
                   placeholder="请输入真实姓名"
                   maxLength={8}
                   onChangeText={this.realNameOnInput.bind(this)}
@@ -143,9 +143,9 @@ class Authentication extends Component {
                 />
               </View>
               <View style={styles.cardItem}>
-                <Text style={DetailsStyles.contentText}>身份证号</Text>
+                <Text style={MineStyles.contentText}>身份证号</Text>
                 <TextInput
-                  style={[styles.input, DetailsStyles.contentText]}
+                  style={[styles.input, MineStyles.contentText]}
                   placeholder="请输入身份证号"
                   maxLength={20}
                   onChangeText={this.idCardOnInput.bind(this)}
@@ -199,9 +199,9 @@ class Authentication extends Component {
           </View>
           <View style={styles.bottomWrapper}>
             <View style={[styles.cardItem, styles.line]}>
-              <Text style={DetailsStyles.contentText}>收款人姓名</Text>
+              <Text style={MineStyles.contentText}>收款人姓名</Text>
               <TextInput
-                style={[styles.input, DetailsStyles.contentText]}
+                style={[styles.input, MineStyles.contentText]}
                 placeholder="请输入收款人姓名"
                 maxLength={8}
                 onChangeText={this.accountHolderOnInput.bind(this)}
@@ -209,9 +209,9 @@ class Authentication extends Component {
               />
             </View>
             <View style={[styles.cardItem, styles.line]}>
-              <Text style={DetailsStyles.contentText}>银行卡号</Text>
+              <Text style={MineStyles.contentText}>银行卡号</Text>
               <TextInput
-                style={[styles.input, DetailsStyles.contentText]}
+                style={[styles.input, MineStyles.contentText]}
                 placeholder="请输入银行卡号"
                 maxLength={20}
                 keyboardType={'number-pad'}
@@ -220,9 +220,9 @@ class Authentication extends Component {
               />
             </View>
             <View style={styles.cardItem}>
-              <Text style={DetailsStyles.contentText}>银行类型</Text>
+              <Text style={MineStyles.contentText}>银行类型</Text>
               <TextInput
-                style={[styles.input, DetailsStyles.contentText]}
+                style={[styles.input, MineStyles.contentText]}
                 placeholder="请输入银行类型"
                 maxLength={20}
                 onChangeText={this.bankNameOnInput.bind(this)}

@@ -3,7 +3,7 @@
  * @description: 常跑线路
  * @Date: 2019-12-27 15:19:24
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 10:53:05
+ * @LastEditTime : 2019-12-30 17:18:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,7 +11,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
-import DetailsStyles from '../../assets/css/DetailsStyles';
+import MineStyles from '../../assets/css/MineStyles';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
@@ -128,7 +128,7 @@ class Line extends Component {
               <View style={styles.lineTitle}>
                 <View style={styles.lineStyle} />
                 <View>
-                  <Text style={DetailsStyles.contentText}>
+                  <Text style={MineStyles.contentText}>
                     我的线路（{routeNumber}/3）
                   </Text>
                 </View>

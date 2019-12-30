@@ -3,7 +3,7 @@
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 17:35:20
+ * @LastEditTime : 2019-12-30 16:42:46
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -69,7 +69,10 @@ class MineDetails extends Component {
    * @return void
    */
   navigationEdit() {
-    NavigationUtil.goPage(this.state.userDetailsInfo, 'MineEditPage');
+    NavigationUtil.goPage(
+      {userDetailsInfo: this.state.userDetailsInfo},
+      'MineEditPage',
+    );
   }
   render() {
     let {userDetailsInfo} = this.state;

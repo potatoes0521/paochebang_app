@@ -3,7 +3,7 @@
  * @description: 编辑、添加司机信息
  * @Date: 2019-12-26 10:36:06
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 14:51:40
+ * @LastEditTime : 2019-12-30 17:23:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,9 +17,8 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
-import DetailsStyles from '../../assets/css/DetailsStyles';
-import GlobalStyles from '../../assets/css/GlobalStyles';
 import MineStyles from '../../assets/css/MineStyles';
+import GlobalStyles from '../../assets/css/GlobalStyles';
 import Button from '../../components/Button/Button.js';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import api from '../../api';
@@ -191,7 +190,7 @@ class DriverEdit extends Component {
           </View>
           <View style={styles.btnWrapper}>
             <Button
-              btnStyle={[styles.btnStyle, DetailsStyles.btnLeft]}
+              btnStyle={[styles.btnStyle, MineStyles.btnLeft]}
               text={'取消'}
               type={'plain'}
             />

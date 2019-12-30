@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 14:41:44
+ * @LastEditTime : 2019-12-30 17:23:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,7 +21,7 @@ import {connect} from 'react-redux';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
-import DetailsStyles from '../../assets/css/DetailsStyles';
+import MineStyles from '../../assets/css/MineStyles';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import accountImage from '../../assets/image/mine/account.png';
 import lineImage from '../../assets/image/mine/line.png';
@@ -123,7 +123,7 @@ class Mine extends Component {
                 </View>
                 {/* <View style={styles.userInfo}>
                   <View style={styles.userName}>
-                    <Text style={DetailsStyles.labelText}>郭仨心</Text>
+                    <Text style={MineStyles.labelText}>郭仨心</Text>
                   </View>
                   <View style={styles.certification}> */}
                 {/* <Image
@@ -143,7 +143,7 @@ class Mine extends Component {
                   </View>
                 </View> */}
                 <View style={styles.userInfo}>
-                  <Text style={DetailsStyles.labelText}>注册/登录</Text>
+                  <Text style={MineStyles.labelText}>注册/登录</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -160,7 +160,7 @@ class Mine extends Component {
                   <Image style={styles.itemImage} source={accountImage} />
                 </View>
                 <View style={styles.menuText}>
-                  <Text style={DetailsStyles.contentText}>账户体系</Text>
+                  <Text style={MineStyles.contentText}>账户体系</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -170,7 +170,7 @@ class Mine extends Component {
                   <Image style={styles.itemImage} source={lineImage} />
                 </View>
                 <View style={styles.menuText}>
-                  <Text style={DetailsStyles.contentText}>常跑路线</Text>
+                  <Text style={MineStyles.contentText}>常跑路线</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -180,7 +180,7 @@ class Mine extends Component {
                   <Image style={styles.itemImage} source={driverImage} />
                 </View>
                 <View style={styles.menuText}>
-                  <Text style={DetailsStyles.contentText}>司机管理</Text>
+                  <Text style={MineStyles.contentText}>司机管理</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -192,7 +192,7 @@ class Mine extends Component {
                   <Image style={styles.itemImage} source={sellingImage} />
                 </View>
                 <View style={styles.menuText}>
-                  <Text style={DetailsStyles.contentText}>已发卖板</Text>
+                  <Text style={MineStyles.contentText}>已发卖板</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -202,7 +202,7 @@ class Mine extends Component {
                   <Image style={styles.itemImage} source={vacancyImage} />
                 </View>
                 <View style={styles.menuText}>
-                  <Text style={DetailsStyles.contentText}>已发空位</Text>
+                  <Text style={MineStyles.contentText}>已发空位</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -212,7 +212,7 @@ class Mine extends Component {
                   <Image style={styles.itemImage} source={realNameImage} />
                 </View>
                 <View style={styles.menuText}>
-                  <Text style={DetailsStyles.contentText}>实名认证</Text>
+                  <Text style={MineStyles.contentText}>实名认证</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -220,12 +220,12 @@ class Mine extends Component {
         </View>
         <View style={styles.versionWrapper}>
           <View style={[styles.versionList, styles.versionLine]}>
-            <Text style={DetailsStyles.contentText}>版本</Text>
+            <Text style={MineStyles.contentText}>版本</Text>
             <Text style={styles.versionNum}>{appVersion}</Text>
           </View>
           <TouchableOpacity onPress={() => this.callService()}>
             <View style={styles.versionList}>
-              <Text style={DetailsStyles.contentText}>联系跑车</Text>
+              <Text style={MineStyles.contentText}>联系跑车</Text>
               <Text style={styles.versionNum}>400-9698-256</Text>
             </View>
           </TouchableOpacity>

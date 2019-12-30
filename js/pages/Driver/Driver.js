@@ -3,7 +3,7 @@
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 14:51:13
+ * @LastEditTime : 2019-12-30 17:17:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,7 +23,7 @@ import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import GlobalStyles from '../../assets/css/GlobalStyles';
-import DetailsStyles from '../../assets/css/DetailsStyles';
+import MineStyles from '../../assets/css/MineStyles';
 import DriverItem from './components/DriverItem.js';
 import EmptyList from '../../components/EmptyList/EmptyList.js';
 import api from '../../api/index';
@@ -184,7 +184,7 @@ class Driver extends Component {
             </View>
             <TouchableOpacity onPress={this.navigationToMine.bind(this)}>
               <View style={styles.mineWrapper}>
-                <Text style={DetailsStyles.labelText}>我的名片</Text>
+                <Text style={MineStyles.labelText}>我的名片</Text>
                 <Text style={styles.icon}>&#xe61d;</Text>
               </View>
             </TouchableOpacity>
