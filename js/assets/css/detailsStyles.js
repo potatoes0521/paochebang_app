@@ -3,7 +3,7 @@
  * @description: 详情通用css
  * @Date: 2019-12-04 11:36:02
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 09:52:37
+ * @LastEditTime : 2019-12-30 09:37:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -76,5 +76,14 @@ export default {
   },
   textThemeDisabled: {
     color: GlobalStyles.themeDisabled,
+  },
+  textInput: {
+    height: 20,
+    textAlign: 'right',
+    flex: 1,
+    padding: 0,
+    margin: 0,
+    color: GlobalStyles.themeFontColor,
+    fontSize: 15,
   },
 };

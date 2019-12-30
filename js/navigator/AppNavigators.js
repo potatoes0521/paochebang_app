@@ -3,7 +3,7 @@
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-29 11:13:21
+ * @LastEditTime : 2019-12-30 10:13:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,13 +29,15 @@ import MainPublishPage from '../pages/MainPublish/MainPublish';
 import LinePage from '../pages/Line/Line';
 // import ChooseCityPage from '../pages/ChooseCity/ChooseCity';
 import UploadImagePage from '../pages/UploadImage/UploadImage.js';
+import SellingPublishPage from '../pages/SellingPublish/SellingPublish.js';
+import VacancyPublishPage from '../pages/VacancyPublish/VacancyPublish.js';
 
 export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一个初始化的路由名
 
 const InitNavigator = createStackNavigator({
   WelcomePage: {
     // screen: WelcomePage,
-    screen: UploadImagePage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
+    screen: SellingPublishPage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
     navigationOptions: {
       header: null, // 隐藏头部
     },
@@ -81,6 +83,20 @@ const MainNavigator = createStackNavigator(
     // 空位详情
     VacancyDetailsPage: {
       screen: VacancyDetailsPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    // 发布卖板
+    SellingPublishPage: {
+      screen: SellingPublishPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    // 发布空位
+    VacancyPublishPage: {
+      screen: VacancyPublishPage,
       navigationOptions: {
         header: null,
       },
