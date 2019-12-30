@@ -14,7 +14,7 @@ import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
-import MainStyles from '../../assets/css/MainStyles';
+import MineStyles from '../../assets/css/MineStyles';
 import Button from '../../components/Button/Button.js';
 import api from '../../api';
 
@@ -82,46 +82,46 @@ class MineDetails extends Component {
             leftViewShow={true}
             title={'我的基本信息'}
           />
-          <View style={MainStyles.itemWrapper}>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
-              <Text style={MainStyles.titleStyle}>姓名</Text>
-              <Text style={MainStyles.textStyle}>
+          <View style={MineStyles.itemWrapper}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
+              <Text style={MineStyles.titleStyle}>姓名</Text>
+              <Text style={MineStyles.textStyle}>
                 {userDetailsInfo.realName || ''}
               </Text>
             </View>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
-              <Text style={MainStyles.titleStyle}>联系方式</Text>
-              <Text style={MainStyles.textStyle}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
+              <Text style={MineStyles.titleStyle}>联系方式</Text>
+              <Text style={MineStyles.textStyle}>
                 {userDetailsInfo.mobile || ''}
               </Text>
             </View>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
-              <Text style={MainStyles.titleStyle}>身份证号</Text>
-              <Text style={MainStyles.textStyle}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
+              <Text style={MineStyles.titleStyle}>身份证号</Text>
+              <Text style={MineStyles.textStyle}>
                 {userDetailsInfo.idCard || ''}
               </Text>
             </View>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
-              <Text style={MainStyles.titleStyle}>所属物流公司</Text>
-              <Text style={MainStyles.textStyle}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
+              <Text style={MineStyles.titleStyle}>所属物流公司</Text>
+              <Text style={MineStyles.textStyle}>
                 {userDetailsInfo.merchantName || ''}
               </Text>
             </View>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
-              <Text style={MainStyles.titleStyle}>车牌号</Text>
-              <Text style={MainStyles.textStyle}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
+              <Text style={MineStyles.titleStyle}>车牌号</Text>
+              <Text style={MineStyles.textStyle}>
                 {userDetailsInfo.carNum || ''}
               </Text>
             </View>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
-              <Text style={MainStyles.titleStyle}>车辆信息</Text>
-              <Text style={MainStyles.textStyle}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
+              <Text style={MineStyles.titleStyle}>车辆信息</Text>
+              <Text style={MineStyles.textStyle}>
                 {userDetailsInfo.carTypeDesc || ''}
               </Text>
             </View>
-            <View style={MainStyles.itemStyle}>
-              <Text style={MainStyles.titleStyle}>注册时间</Text>
-              <Text style={MainStyles.textStyle}>
+            <View style={MineStyles.itemStyle}>
+              <Text style={MineStyles.titleStyle}>注册时间</Text>
+              <Text style={MineStyles.textStyle}>
                 {userDetailsInfo.createTimeDesc || ''}
               </Text>
             </View>

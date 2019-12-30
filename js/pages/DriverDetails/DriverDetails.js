@@ -13,7 +13,7 @@ import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
-import MainStyles from '../../assets/css/MainStyles';
+import MineStyles from '../../assets/css/MineStyles';
 import Button from '../../components/Button/Button.js';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import api from '../../api';
@@ -83,52 +83,52 @@ class DriverDetails extends Component {
             leftViewShow={true}
             title={'司机信息'}
           />
-          <View style={MainStyles.itemWrapper}>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
-              <Text style={MainStyles.titleStyle}>姓名</Text>
-              <Text style={MainStyles.textStyle}>
+          <View style={MineStyles.itemWrapper}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
+              <Text style={MineStyles.titleStyle}>姓名</Text>
+              <Text style={MineStyles.textStyle}>
                 {driverInfo.remarkName || ''}
               </Text>
             </View>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
-              <Text style={MainStyles.titleStyle}>联系方式</Text>
-              <Text style={MainStyles.textStyle}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
+              <Text style={MineStyles.titleStyle}>联系方式</Text>
+              <Text style={MineStyles.textStyle}>
                 {driverInfo.mobile || ''}
               </Text>
             </View>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
-              <Text style={MainStyles.titleStyle}>身份证号</Text>
-              <Text style={MainStyles.textStyle}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
+              <Text style={MineStyles.titleStyle}>身份证号</Text>
+              <Text style={MineStyles.textStyle}>
                 {driverInfo.idCard || ''}
               </Text>
             </View>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
-              <Text style={MainStyles.titleStyle}>车牌号</Text>
-              <Text style={MainStyles.textStyle}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
+              <Text style={MineStyles.titleStyle}>车牌号</Text>
+              <Text style={MineStyles.textStyle}>
                 {driverInfo.carNum || ''}
               </Text>
             </View>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
-              <Text style={MainStyles.titleStyle}>车辆信息</Text>
-              <Text style={MainStyles.textStyle}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
+              <Text style={MineStyles.titleStyle}>车辆信息</Text>
+              <Text style={MineStyles.textStyle}>
                 {driverInfo.carTypeDesc || ''}
               </Text>
             </View>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
-              <Text style={MainStyles.titleStyle}>所属物流公司</Text>
-              <Text style={MainStyles.textStyle}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
+              <Text style={MineStyles.titleStyle}>所属物流公司</Text>
+              <Text style={MineStyles.textStyle}>
                 {driverInfo.merchantName || ''}
               </Text>
             </View>
-            <View style={MainStyles.itemStyle}>
-              <Text style={MainStyles.titleStyle}>添加时间</Text>
-              <Text style={MainStyles.textStyle}>
+            <View style={MineStyles.itemStyle}>
+              <Text style={MineStyles.titleStyle}>添加时间</Text>
+              <Text style={MineStyles.textStyle}>
                 {driverInfo.createTimeDesc || ''}
               </Text>
             </View>
-            <View style={MainStyles.itemStyle}>
-              <Text style={MainStyles.titleStyle}>最后更新时间</Text>
-              <Text style={MainStyles.textStyle}>
+            <View style={MineStyles.itemStyle}>
+              <Text style={MineStyles.titleStyle}>最后更新时间</Text>
+              <Text style={MineStyles.textStyle}>
                 {driverInfo.updateTimeDesc || ''}
               </Text>
             </View>

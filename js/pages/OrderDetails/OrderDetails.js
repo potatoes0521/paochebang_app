@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 14:11:41
+ * @LastEditTime : 2019-12-30 16:05:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -64,7 +64,7 @@ class OrderDetails extends Component {
     const {navigation} = this.props;
     const {state} = navigation;
     const {params} = state;
-    this.pageParams = params;
+    this.pageParams = params || {};
     // this.getOrderDetail();
     this.backPress.componentDidMount();
   }

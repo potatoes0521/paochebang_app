@@ -19,7 +19,7 @@ import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import DetailsStyles from '../../assets/css/DetailsStyles';
 import GlobalStyles from '../../assets/css/GlobalStyles';
-import MainStyles from '../../assets/css/MainStyles';
+import MineStyles from '../../assets/css/MineStyles';
 import Button from '../../components/Button/Button.js';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import api from '../../api';
@@ -120,10 +120,10 @@ class DriverEdit extends Component {
             leftViewShow={true}
             title={'添加司机'}
           />
-          <View style={MainStyles.itemWrapper}>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+          <View style={MineStyles.itemWrapper}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
               <Text style={styles.iconStyle}>*</Text>
-              <Text style={MainStyles.titleStyle}>姓名</Text>
+              <Text style={MineStyles.titleStyle}>姓名</Text>
               <TextInput
                 style={styles.input}
                 placeholder="请输入司机姓名"
@@ -132,9 +132,9 @@ class DriverEdit extends Component {
                 value={remarkName}
               />
             </View>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
               <Text style={styles.iconStyle}>*</Text>
-              <Text style={MainStyles.titleStyle}>联系方式</Text>
+              <Text style={MineStyles.titleStyle}>联系方式</Text>
               <TextInput
                 style={styles.input}
                 placeholder="请输入司机联系方式"
@@ -144,9 +144,9 @@ class DriverEdit extends Component {
                 value={mobile}
               />
             </View>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
               <Text style={styles.iconStyle}>*</Text>
-              <Text style={MainStyles.titleStyle}>身份证号</Text>
+              <Text style={MineStyles.titleStyle}>身份证号</Text>
               <TextInput
                 style={styles.input}
                 placeholder="请输入司机身份证号"
@@ -155,9 +155,9 @@ class DriverEdit extends Component {
                 value={idCard}
               />
             </View>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
               <Text style={styles.iconStyle} />
-              <Text style={MainStyles.titleStyle}>车牌号</Text>
+              <Text style={MineStyles.titleStyle}>车牌号</Text>
               <TextInput
                 style={styles.input}
                 placeholder="请输入车牌号"
@@ -166,9 +166,9 @@ class DriverEdit extends Component {
                 value={carNum}
               />
             </View>
-            <View style={[MainStyles.itemStyle, MainStyles.line]}>
+            <View style={[MineStyles.itemStyle, MineStyles.line]}>
               <Text style={styles.iconStyle} />
-              <Text style={MainStyles.titleStyle}>所属物流公司</Text>
+              <Text style={MineStyles.titleStyle}>所属物流公司</Text>
               <TextInput
                 style={styles.input}
                 placeholder="请输入所属物流公司"
@@ -178,13 +178,13 @@ class DriverEdit extends Component {
               />
             </View>
             <TouchableOpacity onPress={this.chooseCarType.bind(this)}>
-              <View style={MainStyles.itemStyle}>
+              <View style={MineStyles.itemStyle}>
                 <Text style={styles.iconStyle} />
-                <Text style={MainStyles.titleStyle}>车辆信息</Text>
+                <Text style={MineStyles.titleStyle}>车辆信息</Text>
                 {carTypeDesc ? (
-                  <Text style={MainStyles.textStyle}>{carTypeDesc}</Text>
+                  <Text style={MineStyles.textStyle}>{carTypeDesc}</Text>
                 ) : (
-                  <Text style={MainStyles.textStyle}>请选择车辆类型</Text>
+                  <Text style={MineStyles.textStyle}>请选择车辆类型</Text>
                 )}
               </View>
             </TouchableOpacity>
