@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:46:56
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-26 09:41:30
+ * @LastEditors  : guorui
+ * @LastEditTime : 2019-12-31 09:51:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,7 +18,7 @@ import OfferList from './components/OfferList.js';
 import OrderList from './components/OrderList.js';
 import Drawer from '../../components/Drawer/Drawer';
 import Button from '../../components/Button/Button';
-import DetailsStyles from '../../assets/css/DetailsStyles.js/index.js';
+import DetailsStyles from '../../assets/css/DetailsStyles.js';
 import NavigationUtils from '../../navigator/NavigationUtils';
 class Offer extends Component {
   constructor(props) {
