@@ -18,7 +18,7 @@ import OfferList from './components/OfferList.js';
 import OrderList from './components/OrderList.js';
 import Drawer from '../../components/Drawer/Drawer';
 import Button from '../../components/Button/Button';
-import DetailsStyles from '../../assets/css/detailsStyles1.js/index.js';
+import DetailsStyles from '../../assets/css/DetailsStyles.js/index.js';
 import NavigationUtils from '../../navigator/NavigationUtils';
 class Offer extends Component {
   constructor(props) {

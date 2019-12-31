@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import GlobalStyles from '../../assets/css/GlobalStyles';
-import DetailsStyles from '../../assets/css/detailsStyles1';
+import DetailsStyles from '../../assets/css/DetailsStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';

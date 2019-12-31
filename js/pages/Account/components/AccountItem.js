@@ -12,7 +12,7 @@ import {StyleSheet, Text, View} from 'react-native';
 // import PropTypes from 'prop-types';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
 // import NavigationUtil from '../../navigator/NavigationUtils.js';
-import DetailsStyles from '../../../assets/css/detailsStyles1';
+import DetailsStyles from '../../../assets/css/DetailsStyles';
 export default class OrderItem extends Component {
   constructor(props) {
     super(props);

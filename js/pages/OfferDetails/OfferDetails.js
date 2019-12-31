@@ -20,7 +20,7 @@ import {
 import {connect} from 'react-redux';
 import api from '../../api';
 import GlobalStyles from '../../assets/css/GlobalStyles';
-import DetailsStyles from '../../assets/css/detailsStyles1';
+import DetailsStyles from '../../assets/css/DetailsStyles';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
