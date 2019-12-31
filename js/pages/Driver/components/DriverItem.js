@@ -3,14 +3,14 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-25 11:00:24
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 13:31:50
+ * @LastEditTime : 2019-12-31 09:43:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
-import DetailsStyles from '../../../assets/css/DetailsStyles';
+import DetailsStyles from '../../../assets/css/detailsStyles1';
 import BackPressComponent from '../../../components/BackPressComponent/BackPressComponent';
 import PropTypes from 'prop-types';
 import NavigationUtil from '../../../navigator/NavigationUtils';

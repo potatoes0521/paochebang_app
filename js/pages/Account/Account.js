@@ -3,7 +3,7 @@
  * @description: 账户体系
  * @Date: 2019-12-25 15:25:16
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 17:23:40
+ * @LastEditTime : 2019-12-31 09:37:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -75,14 +75,10 @@ class AccountDetails extends Component {
       this.toastRef.current.show('亲,您没有可提现余额哦~');
       return;
     }
-    NavigationUtil.goPage(this.state.accountId, 'CashPage');
+    NavigationUtil.goPage({accountId: this.state.accountId}, 'CashPage');
   }
   /**
    * 获取收支明细列表
-   * @return void
-   */
-  /**
-   * 获取账户明细列表
    * @return void
    */
   getAccountList(pageNum = 1, pageSize = 10) {

@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-12-03 16:47:37
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-30 16:04:23
+ * @LastEditors  : guorui
+ * @LastEditTime : 2019-12-31 09:43:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,7 +20,7 @@ import {
 import {connect} from 'react-redux';
 import api from '../../api';
 import GlobalStyles from '../../assets/css/GlobalStyles';
-import DetailsStyles from '../../assets/css/DetailsStyles';
+import DetailsStyles from '../../assets/css/detailsStyles1';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';

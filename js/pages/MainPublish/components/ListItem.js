@@ -3,7 +3,7 @@
  * @description: 我发布的卖板
  * @Date: 2019-12-27 11:34:26
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 14:58:36
+ * @LastEditTime : 2019-12-31 09:43:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,7 +12,7 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
 import NavigationUtil from '../../../navigator/NavigationUtils.js';
-import DetailsStyles from '../../../assets/css/DetailsStyles';
+import DetailsStyles from '../../../assets/css/detailsStyles1';
 import CardListItemStyles from '../../../assets/css/CardListItemStyle';
 export default class PublishItem extends Component {
   constructor(props) {

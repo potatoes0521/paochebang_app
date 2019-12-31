@@ -3,7 +3,7 @@
  * @description: 编辑、添加司机信息
  * @Date: 2019-12-26 10:36:06
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 17:23:06
+ * @LastEditTime : 2019-12-30 18:24:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,7 +20,14 @@ import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import MineStyles from '../../assets/css/MineStyles';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import Button from '../../components/Button/Button.js';
+import {
+  validateIdCard,
+  realNamePatter,
+  phoneNumberPatter,
+} from '../../utils/patter.js';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
+import NavigationUtil from '../../navigator/NavigationUtils';
+import Toast from 'react-native-easy-toast';
 import api from '../../api';
 
 class DriverEdit extends Component {
@@ -36,6 +43,7 @@ class DriverEdit extends Component {
       carTypeDesc: '',
     };
     this.carTypeList = [];
+    this.toastRef = React.createRef();
   }
 
   componentDidMount() {
@@ -99,6 +107,57 @@ class DriverEdit extends Component {
   inputMerchantName(value) {
     this.setState({
       merchantName: value,
+    });
+  }
+  /**
+   * 取消添加
+   * @return void
+   */
+  cancelAdd() {
+    NavigationUtil.goBack(this.props.navigation);
+  }
+  /**
+   * 提交添加
+   * @return void
+   */
+  submitAdd() {
+    let {
+      mobile,
+      idCard,
+      remarkName,
+      carNum,
+      carType,
+      merchantName,
+    } = this.state;
+    if (!realNamePatter.test(remarkName)) {
+      this.toastRef.current.show('请输入2-8位的中文姓名');
+      return;
+    }
+    if (!phoneNumberPatter.test(mobile)) {
+      this.toastRef.current.show('手机号格式有误');
+      return;
+    }
+    if (!validateIdCard(idCard)) {
+      this.toastRef.current.show('客户身份证号格式有误');
+      return;
+    }
+    let sendData = {
+      userId: this.driverInfo.userId,
+      mobile,
+      idCard,
+      remarkName,
+      carNum,
+      carType,
+      merchantName,
+    };
+    api.driver.updateDriverData(sendData, this).then(() => {
+      if (this.pageParams.pageType === 'edit') {
+        this.toastRef.current.show('编辑成功');
+      }
+      this.toastRef.current.show('添加成功');
+      setTimeout(() => {
+        NavigationUtil.goBack(this.props.navigation);
+      }, 1800);
     });
   }
   render() {
@@ -193,9 +252,20 @@ class DriverEdit extends Component {
               btnStyle={[styles.btnStyle, MineStyles.btnLeft]}
               text={'取消'}
               type={'plain'}
+              onClick={this.cancelAdd.bind(this)}
             />
-            <Button btnStyle={[styles.btnStyle]} text={'保存'} type={'round'} />
+            <Button
+              btnStyle={[styles.btnStyle]}
+              text={'保存'}
+              type={'round'}
+              onClick={this.submitAdd.bind(this)}
+            />
           </View>
+          <Toast
+            ref={this.toastRef}
+            position={'center'}
+            defaultCloseDelay={3000}
+          />
         </View>
       </SafeAreaViewPlus>
     );
