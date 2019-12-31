@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-30 16:51:01
+ * @LastEditTime : 2019-12-31 10:17:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -59,6 +59,7 @@ class SellingPublish extends Component {
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
     });
+    this.toastRef = React.createRef();
     this.pageParams = {};
     this.dateChooseType = '';
   }
@@ -78,6 +79,7 @@ class SellingPublish extends Component {
 
   componentWillUnmount() {
     this.emitRemark.remove(); // 销毁要接受的通知
+    this.emitChooseCity.remove(); // 销毁要接受的通知
     this.backPress.componentWillUnmount();
   }
 
@@ -85,11 +87,28 @@ class SellingPublish extends Component {
     NavigationUtil.goBack(this.props.navigation);
     return true;
   }
+  /**
+   * 处理事件通知
+   * @return void
+   */
   handleEmit() {
+    // 提交备注时候的通知
     this.emitRemark = DeviceEventEmitter.addListener('submitRemark', data => {
       this.setState({
         remarks: data,
       });
+    });
+    // 选择城市时候的通知
+    this.emitChooseCity = DeviceEventEmitter.addListener('chooseCity', data => {
+      let state = {};
+      if (data.type === 'sendCity') {
+        state.sendCityName = data.sendCityName;
+        state.sendCityId = data.sendCityId;
+      } else if (data.type === 'receiveCity') {
+        state.receiveCityName = data.receiveCityName;
+        state.receiveCityId = data.receiveCityId;
+      }
+      this.setState(state);
     });
   }
   getSellingDetail() {}
@@ -131,6 +150,11 @@ class SellingPublish extends Component {
   showActionSheet() {
     this.ActionSheet.show();
   }
+  /**
+   * ActionSheet被选则
+   * @param {Number} index 被选中的下标
+   * @return void
+   */
   chooseActionSheet(index) {
     if (index === payWey.length) {
       return;
@@ -180,21 +204,100 @@ class SellingPublish extends Component {
       datePickerShow: false,
     });
   }
+  /**
+   * 跳转到编辑备注
+   * @return void
+   */
   navigationToRemark() {
     NavigationUtil.goPage({}, 'RemarkPage');
   }
-  cancel() {}
-  submit() {}
+  navigationToChooseCity(type) {
+    console.log('type', type);
+    NavigationUtil.goPage({}, 'ChooseCityPage');
+  }
+  cancel() {
+    NavigationUtil.goBack(this.props.navigation);
+  }
+  submit() {
+    let {
+      sendCityId, // 发车城市
+      receiveCityId, // 收车城市
+      sendTime, // 预期发车时间
+      carInfo, // 车辆信息
+      usedType, // 车辆性质
+      carAmount, // 台数
+      dueTime, // 有效期
+      price, // 报价
+      payType, // 结算方式
+      remark, // 备注
+    } = this.state;
+    if (
+      !sendCityId ||
+      !receiveCityId ||
+      !sendTime ||
+      !carInfo ||
+      !usedType ||
+      !carAmount ||
+      !dueTime ||
+      !payType
+    ) {
+      this.toastRef.current.show('请填写完整信息');
+      return;
+    }
+    let sendData = {
+      carAmount: carAmount,
+      carInfo: carInfo,
+      dueTime: dueTime,
+      usedType: usedType,
+      payType: payType,
+      price: price * 100,
+      receiveCityId: receiveCityId,
+      remark: remark,
+      sendCityId: sendCityId,
+      sendTime: sendTime,
+      userId: this.props.userInfo.userId,
+    };
+    if (this.pageParams.pageType === 'edit') {
+      this.editSellingData(sendData);
+    } else {
+      this.addSellingData(sendData);
+    }
+  }
+  /**
+   * 编辑卖板信息
+   * @param {Object} sendData 请求参数
+   * @return void
+   */
+  editSellingData(sendData) {
+    let data = Object.assign({}, sendData, {
+      saleToPalletId: this.pageParams.saleToPalletId,
+    });
+    api.selling.updateOneSellingData(data, this).then(() => {
+      this.toastRef.current.show('编辑成功');
+      setTimeout(() => {
+        NavigationUtil.goBack(this.props.navigation);
+      }, 1800);
+    });
+  }
+  /**
+   * 卖板发布
+   * @return void
+   */
+  addSellingData(sendData) {
+    api.selling.addSellingData(sendData, this).then(() => {
+      this.toastRef.current.show('发布成功');
+      setTimeout(() => {
+        NavigationUtil.goBack(this.props.navigation);
+      }, 1800);
+    });
+  }
   render() {
     const {theme, navigation} = this.props;
     let {
       carAmount,
       carInfo,
       dueTime,
-      isActive,
       payType,
-      returnPrice,
-      pubTime,
       receiveCityName,
       remarks,
       sendCityName,
@@ -228,26 +331,33 @@ class SellingPublish extends Component {
                 <View style={DetailsStyles.formLabel}>
                   <Text style={DetailsStyles.labelText}>发车城市:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
+                <TouchableOpacity
+                  onPress={this.navigationToChooseCity.bind(this, 'sendCity')}
+                  style={DetailsStyles.formContent}>
                   <Text
                     style={sendCityName ? textClassName : textThemeDisabled}>
                     {sendCityName || '请选择发车城市'}
                   </Text>
                   <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
-                </View>
+                </TouchableOpacity>
               </View>
               {/* 收车城市 */}
               <View style={DetailsStyles.formItem}>
                 <View style={DetailsStyles.formLabel}>
                   <Text style={DetailsStyles.labelText}>收车城市:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
+                <TouchableOpacity
+                  onPress={this.navigationToChooseCity.bind(
+                    this,
+                    'receiveCity',
+                  )}
+                  style={DetailsStyles.formContent}>
                   <Text
                     style={receiveCityName ? textClassName : textThemeDisabled}>
                     {receiveCityName || '请选择收车城市'}
                   </Text>
                   <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
-                </View>
+                </TouchableOpacity>
               </View>
               {/* 预计发车时间 */}
               <View style={DetailsStyles.formItem}>
@@ -408,6 +518,11 @@ class SellingPublish extends Component {
               chooseBeforeTime={false}
               onConfirm={this.dateConfirm.bind(this)}
               onCancel={this.dateCancel.bind(this)}
+            />
+            <Toast
+              ref={this.toastRef}
+              position={'center'}
+              defaultCloseDelay={3000}
             />
           </ScrollView>
         </View>

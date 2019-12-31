@@ -3,7 +3,7 @@
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-30 16:51:53
+ * @LastEditTime : 2019-12-31 10:02:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,7 +29,7 @@ import VacancyDetailsPage from '../pages/VacancyDetails/VacancyDetails';
 import MainPublishPage from '../pages/MainPublish/MainPublish';
 import LinePage from '../pages/Line/Line';
 import LineEditPage from '../pages/LineEdit/LineEdit';
-// import ChooseCityPage from '../pages/ChooseCity/ChooseCity';
+import ChooseCityPage from '../pages/ChooseCity/ChooseCity';
 import UploadImagePage from '../pages/UploadImage/UploadImage.js';
 import SellingPublishPage from '../pages/SellingPublish/SellingPublish.js';
 import VacancyPublishPage from '../pages/VacancyPublish/VacancyPublish.js';
@@ -202,6 +202,12 @@ const MainNavigator = createStackNavigator(
     },
     RemarkPage: {
       screen: RemarkPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    ChooseCityPage: {
+      screen: ChooseCityPage,
       navigationOptions: {
         header: null,
       },

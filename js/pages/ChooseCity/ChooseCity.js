@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-26 09:24:29
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 11:03:37
+ * @LastEditTime : 2019-12-31 11:22:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,7 +19,11 @@ import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus
 // import Indexes from '../../components/Indexes/Indexes';
 import _flattenDeep from 'lodash/flattenDeep';
 import api from '../../api/index';
-import {TextInput} from 'react-native-gesture-handler';
+import {
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native-gesture-handler';
 
 class ChooseCity extends Component {
   constructor(props) {
@@ -37,7 +41,6 @@ class ChooseCity extends Component {
     this.throughCityNameList = [];
     this.throughCityIdList = [];
     this.pageParams = {};
-    this.searchValue = '';
   }
 
   componentDidMount() {
@@ -50,6 +53,7 @@ class ChooseCity extends Component {
   }
 
   componentWillUnmount() {
+    clearTimeout(this.timer);
     this.backPress.componentWillUnmount();
   }
 
@@ -72,13 +76,13 @@ class ChooseCity extends Component {
         data.all.filter(item => {
           return item.list && item.list.length;
         }) || [];
-      allCity = allCity.map(item => {
-        return {data: item.list, initial: item.initial};
-      });
       this.allCityList = allCity.map(item => {
         return item.list;
       });
       this.allCityList = _flattenDeep(this.allCityList);
+      allCity = allCity.map(item => {
+        return {data: item.list, initial: item.initial};
+      });
       this.setState({
         hotCity,
         allCity,
@@ -88,13 +92,44 @@ class ChooseCity extends Component {
   chooseCity(city) {
     console.log('city', city);
   }
+  chooseSearchCity(city) {
+    console.log('city', city);
+  }
   searchInput(value) {
-    console.log('value', value);
-    this.searchValue = value;
+    if (value.length < 1) {
+      return;
+    }
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      let filterCityList = this.allCityList.filter(item => {
+        return (
+          (item && item.cityName && item.cityName.indexOf(value) !== -1) ||
+          (item && item.spell && item.spell.indexOf(value) !== -1)
+        );
+      });
+      this.setState({
+        filterCityList,
+      });
+      console.log('filterCityList', filterCityList);
+    }, 1000);
   }
   render() {
     const {theme, navigation} = this.props;
-    // const {allCity} = this.state;
+    const {hotCity, allCity, filterCityList} = this.state;
+    const filterList = filterCityList.map(city => {
+      const key = city.cityId;
+      return (
+        <TouchableOpacity
+          style={styles.searchItem}
+          onPress={this.chooseSearchCity.bind(this, city)}
+          key={key}>
+          <View style={styles.searchItemName}>
+            <Text>{city.cityName}</Text>
+          </View>
+          <Text style={styles.iconRight}>&#xe61d;</Text>
+        </TouchableOpacity>
+      );
+    });
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -116,6 +151,11 @@ class ChooseCity extends Component {
             </View>
           </View>
           <View style={styles.wrapperLine} />
+          <ScrollView>
+            {filterCityList.length ? (
+              <View className="search-wrapper">{filterList}</View>
+            ) : null}
+          </ScrollView>
           {/* <Indexes data={allCity} onClick={this.chooseCity.bind(this)} /> */}
         </View>
       </SafeAreaViewPlus>
@@ -160,6 +200,22 @@ const styles = StyleSheet.create({
   wrapperLine: {
     height: 8,
     backgroundColor: '#f5f5f5',
+  },
+  searchItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 48,
+    paddingLeft: 24,
+    paddingRight: 16,
+    borderBottomColor: '#f5f5f5',
+    borderBottomWidth: 1,
+  },
+  iconRight: {
+    fontSize: 12,
+    color: GlobalStyles.themeDisabled,
+    fontFamily: 'iconfont',
+    marginLeft: 4,
   },
 });
 // 如果需要引入store
