@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-30 16:03:32
+ * @LastEditTime : 2019-12-30 16:51:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,6 +16,7 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  DeviceEventEmitter,
 } from 'react-native';
 import {connect} from 'react-redux';
 import GlobalStyles from '../../assets/css/GlobalStyles';
@@ -67,19 +68,29 @@ class SellingPublish extends Component {
     const {state} = navigation;
     const {params} = state;
     console.log('params', params);
+    this.handleEmit();
     if (this.pageParams && this.pageParams.pageType === 'edit') {
       this.getSellingDetail();
     }
+
     this.backPress.componentDidMount();
   }
 
   componentWillUnmount() {
+    this.emitRemark.remove(); // 销毁要接受的通知
     this.backPress.componentWillUnmount();
   }
 
   onBackPress() {
     NavigationUtil.goBack(this.props.navigation);
     return true;
+  }
+  handleEmit() {
+    this.emitRemark = DeviceEventEmitter.addListener('submitRemark', data => {
+      this.setState({
+        remarks: data,
+      });
+    });
   }
   getSellingDetail() {}
   /**
@@ -168,6 +179,9 @@ class SellingPublish extends Component {
     this.setState({
       datePickerShow: false,
     });
+  }
+  navigationToRemark() {
+    NavigationUtil.goPage({}, 'RemarkPage');
   }
   cancel() {}
   submit() {}
@@ -351,7 +365,8 @@ class SellingPublish extends Component {
                 <View style={DetailsStyles.formLabel}>
                   <Text style={DetailsStyles.labelText}>备注:</Text>
                 </View>
-                <View
+                <TouchableOpacity
+                  onPress={this.navigationToRemark.bind(this)}
                   style={[
                     DetailsStyles.formContent,
                     DetailsStyles.moreTextFormItem,
@@ -360,7 +375,7 @@ class SellingPublish extends Component {
                     {remarks || '请输入备注信息'}
                   </Text>
                   <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
-                </View>
+                </TouchableOpacity>
               </View>
             </View>
             {/* button */}
