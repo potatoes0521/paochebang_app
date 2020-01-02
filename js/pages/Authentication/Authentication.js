@@ -3,7 +3,7 @@
  * @description: 实名认证
  * @Date: 2019-12-26 18:17:17
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-31 18:11:21
+ * @LastEditTime : 2020-01-02 15:41:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -58,6 +58,9 @@ class Authentication extends Component {
    */
   handleAlreadyAuthorize() {
     api.user.getUserAuthorizeMsg({}, this).then(res => {
+      if (!res) {
+        return;
+      }
       let licenseBeforeImage = '';
       let licenseAfterImage = '';
       if (res && res.imageList) {
@@ -212,7 +215,10 @@ class Authentication extends Component {
       accountNum,
       accountHolder,
     };
-    api.user.realNameAuthentication(sendData, this).then(() => {
+    api.user.realNameAuthentication(sendData, this).then(res => {
+      if (!res) {
+        return;
+      }
       this.toastRef.current.show('实名认证成功');
       if (licenseBeforeImage) {
         Actions.changeUserInfo({

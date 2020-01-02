@@ -3,7 +3,7 @@
  * @description: 编辑、添加司机信息
  * @Date: 2019-12-26 10:36:06
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 15:27:07
+ * @LastEditTime : 2020-01-02 15:42:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -217,7 +217,10 @@ class DriverEdit extends Component {
       merchantName,
     };
     console.log('sendData', sendData);
-    api.driver.updateDriverData(sendData, this).then(() => {
+    api.driver.updateDriverData(sendData, this).then(res => {
+      if (!res) {
+        return;
+      }
       if (this.pageParams.pageType === 'edit') {
         this.toastRef.current.show('编辑成功');
       } else {
