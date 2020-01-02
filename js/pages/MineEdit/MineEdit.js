@@ -3,7 +3,7 @@
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 09:14:24
+ * @LastEditTime : 2020-01-02 11:36:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,6 +14,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  DeviceEventEmitter,
 } from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
@@ -76,13 +77,8 @@ class MineEdit extends Component {
    * @return void
    */
   getCarInfoType() {
-    Axios.request({
-      url: `${defaultResourceConfigURL}driver_car_info.json`,
-      method: 'get',
-      success: res => {
-        console.log('carType', res);
-        // this.carTypeList = res.data.data;
-      },
+    api.driver.getCarInfoList({}, this).then(res => {
+      console.log('carType', res);
     });
   }
   /**
@@ -98,9 +94,9 @@ class MineEdit extends Component {
    * 显示actionSheet
    * @return void
    */
-  // showActionSheet() {
-  //   this.ActionSheet.show();
-  // }
+  showActionSheet() {
+    this.ActionSheet.show();
+  }
   /**
    * 函数功能描述
    * @return void
@@ -126,6 +122,8 @@ class MineEdit extends Component {
       carType,
       carNum,
     };
+    DeviceEventEmitter.emit('submitMineCarType', this.state.carType);
+    DeviceEventEmitter.emit('submitMineCarNum', this.state.carNum);
     api.user.editUserInfo(sendData, this).then(() => {
       this.toastRef.current.show('编辑成功');
       setTimeout(() => {
@@ -170,7 +168,7 @@ class MineEdit extends Component {
             <View style={MineStyles.itemStyle}>
               <Text style={MineStyles.titleStyle}>车辆信息</Text>
               <TouchableOpacity onPress={this.showActionSheet.bind(this)}>
-                <Text style={MineStyles.textStyle}>
+                <Text style={MineStyles.inputStyle}>
                   {carTypeDesc || '请选择车辆类型'}
                 </Text>
               </TouchableOpacity>
@@ -194,9 +192,9 @@ class MineEdit extends Component {
           <ActionSheet
             ref={o => (this.ActionSheet = o)}
             title={'请选择车辆类型'}
-            options={carTypeList}
+            options={this.carTypeList}
             tintColor={GlobalStyles.themeFontColor}
-            cancelButtonIndex={carTypeList.length - 1}
+            cancelButtonIndex={this.carTypeList.length - 1}
             onPress={this.chooseCarType.bind(this)}
           />
           <Toast
@@ -228,6 +226,8 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'right',
     padding: 0,
+    fontSize: 15,
+    color: GlobalStyles.themeFontColor,
   },
 });
 

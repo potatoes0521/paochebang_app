@@ -3,7 +3,7 @@
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 10:07:40
+ * @LastEditTime : 2020-01-02 10:41:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -55,7 +55,7 @@ class Driver extends Component {
     const {params} = state;
     console.log('params', params);
     this.pageParams = params || {};
-    this.getAllDriverList();
+    this.getAllDriverList({});
     this.backPress.componentDidMount();
   }
 
@@ -73,11 +73,23 @@ class Driver extends Component {
    * @param {Number} pageSize 条数
    * @return void
    */
-  getAllDriverList(
+  getAllDriverList({
     selectParam = this.state.selectParam,
     pageNum = 1,
     pageSize = 10,
-  ) {
+    refresh = false,
+  }) {
+    if (refresh) {
+      this.driverFlag = false;
+      this.driverPage = 1;
+      pageNum = 1;
+      this.setState({
+        isLoading: true,
+      });
+    }
+    if (this.driverFlag && !refresh) {
+      return;
+    }
     let sendData = {
       userId: this.props.userInfo.userId,
       selectParam,
@@ -121,14 +133,14 @@ class Driver extends Component {
       selectParam: value,
     });
   }
-  /**
-   * 提交搜索
-   * @return void
-   */
+  // /**
+  //  * 提交搜索
+  //  * @return void
+  //  */
   submitSearch() {
     this.driverPage = 1;
     this.driverFlag = false;
-    this.getAllDriverList(this.state.selectParam, this.driverPage);
+    // this.getAllDriverList(this.state.selectParam, this.driverPage);
   }
   /**
    * 清除输入框内容
@@ -140,7 +152,7 @@ class Driver extends Component {
     });
     this.driverPage = 1;
     this.driverFlag = false;
-    this.getAllDriverList('', this.driverPage);
+    // this.getAllDriverList('', this.driverPage);
   }
   genIndicator() {
     let {driverListData} = this.state;
@@ -166,7 +178,6 @@ class Driver extends Component {
   render() {
     const {theme, navigation} = this.props;
     let {selectParam, totalCount} = this.state;
-    console.log('this.state.driverListData', typeof this.state.driverListData);
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
