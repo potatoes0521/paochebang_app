@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 10:51:34
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 15:55:23
+ * @LastEditTime : 2020-01-02 10:28:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -108,7 +108,7 @@ export default class OrderItem extends Component {
         return (
           <ButtonItem
             onClick={this.buttonsHandle.bind(this)}
-            key={item.key}
+            key={btn.key + this.props.uniq}
             item={btn}
           />
         );
@@ -250,6 +250,7 @@ const styles = StyleSheet.create({
 
 OrderItem.defaultProps = {
   itemData: {},
+  uniq: '10',
   onClick: () => {},
 };
 

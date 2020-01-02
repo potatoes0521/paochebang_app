@@ -18,7 +18,7 @@ import OfferList from './components/OfferList.js';
 import OrderList from './components/OrderList.js';
 import Drawer from '../../components/Drawer/Drawer';
 import Button from '../../components/Button/Button';
-import DetailsStyles from '../../assets/css/DetailsStyles.js';
+import DetailsStyle from '../../assets/css/DetailsStyle.js';
 import NavigationUtils from '../../navigator/NavigationUtils';
 class Offer extends Component {
   constructor(props) {
@@ -101,29 +101,29 @@ class Offer extends Component {
           onClickModel={this.closeDrawer.bind(this)}>
           <View style={styles.drawerList}>
             <View
-              style={[styles.drawerItem, DetailsStyles.formItem]}
+              style={[styles.drawerItem, DetailsStyle.formItem]}
               onPress={this.closeDrawer.bind(this)}>
-              <View style={DetailsStyles.formLabel}>
-                <Text style={DetailsStyles.labelText}>发车地点:</Text>
+              <View style={DetailsStyle.formLabel}>
+                <Text style={DetailsStyle.labelText}>发车地点:</Text>
               </View>
               <TouchableOpacity
                 onPress={this.navigatorTo.bind(this, 'sendCity')}
-                style={DetailsStyles.formContent}>
-                <Text style={DetailsStyles.contentText}>元/台</Text>
-                <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                style={DetailsStyle.formContent}>
+                <Text style={DetailsStyle.contentText}>元/台</Text>
+                <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
               </TouchableOpacity>
             </View>
             <View
-              style={[styles.drawerItem, DetailsStyles.formItem]}
+              style={[styles.drawerItem, DetailsStyle.formItem]}
               onPress={this.closeDrawer.bind(this)}>
-              <View style={DetailsStyles.formLabel}>
-                <Text style={DetailsStyles.labelText}>发车地点:</Text>
+              <View style={DetailsStyle.formLabel}>
+                <Text style={DetailsStyle.labelText}>发车地点:</Text>
               </View>
               <TouchableOpacity
                 onPress={this.navigatorTo.bind(this, 'receiveCity')}
-                style={DetailsStyles.formContent}>
-                <Text style={DetailsStyles.contentText}>元/台</Text>
-                <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                style={DetailsStyle.formContent}>
+                <Text style={DetailsStyle.contentText}>元/台</Text>
+                <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
               </TouchableOpacity>
             </View>
           </View>

@@ -10,7 +10,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
-import DetailsStyles from '../../../assets/css/DetailsStyles';
+import DetailsStyle from '../../../assets/css/DetailsStyle';
 import BackPressComponent from '../../../components/BackPressComponent/BackPressComponent';
 import PropTypes from 'prop-types';
 import NavigationUtil from '../../../navigator/NavigationUtils';
@@ -44,10 +44,10 @@ export default class DriverItem extends Component {
           <View style={styles.item}>
             <View style={styles.itemLeft}>
               <View style={styles.userWrapper}>
-                <Text style={[DetailsStyles.labelText, styles.marginRight]}>
+                <Text style={[DetailsStyle.labelText, styles.marginRight]}>
                   {itemData.remarkName || ''}
                 </Text>
-                <Text style={DetailsStyles.labelText}>
+                <Text style={DetailsStyle.labelText}>
                   {itemData.mobile || ''}
                 </Text>
               </View>

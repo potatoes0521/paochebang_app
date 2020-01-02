@@ -20,7 +20,7 @@ import {
 import {connect} from 'react-redux';
 import api from '../../api';
 import GlobalStyles from '../../assets/css/GlobalStyles';
-import DetailsStyles from '../../assets/css/DetailsStyles';
+import DetailsStyle from '../../assets/css/DetailsStyle';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
@@ -237,16 +237,16 @@ class OfferDetails extends Component {
       status,
       datePickerShow,
     } = this.state;
-    let statusClassName = [DetailsStyles.contentText];
+    let statusClassName = [DetailsStyle.contentText];
     if (status === 10) {
-      statusClassName.push(DetailsStyles.noOffer);
+      statusClassName.push(DetailsStyle.noOffer);
     } else if (status === 20) {
-      statusClassName.push(DetailsStyles.hasOffer);
+      statusClassName.push(DetailsStyle.hasOffer);
     }
-    const offerWrapperClassName = [DetailsStyles.card, {marginTop: 16}];
+    const offerWrapperClassName = [DetailsStyle.card, {marginTop: 16}];
     let btnStyle = [];
     if (status === 10) {
-      btnStyle = [DetailsStyles.btnLeft];
+      btnStyle = [DetailsStyle.btnLeft];
     }
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
@@ -257,24 +257,24 @@ class OfferDetails extends Component {
             title={'报价详情'}
           />
           <ScrollView>
-            <View style={DetailsStyles.card}>
+            <View style={DetailsStyle.card}>
               {/* 报价状态 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>报价状态:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.labelText}>报价状态:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
+                <View style={DetailsStyle.formContent}>
                   <Text style={statusClassName}>{statusDesc || ''}</Text>
                 </View>
               </View>
               {/* 报价 */}
               {status === 20 && (
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>报价:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>报价:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {quotedPriceDesc || ''} 元/台
                     </Text>
                   </View>
@@ -282,12 +282,12 @@ class OfferDetails extends Component {
               )}
               {/* 总价 */}
               {status === 20 && (
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>总价:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>总价:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       ￥{totalPriceDesc || ''}
                     </Text>
                   </View>
@@ -295,12 +295,12 @@ class OfferDetails extends Component {
               )}
               {/* 报价时间 */}
               {status === 20 && (
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>报价时间:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>报价时间:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {quotedTimeDesc || ''}
                     </Text>
                   </View>
@@ -308,58 +308,58 @@ class OfferDetails extends Component {
               )}
               {/* 有效期至 */}
               {status === 20 && (
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>有效期至:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>有效期至:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {dueTimeDesc || ''}
                     </Text>
                   </View>
                 </View>
               )}
               {/* 发车时间 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>预计发车时间:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.labelText}>预计发车时间:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>
+                <View style={DetailsStyle.formContent}>
+                  <Text style={DetailsStyle.contentText}>
                     {sendTimeDesc || ''}
                   </Text>
                 </View>
               </View>
               {/* 发车城市 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>发车城市:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.labelText}>发车城市:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>
+                <View style={DetailsStyle.formContent}>
+                  <Text style={DetailsStyle.contentText}>
                     {sendCityName || ''}
                   </Text>
                 </View>
               </View>
               {/* 收车城市 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>收车城市:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.labelText}>收车城市:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>
+                <View style={DetailsStyle.formContent}>
+                  <Text style={DetailsStyle.contentText}>
                     {receiveCityName || ''}
                   </Text>
                 </View>
               </View>
               {/* 服务 */}
               {storePickup || homeDelivery ? (
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>服务:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>服务:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {storePickup ? storePickupDesc : ''}
                       {storePickup && homeDelivery ? '，' : ''}
                       {homeDelivery ? homeDeliveryDesc : ''}
@@ -369,46 +369,43 @@ class OfferDetails extends Component {
               ) : null}
               {/* 车辆信息 */}
               <View
-                style={[
-                  DetailsStyles.formItem,
-                  DetailsStyles.moreTextFormItem,
-                ]}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>车辆信息:</Text>
+                style={[DetailsStyle.formItem, DetailsStyle.moreTextFormItem]}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.labelText}>车辆信息:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>{carInfo || ''}</Text>
+                <View style={DetailsStyle.formContent}>
+                  <Text style={DetailsStyle.contentText}>{carInfo || ''}</Text>
                 </View>
               </View>
               {/* 车辆类型 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>车辆类型:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.labelText}>车辆类型:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>
+                <View style={DetailsStyle.formContent}>
+                  <Text style={DetailsStyle.contentText}>
                     {usedType === 1 ? '新车' : '二手车'}
                   </Text>
                 </View>
               </View>
               {/* 台数信息 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>台数:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.labelText}>台数:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>
+                <View style={DetailsStyle.formContent}>
+                  <Text style={DetailsStyle.contentText}>
                     {carAmount || ''}台
                   </Text>
                 </View>
               </View>
               {/* 台数信息 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>询价时间:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.labelText}>询价时间:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>
+                <View style={DetailsStyle.formContent}>
+                  <Text style={DetailsStyle.contentText}>
                     {inquiryTimeDesc || ''}
                   </Text>
                 </View>
@@ -417,11 +414,11 @@ class OfferDetails extends Component {
             {status === 10 && (
               <View style={offerWrapperClassName}>
                 {/* 报价 */}
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>报价:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>报价:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
+                  <View style={DetailsStyle.formContent}>
                     <TextInput
                       style={styles.offerInput}
                       maxLength={8}
@@ -429,45 +426,45 @@ class OfferDetails extends Component {
                       keyboardType={'numeric'}
                       onChangeText={this.offerText.bind(this)}
                     />
-                    <Text style={DetailsStyles.contentText}>元/台</Text>
+                    <Text style={DetailsStyle.contentText}>元/台</Text>
                   </View>
                 </View>
                 {/* 有效期 */}
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>有效期至:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>有效期至:</Text>
                   </View>
                   <TouchableOpacity
-                    style={DetailsStyles.formContent}
+                    style={DetailsStyle.formContent}
                     onPress={() => this.handleShowDate()}>
                     {dueTime ? (
-                      <Text style={DetailsStyles.contentText}>
+                      <Text style={DetailsStyle.contentText}>
                         {dueTime}
-                        <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                        <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
                       </Text>
                     ) : (
                       <Text
                         style={[
-                          DetailsStyles.contentText,
-                          DetailsStyles.waitColor,
+                          DetailsStyle.contentText,
+                          DetailsStyle.waitColor,
                         ]}>
                         请选择
-                        <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                        <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
                       </Text>
                     )}
                   </TouchableOpacity>
                 </View>
                 {/* 总价 */}
                 {quotedPrice > 0 && (
-                  <View style={DetailsStyles.formItem}>
-                    <View style={DetailsStyles.formLabel}>
-                      <Text style={DetailsStyles.labelText}>总价:</Text>
+                  <View style={DetailsStyle.formItem}>
+                    <View style={DetailsStyle.formLabel}>
+                      <Text style={DetailsStyle.labelText}>总价:</Text>
                     </View>
-                    <View style={DetailsStyles.formContent}>
+                    <View style={DetailsStyle.formContent}>
                       <Text
                         style={[
-                          DetailsStyles.contentText,
-                          DetailsStyles.hasOffer,
+                          DetailsStyle.contentText,
+                          DetailsStyle.hasOffer,
                         ]}>
                         ￥{totalPriceDesc || ''}
                       </Text>
@@ -482,7 +479,7 @@ class OfferDetails extends Component {
               onConfirm={this.dateConfirm.bind(this)}
               onCancel={this.dateCancel.bind(this)}
             />
-            <View style={DetailsStyles.btnWrapper}>
+            <View style={DetailsStyle.btnWrapper}>
               <Button
                 type={'plain'}
                 btnStyle={btnStyle}
@@ -491,7 +488,7 @@ class OfferDetails extends Component {
               />
               {status === 10 && (
                 <Button
-                  btnStyle={[DetailsStyles.btnRight]}
+                  btnStyle={[DetailsStyle.btnRight]}
                   text={'报价'}
                   type={'round'}
                   onClick={this.quote.bind(this)}

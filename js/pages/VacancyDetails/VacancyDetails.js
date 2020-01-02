@@ -12,7 +12,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, Linking} from 'react-native';
 import {connect} from 'react-redux';
 // import GlobalStyles from '../../assets/css/GlobalStyles';
-import DetailsStyles from '../../assets/css/DetailsStyles';
+import DetailsStyle from '../../assets/css/DetailsStyle';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
@@ -154,115 +154,115 @@ class VacancyDetsils extends Component {
             title={'空位详情'}
           />
           <ScrollView>
-            <View style={DetailsStyles.card}>
+            <View style={DetailsStyle.card}>
               {/* 发车城市 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>发车城市:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.labelText}>发车城市:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>
+                <View style={DetailsStyle.formContent}>
+                  <Text style={DetailsStyle.contentText}>
                     {sendCityName || ''}
                   </Text>
                 </View>
               </View>
               {/* 收车城市 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>收车城市:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.labelText}>收车城市:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>
+                <View style={DetailsStyle.formContent}>
+                  <Text style={DetailsStyle.contentText}>
                     {receiveCityName || ''}
                   </Text>
                 </View>
               </View>
               {/* 途经城市 */}
               {throughCitys && throughCitys.cityName ? (
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>途经城市:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>途经城市:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {throughCitys.cityName || ''}
                     </Text>
                   </View>
                 </View>
               ) : null}
               {/* 出发时间 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>出发时间:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.labelText}>出发时间:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>
+                <View style={DetailsStyle.formContent}>
+                  <Text style={DetailsStyle.contentText}>
                     {startTime.split('T')[0] || ''}
                   </Text>
                 </View>
               </View>
               {/* 余位 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>余位:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.labelText}>余位:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>
+                <View style={DetailsStyle.formContent}>
+                  <Text style={DetailsStyle.contentText}>
                     {vacantAmount || '0'}
                   </Text>
                 </View>
               </View>
               {/* 有效期至 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>有效期至:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.labelText}>有效期至:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>
+                <View style={DetailsStyle.formContent}>
+                  <Text style={DetailsStyle.contentText}>
                     {dueTime.split('T')[0] || ''}
                   </Text>
                 </View>
               </View>
               {/* 报价 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>报价:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.labelText}>报价:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>
+                <View style={DetailsStyle.formContent}>
+                  <Text style={DetailsStyle.contentText}>
                     {returnPrice || ''}
                   </Text>
                 </View>
               </View>
               {/* 备注 */}
               {remarks ? (
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>备注:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>备注:</Text>
                   </View>
                   <View
                     style={[
-                      DetailsStyles.formContent,
-                      DetailsStyles.moreTextFormItem,
+                      DetailsStyle.formContent,
+                      DetailsStyle.moreTextFormItem,
                     ]}>
-                    <Text style={DetailsStyles.contentText}>
+                    <Text style={DetailsStyle.contentText}>
                       {remarks || ''}
                     </Text>
                   </View>
                 </View>
               ) : null}
             </View>
-            <View style={DetailsStyles.btnWrapper}>
+            <View style={DetailsStyle.btnWrapper}>
               {isEdit !== '' && isEdit ? (
                 <>
                   <Button
                     type={'plain'}
-                    btnStyle={[DetailsStyles.btnLeft]}
+                    btnStyle={[DetailsStyle.btnLeft]}
                     text={'编辑'}
                     onClick={this.navigatorEdit.bind(this)}
                   />
                   <Button
-                    btnStyle={[DetailsStyles.btnRight]}
+                    btnStyle={[DetailsStyle.btnRight]}
                     text={'下架'}
                     type={'round'}
                     onClick={this.pullOffer.bind(this)}
@@ -270,7 +270,7 @@ class VacancyDetsils extends Component {
                 </>
               ) : (
                 <Button
-                  btnStyle={[DetailsStyles.btnRight]}
+                  btnStyle={[DetailsStyle.btnRight]}
                   text={'立即联系'}
                   type={'round'}
                   onClick={this.callHim.bind(this)}

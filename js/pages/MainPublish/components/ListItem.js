@@ -12,7 +12,7 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
 import NavigationUtil from '../../../navigator/NavigationUtils.js';
-import DetailsStyles from '../../../assets/css/DetailsStyles';
+import DetailsStyle from '../../../assets/css/DetailsStyle';
 import CardListItemStyles from '../../../assets/css/CardListItemStyle';
 export default class PublishItem extends Component {
   constructor(props) {
@@ -57,11 +57,11 @@ export default class PublishItem extends Component {
       item.takeStatus === 30 ||
       item.takeStatus === 40
     ) {
-      statusClassNames.push(DetailsStyles.textThemeDisabled);
-      itemTextClassNames.push(DetailsStyles.textThemeDisabled);
-      cityTextClassNames.push(DetailsStyles.textThemeDisabled);
-      iconClassName.push(DetailsStyles.textThemeDisabled);
-      timeClassName.push(DetailsStyles.textThemeDisabled);
+      statusClassNames.push(DetailsStyle.textThemeDisabled);
+      itemTextClassNames.push(DetailsStyle.textThemeDisabled);
+      cityTextClassNames.push(DetailsStyle.textThemeDisabled);
+      iconClassName.push(DetailsStyle.textThemeDisabled);
+      timeClassName.push(DetailsStyle.textThemeDisabled);
     }
     return (
       <View style={styles.itemWrapper}>

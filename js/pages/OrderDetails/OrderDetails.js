@@ -13,7 +13,7 @@ import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import api from '../../api';
 // import GlobalStyles from '../../assets/css/GlobalStyles';
-import DetailsStyles from '../../assets/css/DetailsStyles';
+import DetailsStyle from '../../assets/css/DetailsStyle';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
@@ -305,60 +305,60 @@ class OrderDetails extends Component {
                 ) : null}
               </View>
             ) : null}
-            <View style={[DetailsStyles.card, styles.marginBottom]}>
+            <View style={[DetailsStyle.card, styles.marginBottom]}>
               {/* 发车城市 */}
               <View style={styles.line}>
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>发车城市:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>发车城市:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {sendCityName || ''}
                     </Text>
                   </View>
                 </View>
                 <View
                   style={[
-                    DetailsStyles.formItem,
-                    DetailsStyles.moreTextFormItem,
+                    DetailsStyle.formItem,
+                    DetailsStyle.moreTextFormItem,
                   ]}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>详细地址:</Text>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>详细地址:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {sendAddress || ''}
                     </Text>
                   </View>
                 </View>
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>联系人:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>联系人:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {sendPerson || ''}
                     </Text>
                   </View>
                 </View>
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>联系方式:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>联系方式:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {sendMobile || ''}
                     </Text>
                   </View>
                 </View>
                 {sendCardNo ? (
-                  <View style={DetailsStyles.formItem}>
-                    <View style={DetailsStyles.formLabel}>
-                      <Text style={DetailsStyles.labelText}>身份证号:</Text>
+                  <View style={DetailsStyle.formItem}>
+                    <View style={DetailsStyle.formLabel}>
+                      <Text style={DetailsStyle.labelText}>身份证号:</Text>
                     </View>
-                    <View style={DetailsStyles.formContent}>
-                      <Text style={DetailsStyles.contentText}>
+                    <View style={DetailsStyle.formContent}>
+                      <Text style={DetailsStyle.contentText}>
                         {sendCardNo || ''}
                       </Text>
                     </View>
@@ -367,57 +367,57 @@ class OrderDetails extends Component {
               </View>
               {/* 收车城市 */}
               <View style={[styles.line, styles.paddingTop]}>
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>收车城市:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>收车城市:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {receiveCityName || ''}
                     </Text>
                   </View>
                 </View>
                 <View
                   style={[
-                    DetailsStyles.formItem,
-                    DetailsStyles.moreTextFormItem,
+                    DetailsStyle.formItem,
+                    DetailsStyle.moreTextFormItem,
                   ]}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>详细地址:</Text>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>详细地址:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {receiveAddress || ''}
                     </Text>
                   </View>
                 </View>
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>联系人:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>联系人:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {receivePerson || ''}
                     </Text>
                   </View>
                 </View>
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>联系方式:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>联系方式:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {receiveMobile || ''}
                     </Text>
                   </View>
                 </View>
                 {receiveCardNo ? (
-                  <View style={DetailsStyles.formItem}>
-                    <View style={DetailsStyles.formLabel}>
-                      <Text style={DetailsStyles.labelText}>身份证号:</Text>
+                  <View style={DetailsStyle.formItem}>
+                    <View style={DetailsStyle.formLabel}>
+                      <Text style={DetailsStyle.labelText}>身份证号:</Text>
                     </View>
-                    <View style={DetailsStyles.formContent}>
-                      <Text style={DetailsStyles.contentText}>
+                    <View style={DetailsStyle.formContent}>
+                      <Text style={DetailsStyle.contentText}>
                         {receiveCardNo || ''}
                       </Text>
                     </View>
@@ -426,77 +426,77 @@ class OrderDetails extends Component {
               </View>
               {/* 服务信息 */}
               <View style={[styles.line, styles.paddingTop]}>
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>服务:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>服务:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {storePickup ? storePickupDesc : ''}
                       {storePickup && homeDelivery ? '，' : ''}
                       {homeDelivery ? homeDeliveryDesc : ''}
                     </Text>
                   </View>
                 </View>
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>发车时间:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>发车时间:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {sendTimeDesc || ''}
                     </Text>
                   </View>
                 </View>
                 <View
                   style={[
-                    DetailsStyles.formItem,
-                    DetailsStyles.moreTextFormItem,
+                    DetailsStyle.formItem,
+                    DetailsStyle.moreTextFormItem,
                   ]}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>车辆信息:</Text>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>车辆信息:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {carInfo || ''}
                     </Text>
                   </View>
                 </View>
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>车辆类型:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>车辆类型:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {usedType === 1 ? '新车' : '二手车'}
                     </Text>
                   </View>
                 </View>
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>台数:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>台数:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
                       {carAmount || ''}台
                     </Text>
                   </View>
                 </View>
-                <View style={DetailsStyles.formItem}>
-                  <View style={DetailsStyles.formLabel}>
-                    <Text style={DetailsStyles.labelText}>车架号:</Text>
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>车架号:</Text>
                   </View>
-                  <View style={DetailsStyles.formContent}>
-                    <Text style={DetailsStyles.contentText}>{vins || ''}</Text>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>{vins || ''}</Text>
                   </View>
                 </View>
               </View>
-              <View style={[DetailsStyles.formItem, styles.paddingTop]}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>报价:</Text>
+              <View style={[DetailsStyle.formItem, styles.paddingTop]}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.labelText}>报价:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
-                  <Text style={DetailsStyles.contentText}>
+                <View style={DetailsStyle.formContent}>
+                  <Text style={DetailsStyle.contentText}>
                     {transferSettlePriceDesc || ''}
                   </Text>
                 </View>

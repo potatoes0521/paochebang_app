@@ -12,7 +12,7 @@ import {StyleSheet, Text, View} from 'react-native';
 // import PropTypes from 'prop-types';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
 // import NavigationUtil from '../../navigator/NavigationUtils.js';
-import DetailsStyles from '../../../assets/css/DetailsStyles';
+import DetailsStyle from '../../../assets/css/DetailsStyle';
 export default class OrderItem extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +27,7 @@ export default class OrderItem extends Component {
       <View style={styles.itemWrapper}>
         <View style={styles.cashWrapper}>
           <View style={styles.cashStyle}>
-            <Text style={DetailsStyles.contentText}>提现</Text>
+            <Text style={DetailsStyle.contentText}>提现</Text>
           </View>
           <View style={styles.cashInfo}>
             {/* <View style={styles.cashAmount}>

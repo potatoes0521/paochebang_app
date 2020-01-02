@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import GlobalStyles from '../../assets/css/GlobalStyles';
-import DetailsStyles from '../../assets/css/DetailsStyles';
+import DetailsStyle from '../../assets/css/DetailsStyle';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
@@ -311,10 +311,10 @@ class SellingPublish extends Component {
     })[0];
     let payWeyList = payWey.map(item => item.name);
     payWeyList.push('取消');
-    let textClassName = [DetailsStyles.contentText];
+    let textClassName = [DetailsStyle.contentText];
     let textThemeDisabled = [
-      DetailsStyles.contentText,
-      DetailsStyles.textThemeDisabled,
+      DetailsStyle.contentText,
+      DetailsStyle.textThemeDisabled,
     ];
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
@@ -325,69 +325,69 @@ class SellingPublish extends Component {
             title={'卖板发布'}
           />
           <ScrollView>
-            <View style={DetailsStyles.card}>
+            <View style={DetailsStyle.card}>
               {/* 发车城市 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.isRequired}>*</Text>
-                  <Text style={DetailsStyles.labelText}>发车城市:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.isRequired}>*</Text>
+                  <Text style={DetailsStyle.labelText}>发车城市:</Text>
                 </View>
                 <TouchableOpacity
                   onPress={this.navigationToChooseCity.bind(this, 'sendCity')}
-                  style={DetailsStyles.formContent}>
+                  style={DetailsStyle.formContent}>
                   <Text
                     style={sendCityName ? textClassName : textThemeDisabled}>
                     {sendCityName || '请选择发车城市'}
                   </Text>
-                  <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                  <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
                 </TouchableOpacity>
               </View>
               {/* 收车城市 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.isRequired}>*</Text>
-                  <Text style={DetailsStyles.labelText}>收车城市:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.isRequired}>*</Text>
+                  <Text style={DetailsStyle.labelText}>收车城市:</Text>
                 </View>
                 <TouchableOpacity
                   onPress={this.navigationToChooseCity.bind(
                     this,
                     'receiveCity',
                   )}
-                  style={DetailsStyles.formContent}>
+                  style={DetailsStyle.formContent}>
                   <Text
                     style={receiveCityName ? textClassName : textThemeDisabled}>
                     {receiveCityName || '请选择收车城市'}
                   </Text>
-                  <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                  <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
                 </TouchableOpacity>
               </View>
               {/* 预计发车时间 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.isRequired}>*</Text>
-                  <Text style={DetailsStyles.labelText}>预计发车时间:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.isRequired}>*</Text>
+                  <Text style={DetailsStyle.labelText}>预计发车时间:</Text>
                 </View>
                 <TouchableOpacity
                   onPress={this.handleShowDate.bind(this, 'sendTime')}
-                  style={DetailsStyles.formContent}>
+                  style={DetailsStyle.formContent}>
                   <Text
                     style={
                       sendTime.split('T')[0] ? textClassName : textThemeDisabled
                     }>
                     {sendTime.split('T')[0] || '请选择发车时间'}
                   </Text>
-                  <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                  <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
                 </TouchableOpacity>
               </View>
               {/* 车辆信息 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.isRequired}>*</Text>
-                  <Text style={DetailsStyles.labelText}>车辆信息:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.isRequired}>*</Text>
+                  <Text style={DetailsStyle.labelText}>车辆信息:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
+                <View style={DetailsStyle.formContent}>
                   <TextInput
-                    style={DetailsStyles.textInput}
+                    style={DetailsStyle.textInput}
                     maxLength={20}
                     value={carInfo}
                     placeholderTextColor={GlobalStyles.themeDisabled}
@@ -397,12 +397,12 @@ class SellingPublish extends Component {
                 </View>
               </View>
               {/* 车辆性质 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.isRequired}>*</Text>
-                  <Text style={DetailsStyles.labelText}>车辆性质:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.isRequired}>*</Text>
+                  <Text style={DetailsStyle.labelText}>车辆性质:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
+                <View style={DetailsStyle.formContent}>
                   <Radio
                     options={carNatureList}
                     activeIndex={radioActiveIndex}
@@ -411,46 +411,46 @@ class SellingPublish extends Component {
                 </View>
               </View>
               {/* 台数 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.isRequired}>*</Text>
-                  <Text style={DetailsStyles.labelText}>台数:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.isRequired}>*</Text>
+                  <Text style={DetailsStyle.labelText}>台数:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
+                <View style={DetailsStyle.formContent}>
                   <NumberInput
                     initNumber={carAmount}
                     onInputTextChange={this.numberInputChange.bind(this)}
                   />
-                  <Text style={DetailsStyles.unit}>台</Text>
+                  <Text style={DetailsStyle.unit}>台</Text>
                 </View>
               </View>
               {/* 有效期至 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.isRequired}>*</Text>
-                  <Text style={DetailsStyles.labelText}>有效期至:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.isRequired}>*</Text>
+                  <Text style={DetailsStyle.labelText}>有效期至:</Text>
                 </View>
                 <TouchableOpacity
                   onPress={this.handleShowDate.bind(this, 'dueTime')}
-                  style={DetailsStyles.formContent}>
+                  style={DetailsStyle.formContent}>
                   <Text
                     style={
                       dueTime.split('T')[0] ? textClassName : textThemeDisabled
                     }>
                     {dueTime.split('T')[0] || '请选择发车时间'}
                   </Text>
-                  <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                  <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
                 </TouchableOpacity>
               </View>
               {/* 结算方式 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.isRequired}>*</Text>
-                  <Text style={DetailsStyles.labelText}>结算方式:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.isRequired}>*</Text>
+                  <Text style={DetailsStyle.labelText}>结算方式:</Text>
                 </View>
                 <TouchableOpacity
                   onPress={this.showActionSheet.bind(this)}
-                  style={DetailsStyles.formContent}>
+                  style={DetailsStyle.formContent}>
                   <Text
                     style={
                       payWeyText && payWeyText.name
@@ -459,18 +459,18 @@ class SellingPublish extends Component {
                     }>
                     {payWeyText ? payWeyText.name : '请选择结算方式'}
                   </Text>
-                  <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                  <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
                 </TouchableOpacity>
               </View>
               {/* 报价 */}
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.isRequired} />
-                  <Text style={DetailsStyles.labelText}>报价:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.isRequired} />
+                  <Text style={DetailsStyle.labelText}>报价:</Text>
                 </View>
-                <View style={DetailsStyles.formContent}>
+                <View style={DetailsStyle.formContent}>
                   <TextInput
-                    style={DetailsStyles.textInput}
+                    style={DetailsStyle.textInput}
                     maxLength={8}
                     value={price}
                     keyboardType={'numeric'}
@@ -480,34 +480,34 @@ class SellingPublish extends Component {
                   />
                 </View>
               </View>
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.isRequired} />
-                  <Text style={DetailsStyles.labelText}>备注:</Text>
+              <View style={DetailsStyle.formItem}>
+                <View style={DetailsStyle.formLabel}>
+                  <Text style={DetailsStyle.isRequired} />
+                  <Text style={DetailsStyle.labelText}>备注:</Text>
                 </View>
                 <TouchableOpacity
                   onPress={this.navigationToRemark.bind(this)}
                   style={[
-                    DetailsStyles.formContent,
-                    DetailsStyles.moreTextFormItem,
+                    DetailsStyle.formContent,
+                    DetailsStyle.moreTextFormItem,
                   ]}>
                   <Text style={remarks ? textClassName : textThemeDisabled}>
                     {remarks || '请输入备注信息'}
                   </Text>
-                  <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                  <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
                 </TouchableOpacity>
               </View>
             </View>
             {/* button */}
-            <View style={DetailsStyles.btnWrapper}>
+            <View style={DetailsStyle.btnWrapper}>
               <Button
                 type={'plain'}
-                btnStyle={[DetailsStyles.btnLeft]}
+                btnStyle={[DetailsStyle.btnLeft]}
                 text={'取消'}
                 onClick={this.cancel.bind(this)}
               />
               <Button
-                btnStyle={[DetailsStyles.btnRight]}
+                btnStyle={[DetailsStyle.btnRight]}
                 text={'提交'}
                 type={'round'}
                 onClick={this.submit.bind(this)}

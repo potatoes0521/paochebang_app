@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 11:30:10
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-30 09:22:06
+ * @LastEditTime : 2020-01-02 10:28:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -101,7 +101,12 @@ class OrderList extends Component {
         <FlatList
           data={this.state.orderData}
           renderItem={data => (
-            <OrderItem {...this.props} type={'order'} itemData={data} />
+            <OrderItem
+              {...this.props}
+              type={'order'}
+              uniq={this.props.status}
+              itemData={data}
+            />
           )}
           refreshControl={
             <RefreshControl
@@ -120,7 +125,7 @@ class OrderList extends Component {
             <EmptyList {...this.props} pageType={'order'} />
           )}
           keyExtractor={data => {
-            return data.orderCode + this.props.status + 'order';
+            return data.orderCode + 'status' + this.props.status + 'order';
           }}
         />
       </View>
