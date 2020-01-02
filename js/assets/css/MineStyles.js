@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-26 16:32:40
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 10:57:51
+ * @LastEditTime : 2019-12-30 17:22:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -36,5 +36,17 @@ export default {
   line: {
     borderBottomWidth: 1,
     borderBottomColor: '#F5F5F5',
+  },
+  contentText: {
+    fontSize: 15,
+    color: GlobalStyles.themeFontColor,
+  },
+  labelText: {
+    color: GlobalStyles.themeFontColor,
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  btnLeft: {
+    marginRight: 9,
   },
 };

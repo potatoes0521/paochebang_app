@@ -3,12 +3,19 @@
  * @description: 账户体系
  * @Date: 2019-12-25 15:25:16
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-27 17:23:40
+ * @LastEditTime : 2019-12-31 10:38:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, FlatList, RefreshControl} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  RefreshControl,
+  TouchableOpacity,
+} from 'react-native';
 import {connect} from 'react-redux';
 import AccountItem from './components/AccountItem';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
@@ -71,18 +78,14 @@ class AccountDetails extends Component {
    * @return void
    */
   applyCash() {
-    if (this.state.withdrawAmountDesc <= 0) {
-      this.toastRef.current.show('亲,您没有可提现余额哦~');
-      return;
-    }
-    NavigationUtil.goPage(this.state.accountId, 'CashPage');
+    // if (this.state.withdrawAmountDesc <= 0) {
+    //   this.toastRef.current.show('亲,您没有可提现余额哦~');
+    //   return;
+    // }
+    NavigationUtil.goPage({accountId: this.state.accountId}, 'CashPage');
   }
   /**
    * 获取收支明细列表
-   * @return void
-   */
-  /**
-   * 获取账户明细列表
    * @return void
    */
   getAccountList(pageNum = 1, pageSize = 10) {
@@ -128,11 +131,9 @@ class AccountDetails extends Component {
             <View style={styles.accountCard}>
               <View style={styles.cardTitle}>
                 <Text style={styles.titleStyle}>总收入</Text>
-                <Text
-                  style={styles.titleStyle}
-                  onPress={this.applyCash.bind(this)}>
-                  申请提现
-                </Text>
+                <TouchableOpacity onPress={this.applyCash.bind(this)}>
+                  <Text style={styles.titleStyle}>申请提现</Text>
+                </TouchableOpacity>
               </View>
               <View style={styles.cardMoney}>
                 <Text style={styles.iconStyle}>￥</Text>

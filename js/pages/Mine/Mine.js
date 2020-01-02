@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 14:41:44
+ * @LastEditTime : 2019-12-31 18:37:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,7 +21,7 @@ import {connect} from 'react-redux';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
-import DetailsStyles from '../../assets/css/DetailsStyles';
+import MineStyles from '../../assets/css/MineStyles';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import accountImage from '../../assets/image/mine/account.png';
 import lineImage from '../../assets/image/mine/line.png';
@@ -41,6 +41,7 @@ class Mine extends Component {
   }
 
   componentDidMount() {
+    console.log('userInfo', this.props.userInfo);
     this.backPress.componentDidMount();
   }
 
@@ -57,7 +58,7 @@ class Mine extends Component {
    */
   navigatorRegister(e) {
     e.stopPropagation();
-    NavigationUtil.goPage(e, 'RegisterPage');
+    NavigationUtil.goPage({}, 'RegisterPage');
   }
   /**
    * 跳转页面
@@ -69,16 +70,16 @@ class Mine extends Component {
     }
     switch (pageName) {
       case 'account':
-        NavigationUtil.goPage(pageName, 'AccountPage');
+        NavigationUtil.goPage({}, 'AccountPage');
         break;
       case 'driver':
-        NavigationUtil.goPage(pageName, 'DriverPage');
+        NavigationUtil.goPage({}, 'DriverPage');
         break;
       case 'mine':
-        NavigationUtil.goPage(pageName, 'MineDetailsPage');
+        NavigationUtil.goPage({}, 'MineDetailsPage');
         break;
       case 'name':
-        NavigationUtil.goPage(pageName, 'AuthenticationPage');
+        NavigationUtil.goPage({}, 'AuthenticationPage');
         break;
       case 'selling':
         NavigationUtil.goPage({pageType: pageName}, 'MainPublishPage');
@@ -87,7 +88,7 @@ class Mine extends Component {
         NavigationUtil.goPage({pageType: pageName}, 'MainPublishPage');
         break;
       case 'line':
-        NavigationUtil.goPage(pageName, 'LinePage');
+        NavigationUtil.goPage({}, 'LinePage');
         break;
       default:
         return;
@@ -111,6 +112,7 @@ class Mine extends Component {
   }
 
   render() {
+    let {userInfo} = this.props;
     return (
       <View style={styles.pageWrapper}>
         <NavigationBar title={'我的'} />
@@ -118,33 +120,50 @@ class Mine extends Component {
           <View style={styles.userWrapper}>
             <TouchableOpacity onPress={this.navigatorRegister.bind(this)}>
               <View style={styles.left}>
-                <View style={styles.userImage}>
-                  <Image style={styles.imageStyle} source={defaultImage} />
-                </View>
-                {/* <View style={styles.userInfo}>
-                  <View style={styles.userName}>
-                    <Text style={DetailsStyles.labelText}>郭仨心</Text>
-                  </View>
-                  <View style={styles.certification}> */}
-                {/* <Image
-                      style={styles.certificationImage}
-                      source={{
-                        uri:
-                          'https://resource.paoche56.com/paochebang/mp_img/mine/already.png',
-                      }}
-                    /> */}
-                {/* <Image
-                      style={styles.certificationImage}
-                      source={{
-                        uri:
-                          'https://resource.paoche56.com/paochebang/mp_img/mine/never.png',
-                      }}
+                {userInfo.userId ? (
+                  <View style={styles.userImage}>
+                    <Image
+                      style={styles.imageStyle}
+                      source={{uri: userInfo.userPhoto}}
                     />
                   </View>
-                </View> */}
-                <View style={styles.userInfo}>
-                  <Text style={DetailsStyles.labelText}>注册/登录</Text>
-                </View>
+                ) : (
+                  <View style={styles.userImage}>
+                    <Image style={styles.imageStyle} source={defaultImage} />
+                  </View>
+                )}
+                {userInfo.userId ? (
+                  <View style={styles.userInfo}>
+                    <View style={styles.userName}>
+                      <Text style={MineStyles.labelText}>
+                        {userInfo.nickName}
+                      </Text>
+                    </View>
+                    <View style={styles.certification}>
+                      {userInfo.realNameAuthStatus ? (
+                        <Image
+                          style={styles.certificationImage}
+                          source={{
+                            uri:
+                              'https://resource.paoche56.com/paochebang/mp_img/mine/already.png',
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          style={styles.certificationImage}
+                          source={{
+                            uri:
+                              'https://resource.paoche56.com/paochebang/mp_img/mine/never.png',
+                          }}
+                        />
+                      )}
+                    </View>
+                  </View>
+                ) : (
+                  <View style={styles.userInfo}>
+                    <Text style={MineStyles.labelText}>注册/登录</Text>
+                  </View>
+                )}
               </View>
             </TouchableOpacity>
             <View style={styles.right}>
@@ -160,7 +179,7 @@ class Mine extends Component {
                   <Image style={styles.itemImage} source={accountImage} />
                 </View>
                 <View style={styles.menuText}>
-                  <Text style={DetailsStyles.contentText}>账户体系</Text>
+                  <Text style={MineStyles.contentText}>账户体系</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -170,7 +189,7 @@ class Mine extends Component {
                   <Image style={styles.itemImage} source={lineImage} />
                 </View>
                 <View style={styles.menuText}>
-                  <Text style={DetailsStyles.contentText}>常跑路线</Text>
+                  <Text style={MineStyles.contentText}>常跑路线</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -180,7 +199,7 @@ class Mine extends Component {
                   <Image style={styles.itemImage} source={driverImage} />
                 </View>
                 <View style={styles.menuText}>
-                  <Text style={DetailsStyles.contentText}>司机管理</Text>
+                  <Text style={MineStyles.contentText}>司机管理</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -192,7 +211,7 @@ class Mine extends Component {
                   <Image style={styles.itemImage} source={sellingImage} />
                 </View>
                 <View style={styles.menuText}>
-                  <Text style={DetailsStyles.contentText}>已发卖板</Text>
+                  <Text style={MineStyles.contentText}>已发卖板</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -202,7 +221,7 @@ class Mine extends Component {
                   <Image style={styles.itemImage} source={vacancyImage} />
                 </View>
                 <View style={styles.menuText}>
-                  <Text style={DetailsStyles.contentText}>已发空位</Text>
+                  <Text style={MineStyles.contentText}>已发空位</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -212,7 +231,7 @@ class Mine extends Component {
                   <Image style={styles.itemImage} source={realNameImage} />
                 </View>
                 <View style={styles.menuText}>
-                  <Text style={DetailsStyles.contentText}>实名认证</Text>
+                  <Text style={MineStyles.contentText}>实名认证</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -220,12 +239,12 @@ class Mine extends Component {
         </View>
         <View style={styles.versionWrapper}>
           <View style={[styles.versionList, styles.versionLine]}>
-            <Text style={DetailsStyles.contentText}>版本</Text>
+            <Text style={MineStyles.contentText}>版本</Text>
             <Text style={styles.versionNum}>{appVersion}</Text>
           </View>
           <TouchableOpacity onPress={() => this.callService()}>
             <View style={styles.versionList}>
-              <Text style={DetailsStyles.contentText}>联系跑车</Text>
+              <Text style={MineStyles.contentText}>联系跑车</Text>
               <Text style={styles.versionNum}>400-9698-256</Text>
             </View>
           </TouchableOpacity>

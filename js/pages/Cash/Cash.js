@@ -3,15 +3,21 @@
  * @description: 提现页面
  * @Date: 2019-12-26 17:05:08
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 15:27:36
+ * @LastEditTime : 2019-12-31 10:35:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
-import DetailsStyles from '../../assets/css/DetailsStyles';
+import MineStyles from '../../assets/css/MineStyles';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import {handleMoney, realNamePatter} from '../../utils/patter';
@@ -61,11 +67,11 @@ class CashDetails extends Component {
    * @return void
    */
   getAccountAmount() {
-    if (!this.pageParams.account_id) {
+    if (!this.pageParams.accountId) {
       return;
     }
     let sendData = {
-      accountId: this.pageParams.account_id,
+      accountId: this.pageParams.accountId,
     };
     api.account.getAccountAmount(sendData, this).then(res => {
       this.setState({
@@ -189,7 +195,7 @@ class CashDetails extends Component {
       return;
     }
     let sendData = {
-      accountId: this.pageParams.account_id,
+      accountId: this.pageParams.accountId,
       amount: amount * 100,
       otherSideAccountName,
       otherSideBank,
@@ -224,7 +230,7 @@ class CashDetails extends Component {
           <View style={styles.cashWrapper}>
             <View style={styles.cashDetails}>
               <Text style={styles.iconStyle}>*</Text>
-              <Text style={DetailsStyles.contentText}>提现金额</Text>
+              <Text style={MineStyles.contentText}>提现金额</Text>
               <TextInput
                 style={styles.input}
                 placeholder="请输入提现金额"
@@ -232,19 +238,21 @@ class CashDetails extends Component {
                 onChangeText={this.cashAmountInput.bind(this)}
                 value={amount}
               />
-              <Text style={DetailsStyles.contentText}>元</Text>
+              <Text style={MineStyles.contentText}>元</Text>
             </View>
             <View style={styles.tipsWrapper}>
               <Text style={styles.tipsText}>
                 账户余额{withdrawAmountDesc || 0}元
               </Text>
-              <Text style={styles.tipsBtn}>全部提现</Text>
+              <TouchableOpacity onPress={this.cashAccountAmount.bind(this)}>
+                <Text style={styles.tipsBtn}>全部提现</Text>
+              </TouchableOpacity>
             </View>
           </View>
           <View style={styles.bankWrapper}>
             <View style={styles.cashDetails}>
               <Text style={styles.iconStyle}>*</Text>
-              <Text style={DetailsStyles.contentText}>收款人姓名</Text>
+              <Text style={MineStyles.contentText}>收款人姓名</Text>
               <TextInput
                 style={styles.input}
                 placeholder="请输入收款人姓名"
@@ -255,7 +263,7 @@ class CashDetails extends Component {
             </View>
             <View style={styles.cashDetails}>
               <Text style={styles.iconStyle}>*</Text>
-              <Text style={DetailsStyles.contentText}>银行卡号</Text>
+              <Text style={MineStyles.contentText}>银行卡号</Text>
               <TextInput
                 style={styles.input}
                 placeholder="请输入银行卡号"
@@ -266,7 +274,7 @@ class CashDetails extends Component {
             </View>
             <View style={styles.cashDetails}>
               <Text style={styles.iconStyle}>*</Text>
-              <Text style={DetailsStyles.contentText}>银行类型</Text>
+              <Text style={MineStyles.contentText}>银行类型</Text>
               <TextInput
                 style={styles.input}
                 placeholder="请输入银行类型"
@@ -277,7 +285,7 @@ class CashDetails extends Component {
             </View>
             <View style={styles.cashDetails}>
               <Text style={styles.iconStyle} />
-              <Text style={DetailsStyles.contentText}>支行名称</Text>
+              <Text style={MineStyles.contentText}>支行名称</Text>
               <TextInput
                 style={styles.input}
                 placeholder="请输入支行名称"

@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 11:47:17
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 11:06:40
+ * @LastEditTime : 2019-12-30 18:00:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,13 +32,14 @@ export default class EmptyList extends Component {
     switch (pageType) {
       case 'selling':
       case 'selling_index':
+        NavigationUtil.goPage(pageType, 'SellingPublishPage');
         break;
       case 'vacancy':
       case 'vacancy_index':
+        NavigationUtil.goPage(pageType, 'VacancyPublishPage');
         break;
       case 'driver':
-        navigation.navigate('DriverEdit');
-        // NavigationUtil.goPage({}, 'DriverEditPage');
+        NavigationUtil.goPage(pageType, 'DriverEditPage');
         break;
       case 'order':
       case 'offer':
@@ -47,7 +48,7 @@ export default class EmptyList extends Component {
       case 'login_offer':
         break;
       case 'line':
-        navigation.navigate('LineEdit');
+        NavigationUtil.goPage(pageType, 'LineEditPage');
         break;
       case 'login_order':
         break;
