@@ -179,6 +179,11 @@ class SellingPublish extends Component {
       payType: payWey[index].id,
     });
   }
+  /**
+   * 数字选择框
+   * @param {Number | String} value 台数
+   * @return void
+   */
   numberInputChange(value) {
     this.setState({
       carAmount: value,
