@@ -34,9 +34,10 @@ class ActionSheet extends React.Component {
   }
 
   // getDerivedStateFromProps(nextProps) {
-  //   this.translateY = this._calculateHeight(nextProps);
   // }
-
+  componentDidUpdate() {
+    this.translateY = this._calculateHeight(this.props);
+  }
   get styles() {
     const {styles} = this.props;
     const obj = {};
