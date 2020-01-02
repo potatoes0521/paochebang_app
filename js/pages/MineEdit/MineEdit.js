@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-02 14:07:39
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-02 15:19:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,6 +19,7 @@ import {
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
+import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import ActionSheet from '../../components/ActionSheet/ActionSheet';
 import MineStyles from '../../assets/css/MineStyles';
 import GlobalStyles from '../../assets/css/GlobalStyles';
@@ -42,6 +43,9 @@ class MineEdit extends Component {
     };
     this.pageParams = {};
     this.toastRef = React.createRef();
+    this.backPress = new BackPressComponent({
+      backPress: () => this.onBackPress(),
+    });
   }
 
   componentDidMount() {
@@ -54,8 +58,15 @@ class MineEdit extends Component {
     if (this.pageParams.userDetailsInfo) {
       this.getMineInfoDetails();
     }
+    this.backPress.componentDidMount();
   }
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.backPress.componentWillUnmount();
+  }
+  onBackPress() {
+    NavigationUtil.goBack(this.props.navigation);
+    return true;
+  }
   /**
    * 获取用户信息详情
    * @return void
@@ -81,7 +92,6 @@ class MineEdit extends Component {
         return;
       }
       const carTypeName = res.data.map(item => item.carInfoName);
-      console.log('carTypeName', carTypeName);
       this.setState({
         carTypeList: res.data,
         carTypeName,
@@ -102,7 +112,6 @@ class MineEdit extends Component {
    * @return void
    */
   showActionSheet() {
-    console.log('show', this.state.carTypeList);
     this.ActionSheet.show();
   }
   /**
@@ -156,8 +165,6 @@ class MineEdit extends Component {
       carTypeName,
     } = this.state;
     const {theme, navigation} = this.props;
-    console.log('abcd', carTypeName);
-    // carTypeName.push('取消');
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -191,10 +198,14 @@ class MineEdit extends Component {
             </View>
             <View style={MineStyles.itemStyle}>
               <Text style={MineStyles.titleStyle}>车辆信息</Text>
-              <TouchableOpacity onPress={this.showActionSheet.bind(this)}>
-                <Text style={MineStyles.inputStyle}>
-                  {carTypeDesc || '请选择车辆类型'}
-                </Text>
+              <TouchableOpacity
+                onPress={this.showActionSheet.bind(this)}
+                style={styles.formContent}>
+                {carTypeDesc ? (
+                  <Text style={MineStyles.textStyle}>{carTypeDesc}</Text>
+                ) : (
+                  <Text style={MineStyles.inputStyle}>请选择车辆类型</Text>
+                )}
               </TouchableOpacity>
             </View>
           </View>
@@ -252,6 +263,12 @@ const styles = StyleSheet.create({
     padding: 0,
     fontSize: 15,
     color: GlobalStyles.themeFontColor,
+  },
+  formContent: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
 });
 

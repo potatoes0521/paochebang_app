@@ -3,7 +3,7 @@
  * @description: 我发布的卖板
  * @Date: 2019-12-27 11:34:26
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 14:08:55
+ * @LastEditTime : 2020-01-02 15:37:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -36,27 +36,19 @@ export default class PublishItem extends Component {
     let {item} = this.props.item;
     let {type} = this.props;
     let time = '';
-    let statusClassNames = [styles.status];
+    let statusClassNames = [styles.statusDesc];
     let itemTextClassNames = [styles.itemText];
     let cityTextClassNames = [styles.cityText];
     let iconClassName = [GlobalStyles.icon, styles.icon];
     let timeClassName = [styles.time];
     if (type === 'selling') {
-      time = item.inquiryTimeDesc;
-      if (item.status === 10 || item.takeStatus === 10) {
-        statusClassNames.push(styles.themeSubColor);
-      } else if (item.status === 20 || item.takeStatus === 20) {
-        statusClassNames.push(styles.themeColor);
-      }
+      const timeArray = item.pubTime.split('T');
+      time = timeArray[0] + ' ' + timeArray[1].split('.')[0];
     } else if (type === 'vacancy') {
-      time = item.inquiryTimeDesc;
+      const timeArray = item.pubTime.split('T');
+      time = timeArray[0] + ' ' + timeArray[1].split('.')[0];
     }
-    if (
-      item.status === 30 ||
-      item.status === 40 ||
-      item.takeStatus === 30 ||
-      item.takeStatus === 40
-    ) {
+    if (item.isActive !== 1) {
       statusClassNames.push(DetailsStyle.textThemeDisabled);
       itemTextClassNames.push(DetailsStyle.textThemeDisabled);
       cityTextClassNames.push(DetailsStyle.textThemeDisabled);
@@ -68,7 +60,15 @@ export default class PublishItem extends Component {
         <TouchableOpacity onPress={this.navigatorTo.bind(this)}>
           <View style={styles.title}>
             <Text style={timeClassName}>{time || ''}</Text>
-            <Text style={statusClassNames}>{item.statusDesc || ''}</Text>
+            {type === 'selling' ? (
+              <Text style={statusClassNames}>
+                {item.statusOfMySaleToPalletList || ''}
+              </Text>
+            ) : (
+              <Text style={statusClassNames}>
+                {item.statusOfMyVacantPalletList || ''}
+              </Text>
+            )}
           </View>
           <View style={styles.main}>
             <View style={styles.city}>
@@ -78,11 +78,19 @@ export default class PublishItem extends Component {
                 {item.receiveCityName || ''}
               </Text>
             </View>
-            <View style={styles.item}>
-              <Text style={itemTextClassNames}>
-                车辆信息:{item.carAmount || 0} 台 {item.carInfo || ''}待发
-              </Text>
-            </View>
+            {type === 'selling' ? (
+              <View style={styles.item}>
+                <Text style={itemTextClassNames}>
+                  车辆信息:{item.carAmount || 0} 台 {item.carInfo || ''}待发
+                </Text>
+              </View>
+            ) : (
+              <View style={styles.item}>
+                <Text style={itemTextClassNames}>
+                  余位:{item.vacantAmount || 0}
+                </Text>
+              </View>
+            )}
             <View style={styles.item}>
               <Text style={itemTextClassNames}>
                 有效期至:{(item.dueTime && item.dueTime.split('T')[0]) || ''}
