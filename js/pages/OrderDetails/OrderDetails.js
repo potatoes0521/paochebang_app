@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
- * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 16:05:43
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-02 10:30:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -65,7 +65,7 @@ class OrderDetails extends Component {
     const {state} = navigation;
     const {params} = state;
     this.pageParams = params || {};
-    // this.getOrderDetail();
+    this.getOrderDetail();
     this.backPress.componentDidMount();
   }
 
