@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:53:33
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-31 17:51:56
+ * @LastEditTime : 2020-01-02 10:48:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,6 @@ import GlobalStyles from '../../../assets/css/GlobalStyles';
 import api from '../../../api/index';
 import BottomLoading from '../../../components/BottomLoading/BottomLoading.js';
 import VacancyItem from './VacancyItem.js';
-// import FloatPublishBtn from '../../../components/FloatPublishBtn/FloatPublishBtn';
 
 class VacancyList extends Component {
   constructor(props) {
@@ -120,7 +119,6 @@ class VacancyList extends Component {
             return data.vacantPalletId + 'vacancy';
           }}
         />
-        {/* <FloatPublishBtn type={'vacancy'} /> */}
       </View>
     );
   }

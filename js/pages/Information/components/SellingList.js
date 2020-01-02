@@ -16,7 +16,6 @@ import GlobalStyles from '../../../assets/css/GlobalStyles';
 import api from '../../../api/index';
 import BottomLoading from '../../../components/BottomLoading/BottomLoading.js';
 import SellingItem from './SellingItem.js';
-// import FloatPublishBtn from '../../../components/FloatPublishBtn/FloatPublishBtn';
 
 class SellingList extends Component {
   constructor(props) {
@@ -118,7 +117,6 @@ class SellingList extends Component {
             return data.saleToPalletId + 'selling';
           }}
         />
-        {/* <FloatPublishBtn type={'selling'} /> */}
       </View>
     );
   }
