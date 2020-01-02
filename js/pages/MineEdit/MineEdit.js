@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 14:01:38
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-02 14:07:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -38,6 +38,7 @@ class MineEdit extends Component {
       carNum: '',
       carTypeDesc: '',
       carTypeList: [],
+      carTypeName: [],
     };
     this.pageParams = {};
     this.toastRef = React.createRef();
@@ -76,8 +77,14 @@ class MineEdit extends Component {
    */
   getCarInfoType() {
     api.driver.getCarInfoList({}, this).then(res => {
+      if (!res.data) {
+        return;
+      }
+      const carTypeName = res.data.map(item => item.carInfoName);
+      console.log('carTypeName', carTypeName);
       this.setState({
         carTypeList: res.data,
+        carTypeName,
       });
     });
   }
@@ -146,10 +153,9 @@ class MineEdit extends Component {
       idCard,
       carNum,
       carTypeDesc,
-      carTypeList,
+      carTypeName,
     } = this.state;
     const {theme, navigation} = this.props;
-    let carTypeName = carTypeList && carTypeList.map(item => item.carInfoName);
     console.log('abcd', carTypeName);
     // carTypeName.push('取消');
     return (
