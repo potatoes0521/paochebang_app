@@ -3,7 +3,7 @@
  * @description: 司机详情
  * @Date: 2019-12-25 15:23:46
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 09:50:02
+ * @LastEditTime : 2020-01-02 10:49:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -63,7 +63,7 @@ class DriverDetails extends Component {
         return;
       }
       this.setState({
-        driverInfo: res,
+        driverInfo: res.data,
       });
     });
   }
@@ -107,24 +107,30 @@ class DriverDetails extends Component {
                 {driverInfo.idCard || ''}
               </Text>
             </View>
-            <View style={[MineStyles.itemStyle, MineStyles.line]}>
-              <Text style={MineStyles.titleStyle}>车牌号</Text>
-              <Text style={MineStyles.textStyle}>
-                {driverInfo.carNum || ''}
-              </Text>
-            </View>
-            <View style={[MineStyles.itemStyle, MineStyles.line]}>
-              <Text style={MineStyles.titleStyle}>车辆信息</Text>
-              <Text style={MineStyles.textStyle}>
-                {driverInfo.carTypeDesc || ''}
-              </Text>
-            </View>
-            <View style={[MineStyles.itemStyle, MineStyles.line]}>
-              <Text style={MineStyles.titleStyle}>所属物流公司</Text>
-              <Text style={MineStyles.textStyle}>
-                {driverInfo.merchantName || ''}
-              </Text>
-            </View>
+            {driverInfo.carNum ? (
+              <View style={[MineStyles.itemStyle, MineStyles.line]}>
+                <Text style={MineStyles.titleStyle}>车牌号</Text>
+                <Text style={MineStyles.textStyle}>
+                  {driverInfo.carNum || ''}
+                </Text>
+              </View>
+            ) : null}
+            {driverInfo.carTypeDesc ? (
+              <View style={[MineStyles.itemStyle, MineStyles.line]}>
+                <Text style={MineStyles.titleStyle}>车辆信息</Text>
+                <Text style={MineStyles.textStyle}>
+                  {driverInfo.carTypeDesc || ''}
+                </Text>
+              </View>
+            ) : null}
+            {driverInfo.merchantName ? (
+              <View style={[MineStyles.itemStyle, MineStyles.line]}>
+                <Text style={MineStyles.titleStyle}>所属物流公司</Text>
+                <Text style={MineStyles.textStyle}>
+                  {driverInfo.merchantName || ''}
+                </Text>
+              </View>
+            ) : null}
             <View style={MineStyles.itemStyle}>
               <Text style={MineStyles.titleStyle}>添加时间</Text>
               <Text style={MineStyles.textStyle}>

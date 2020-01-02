@@ -3,12 +3,12 @@
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-31 18:45:41
+ * @LastEditTime : 2020-01-02 11:13:46
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, DeviceEventEmitter} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import NavigationUtil from '../../navigator/NavigationUtils';
@@ -36,15 +36,36 @@ class MineDetails extends Component {
     const {params} = state;
     console.log('params', params);
     this.pageParams = params || {};
+    this.handleEmit();
     this.getUserInfo();
     this.backPress.componentDidMount();
   }
   componentWillUnmount() {
+    this.emitMineCarType.remove();
+    this.emitMineCarNum.remove();
     this.backPress.componentWillUnmount();
   }
   onBackPress() {
     NavigationUtil.goBack(this.props.navigation);
     return true;
+  }
+  handleEmit() {
+    this.emitMineCarType = DeviceEventEmitter.addListener(
+      'submitMineCarType',
+      data => {
+        this.setState({
+          carTypeDesc: data,
+        });
+      },
+    );
+    this.emitMineCarNum = DeviceEventEmitter.addListener(
+      'submitMineCarNum',
+      data => {
+        this.setState({
+          carNum: data,
+        });
+      },
+    );
   }
   /**
    * 获取用户信息

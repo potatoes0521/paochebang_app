@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-26 16:32:40
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 17:22:49
+ * @LastEditTime : 2020-01-02 11:19:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -28,6 +28,12 @@ export default {
     color: GlobalStyles.themeFontColor,
   },
   textStyle: {
+    flex: 1,
+    fontSize: 15,
+    textAlign: 'right',
+    color: GlobalStyles.themeFontColor,
+  },
+  inputStyle: {
     flex: 1,
     fontSize: 15,
     textAlign: 'right',

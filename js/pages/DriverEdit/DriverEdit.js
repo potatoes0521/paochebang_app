@@ -3,7 +3,7 @@
  * @description: 编辑、添加司机信息
  * @Date: 2019-12-26 10:36:06
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 09:48:29
+ * @LastEditTime : 2020-01-02 11:20:25
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,6 +27,7 @@ import {
 } from '../../utils/patter.js';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
+import ActionSheet from '../../components/ActionSheet/ActionSheet';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import Toast from 'react-native-easy-toast';
 import api from '../../api';
@@ -87,6 +88,13 @@ class DriverEdit extends Component {
       carTypeDesc: res.carTypeDesc,
       merchantName: res.merchantName,
     });
+  }
+  /**
+   * 显示actionSheet
+   * @return void
+   */
+  showActionSheet() {
+    this.ActionSheet.show();
   }
   /**
    * 获取车辆信息类型
@@ -186,8 +194,9 @@ class DriverEdit extends Component {
     api.driver.updateDriverData(sendData, this).then(() => {
       if (this.pageParams.pageType === 'edit') {
         this.toastRef.current.show('编辑成功');
+      } else {
+        this.toastRef.current.show('添加成功');
       }
-      this.toastRef.current.show('添加成功');
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);
@@ -206,11 +215,19 @@ class DriverEdit extends Component {
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
-          <NavigationBar
-            navigation={navigation}
-            leftViewShow={true}
-            title={'添加司机'}
-          />
+          {this.pageParams.pageType === 'edit' ? (
+            <NavigationBar
+              navigation={navigation}
+              leftViewShow={true}
+              title={'编辑司机'}
+            />
+          ) : (
+            <NavigationBar
+              navigation={navigation}
+              leftViewShow={true}
+              title={'添加司机'}
+            />
+          )}
           <View style={MineStyles.itemWrapper}>
             <View style={[MineStyles.itemStyle, MineStyles.line]}>
               <Text style={styles.iconStyle}>*</Text>
@@ -268,14 +285,14 @@ class DriverEdit extends Component {
                 value={merchantName}
               />
             </View>
-            <TouchableOpacity onPress={this.chooseCarType.bind(this)}>
+            <TouchableOpacity onPress={this.showActionSheet.bind(this)}>
               <View style={MineStyles.itemStyle}>
                 <Text style={styles.iconStyle} />
                 <Text style={MineStyles.titleStyle}>车辆信息</Text>
                 {carTypeDesc ? (
                   <Text style={MineStyles.textStyle}>{carTypeDesc}</Text>
                 ) : (
-                  <Text style={MineStyles.textStyle}>请选择车辆类型</Text>
+                  <Text style={MineStyles.inputStyle}>请选择车辆类型</Text>
                 )}
               </View>
             </TouchableOpacity>
@@ -294,6 +311,15 @@ class DriverEdit extends Component {
               onClick={this.submitAdd.bind(this)}
             />
           </View>
+          {/* 动作指示器 */}
+          <ActionSheet
+            ref={o => (this.ActionSheet = o)}
+            title={'请选择车辆类型'}
+            options={this.carTypeList}
+            tintColor={GlobalStyles.themeFontColor}
+            cancelButtonIndex={this.carTypeList.length - 1}
+            onPress={this.chooseCarType.bind(this)}
+          />
           <Toast
             ref={this.toastRef}
             position={'center'}
@@ -328,6 +354,8 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'right',
     padding: 0,
+    fontSize: 15,
+    color: GlobalStyles.themeFontColor,
   },
 });
 

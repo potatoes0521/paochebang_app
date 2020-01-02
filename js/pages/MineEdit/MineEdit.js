@@ -3,7 +3,7 @@
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 09:14:24
+ * @LastEditTime : 2020-01-02 13:51:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,6 +14,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  DeviceEventEmitter,
 } from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
@@ -23,10 +24,8 @@ import MineStyles from '../../assets/css/MineStyles';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import Button from '../../components/Button/Button.js';
-import {defaultResourceConfigURL} from '../../config/requestConfig.js';
 import Toast from 'react-native-easy-toast';
 import api from '../../api';
-import Axios from 'axios';
 
 class MineEdit extends Component {
   constructor(props) {
@@ -38,8 +37,8 @@ class MineEdit extends Component {
       carType: '',
       carNum: '',
       carTypeDesc: '',
+      carTypeList: [],
     };
-    this.carTypeList = [];
     this.pageParams = {};
     this.toastRef = React.createRef();
   }
@@ -50,10 +49,10 @@ class MineEdit extends Component {
     const {params} = state;
     console.log('params', params);
     this.pageParams = params || {};
+    this.getCarInfoType();
     if (this.pageParams.userDetailsInfo) {
       this.getMineInfoDetails();
     }
-    this.getCarInfoType();
   }
   componentWillUnmount() {}
   /**
@@ -76,13 +75,10 @@ class MineEdit extends Component {
    * @return void
    */
   getCarInfoType() {
-    Axios.request({
-      url: `${defaultResourceConfigURL}driver_car_info.json`,
-      method: 'get',
-      success: res => {
-        console.log('carType', res);
-        // this.carTypeList = res.data.data;
-      },
+    api.driver.getCarInfoList({}, this).then(res => {
+      this.setState({
+        carTypeList: res.data,
+      });
     });
   }
   /**
@@ -98,15 +94,23 @@ class MineEdit extends Component {
    * 显示actionSheet
    * @return void
    */
-  // showActionSheet() {
-  //   this.ActionSheet.show();
-  // }
+  showActionSheet() {
+    console.log('show', this.state.carTypeList);
+    this.ActionSheet.show();
+  }
   /**
-   * 函数功能描述
+   * 选择车辆类型
+   * @param {Type} index 被选中的下标
    * @return void
    */
-  chooseCarType() {
-    console.log('选择车辆类型');
+  chooseCarType(index) {
+    if (index === this.state.carTypeList.length) {
+      return;
+    }
+    this.setState({
+      carType: this.state.carTypeList[index].carInfoId,
+      carTypeDesc: this.state.carTypeList[index].carInfoName,
+    });
   }
   /**
    * 取消编辑
@@ -126,6 +130,8 @@ class MineEdit extends Component {
       carType,
       carNum,
     };
+    DeviceEventEmitter.emit('submitMineCarType', this.state.carType);
+    DeviceEventEmitter.emit('submitMineCarNum', this.state.carNum);
     api.user.editUserInfo(sendData, this).then(() => {
       this.toastRef.current.show('编辑成功');
       setTimeout(() => {
@@ -134,8 +140,18 @@ class MineEdit extends Component {
     });
   }
   render() {
-    let {realName, mobile, idCard, carNum, carTypeDesc} = this.state;
+    let {
+      realName,
+      mobile,
+      idCard,
+      carNum,
+      carTypeDesc,
+      carTypeList,
+    } = this.state;
     const {theme, navigation} = this.props;
+    let carTypeName = carTypeList && carTypeList.map(item => item.carInfoName);
+    console.log('abc', carTypeName);
+    // carTypeName.push('取消');
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -170,7 +186,7 @@ class MineEdit extends Component {
             <View style={MineStyles.itemStyle}>
               <Text style={MineStyles.titleStyle}>车辆信息</Text>
               <TouchableOpacity onPress={this.showActionSheet.bind(this)}>
-                <Text style={MineStyles.textStyle}>
+                <Text style={MineStyles.inputStyle}>
                   {carTypeDesc || '请选择车辆类型'}
                 </Text>
               </TouchableOpacity>
@@ -194,9 +210,9 @@ class MineEdit extends Component {
           <ActionSheet
             ref={o => (this.ActionSheet = o)}
             title={'请选择车辆类型'}
-            options={carTypeList}
+            options={carTypeName}
             tintColor={GlobalStyles.themeFontColor}
-            cancelButtonIndex={carTypeList.length - 1}
+            cancelButtonIndex={carTypeName.length - 1}
             onPress={this.chooseCarType.bind(this)}
           />
           <Toast
@@ -228,6 +244,8 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'right',
     padding: 0,
+    fontSize: 15,
+    color: GlobalStyles.themeFontColor,
   },
 });
 
