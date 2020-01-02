@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:53:33
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 11:47:32
+ * @LastEditTime : 2020-01-02 09:54:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,6 +16,7 @@ import GlobalStyles from '../../../assets/css/GlobalStyles';
 import api from '../../../api/index';
 import BottomLoading from '../../../components/BottomLoading/BottomLoading.js';
 import SellingItem from './SellingItem.js';
+// import FloatPublishBtn from '../../../components/FloatPublishBtn/FloatPublishBtn';
 
 class SellingList extends Component {
   constructor(props) {
@@ -56,7 +57,6 @@ class SellingList extends Component {
       });
     }
     if (this.loadingFlag && !refresh) {
-      console.log('loadMore');
       return;
     }
     let sendData = {
@@ -118,6 +118,7 @@ class SellingList extends Component {
             return data.saleToPalletId + 'selling';
           }}
         />
+        {/* <FloatPublishBtn type={'selling'} /> */}
       </View>
     );
   }

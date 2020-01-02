@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-31 10:17:17
+ * @LastEditTime : 2019-12-31 15:23:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -329,6 +329,7 @@ class SellingPublish extends Component {
               {/* 发车城市 */}
               <View style={DetailsStyles.formItem}>
                 <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.isRequired}>*</Text>
                   <Text style={DetailsStyles.labelText}>发车城市:</Text>
                 </View>
                 <TouchableOpacity
@@ -344,6 +345,7 @@ class SellingPublish extends Component {
               {/* 收车城市 */}
               <View style={DetailsStyles.formItem}>
                 <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.isRequired}>*</Text>
                   <Text style={DetailsStyles.labelText}>收车城市:</Text>
                 </View>
                 <TouchableOpacity
@@ -362,6 +364,7 @@ class SellingPublish extends Component {
               {/* 预计发车时间 */}
               <View style={DetailsStyles.formItem}>
                 <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.isRequired}>*</Text>
                   <Text style={DetailsStyles.labelText}>预计发车时间:</Text>
                 </View>
                 <TouchableOpacity
@@ -379,6 +382,7 @@ class SellingPublish extends Component {
               {/* 车辆信息 */}
               <View style={DetailsStyles.formItem}>
                 <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.isRequired}>*</Text>
                   <Text style={DetailsStyles.labelText}>车辆信息:</Text>
                 </View>
                 <View style={DetailsStyles.formContent}>
@@ -395,6 +399,7 @@ class SellingPublish extends Component {
               {/* 车辆性质 */}
               <View style={DetailsStyles.formItem}>
                 <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.isRequired}>*</Text>
                   <Text style={DetailsStyles.labelText}>车辆性质:</Text>
                 </View>
                 <View style={DetailsStyles.formContent}>
@@ -408,6 +413,7 @@ class SellingPublish extends Component {
               {/* 台数 */}
               <View style={DetailsStyles.formItem}>
                 <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.isRequired}>*</Text>
                   <Text style={DetailsStyles.labelText}>台数:</Text>
                 </View>
                 <View style={DetailsStyles.formContent}>
@@ -418,9 +424,28 @@ class SellingPublish extends Component {
                   <Text style={DetailsStyles.unit}>台</Text>
                 </View>
               </View>
+              {/* 有效期至 */}
+              <View style={DetailsStyles.formItem}>
+                <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.isRequired}>*</Text>
+                  <Text style={DetailsStyles.labelText}>有效期至:</Text>
+                </View>
+                <TouchableOpacity
+                  onPress={this.handleShowDate.bind(this, 'dueTime')}
+                  style={DetailsStyles.formContent}>
+                  <Text
+                    style={
+                      dueTime.split('T')[0] ? textClassName : textThemeDisabled
+                    }>
+                    {dueTime.split('T')[0] || '请选择发车时间'}
+                  </Text>
+                  <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
+                </TouchableOpacity>
+              </View>
               {/* 结算方式 */}
               <View style={DetailsStyles.formItem}>
                 <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.isRequired}>*</Text>
                   <Text style={DetailsStyles.labelText}>结算方式:</Text>
                 </View>
                 <TouchableOpacity
@@ -440,6 +465,7 @@ class SellingPublish extends Component {
               {/* 报价 */}
               <View style={DetailsStyles.formItem}>
                 <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.isRequired} />
                   <Text style={DetailsStyles.labelText}>报价:</Text>
                 </View>
                 <View style={DetailsStyles.formContent}>
@@ -454,25 +480,9 @@ class SellingPublish extends Component {
                   />
                 </View>
               </View>
-              {/* 有效期至 */}
               <View style={DetailsStyles.formItem}>
                 <View style={DetailsStyles.formLabel}>
-                  <Text style={DetailsStyles.labelText}>有效期至:</Text>
-                </View>
-                <TouchableOpacity
-                  onPress={this.handleShowDate.bind(this, 'dueTime')}
-                  style={DetailsStyles.formContent}>
-                  <Text
-                    style={
-                      dueTime.split('T')[0] ? textClassName : textThemeDisabled
-                    }>
-                    {dueTime.split('T')[0] || '请选择发车时间'}
-                  </Text>
-                  <Text style={DetailsStyles.iconRight}>&#xe61d;</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={DetailsStyles.formItem}>
-                <View style={DetailsStyles.formLabel}>
+                  <Text style={DetailsStyles.isRequired} />
                   <Text style={DetailsStyles.labelText}>备注:</Text>
                 </View>
                 <TouchableOpacity

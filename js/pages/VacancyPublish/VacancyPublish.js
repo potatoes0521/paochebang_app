@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-29 11:51:02
+ * @LastEditTime : 2019-12-31 15:24:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -47,7 +47,7 @@ class VacancyPublish extends Component {
           <NavigationBar
             navigation={navigation}
             leftViewShow={true}
-            title={'VacancyPublish'}
+            title={'空位发布'}
           />
           <Text>VacancyPublish</Text>
         </View>
