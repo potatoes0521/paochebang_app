@@ -3,7 +3,7 @@
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 13:51:31
+ * @LastEditTime : 2020-01-02 14:01:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -150,7 +150,7 @@ class MineEdit extends Component {
     } = this.state;
     const {theme, navigation} = this.props;
     let carTypeName = carTypeList && carTypeList.map(item => item.carInfoName);
-    console.log('abc', carTypeName);
+    console.log('abcd', carTypeName);
     // carTypeName.push('取消');
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
