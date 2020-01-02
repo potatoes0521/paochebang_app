@@ -3,8 +3,8 @@
  * @Author: guorui
  * @description: 司机相关接口
  * @Date: 2019-12-25 11:32:56
- * @LastEditors  : guorui
- * @LastEditTime : 2019-12-25 11:36:45
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-02 09:34:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,5 +22,9 @@ export default {
   //获取司机信息列表
   getDriverList(data, that) {
     return requestHandle.get('transferuser/list', data, that);
+  },
+  // 获取车辆类型信息
+  getCarInfoList(that) {
+    return requestHandle.getJson('driver_car_info.json', that);
   },
 };

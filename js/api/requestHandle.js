@@ -4,12 +4,15 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 10:21:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 14:28:42
+ * @LastEditTime : 2020-01-02 09:20:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import axios from 'axios';
-import {defaultApiURL} from '../config/requestConfig.js';
+import {
+  defaultApiURL,
+  defaultResourceConfigURL,
+} from '../config/requestConfig.js';
 import createSignData from './secret.js';
 
 const sign_id = 'wxb633da0aa161b42c';
@@ -24,6 +27,16 @@ class HttpRequest {
     const instance = axios.create();
     options = Object.assign(this.getInsideConfig(options), options);
     this.interceptors(instance, options.url, options.that);
+    return instance(options);
+  }
+  requestJson(options) {
+    const instance = axios.create();
+    options = Object.assign({
+      url: options.url,
+      method: 'get',
+      baseURL: defaultResourceConfigURL,
+    });
+    this.interceptors(instance, options.url);
     return instance(options);
   }
   getInsideConfig(options) {
@@ -156,6 +169,12 @@ export default {
       that,
       loadingTitle,
       method: 'post',
+    });
+  },
+  getJson(url, that) {
+    return newAxios.requestJson({
+      url,
+      that,
     });
   },
 };
