@@ -3,7 +3,7 @@
  * @description: 我发布的卖板
  * @Date: 2019-12-27 11:34:26
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-31 09:43:28
+ * @LastEditTime : 2020-01-02 14:08:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -80,26 +80,14 @@ export default class PublishItem extends Component {
             </View>
             <View style={styles.item}>
               <Text style={itemTextClassNames}>
-                车辆信息:{item.carInfo || ''}
+                车辆信息:{item.carAmount || 0} 台 {item.carInfo || ''}待发
               </Text>
             </View>
-            {!item.storePickup && !item.homeDelivery ? null : (
-              <View style={styles.item}>
-                <Text style={itemTextClassNames}>
-                  服务：
-                  {item.storePickup ? item.storePickupDesc : ''}
-                  {item.storePickup && item.homeDelivery ? '，' : ''}
-                  {item.homeDelivery ? item.homeDeliveryDesc : ''}
-                </Text>
-              </View>
-            )}
-            {item.transferSettlePriceDesc ? (
-              <View style={styles.item}>
-                <Text style={itemTextClassNames}>
-                  报价(元)：￥{item.transferSettlePriceDesc || ''}元
-                </Text>
-              </View>
-            ) : null}
+            <View style={styles.item}>
+              <Text style={itemTextClassNames}>
+                有效期至:{(item.dueTime && item.dueTime.split('T')[0]) || ''}
+              </Text>
+            </View>
           </View>
         </TouchableOpacity>
       </View>
