@@ -3,20 +3,30 @@
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 17:24:19
+ * @LastEditTime : 2020-01-02 09:14:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
+import ActionSheet from '../../components/ActionSheet/ActionSheet';
 import MineStyles from '../../assets/css/MineStyles';
+import GlobalStyles from '../../assets/css/GlobalStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import Button from '../../components/Button/Button.js';
+import {defaultResourceConfigURL} from '../../config/requestConfig.js';
 import Toast from 'react-native-easy-toast';
 import api from '../../api';
+import Axios from 'axios';
 
 class MineEdit extends Component {
   constructor(props) {
@@ -51,20 +61,30 @@ class MineEdit extends Component {
    * @return void
    */
   getMineInfoDetails() {
+    let res = this.pageParams.userDetailsInfo;
     this.setState({
-      realName: this.pageParams.userDetailsInfo.realName,
-      mobile: this.pageParams.userDetailsInfo.mobile,
-      idCard: this.pageParams.userDetailsInfo.idCard,
-      carType: this.pageParams.userDetailsInfo.carType,
-      carTypeDesc: this.pageParams.userDetailsInfo.carTypeDesc,
-      carNum: this.pageParams.userDetailsInfo.carNum,
+      realName: res.realName,
+      mobile: res.mobile,
+      idCard: res.idCard,
+      carType: res.carType,
+      carTypeDesc: res.carTypeDesc,
+      carNum: res.carNum,
     });
   }
   /**
    * 获取车辆信息类型
    * @return void
    */
-  getCarInfoType() {}
+  getCarInfoType() {
+    Axios.request({
+      url: `${defaultResourceConfigURL}driver_car_info.json`,
+      method: 'get',
+      success: res => {
+        console.log('carType', res);
+        // this.carTypeList = res.data.data;
+      },
+    });
+  }
   /**
    * 输入车牌号
    * @return void
@@ -74,6 +94,13 @@ class MineEdit extends Component {
       carNum: value,
     });
   }
+  /**
+   * 显示actionSheet
+   * @return void
+   */
+  // showActionSheet() {
+  //   this.ActionSheet.show();
+  // }
   /**
    * 函数功能描述
    * @return void
@@ -142,11 +169,11 @@ class MineEdit extends Component {
             </View>
             <View style={MineStyles.itemStyle}>
               <Text style={MineStyles.titleStyle}>车辆信息</Text>
-              <Text
-                style={MineStyles.textStyle}
-                onPress={this.chooseCarType.bind(this)}>
-                {carTypeDesc || '请选择车辆类型'}
-              </Text>
+              <TouchableOpacity onPress={this.showActionSheet.bind(this)}>
+                <Text style={MineStyles.textStyle}>
+                  {carTypeDesc || '请选择车辆类型'}
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
           <View style={styles.btnWrapper}>
@@ -163,6 +190,15 @@ class MineEdit extends Component {
               onClick={this.submitEdit.bind(this)}
             />
           </View>
+          {/* 动作指示器 */}
+          <ActionSheet
+            ref={o => (this.ActionSheet = o)}
+            title={'请选择车辆类型'}
+            options={carTypeList}
+            tintColor={GlobalStyles.themeFontColor}
+            cancelButtonIndex={carTypeList.length - 1}
+            onPress={this.chooseCarType.bind(this)}
+          />
           <Toast
             ref={this.toastRef}
             position={'center'}

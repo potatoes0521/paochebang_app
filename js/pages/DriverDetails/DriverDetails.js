@@ -3,7 +3,7 @@
  * @description: 司机详情
  * @Date: 2019-12-25 15:23:46
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 13:33:04
+ * @LastEditTime : 2020-01-02 09:50:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -24,6 +24,7 @@ class DriverDetails extends Component {
     this.state = {
       driverInfo: {},
     };
+    this.pageParams = {};
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
     });
@@ -34,7 +35,8 @@ class DriverDetails extends Component {
     const {state} = navigation;
     const {params} = state;
     console.log('params', params);
-    // this.getDriverDetails();
+    this.pageParams = params || {};
+    this.getDriverDetails();
     this.backPress.componentDidMount();
   }
   componentWillUnmount() {
@@ -70,7 +72,10 @@ class DriverDetails extends Component {
    * @return void
    */
   navigationEdit() {
-    NavigationUtil.goPage({pageType: 'edit'}, 'DriverEditPage');
+    NavigationUtil.goPage(
+      {pageType: 'edit', driverInfo: this.state.driverInfo},
+      'DriverEditPage',
+    );
   }
   render() {
     const {theme, navigation} = this.props;

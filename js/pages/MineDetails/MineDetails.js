@@ -3,7 +3,7 @@
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 16:42:46
+ * @LastEditTime : 2019-12-31 18:45:41
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -36,7 +36,7 @@ class MineDetails extends Component {
     const {params} = state;
     console.log('params', params);
     this.pageParams = params || {};
-    // this.getUserInfo();
+    this.getUserInfo();
     this.backPress.componentDidMount();
   }
   componentWillUnmount() {
@@ -60,7 +60,7 @@ class MineDetails extends Component {
         return;
       }
       this.setState({
-        userDetailsInfo: res,
+        userDetailsInfo: res.data,
       });
     });
   }
@@ -86,48 +86,62 @@ class MineDetails extends Component {
             title={'我的基本信息'}
           />
           <View style={MineStyles.itemWrapper}>
-            <View style={[MineStyles.itemStyle, MineStyles.line]}>
-              <Text style={MineStyles.titleStyle}>姓名</Text>
-              <Text style={MineStyles.textStyle}>
-                {userDetailsInfo.realName || ''}
-              </Text>
-            </View>
-            <View style={[MineStyles.itemStyle, MineStyles.line]}>
-              <Text style={MineStyles.titleStyle}>联系方式</Text>
-              <Text style={MineStyles.textStyle}>
-                {userDetailsInfo.mobile || ''}
-              </Text>
-            </View>
-            <View style={[MineStyles.itemStyle, MineStyles.line]}>
-              <Text style={MineStyles.titleStyle}>身份证号</Text>
-              <Text style={MineStyles.textStyle}>
-                {userDetailsInfo.idCard || ''}
-              </Text>
-            </View>
-            <View style={[MineStyles.itemStyle, MineStyles.line]}>
-              <Text style={MineStyles.titleStyle}>所属物流公司</Text>
-              <Text style={MineStyles.textStyle}>
-                {userDetailsInfo.merchantName || ''}
-              </Text>
-            </View>
-            <View style={[MineStyles.itemStyle, MineStyles.line]}>
-              <Text style={MineStyles.titleStyle}>车牌号</Text>
-              <Text style={MineStyles.textStyle}>
-                {userDetailsInfo.carNum || ''}
-              </Text>
-            </View>
-            <View style={[MineStyles.itemStyle, MineStyles.line]}>
-              <Text style={MineStyles.titleStyle}>车辆信息</Text>
-              <Text style={MineStyles.textStyle}>
-                {userDetailsInfo.carTypeDesc || ''}
-              </Text>
-            </View>
-            <View style={MineStyles.itemStyle}>
-              <Text style={MineStyles.titleStyle}>注册时间</Text>
-              <Text style={MineStyles.textStyle}>
-                {userDetailsInfo.createTimeDesc || ''}
-              </Text>
-            </View>
+            {userDetailsInfo.realName ? (
+              <View style={[MineStyles.itemStyle, MineStyles.line]}>
+                <Text style={MineStyles.titleStyle}>姓名</Text>
+                <Text style={MineStyles.textStyle}>
+                  {userDetailsInfo.realName || ''}
+                </Text>
+              </View>
+            ) : null}
+            {userDetailsInfo.mobile ? (
+              <View style={[MineStyles.itemStyle, MineStyles.line]}>
+                <Text style={MineStyles.titleStyle}>联系方式</Text>
+                <Text style={MineStyles.textStyle}>
+                  {userDetailsInfo.mobile || ''}
+                </Text>
+              </View>
+            ) : null}
+            {userDetailsInfo.idCard ? (
+              <View style={[MineStyles.itemStyle, MineStyles.line]}>
+                <Text style={MineStyles.titleStyle}>身份证号</Text>
+                <Text style={MineStyles.textStyle}>
+                  {userDetailsInfo.idCard || ''}
+                </Text>
+              </View>
+            ) : null}
+            {userDetailsInfo.merchantName ? (
+              <View style={[MineStyles.itemStyle, MineStyles.line]}>
+                <Text style={MineStyles.titleStyle}>所属物流公司</Text>
+                <Text style={MineStyles.textStyle}>
+                  {userDetailsInfo.merchantName || ''}
+                </Text>
+              </View>
+            ) : null}
+            {userDetailsInfo.carNum ? (
+              <View style={[MineStyles.itemStyle, MineStyles.line]}>
+                <Text style={MineStyles.titleStyle}>车牌号</Text>
+                <Text style={MineStyles.textStyle}>
+                  {userDetailsInfo.carNum || ''}
+                </Text>
+              </View>
+            ) : null}
+            {userDetailsInfo.carTypeDesc ? (
+              <View style={[MineStyles.itemStyle, MineStyles.line]}>
+                <Text style={MineStyles.titleStyle}>车辆信息</Text>
+                <Text style={MineStyles.textStyle}>
+                  {userDetailsInfo.carTypeDesc || ''}
+                </Text>
+              </View>
+            ) : null}
+            {userDetailsInfo.createTimeDesc ? (
+              <View style={MineStyles.itemStyle}>
+                <Text style={MineStyles.titleStyle}>注册时间</Text>
+                <Text style={MineStyles.textStyle}>
+                  {userDetailsInfo.createTimeDesc || ''}
+                </Text>
+              </View>
+            ) : null}
           </View>
           <View style={styles.btnWrapper}>
             <Button

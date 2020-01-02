@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 17:23:42
+ * @LastEditTime : 2019-12-31 18:37:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -41,6 +41,7 @@ class Mine extends Component {
   }
 
   componentDidMount() {
+    console.log('userInfo', this.props.userInfo);
     this.backPress.componentDidMount();
   }
 
@@ -57,7 +58,7 @@ class Mine extends Component {
    */
   navigatorRegister(e) {
     e.stopPropagation();
-    NavigationUtil.goPage(e, 'RegisterPage');
+    NavigationUtil.goPage({}, 'RegisterPage');
   }
   /**
    * 跳转页面
@@ -69,16 +70,16 @@ class Mine extends Component {
     }
     switch (pageName) {
       case 'account':
-        NavigationUtil.goPage(pageName, 'AccountPage');
+        NavigationUtil.goPage({}, 'AccountPage');
         break;
       case 'driver':
-        NavigationUtil.goPage(pageName, 'DriverPage');
+        NavigationUtil.goPage({}, 'DriverPage');
         break;
       case 'mine':
-        NavigationUtil.goPage(pageName, 'MineDetailsPage');
+        NavigationUtil.goPage({}, 'MineDetailsPage');
         break;
       case 'name':
-        NavigationUtil.goPage(pageName, 'AuthenticationPage');
+        NavigationUtil.goPage({}, 'AuthenticationPage');
         break;
       case 'selling':
         NavigationUtil.goPage({pageType: pageName}, 'MainPublishPage');
@@ -87,7 +88,7 @@ class Mine extends Component {
         NavigationUtil.goPage({pageType: pageName}, 'MainPublishPage');
         break;
       case 'line':
-        NavigationUtil.goPage(pageName, 'LinePage');
+        NavigationUtil.goPage({}, 'LinePage');
         break;
       default:
         return;
@@ -111,6 +112,7 @@ class Mine extends Component {
   }
 
   render() {
+    let {userInfo} = this.props;
     return (
       <View style={styles.pageWrapper}>
         <NavigationBar title={'我的'} />
@@ -118,33 +120,50 @@ class Mine extends Component {
           <View style={styles.userWrapper}>
             <TouchableOpacity onPress={this.navigatorRegister.bind(this)}>
               <View style={styles.left}>
-                <View style={styles.userImage}>
-                  <Image style={styles.imageStyle} source={defaultImage} />
-                </View>
-                {/* <View style={styles.userInfo}>
-                  <View style={styles.userName}>
-                    <Text style={MineStyles.labelText}>郭仨心</Text>
-                  </View>
-                  <View style={styles.certification}> */}
-                {/* <Image
-                      style={styles.certificationImage}
-                      source={{
-                        uri:
-                          'https://resource.paoche56.com/paochebang/mp_img/mine/already.png',
-                      }}
-                    /> */}
-                {/* <Image
-                      style={styles.certificationImage}
-                      source={{
-                        uri:
-                          'https://resource.paoche56.com/paochebang/mp_img/mine/never.png',
-                      }}
+                {userInfo.userId ? (
+                  <View style={styles.userImage}>
+                    <Image
+                      style={styles.imageStyle}
+                      source={{uri: userInfo.userPhoto}}
                     />
                   </View>
-                </View> */}
-                <View style={styles.userInfo}>
-                  <Text style={MineStyles.labelText}>注册/登录</Text>
-                </View>
+                ) : (
+                  <View style={styles.userImage}>
+                    <Image style={styles.imageStyle} source={defaultImage} />
+                  </View>
+                )}
+                {userInfo.userId ? (
+                  <View style={styles.userInfo}>
+                    <View style={styles.userName}>
+                      <Text style={MineStyles.labelText}>
+                        {userInfo.nickName}
+                      </Text>
+                    </View>
+                    <View style={styles.certification}>
+                      {userInfo.realNameAuthStatus ? (
+                        <Image
+                          style={styles.certificationImage}
+                          source={{
+                            uri:
+                              'https://resource.paoche56.com/paochebang/mp_img/mine/already.png',
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          style={styles.certificationImage}
+                          source={{
+                            uri:
+                              'https://resource.paoche56.com/paochebang/mp_img/mine/never.png',
+                          }}
+                        />
+                      )}
+                    </View>
+                  </View>
+                ) : (
+                  <View style={styles.userInfo}>
+                    <Text style={MineStyles.labelText}>注册/登录</Text>
+                  </View>
+                )}
               </View>
             </TouchableOpacity>
             <View style={styles.right}>

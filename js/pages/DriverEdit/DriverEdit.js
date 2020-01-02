@@ -3,7 +3,7 @@
  * @description: 编辑、添加司机信息
  * @Date: 2019-12-26 10:36:06
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 18:24:39
+ * @LastEditTime : 2020-01-02 09:48:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,6 +26,7 @@ import {
   phoneNumberPatter,
 } from '../../utils/patter.js';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
+import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import Toast from 'react-native-easy-toast';
 import api from '../../api';
@@ -42,20 +43,51 @@ class DriverEdit extends Component {
       carNum: '',
       carTypeDesc: '',
     };
+    this.pageParams = {};
+    this.driverInfo = {};
     this.carTypeList = [];
     this.toastRef = React.createRef();
+    this.backPress = new BackPressComponent({
+      backPress: () => this.onBackPress(),
+    });
   }
 
   componentDidMount() {
-    this.getDriverInfoDetails();
+    const {navigation} = this.props;
+    const {state} = navigation;
+    const {params} = state;
+    console.log('params', params);
+    this.pageParams = params || {};
+    if (this.pageParams.pageType === 'edit') {
+      this.getDriverInfoDetails();
+    }
     this.chooseCarType();
+    this.backPress.componentDidMount();
   }
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.backPress.componentWillUnmount();
+  }
+  onBackPress() {
+    NavigationUtil.goBack(this.props.navigation);
+    return true;
+  }
   /**
    * 获取司机信息详情
    * @return void
    */
-  getDriverInfoDetails() {}
+  getDriverInfoDetails() {
+    this.driverInfo = this.pageParams.driverInfo;
+    let res = this.pageParams.driverInfo;
+    this.setState({
+      remarkName: res.remarkName,
+      mobile: res.mobile,
+      idCard: res.idCard,
+      carNum: res.carNum,
+      carType: res.carType,
+      carTypeDesc: res.carTypeDesc,
+      merchantName: res.merchantName,
+    });
+  }
   /**
    * 获取车辆信息类型
    * @return void
@@ -150,6 +182,7 @@ class DriverEdit extends Component {
       carType,
       merchantName,
     };
+    console.log('sendData', sendData);
     api.driver.updateDriverData(sendData, this).then(() => {
       if (this.pageParams.pageType === 'edit') {
         this.toastRef.current.show('编辑成功');

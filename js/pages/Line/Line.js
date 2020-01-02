@@ -3,7 +3,7 @@
  * @description: 常跑线路
  * @Date: 2019-12-27 15:19:24
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 17:18:02
+ * @LastEditTime : 2020-01-02 09:45:11
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,7 +29,6 @@ class Line extends Component {
       routeNumber: 0,
       lineList: [],
     };
-    this.pageParams = {};
     this.toastRef = React.createRef();
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
@@ -37,16 +36,11 @@ class Line extends Component {
   }
 
   componentDidMount() {
-    const {navigation} = this.props;
-    const {state} = navigation;
-    const {params} = state;
-    console.log('params', params);
-    this.pageParams = params || {};
+    this.getAllLineList();
     this.backPress.componentDidMount();
   }
   componentWillUnmount() {
     this.backPress.componentWillUnmount();
-    this.getAllLineList();
   }
   onBackPress() {
     NavigationUtil.goBack(this.props.navigation);
@@ -70,8 +64,8 @@ class Line extends Component {
    * 编辑线路
    * @return void
    */
-  editLine() {
-    console.log('choose');
+  editLine(item) {
+    NavigationUtil.goPage({pageType: 'edit', lineItem: item}, 'LineEditPage');
   }
   /**
    * 添加线路
@@ -84,8 +78,15 @@ class Line extends Component {
    * 删除线路
    * @return void
    */
-  deleteLine() {
+  deleteLine(item) {
     console.log('delete');
+    let sendData = {
+      lineId: item,
+    };
+    api.line.deleteList(sendData, this).then(() => {
+      this.toastRef.current.show('删除成功');
+      this.getAllLineList();
+    });
   }
   render() {
     const {theme, navigation} = this.props;
@@ -123,7 +124,7 @@ class Line extends Component {
             leftViewShow={true}
             title={'常跑线路'}
           />
-          {lineList.length ? (
+          {lineList && lineList.length ? (
             <View style={styles.lineWrapper}>
               <View style={styles.lineTitle}>
                 <View style={styles.lineStyle} />

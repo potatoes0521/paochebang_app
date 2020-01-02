@@ -3,7 +3,7 @@
  * @description: 添加编辑路线
  * @Date: 2019-12-30 09:35:08
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 16:05:34
+ * @LastEditTime : 2019-12-31 12:01:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,7 +11,6 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import {connect} from 'react-redux';
 import api from '../../api';
-import Actions from '../../store/action/index.js';
 import Button from '../../components/Button/Button.js';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
@@ -42,6 +41,9 @@ class LineEdit extends Component {
     const {params} = state;
     console.log('params', params);
     this.pageParams = params || {};
+    if (this.pageParams.pageType === 'edit') {
+      this.getPageParams();
+    }
     this.backPress.componentDidMount();
   }
 
@@ -52,6 +54,21 @@ class LineEdit extends Component {
   onBackPress() {
     NavigationUtil.goBack(this.props.navigation);
     return true;
+  }
+  /**
+   * 获取页面传递的参数
+   * @return void
+   */
+  getPageParams() {
+    this.pageParams.lineItem.sendCityName = decodeURIComponent(
+      this.pageParams.lineItem.fromCityName,
+    );
+    this.pageParams.lineItem.receiveCityName = decodeURIComponent(
+      this.pageParams.lineItem.toCityName,
+    );
+    this.pageParams.lineItem.sendCityId = this.pageParams.lineItem.fromCityId;
+    this.pageParams.lineItem.receiveCityId = this.pageParams.lineItem.toCityId;
+    this.setState(this.pageParams);
   }
   /**
    * 添加线路
@@ -73,7 +90,7 @@ class LineEdit extends Component {
       driverId: this.props.userInfo.userId,
     };
     if (this.pageParams.pageType === 'edit') {
-      sendData.lineId = this.pageParams.lineId;
+      sendData.lineId = this.pageParams.lineItem.lineId;
     }
     api.line.addLine(sendData, this).then(() => {
       if (this.pageParams.pageType === 'edit') {

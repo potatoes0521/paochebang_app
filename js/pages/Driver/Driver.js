@@ -3,7 +3,7 @@
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 17:17:07
+ * @LastEditTime : 2020-01-02 10:07:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -40,6 +40,7 @@ class Driver extends Component {
       driverListData: [],
       isLoading: false,
     };
+    this.pageParams = {};
     this.driverPage = 1;
     this.driverFlag = false;
     this.toastRef = React.createRef();
@@ -49,6 +50,11 @@ class Driver extends Component {
   }
 
   componentDidMount() {
+    const {navigation} = this.props;
+    const {state} = navigation;
+    const {params} = state;
+    console.log('params', params);
+    this.pageParams = params || {};
     this.getAllDriverList();
     this.backPress.componentDidMount();
   }
@@ -67,7 +73,11 @@ class Driver extends Component {
    * @param {Number} pageSize 条数
    * @return void
    */
-  getAllDriverList(selectParam = '', pageNum = 1, pageSize = 10) {
+  getAllDriverList(
+    selectParam = this.state.selectParam,
+    pageNum = 1,
+    pageSize = 10,
+  ) {
     let sendData = {
       userId: this.props.userInfo.userId,
       selectParam,
@@ -76,6 +86,7 @@ class Driver extends Component {
     };
     let {driverListData} = this.state;
     api.driver.getDriverList(sendData, this).then(res => {
+      console.log('driverList', res.data);
       const data = res.data;
       if (!data) {
         return;
@@ -141,13 +152,21 @@ class Driver extends Component {
    * 跳转我的基本信息页面
    * @return void
    */
-  navigationToMine(e) {
-    NavigationUtil.goPage(e, 'MineDetailsPage');
+  navigationToMine() {
+    if (this.pageParams.pageType === 'choose') {
+      NavigationUtil.goPage(
+        {pageType: this.pageParams.pageType},
+        'MineDetailsPage',
+      );
+    } else {
+      NavigationUtil.goPage({}, 'MineDetailsPage');
+    }
   }
 
   render() {
     const {theme, navigation} = this.props;
     let {selectParam, totalCount} = this.state;
+    console.log('this.state.driverListData', typeof this.state.driverListData);
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -166,6 +185,7 @@ class Driver extends Component {
                   style={styles.input}
                   placeholder="输入姓名/联系方式进行搜索"
                   onChangeText={this.searchInput.bind(this)}
+                  onSubmitEditing={this.submitSearch.bind(this)}
                   value={selectParam}
                 />
               </View>
