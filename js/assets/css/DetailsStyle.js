@@ -3,7 +3,7 @@
  * @description: 详情通用css
  * @Date: 2019-12-04 11:36:02
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-31 15:23:02
+ * @LastEditTime : 2020-01-02 11:58:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -97,5 +97,8 @@ export default {
     margin: 0,
     color: GlobalStyles.themeFontColor,
     fontSize: 15,
+  },
+  borderDisabled: {
+    borderColor: GlobalStyles.themeDisabled,
   },
 };

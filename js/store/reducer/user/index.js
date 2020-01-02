@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-08-15 15:26:09
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 17:08:20
+ * @LastEditTime : 2020-01-02 11:03:00
  */
 
 import Types from '../../type';
@@ -33,7 +33,7 @@ defaultState.userInfo = {
   // openId: "11akshahsdgjhasgk", // 测试环境被添加的客户的openid   手机号是  13312345678
   // userId: 177,
   // userType: 2,
-  userType: 0, // 13121850481
+  userType: 1, // 13121850481
   openId: 'oLgd75eZdM9Cp-dSE0YpU9gKxJoE', // 测试环境刘洋的openId
   // userId: 93, // 正式刘洋的userId
   // token: '006c043c79f7555d1c327ff64ade066c', // 正式token

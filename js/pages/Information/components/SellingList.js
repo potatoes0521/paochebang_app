@@ -4,12 +4,18 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:53:33
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-02 09:54:29
+ * @LastEditTime : 2020-01-02 11:26:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  RefreshControl,
+  DeviceEventEmitter,
+} from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
@@ -31,9 +37,16 @@ class SellingList extends Component {
 
   componentDidMount() {
     this.getSellingList({});
+    this.handleEmit();
   }
-
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.emitRefresh.remove();
+  }
+  handleEmit() {
+    this.emitRefresh = DeviceEventEmitter.addListener('refreshSelling', () => {
+      this.getSellingList({refresh: true});
+    });
+  }
   /**
    * 获取卖板详情
    * @param {Number} pageNum=1 页数

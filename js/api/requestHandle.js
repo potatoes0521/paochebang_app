@@ -4,7 +4,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 10:21:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-02 09:20:02
+ * @LastEditTime : 2020-01-02 11:06:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,7 +17,7 @@ import createSignData from './secret.js';
 
 const sign_id = 'wxb633da0aa161b42c';
 const contentType = 'application/json;charset=UTF-8';
-export const appVersion = '0.9.2';
+export const appVersion = '1.0.0';
 
 class HttpRequest {
   constructor(baseUrl) {
@@ -46,12 +46,12 @@ class HttpRequest {
     console.log(JSON.stringify(data), 'sign=' + sign, url);
     const {userInfo} = that.props || {};
     const headerUserLogin = JSON.stringify({
-      token: userInfo.token || '',
-      mobile: userInfo.mobile || '',
-      openId: userInfo.openId || '',
-      userId: userInfo.userId || '', // 常用请求全部放在请求头上
-      unionId: userInfo.unionId || '',
-      userType: userInfo.userType || '', // 0 驿站人员  1 自主注册   2 驿站人员添加客户 3 运力  4 司机
+      token: userInfo.token,
+      mobile: userInfo.mobile,
+      openId: userInfo.openId,
+      userId: userInfo.userId, // 常用请求全部放在请求头上
+      unionId: userInfo.unionId,
+      userType: userInfo.userType, // 0 驿站人员  1 自主注册   2 驿站人员添加客户 3 运力  4 司机
     });
     if (url.indexOf('file/read') !== -1) {
       this.baseUrl = url;
@@ -67,7 +67,7 @@ class HttpRequest {
         'terminal-type': 1, // 终端类型  1 小程序   2 H5  3 APP 4 运营后台
         // 'source-id': 2, // 1 跑车帮小程序 2 跑车帮app 3 跑车物流小程序 4 跑车物流运营平台
         'source-id': 1, // 1 跑车帮小程序 2 跑车帮app 3 跑车物流小程序 4 跑车物流运营平台
-        'system-info': userInfo.userAgent || '', // 系统信息
+        'system-info': userInfo.userAgent || 'iPhone 6/7/8-iOS 10.0.1-2.9.4', // 系统信息
         'app-version': appVersion, // 版本号
         // 'app-type': 4, // 1 微信小程序 2 支付宝小程序  3 PC运营后台
         'app-type': 1, // 1 微信小程序 2 支付宝小程序  3 PC运营后台

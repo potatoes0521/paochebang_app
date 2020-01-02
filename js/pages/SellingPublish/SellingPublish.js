@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-31 15:23:29
+ * @LastEditTime : 2020-01-02 11:40:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -39,7 +39,7 @@ class SellingPublish extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      carAmount: '', // 空位数
+      carAmount: '1', // 空位数
       carInfo: '', // 车辆信息
       dueTime: '', // 有效期
       isActive: 1, // 订单状态
@@ -52,7 +52,7 @@ class SellingPublish extends Component {
       sendTime: '', // 发车时间
       saleToPalletId: '', // 卖板信息ID
       isEdit: '', // 是否可编辑
-      usedType: '', // 车辆性质
+      usedType: '1', // 车辆性质
       disabled: true,
       sendTimerInit: '', // 初始化时间
     };
@@ -69,11 +69,12 @@ class SellingPublish extends Component {
     const {state} = navigation;
     const {params} = state;
     console.log('params', params);
+    this.pageParams = params;
     this.handleEmit();
-    if (this.pageParams && this.pageParams.pageType === 'edit') {
+    if (this.pageParams && this.pageParams.saleToPalletId) {
+      console.log('1111', 1111);
       this.getSellingDetail();
     }
-
     this.backPress.componentDidMount();
   }
 
@@ -95,23 +96,38 @@ class SellingPublish extends Component {
     // 提交备注时候的通知
     this.emitRemark = DeviceEventEmitter.addListener('submitRemark', data => {
       this.setState({
-        remarks: data,
+        remark: data,
       });
     });
     // 选择城市时候的通知
     this.emitChooseCity = DeviceEventEmitter.addListener('chooseCity', data => {
       let state = {};
       if (data.type === 'sendCity') {
-        state.sendCityName = data.sendCityName;
-        state.sendCityId = data.sendCityId;
+        state.sendCityName = data.cityName;
+        state.sendCityId = data.cityId;
       } else if (data.type === 'receiveCity') {
-        state.receiveCityName = data.receiveCityName;
-        state.receiveCityId = data.receiveCityId;
+        state.receiveCityName = data.cityName;
+        state.receiveCityId = data.cityId;
       }
       this.setState(state);
     });
   }
-  getSellingDetail() {}
+  getSellingDetail() {
+    if (!this.pageParams.saleToPalletId) {
+      this.toastRef.current.show('缺少saleToPalletId或saleToPalletCode');
+      return;
+    }
+    let sendData = {
+      id: this.pageParams.saleToPalletId,
+    };
+    api.selling.getSellingDetail(sendData, this).then(res => {
+      if (!res.data) {
+        return;
+      }
+      res.data.price = res.data.price / 100 + '';
+      this.setState(res.data);
+    });
+  }
   /**
    * 输入车辆信息
    * @return void
@@ -212,8 +228,7 @@ class SellingPublish extends Component {
     NavigationUtil.goPage({}, 'RemarkPage');
   }
   navigationToChooseCity(type) {
-    console.log('type', type);
-    NavigationUtil.goPage({}, 'ChooseCityPage');
+    NavigationUtil.goPage({type}, 'ChooseCityPage');
   }
   cancel() {
     NavigationUtil.goBack(this.props.navigation);
@@ -256,6 +271,7 @@ class SellingPublish extends Component {
       sendCityId: sendCityId,
       sendTime: sendTime,
       userId: this.props.userInfo.userId,
+      sourceId: 1,
     };
     if (this.pageParams.pageType === 'edit') {
       this.editSellingData(sendData);
@@ -274,9 +290,11 @@ class SellingPublish extends Component {
     });
     api.selling.updateOneSellingData(data, this).then(() => {
       this.toastRef.current.show('编辑成功');
+      DeviceEventEmitter.emit('refreshSelling');
+      DeviceEventEmitter.emit('refreshSellingDetails');
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
-      }, 1800);
+      }, 2000);
     });
   }
   /**
@@ -286,9 +304,10 @@ class SellingPublish extends Component {
   addSellingData(sendData) {
     api.selling.addSellingData(sendData, this).then(() => {
       this.toastRef.current.show('发布成功');
+      DeviceEventEmitter.emit('refreshSelling');
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
-      }, 1800);
+      }, 2000);
     });
   }
   render() {
@@ -299,7 +318,7 @@ class SellingPublish extends Component {
       dueTime,
       payType,
       receiveCityName,
-      remarks,
+      remark,
       sendCityName,
       sendTime,
       radioActiveIndex,
@@ -491,8 +510,8 @@ class SellingPublish extends Component {
                     DetailsStyle.formContent,
                     DetailsStyle.moreTextFormItem,
                   ]}>
-                  <Text style={remarks ? textClassName : textThemeDisabled}>
-                    {remarks || '请输入备注信息'}
+                  <Text style={remark ? textClassName : textThemeDisabled}>
+                    {remark || '请输入备注信息'}
                   </Text>
                   <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
                 </TouchableOpacity>

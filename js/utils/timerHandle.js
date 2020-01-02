@@ -3,7 +3,7 @@
  * @description: 各种时间处理方法
  * @Date: 2019-10-08 14:45:15
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-20 10:26:12
+ * @LastEditTime : 2020-01-02 11:09:11
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,7 +22,7 @@ export const getTimeDate = times => {
 export const getDateTime = times => {
   let date = new Date(times); // 13位时间戳
   let Y = date.getFullYear() + '-';
-  let M = date.getMonth() + 1 + '-';
+  let M = toDou(date.getMonth() + 1) + '-';
   let D = toDou(date.getDate()) + ' ';
   let h = toDou(date.getHours()) + ':';
   let m = toDou(date.getMinutes()) + ':';

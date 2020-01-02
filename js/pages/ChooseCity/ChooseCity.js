@@ -4,12 +4,12 @@
  * @path: 引入路径
  * @Date: 2019-12-26 09:24:29
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-31 11:22:06
+ * @LastEditTime : 2020-01-02 10:55:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, DeviceEventEmitter} from 'react-native';
 import {connect} from 'react-redux';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
@@ -48,6 +48,7 @@ class ChooseCity extends Component {
     const {state} = navigation;
     const {params} = state;
     console.log('params', params);
+    this.pageParams = params;
     this.getCityList();
     this.backPress.componentDidMount();
   }
@@ -93,7 +94,9 @@ class ChooseCity extends Component {
     console.log('city', city);
   }
   chooseSearchCity(city) {
-    console.log('city', city);
+    city.type = this.pageParams.type;
+    DeviceEventEmitter.emit('chooseCity', city);
+    NavigationUtil.goBack(this.props.navigation);
   }
   searchInput(value) {
     if (value.length < 1) {

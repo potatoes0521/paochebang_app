@@ -4,12 +4,19 @@
  * @path: 引入路径
  * @Date: 2019-12-24 11:45:16
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 17:07:56
+ * @LastEditTime : 2020-01-02 12:02:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Linking} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Linking,
+  DeviceEventEmitter,
+} from 'react-native';
 import {connect} from 'react-redux';
 // import GlobalStyles from '../../assets/css/GlobalStyles';
 import DetailsStyle from '../../assets/css/DetailsStyle';
@@ -55,10 +62,12 @@ class SellingDetails extends Component {
     console.log('params', params);
     this.pageParams = params || {};
     this.getSellingDetail();
+    this.handleEmit();
     this.backPress.componentDidMount();
   }
 
   componentWillUnmount() {
+    this.emitRefresh.remove();
     this.backPress.componentWillUnmount();
   }
 
@@ -66,7 +75,14 @@ class SellingDetails extends Component {
     NavigationUtil.goBack(this.props.navigation);
     return true;
   }
-
+  handleEmit() {
+    this.emitRefresh = DeviceEventEmitter.addListener(
+      'refreshSellingDetails',
+      () => {
+        this.getSellingDetail();
+      },
+    );
+  }
   /**
    * 获取详情
    * @return void
@@ -83,7 +99,6 @@ class SellingDetails extends Component {
       if (!res.data) {
         return;
       }
-      console.log('res.data', res.data);
       this.setState(res.data);
     });
   }
@@ -119,13 +134,15 @@ class SellingDetails extends Component {
     };
     api.selling.sellingDataPullOff(sendData, this).then(() => {
       this.toastRef.current.show('下架成功');
+      DeviceEventEmitter.emit('refreshSelling');
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);
     });
   }
   navigatorEdit() {
-    NavigationUtil.goPage(this.pageParams, 'EditSellingPage');
+    let params = Object.assign({}, this.pageParams, {pageType: 'edit'});
+    NavigationUtil.goPage(params, 'SellingPublishPage');
   }
 
   render() {
@@ -152,6 +169,18 @@ class SellingDetails extends Component {
     if (isActive !== 1) {
       textClassName.push(DetailsStyle.textThemeDisabled);
     }
+    let labelTextClassName = [DetailsStyle.contentText];
+    if (isActive !== 1) {
+      labelTextClassName.push(DetailsStyle.textThemeDisabled);
+    }
+    let pullOffClassName = [DetailsStyle.btnRight];
+    if (isActive !== 1) {
+      pullOffClassName.push(DetailsStyle.borderDisabled);
+    }
+    let pullOffBtnTextClassName = [];
+    if (isActive !== 1) {
+      pullOffBtnTextClassName.push(DetailsStyle.textThemeDisabled);
+    }
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -165,32 +194,28 @@ class SellingDetails extends Component {
               {/* 发车城市 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>发车城市:</Text>
+                  <Text style={labelTextClassName}>发车城市:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
-                    {sendCityName || ''}
-                  </Text>
+                  <Text style={textClassName}>{sendCityName || ''}</Text>
                 </View>
               </View>
               {/* 收车城市 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>收车城市:</Text>
+                  <Text style={labelTextClassName}>收车城市:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
-                    {receiveCityName || ''}
-                  </Text>
+                  <Text style={textClassName}>{receiveCityName || ''}</Text>
                 </View>
               </View>
               {/* 预计发车时间 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>预计发车时间:</Text>
+                  <Text style={labelTextClassName}>预计发车时间:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
+                  <Text style={textClassName}>
                     {sendTime.split('T')[0] || ''}
                   </Text>
                 </View>
@@ -198,23 +223,23 @@ class SellingDetails extends Component {
               {/* 车辆信息 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>车辆信息:</Text>
+                  <Text style={labelTextClassName}>车辆信息:</Text>
                 </View>
                 <View
                   style={[
                     DetailsStyle.formContent,
                     DetailsStyle.moreTextFormItem,
                   ]}>
-                  <Text style={DetailsStyle.contentText}>{carInfo || ''}</Text>
+                  <Text style={textClassName}>{carInfo || ''}</Text>
                 </View>
               </View>
               {/* 车辆性质 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>车辆性质:</Text>
+                  <Text style={labelTextClassName}>车辆性质:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
+                  <Text style={textClassName}>
                     {usedType === 1 ? '新车' : '二手车'}
                   </Text>
                 </View>
@@ -222,21 +247,19 @@ class SellingDetails extends Component {
               {/* 台数 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>台数:</Text>
+                  <Text style={labelTextClassName}>台数:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
-                    {carAmount || '0'}
-                  </Text>
+                  <Text style={textClassName}>{carAmount || '0'}</Text>
                 </View>
               </View>
               {/* 结算方式 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>结算方式:</Text>
+                  <Text style={labelTextClassName}>结算方式:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
+                  <Text style={textClassName}>
                     {payWeyText ? payWeyText.name : ''}
                   </Text>
                 </View>
@@ -244,21 +267,19 @@ class SellingDetails extends Component {
               {/* 报价 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>报价:</Text>
+                  <Text style={labelTextClassName}>报价:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
-                    {returnPrice || ''}
-                  </Text>
+                  <Text style={textClassName}>{returnPrice || '私聊'}</Text>
                 </View>
               </View>
               {/* 有效期至 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>有效期至:</Text>
+                  <Text style={labelTextClassName}>有效期至:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
+                  <Text style={textClassName}>
                     {dueTime.split('T')[0] || ''}
                   </Text>
                 </View>
@@ -266,10 +287,10 @@ class SellingDetails extends Component {
               {/* 发布时间 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>发布时间:</Text>
+                  <Text style={labelTextClassName}>发布时间:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
+                  <Text style={textClassName}>
                     {pubTime.split('T')[0] || ''}
                   </Text>
                 </View>
@@ -278,16 +299,14 @@ class SellingDetails extends Component {
               {remarks ? (
                 <View style={DetailsStyle.formItem}>
                   <View style={DetailsStyle.formLabel}>
-                    <Text style={DetailsStyle.labelText}>备注:</Text>
+                    <Text style={labelTextClassName}>备注:</Text>
                   </View>
                   <View
                     style={[
                       DetailsStyle.formContent,
                       DetailsStyle.moreTextFormItem,
                     ]}>
-                    <Text style={DetailsStyle.contentText}>
-                      {remarks || ''}
-                    </Text>
+                    <Text style={textClassName}>{remarks || ''}</Text>
                   </View>
                 </View>
               ) : null}
@@ -302,10 +321,11 @@ class SellingDetails extends Component {
                     onClick={this.navigatorEdit.bind(this)}
                   />
                   <Button
-                    btnStyle={[DetailsStyle.btnRight]}
+                    btnStyle={pullOffClassName}
                     text={'下架'}
-                    type={'round'}
-                    onClick={this.pullOffer.bind(this)}
+                    type={'plain'}
+                    fontStyles={pullOffBtnTextClassName}
+                    onClick={this.pullOff.bind(this)}
                   />
                 </>
               ) : (
