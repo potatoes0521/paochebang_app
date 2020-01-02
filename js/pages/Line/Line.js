@@ -3,7 +3,7 @@
  * @description: 常跑线路
  * @Date: 2019-12-27 15:19:24
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 09:45:11
+ * @LastEditTime : 2020-01-02 15:43:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -52,6 +52,9 @@ class Line extends Component {
    */
   getAllLineList() {
     api.line.getLineList({}, this).then(res => {
+      if (!res) {
+        return;
+      }
       if (res) {
         this.setState({
           lineList: res.transferLineVO,
@@ -83,7 +86,10 @@ class Line extends Component {
     let sendData = {
       lineId: item,
     };
-    api.line.deleteList(sendData, this).then(() => {
+    api.line.deleteList(sendData, this).then(res => {
+      if (!res) {
+        return;
+      }
       this.toastRef.current.show('删除成功');
       this.getAllLineList();
     });

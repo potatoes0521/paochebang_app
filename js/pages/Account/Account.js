@@ -3,7 +3,7 @@
  * @description: 账户体系
  * @Date: 2019-12-25 15:25:16
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-31 10:38:16
+ * @LastEditTime : 2020-01-02 15:40:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -65,6 +65,9 @@ class AccountDetails extends Component {
    */
   getAccountAmount() {
     api.account.getAccountAmount({}, this).then(res => {
+      if (!res) {
+        return;
+      }
       this.setState({
         accountId: res.accountId,
         totalIncomeDesc: res.totalIncomeDesc,
@@ -95,6 +98,9 @@ class AccountDetails extends Component {
     };
     let {accountList} = this.state;
     api.account.getAccountList(sendData, this).then(res => {
+      if (!res) {
+        return;
+      }
       if (res && res.length < pageSize) {
         this.accountFlag = true;
       }

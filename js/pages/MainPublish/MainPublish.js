@@ -3,7 +3,7 @@
  * @description: 我发布的卖板和空位
  * @Date: 2019-12-27 11:21:19
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 14:01:25
+ * @LastEditTime : 2020-01-02 15:43:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -71,7 +71,6 @@ class MainPublish extends Component {
       pageSize,
     };
     api.selling.getMineSellingList(sendData, this).then(res => {
-      console.log('selling', res);
       this.setState({
         isLoading: false,
       });

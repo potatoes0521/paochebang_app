@@ -3,7 +3,7 @@
  * @description: 添加编辑路线
  * @Date: 2019-12-30 09:35:08
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-31 12:01:26
+ * @LastEditTime : 2020-01-02 15:43:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -92,7 +92,10 @@ class LineEdit extends Component {
     if (this.pageParams.pageType === 'edit') {
       sendData.lineId = this.pageParams.lineItem.lineId;
     }
-    api.line.addLine(sendData, this).then(() => {
+    api.line.addLine(sendData, this).then(res => {
+      if (!res) {
+        return;
+      }
       if (this.pageParams.pageType === 'edit') {
         this.toastRef.current.show('编辑成功');
       }

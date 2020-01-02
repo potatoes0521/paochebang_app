@@ -3,7 +3,7 @@
  * @description: 确认司机页面
  * @Date: 2019-12-30 15:01:46
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 16:06:31
+ * @LastEditTime : 2020-01-02 15:42:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -64,6 +64,9 @@ class DriverConfirm extends Component {
       orderCode: this.pageParams.order_code,
     };
     api.order.getOrderDriver(sendData, this).then(res => {
+      if (!res) {
+        return;
+      }
       if (res && res.extractDriver) {
         this.setState({
           realName: res.extractDriver,
@@ -121,7 +124,10 @@ class DriverConfirm extends Component {
       extractDriverMobile: mobile,
       orderCode: this.pageParams.order_code,
     };
-    api.order.confirmDriver(sendData, this).then(() => {
+    api.order.confirmDriver(sendData, this).then(res => {
+      if (!res) {
+        return;
+      }
       this.toastRef.current.show('提交成功');
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);

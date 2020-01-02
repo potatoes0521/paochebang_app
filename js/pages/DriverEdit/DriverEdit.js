@@ -3,7 +3,7 @@
  * @description: 编辑、添加司机信息
  * @Date: 2019-12-26 10:36:06
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 11:20:25
+ * @LastEditTime : 2020-01-02 15:42:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -43,10 +43,11 @@ class DriverEdit extends Component {
       merchantName: '',
       carNum: '',
       carTypeDesc: '',
+      carTypeList: [],
+      carTypeName: [],
     };
     this.pageParams = {};
     this.driverInfo = {};
-    this.carTypeList = [];
     this.toastRef = React.createRef();
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
@@ -62,7 +63,7 @@ class DriverEdit extends Component {
     if (this.pageParams.pageType === 'edit') {
       this.getDriverInfoDetails();
     }
-    this.chooseCarType();
+    this.getCarInfoType();
     this.backPress.componentDidMount();
   }
   componentWillUnmount() {
@@ -90,6 +91,22 @@ class DriverEdit extends Component {
     });
   }
   /**
+   * 获取车辆信息类型
+   * @return void
+   */
+  getCarInfoType() {
+    api.driver.getCarInfoList({}, this).then(res => {
+      if (!res.data) {
+        return;
+      }
+      const carTypeName = res.data.map(item => item.carInfoName);
+      this.setState({
+        carTypeList: res.data,
+        carTypeName,
+      });
+    });
+  }
+  /**
    * 显示actionSheet
    * @return void
    */
@@ -97,10 +114,19 @@ class DriverEdit extends Component {
     this.ActionSheet.show();
   }
   /**
-   * 获取车辆信息类型
+   * 选择车辆类型
+   * @param {Type} index 被选中的下标
    * @return void
    */
-  chooseCarType() {}
+  chooseCarType(index) {
+    if (index === this.state.carTypeList.length) {
+      return;
+    }
+    this.setState({
+      carType: this.state.carTypeList[index].carInfoId,
+      carTypeDesc: this.state.carTypeList[index].carInfoName,
+    });
+  }
   /**
    * 输入司机姓名
    * @param {Type} value 参数描述
@@ -191,7 +217,10 @@ class DriverEdit extends Component {
       merchantName,
     };
     console.log('sendData', sendData);
-    api.driver.updateDriverData(sendData, this).then(() => {
+    api.driver.updateDriverData(sendData, this).then(res => {
+      if (!res) {
+        return;
+      }
       if (this.pageParams.pageType === 'edit') {
         this.toastRef.current.show('编辑成功');
       } else {
@@ -210,6 +239,7 @@ class DriverEdit extends Component {
       merchantName,
       carNum,
       carTypeDesc,
+      carTypeName,
     } = this.state;
     const {theme, navigation} = this.props;
     return (
@@ -285,17 +315,19 @@ class DriverEdit extends Component {
                 value={merchantName}
               />
             </View>
-            <TouchableOpacity onPress={this.showActionSheet.bind(this)}>
-              <View style={MineStyles.itemStyle}>
-                <Text style={styles.iconStyle} />
-                <Text style={MineStyles.titleStyle}>车辆信息</Text>
+            <View style={MineStyles.itemStyle}>
+              <Text style={styles.iconStyle} />
+              <Text style={MineStyles.titleStyle}>车辆信息</Text>
+              <TouchableOpacity
+                onPress={this.showActionSheet.bind(this)}
+                style={styles.formContent}>
                 {carTypeDesc ? (
                   <Text style={MineStyles.textStyle}>{carTypeDesc}</Text>
                 ) : (
                   <Text style={MineStyles.inputStyle}>请选择车辆类型</Text>
                 )}
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={styles.btnWrapper}>
             <Button
@@ -315,9 +347,9 @@ class DriverEdit extends Component {
           <ActionSheet
             ref={o => (this.ActionSheet = o)}
             title={'请选择车辆类型'}
-            options={this.carTypeList}
+            options={carTypeName}
             tintColor={GlobalStyles.themeFontColor}
-            cancelButtonIndex={this.carTypeList.length - 1}
+            cancelButtonIndex={carTypeName.length - 1}
             onPress={this.chooseCarType.bind(this)}
           />
           <Toast
@@ -356,6 +388,12 @@ const styles = StyleSheet.create({
     padding: 0,
     fontSize: 15,
     color: GlobalStyles.themeFontColor,
+  },
+  formContent: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
 });
 

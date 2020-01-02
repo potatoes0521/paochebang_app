@@ -3,8 +3,8 @@
  * @description: offer页面和我发布的卖板空位item公共样式
  * @path: 引入路径
  * @Date: 2019-12-27 10:52:36
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 13:26:16
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-02 15:35:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -33,6 +33,11 @@ export default {
   },
   status: {
     color: GlobalStyles.themeFontColor,
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  statusDesc: {
+    color: GlobalStyles.themeSubColor,
     fontSize: 16,
     fontWeight: '700',
   },

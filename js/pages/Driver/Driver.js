@@ -3,7 +3,7 @@
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 10:41:07
+ * @LastEditTime : 2020-01-02 16:07:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -98,7 +98,6 @@ class Driver extends Component {
     };
     let {driverListData} = this.state;
     api.driver.getDriverList(sendData, this).then(res => {
-      console.log('driverList', res.data);
       const data = res.data;
       if (!data) {
         return;
@@ -133,14 +132,14 @@ class Driver extends Component {
       selectParam: value,
     });
   }
-  // /**
-  //  * 提交搜索
-  //  * @return void
-  //  */
+  /**
+   * 提交搜索
+   * @return void
+   */
   submitSearch() {
     this.driverPage = 1;
     this.driverFlag = false;
-    // this.getAllDriverList(this.state.selectParam, this.driverPage);
+    // this.getAllDriverList({selectParam: this.state.selectParam, this.driverPage});
   }
   /**
    * 清除输入框内容
@@ -152,7 +151,7 @@ class Driver extends Component {
     });
     this.driverPage = 1;
     this.driverFlag = false;
-    // this.getAllDriverList('', this.driverPage);
+    // this.getAllDriverList({selectParam: '', this.driverPage});
   }
   genIndicator() {
     let {driverListData} = this.state;

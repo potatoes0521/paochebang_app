@@ -3,7 +3,7 @@
  * @description: 提现页面
  * @Date: 2019-12-26 17:05:08
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-31 10:35:53
+ * @LastEditTime : 2020-01-02 15:41:32
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -74,6 +74,9 @@ class CashDetails extends Component {
       accountId: this.pageParams.accountId,
     };
     api.account.getAccountAmount(sendData, this).then(res => {
+      if (!res) {
+        return;
+      }
       this.setState({
         withdrawAmountDesc: res.withdrawAmountDesc,
       });
@@ -85,6 +88,9 @@ class CashDetails extends Component {
    */
   getAccountInfo() {
     api.account.getAccountInfo({}, this).then(res => {
+      if (!res) {
+        return;
+      }
       this.setState({
         otherSideAccountName: res.accountHolder || '', //收款人
         otherSideAccount: res.accountNum || '', //银行卡号
@@ -202,7 +208,10 @@ class CashDetails extends Component {
       otherSideAccount,
       otherSideBranchBank,
     };
-    api.account.getWithdrawData(sendData, this).then(() => {
+    api.account.getWithdrawData(sendData, this).then(res => {
+      if (!res) {
+        return;
+      }
       this.toastRef.current.show('提现申请成功');
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
