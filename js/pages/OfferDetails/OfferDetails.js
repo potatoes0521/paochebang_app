@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-03 16:47:37
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-04 14:35:57
+ * @LastEditTime : 2020-01-04 14:36:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -277,7 +277,7 @@ class OfferDetails extends Component {
               <View style={styles.statusWrapper}>
                 <View style={styles.statusStyle}>
                   <Text style={styles.statusIcon}>&#xe658;</Text>
-                  <Text style={styles.statusText}>statusDescs[0].name</Text>
+                  <Text style={styles.statusText}>{statusDescs[0].name}</Text>
                 </View>
                 <TouchableOpacity onPress={this.navigateToOrder.bind(this)}>
                   <View style={styles.seeStyle}>
