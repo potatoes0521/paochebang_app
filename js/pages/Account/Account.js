@@ -3,7 +3,7 @@
  * @description: 账户体系
  * @Date: 2019-12-25 15:25:16
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 19:11:39
+ * @LastEditTime : 2020-01-04 13:53:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -66,7 +66,6 @@ class AccountDetails extends Component {
    */
   getAccountAmount() {
     api.account.getAccountAmount({}, this).then(res => {
-      console.log('account', res.data);
       if (!res.data) {
         return;
       }
