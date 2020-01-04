@@ -3,7 +3,7 @@
  * @description: 实名认证弹框
  * @Date: 2020-01-04 10:45:41
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-04 15:58:27
+ * @LastEditTime : 2020-01-04 16:10:11
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,6 +11,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
+import PropTypes from 'prop-types';
 import authenticationImage from '../../assets/image/authentication/certification_img.png';
 
 export default class Authentication extends Component {
@@ -24,6 +25,7 @@ export default class Authentication extends Component {
   componentWillUnmount() {}
   goToAuthentication() {
     NavigationUtil.goPage({pageBack: '1'}, 'AuthenticationPage');
+    this.props.onClick();
   }
   render() {
     return (
@@ -95,3 +97,11 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
 });
+
+Authentication.defaultProps = {
+  onClick: () => {},
+};
+
+Authentication.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
