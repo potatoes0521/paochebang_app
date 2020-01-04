@@ -4,12 +4,18 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:53:33
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-02 10:48:12
+ * @LastEditTime : 2020-01-02 15:21:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  RefreshControl,
+  DeviceEventEmitter,
+} from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
@@ -31,9 +37,19 @@ class VacancyList extends Component {
 
   componentDidMount() {
     this.getVacancyList({});
+    this.handleEmit();
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.emitRefresh.remove();
+  }
+  handleEmit() {
+    this.emitRefresh = DeviceEventEmitter.addListener('refreshVacancy', () => {
+      this.getVacancyList({
+        refresh: true,
+      });
+    });
+  }
   /**
    * 获取卖板详情
    * @param {Number} pageNum=1 页数
@@ -47,7 +63,6 @@ class VacancyList extends Component {
     receiveCityId = this.receiveCityId,
     refresh = false,
   }) {
-    console.log('aaaa');
     if (refresh) {
       this.loadingFlag = false;
       this.pageNum = 1;
@@ -57,7 +72,6 @@ class VacancyList extends Component {
       });
     }
     if (this.loadingFlag && !refresh) {
-      console.log('loadMore');
       return;
     }
     let sendData = {

@@ -4,12 +4,19 @@
  * @path: 引入路径
  * @Date: 2019-12-24 11:48:37
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-24 17:13:53
+ * @LastEditTime : 2020-01-02 15:19:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Linking} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Linking,
+  DeviceEventEmitter,
+} from 'react-native';
 import {connect} from 'react-redux';
 // import GlobalStyles from '../../assets/css/GlobalStyles';
 import DetailsStyle from '../../assets/css/DetailsStyle';
@@ -53,13 +60,22 @@ class VacancyDetsils extends Component {
     console.log('params', params);
     this.pageParams = params || {};
     this.getVacancyDetail();
+    this.handleEmit();
     this.backPress.componentDidMount();
   }
 
   componentWillUnmount() {
+    this.emitRefresh.remove();
     this.backPress.componentWillUnmount();
   }
-
+  handleEmit() {
+    this.emitRefresh = DeviceEventEmitter.addListener(
+      'refreshVacancyDetails',
+      () => {
+        this.getVacancyDetail();
+      },
+    );
+  }
   onBackPress() {
     NavigationUtil.goBack(this.props.navigation);
     return true;
@@ -86,9 +102,7 @@ class VacancyDetsils extends Component {
           cityId: res.throughCitys,
         },
       });
-      this.setState(data, () => {
-        console.log('this.state', this.state);
-      });
+      this.setState(data);
     });
   }
   /**
@@ -119,24 +133,26 @@ class VacancyDetsils extends Component {
       return;
     }
     let sendData = {
-      saleToPalletId: this.state.saleToPalletId,
+      vacantPalletId: this.state.vacantPalletId,
     };
-    api.vacancy.sellingDataPullOff(sendData, this).then(() => {
+    api.vacancy.vacancyDataPullOff(sendData, this).then(() => {
       this.toastRef.current.show('下架成功');
+      DeviceEventEmitter.emit('refreshVacancy');
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);
     });
   }
   navigatorEdit() {
-    NavigationUtil.goPage(this.pageParams, 'EditVacancyPage');
+    let params = Object.assign({}, this.pageParams, {pageType: 'edit'});
+    NavigationUtil.goPage(params, 'VacancyPublishPage');
   }
   render() {
     const {theme, navigation} = this.props;
     let {
       vacantAmount,
       dueTime,
-      // isActive,
+      isActive,
       returnPrice,
       throughCitys,
       receiveCityName,
@@ -145,6 +161,22 @@ class VacancyDetsils extends Component {
       startTime,
       isEdit,
     } = this.state;
+    let textClassName = [DetailsStyle.contentText];
+    if (isActive !== 1) {
+      textClassName.push(DetailsStyle.textThemeDisabled);
+    }
+    let labelTextClassName = [DetailsStyle.contentText];
+    if (isActive !== 1) {
+      labelTextClassName.push(DetailsStyle.textThemeDisabled);
+    }
+    let pullOffClassName = [DetailsStyle.btnRight];
+    if (isActive !== 1) {
+      pullOffClassName.push(DetailsStyle.borderDisabled);
+    }
+    let pullOffBtnTextClassName = [];
+    if (isActive !== 1) {
+      pullOffBtnTextClassName.push(DetailsStyle.textThemeDisabled);
+    }
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -158,33 +190,29 @@ class VacancyDetsils extends Component {
               {/* 发车城市 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>发车城市:</Text>
+                  <Text style={labelTextClassName}>发车城市:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
-                    {sendCityName || ''}
-                  </Text>
+                  <Text style={textClassName}>{sendCityName || ''}</Text>
                 </View>
               </View>
               {/* 收车城市 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>收车城市:</Text>
+                  <Text style={labelTextClassName}>收车城市:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
-                    {receiveCityName || ''}
-                  </Text>
+                  <Text style={textClassName}>{receiveCityName || ''}</Text>
                 </View>
               </View>
               {/* 途经城市 */}
               {throughCitys && throughCitys.cityName ? (
                 <View style={DetailsStyle.formItem}>
                   <View style={DetailsStyle.formLabel}>
-                    <Text style={DetailsStyle.labelText}>途经城市:</Text>
+                    <Text style={labelTextClassName}>途经城市:</Text>
                   </View>
                   <View style={DetailsStyle.formContent}>
-                    <Text style={DetailsStyle.contentText}>
+                    <Text style={textClassName}>
                       {throughCitys.cityName || ''}
                     </Text>
                   </View>
@@ -193,10 +221,10 @@ class VacancyDetsils extends Component {
               {/* 出发时间 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>出发时间:</Text>
+                  <Text style={labelTextClassName}>出发时间:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
+                  <Text style={textClassName}>
                     {startTime.split('T')[0] || ''}
                   </Text>
                 </View>
@@ -204,21 +232,19 @@ class VacancyDetsils extends Component {
               {/* 余位 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>余位:</Text>
+                  <Text style={labelTextClassName}>余位:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
-                    {vacantAmount || '0'}
-                  </Text>
+                  <Text style={textClassName}>{vacantAmount || '0'}</Text>
                 </View>
               </View>
               {/* 有效期至 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>有效期至:</Text>
+                  <Text style={labelTextClassName}>有效期至:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
+                  <Text style={textClassName}>
                     {dueTime.split('T')[0] || ''}
                   </Text>
                 </View>
@@ -226,28 +252,24 @@ class VacancyDetsils extends Component {
               {/* 报价 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>报价:</Text>
+                  <Text style={labelTextClassName}>报价:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
-                    {returnPrice || ''}
-                  </Text>
+                  <Text style={textClassName}>{returnPrice || ''}</Text>
                 </View>
               </View>
               {/* 备注 */}
               {remarks ? (
                 <View style={DetailsStyle.formItem}>
                   <View style={DetailsStyle.formLabel}>
-                    <Text style={DetailsStyle.labelText}>备注:</Text>
+                    <Text style={labelTextClassName}>备注:</Text>
                   </View>
                   <View
                     style={[
                       DetailsStyle.formContent,
                       DetailsStyle.moreTextFormItem,
                     ]}>
-                    <Text style={DetailsStyle.contentText}>
-                      {remarks || ''}
-                    </Text>
+                    <Text style={textClassName}>{remarks || ''}</Text>
                   </View>
                 </View>
               ) : null}
@@ -262,10 +284,11 @@ class VacancyDetsils extends Component {
                     onClick={this.navigatorEdit.bind(this)}
                   />
                   <Button
-                    btnStyle={[DetailsStyle.btnRight]}
+                    btnStyle={pullOffClassName}
                     text={'下架'}
-                    type={'round'}
-                    onClick={this.pullOffer.bind(this)}
+                    type={'plain'}
+                    fontStyles={pullOffBtnTextClassName}
+                    onClick={this.pullOff.bind(this)}
                   />
                 </>
               ) : (
