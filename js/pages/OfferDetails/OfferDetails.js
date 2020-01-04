@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-03 16:47:37
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-04 10:37:28
+ * @LastEditTime : 2020-01-04 14:35:57
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,6 +22,7 @@ import api from '../../api';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import DetailsStyle from '../../assets/css/DetailsStyle';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
+import Authentication from '../../components/Authentication/Authentication';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
@@ -248,6 +249,7 @@ class OfferDetails extends Component {
       status,
       datePickerShow,
       statusDescs,
+      isShow,
     } = this.state;
     let statusClassName = [DetailsStyle.contentText];
     if (status === 10) {
@@ -268,6 +270,8 @@ class OfferDetails extends Component {
             leftViewShow={true}
             title={'报价详情'}
           />
+          {/* 实名认证弹框 */}
+          {isShow ? <Authentication /> : null}
           <ScrollView>
             {statusDescs && statusDescs.length ? (
               <View style={styles.statusWrapper}>
