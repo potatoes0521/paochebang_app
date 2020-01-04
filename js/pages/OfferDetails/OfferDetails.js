@@ -38,7 +38,7 @@ class OfferDetails extends Component {
       datePickerShow: false,
       quotedPrice: '',
       dueTime: '',
-      isShow: false,
+      isShow: true,
       inquiryCode: '',
       inquiryId: '',
       carAmount: '',

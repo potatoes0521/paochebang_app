@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   titleStyle: {
     fontSize: 15,
     fontWeight: '700',
-    color: GlobalStyles.backgroundColor,
+    color: '#fff',
   },
   cardMoney: {
     flexDirection: 'row',
@@ -234,13 +234,13 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     fontSize: 18,
-    color: GlobalStyles.backgroundColor,
+    color: '#fff',
     marginRight: 6,
   },
   moneyStyle: {
     fontSize: 28,
     fontWeight: '700',
-    color: GlobalStyles.backgroundColor,
+    color: '#fff',
   },
   cardTips: {
     flexDirection: 'row',
@@ -249,14 +249,14 @@ const styles = StyleSheet.create({
   },
   tipsStyle: {
     fontSize: 14,
-    color: GlobalStyles.backgroundColor,
+    color: '#fff',
   },
   marginRight: {
     marginRight: 10,
   },
   accountTitle: {
     height: 54,
-    backgroundColor: GlobalStyles.backgroundColor,
+    backgroundColor: '#fff',
     paddingVertical: 16,
     paddingLeft: 15,
     borderBottomWidth: 1,

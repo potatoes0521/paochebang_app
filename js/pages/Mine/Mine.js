@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: GlobalStyles.backgroundColor,
+    backgroundColor: '#fff',
   },
   left: {
     flexDirection: 'row',
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 4,
     paddingHorizontal: 12,
-    backgroundColor: GlobalStyles.backgroundColor,
+    backgroundColor: '#fff',
   },
   menuList: {
     paddingHorizontal: 17,
@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 12,
     marginTop: 10,
     borderRadius: 4,
-    backgroundColor: GlobalStyles.backgroundColor,
+    backgroundColor: '#fff',
   },
   versionList: {
     flexDirection: 'row',

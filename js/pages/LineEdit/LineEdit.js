@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     fontSize: 16,
     fontWeight: '700',
-    color: GlobalStyles.backgroundColor,
+    color: '#fff',
   },
 });
 // 如果需要引入store

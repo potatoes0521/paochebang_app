@@ -415,14 +415,14 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
     borderBottomWidth: 10,
     borderBottomColor: '#F7F7F7',
-    backgroundColor: GlobalStyles.backgroundColor,
+    backgroundColor: '#fff',
   },
   middleWrapper: {
     paddingVertical: 12,
     paddingLeft: 24,
     borderBottomWidth: 10,
     borderBottomColor: '#F7F7F7',
-    backgroundColor: GlobalStyles.backgroundColor,
+    backgroundColor: '#fff',
   },
   tipsStyle: {
     fontSize: 13,
@@ -474,7 +474,7 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     fontFamily: 'iconfont',
-    color: GlobalStyles.backgroundColor,
+    color: '#fff',
     fontSize: 20,
   },
   textStyle: {
@@ -501,7 +501,7 @@ const styles = StyleSheet.create({
   },
   bottomWrapper: {
     paddingLeft: 24,
-    backgroundColor: GlobalStyles.backgroundColor,
+    backgroundColor: '#fff',
   },
   btnWrapper: {
     height: 40,

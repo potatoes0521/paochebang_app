@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
   cashWrapper: {
     marginVertical: 10,
     paddingHorizontal: 24,
-    backgroundColor: GlobalStyles.backgroundColor,
+    backgroundColor: '#fff',
   },
   cashDetails: {
     flexDirection: 'row',
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
   },
   bankWrapper: {
     paddingHorizontal: 24,
-    backgroundColor: GlobalStyles.backgroundColor,
+    backgroundColor: '#fff',
   },
   btnWrapper: {
     flexDirection: 'row',
