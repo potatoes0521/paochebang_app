@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-03 16:47:37
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-04 14:36:56
+ * @LastEditTime : 2020-01-04 16:36:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -38,7 +38,7 @@ class OfferDetails extends Component {
       datePickerShow: false,
       quotedPrice: '',
       dueTime: '',
-      isShow: true,
+      isShow: false,
       inquiryCode: '',
       inquiryId: '',
       carAmount: '',
