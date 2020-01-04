@@ -3,7 +3,7 @@
  * @description: 账户体系
  * @Date: 2019-12-25 15:25:16
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 15:40:14
+ * @LastEditTime : 2020-01-02 19:11:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -48,7 +48,8 @@ class AccountDetails extends Component {
   }
 
   componentDidMount() {
-    // this.getAccountList();
+    this.getAccountList();
+    this.getAccountAmount();
     this.backPress.componentDidMount();
   }
 
@@ -65,14 +66,15 @@ class AccountDetails extends Component {
    */
   getAccountAmount() {
     api.account.getAccountAmount({}, this).then(res => {
-      if (!res) {
+      console.log('account', res.data);
+      if (!res.data) {
         return;
       }
       this.setState({
-        accountId: res.accountId,
-        totalIncomeDesc: res.totalIncomeDesc,
-        withdrawAmountDesc: res.withdrawAmountDesc,
-        blockedAmountDesc: res.blockedAmountDesc,
+        accountId: res.data.accountId,
+        totalIncomeDesc: res.data.totalIncomeDesc,
+        withdrawAmountDesc: res.data.withdrawAmountDesc,
+        blockedAmountDesc: res.data.blockedAmountDesc,
       });
     });
   }
@@ -81,10 +83,10 @@ class AccountDetails extends Component {
    * @return void
    */
   applyCash() {
-    // if (this.state.withdrawAmountDesc <= 0) {
-    //   this.toastRef.current.show('亲,您没有可提现余额哦~');
-    //   return;
-    // }
+    if (this.state.withdrawAmountDesc <= 0) {
+      this.toastRef.current.show('亲,您没有可提现余额哦~');
+      return;
+    }
     NavigationUtil.goPage({accountId: this.state.accountId}, 'CashPage');
   }
   /**
@@ -98,20 +100,21 @@ class AccountDetails extends Component {
     };
     let {accountList} = this.state;
     api.account.getAccountList(sendData, this).then(res => {
-      if (!res) {
+      let data = res.data;
+      if (!data) {
         return;
       }
-      if (res && res.length < pageSize) {
+      if (data && data.length < pageSize) {
         this.accountFlag = true;
       }
       this.accountPage += 1;
       if (pageNum === 1) {
         this.setState({
-          accountList: [...res],
+          accountList: [...data],
         });
       } else {
         this.setState({
-          accountList: [...accountList, ...res],
+          accountList: [...accountList, ...data],
         });
       }
     });
@@ -161,34 +164,32 @@ class AccountDetails extends Component {
             <View style={styles.accountTitle}>
               <Text style={styles.detailsTitle}>收支明细</Text>
             </View>
-            <View style={styles.cashDetails}>
-              <FlatList
-                data={this.state.accountList}
-                renderItem={data => (
-                  <AccountItem type={'account'} item={data} />
-                )}
-                refreshControl={
-                  <RefreshControl
-                    title="Loading..."
-                    colors={[GlobalStyles.themeColor]}
-                    refreshing={this.state.isLoading}
-                    onRefresh={() => this.getAccountList({refresh: true})}
-                    tintColor={GlobalStyles.themeColor}
-                    titleColor={GlobalStyles.themeTipColor}
-                  />
-                }
-                ListFooterComponent={() => this.genIndicator()}
-                onEndReached={() => {
-                  this.getAccountList.bind(this, {});
-                }}
-                ListEmptyComponent={() => (
-                  <EmptyList {...this.props} pageType={'account'} />
-                )}
-                keyExtractor={data => {
-                  return data.accountId + 'account';
-                }}
-              />
-            </View>
+            <FlatList
+              data={this.state.accountList}
+              renderItem={data => (
+                <AccountItem type={'account'} item={data.item} />
+              )}
+              refreshControl={
+                <RefreshControl
+                  title="Loading..."
+                  colors={[GlobalStyles.themeColor]}
+                  refreshing={this.state.isLoading}
+                  onRefresh={() => this.getAccountList({refresh: true})}
+                  tintColor={GlobalStyles.themeColor}
+                  titleColor={GlobalStyles.themeTipColor}
+                />
+              }
+              ListFooterComponent={() => this.genIndicator()}
+              onEndReached={() => {
+                this.getAccountList.bind(this, {});
+              }}
+              ListEmptyComponent={() => (
+                <EmptyList {...this.props} pageType={'account'} />
+              )}
+              keyExtractor={data => {
+                return data.accountId + 'account';
+              }}
+            />
           </View>
           <Toast
             ref={this.toastRef}
@@ -266,9 +267,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: GlobalStyles.themeFontColor,
     fontWeight: '700',
-  },
-  cashDetails: {
-    paddingHorizontal: 24,
   },
 });
 
