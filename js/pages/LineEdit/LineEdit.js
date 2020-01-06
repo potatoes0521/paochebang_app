@@ -3,7 +3,7 @@
  * @description: 添加编辑路线
  * @Date: 2019-12-30 09:35:08
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 15:43:18
+ * @LastEditTime : 2020-01-06 14:10:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,9 +23,9 @@ class LineEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sendCityId: '',
-      sendCityName: '北京', //发车城市
-      receiveCityId: '',
+      sendCityId: '630100',
+      sendCityName: '', //发车城市
+      receiveCityId: '231100',
       receiveCityName: '', //收车城市
     };
     this.pageParams = {};

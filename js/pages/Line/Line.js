@@ -3,7 +3,7 @@
  * @description: 常跑线路
  * @Date: 2019-12-27 15:19:24
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-04 09:41:44
+ * @LastEditTime : 2020-01-06 10:28:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -52,15 +52,14 @@ class Line extends Component {
    */
   getAllLineList() {
     api.line.getLineList({}, this).then(res => {
-      if (!res) {
+      let data = res.data;
+      if (!data) {
         return;
       }
-      if (res) {
-        this.setState({
-          lineList: res.transferLineVO,
-          routeNumber: res.routeNumber,
-        });
-      }
+      this.setState({
+        lineList: data.transferLineVO,
+        routeNumber: data.routeNumber,
+      });
     });
   }
   /**
