@@ -1,4 +1,14 @@
-package com.paochebang_app;
+/*
+ * @Author: liuYang
+ * @description: 请填写描述信息
+ * @path: 引入路径
+ * @Date: 2019-12-31 09:16:47
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-01-06 14:06:08
+ * @mustParam: 必传参数
+ * @optionalParam: 选传参数
+ */
+package com.paoche56.help;
 
 import android.app.Application;
 import android.content.Context;
