@@ -132,7 +132,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.paochebang_app"
+        applicationId "com.paoche56.help"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
