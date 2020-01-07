@@ -5,23 +5,36 @@
  * @path: 引入路径
  * @Date: 2020-01-02 15:39:43
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-06 15:09:40
+ * @LastEditTime : 2020-01-07 11:11:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
+
 /**
- * 函数功能描述
- * @param {Type} {multiple=false 是否开启多选
- * @param {Type} openType='album' // 相册 'camera' 照相机
- * @param {Type} that this参数
- * @param {Type} businessType=1 文件类型
- * @return void
+ * 文件类型  businessType
+ * 1 身份证照片
+ * 2 提车单照片
+ * 3 验车照片
+ * 4 交车单照片
+ * 5 行驶证照片
+ * 6 货车车辆照片
+ * 7 询价单表格
+ * 8 客户表格
+ * 9 banner位图片
  */
 // import React from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
 // import ImagePicker from 'react-native-image-picker';
 import api from '../api/index';
 // import {defaultFileUrl} from '../config/requestConfig';
+/**
+ * 函数功能描述
+ * @param {Boolean} multiple=false 是否多选
+ * @param {String} openType='album' 是否从相册选择
+ * @param {Object} that this
+ * @param {Number} businessType=1 文件类型
+ * @return void
+ */
 export const uploadFile = ({
   multiple = false,
   openType = 'album',

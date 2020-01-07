@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 15:33:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-07 11:04:21
+ * @LastEditTime : 2020-01-07 11:13:01
  * @mustParam: 必传参数
  * // pageType = delivery 交车单  pickUp 提车单
     // type=edit 编辑  see 看
@@ -124,17 +124,22 @@ class UploadImage extends Component {
   chooseImage(type) {
     let {carList, pickUpCarList, deliveryCarList} = this.state;
     let count = 9;
+    let businessType = 1;
     // 判断是那个要添加图片
     if (type === 'delivery') {
       count -= deliveryCarList.length;
+      businessType = 4;
     } else if (type === 'car') {
       count -= carList.length;
+      businessType = 3;
     } else if (type === 'pickUp') {
       count -= pickUpCarList.length;
+      businessType = 2;
     }
     uploadFile({
       multiple: true,
       that: this,
+      businessType,
     })
       .then(res => {
         let data = {};
