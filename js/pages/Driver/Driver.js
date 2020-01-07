@@ -3,7 +3,7 @@
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 15:35:00
+ * @LastEditTime : 2020-01-07 17:15:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,6 +17,7 @@ import {
   RefreshControl,
   TouchableOpacity,
   DeviceEventEmitter,
+  Image,
 } from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -29,6 +30,7 @@ import DriverItem from './components/DriverItem.js';
 import EmptyList from '../../components/EmptyList/EmptyList.js';
 import api from '../../api/index';
 import BottomLoading from '../../components/BottomLoading/BottomLoading.js';
+import AddDriverImage from '../../assets/image/driver/add_driver.png';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import Toast from 'react-native-easy-toast';
 
@@ -196,6 +198,13 @@ class Driver extends Component {
       NavigationUtil.goPage({}, 'MineDetailsPage');
     }
   }
+  /**
+   * 添加司机
+   * @return void
+   */
+  addDriver() {
+    NavigationUtil.goPage({}, 'DriverEditPage');
+  }
 
   render() {
     const {theme, navigation} = this.props;
@@ -271,6 +280,11 @@ class Driver extends Component {
                 return data.driverId + 'driver';
               }}
             />
+          </View>
+          <View style={styles.imageWrapper}>
+            <TouchableOpacity onPress={this.addDriver.bind(this)}>
+              <Image style={styles.imageStyle} source={AddDriverImage} />
+            </TouchableOpacity>
           </View>
           <Toast
             ref={this.toastRef}
@@ -362,6 +376,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'iconfont',
     color: GlobalStyles.themeHColor,
+  },
+  imageWrapper: {
+    position: 'absolute',
+    right: 12,
+    bottom: 59,
+    zIndex: 5,
+  },
+  imageStyle: {
+    width: 54,
+    height: 54,
   },
 });
 

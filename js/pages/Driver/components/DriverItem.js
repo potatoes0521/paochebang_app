@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-25 11:00:24
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 14:56:00
+ * @LastEditTime : 2020-01-07 17:17:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -38,7 +38,6 @@ export default class DriverItem extends Component {
     this.backPress.componentWillUnmount();
   }
   navigatorDetails() {
-    console.log('props', this.props);
     let {itemData} = this.props;
     let {type} = this.props;
     if (type === 'choose') {
@@ -63,14 +62,18 @@ export default class DriverItem extends Component {
                   {itemData.mobile || ''}
                 </Text>
               </View>
-              <View style={styles.userWrapper}>
-                <Text style={styles.fontStyle}>{itemData.carNum || ''}</Text>
-              </View>
-              <View style={styles.userWrapper}>
-                <Text style={styles.fontStyle}>
-                  {itemData.carTypeDesc || ''}
-                </Text>
-              </View>
+              {itemData.carNum ? (
+                <View style={styles.userWrapper}>
+                  <Text style={styles.fontStyle}>{itemData.carNum || ''}</Text>
+                </View>
+              ) : null}
+              {itemData.carTypeDesc ? (
+                <View style={styles.userWrapper}>
+                  <Text style={styles.fontStyle}>
+                    {itemData.carTypeDesc || ''}
+                  </Text>
+                </View>
+              ) : null}
             </View>
             <View style={styles.itemRight}>
               <Text style={styles.icon}>&#xe61d;</Text>
