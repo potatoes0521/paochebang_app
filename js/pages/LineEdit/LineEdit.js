@@ -3,12 +3,18 @@
  * @description: 添加编辑路线
  * @Date: 2019-12-30 09:35:08
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-06 14:10:49
+ * @LastEditTime : 2020-01-07 15:13:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  DeviceEventEmitter,
+} from 'react-native';
 import {connect} from 'react-redux';
 import api from '../../api';
 import Button from '../../components/Button/Button.js';
@@ -41,6 +47,7 @@ class LineEdit extends Component {
     const {params} = state;
     console.log('params', params);
     this.pageParams = params || {};
+    this.handleEmit();
     if (this.pageParams.pageType === 'edit') {
       this.getPageParams();
     }
@@ -48,6 +55,7 @@ class LineEdit extends Component {
   }
 
   componentWillUnmount() {
+    this.emitChooseCity.remove(); // 销毁要接受的通知
     this.backPress.componentWillUnmount();
   }
 
@@ -56,19 +64,39 @@ class LineEdit extends Component {
     return true;
   }
   /**
+   * 处理事件通知
+   * @return void
+   */
+  handleEmit() {
+    // 选择城市时候的通知
+    this.emitChooseCity = DeviceEventEmitter.addListener('chooseCity', data => {
+      let state = {};
+      if (data.type === 'sendCity') {
+        state.sendCityName = data.cityName;
+        state.sendCityId = data.cityId;
+      } else if (data.type === 'receiveCity') {
+        state.receiveCityName = data.cityName;
+        state.receiveCityId = data.cityId;
+      }
+      this.setState(state);
+    });
+  }
+  /**
    * 获取页面传递的参数
    * @return void
    */
   getPageParams() {
-    this.pageParams.lineItem.sendCityName = decodeURIComponent(
-      this.pageParams.lineItem.fromCityName,
-    );
-    this.pageParams.lineItem.receiveCityName = decodeURIComponent(
-      this.pageParams.lineItem.toCityName,
-    );
+    // console.log('lineItem', this.pageParams.lineItem);
+    this.pageParams.lineItem.sendCityName = this.pageParams.lineItem.fromCityName;
+    this.pageParams.lineItem.receiveCityName = this.pageParams.lineItem.toCityName;
     this.pageParams.lineItem.sendCityId = this.pageParams.lineItem.fromCityId;
     this.pageParams.lineItem.receiveCityId = this.pageParams.lineItem.toCityId;
-    this.setState(this.pageParams);
+    this.setState({
+      sendCityId: this.pageParams.lineItem.sendCityId,
+      sendCityName: this.pageParams.lineItem.sendCityName,
+      receiveCityId: this.pageParams.lineItem.receiveCityId,
+      receiveCityName: this.pageParams.lineItem.receiveCityName,
+    });
   }
   /**
    * 添加线路
@@ -92,23 +120,26 @@ class LineEdit extends Component {
     if (this.pageParams.pageType === 'edit') {
       sendData.lineId = this.pageParams.lineItem.lineId;
     }
-    api.line.addLine(sendData, this).then(res => {
-      if (!res) {
-        return;
-      }
+    api.line.addLine(sendData, this).then(() => {
       if (this.pageParams.pageType === 'edit') {
         this.toastRef.current.show('编辑成功');
       }
       this.toastRef.current.show('添加成功');
+      DeviceEventEmitter.emit('editLine', sendData);
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);
     });
   }
+  chooseCity(type) {
+    NavigationUtil.goPage({type}, 'ChooseCityPage');
+  }
 
   render() {
     const {theme, navigation} = this.props;
     let {sendCityName, receiveCityName} = this.state;
+    let textClassName = [styles.chooseCityName];
+    let textDisables = [styles.cityStyle];
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -121,25 +152,25 @@ class LineEdit extends Component {
             <View style={styles.cityWrapper}>
               <View style={styles.chooseCity}>
                 <Text style={styles.titleStyle}>始发地：</Text>
-                {sendCityName ? (
-                  <Text style={[styles.titleStyle, styles.chooseCityName]}>
-                    {sendCityName}
+                <TouchableOpacity
+                  onPress={this.chooseCity.bind(this, 'sendCity')}
+                  style={styles.chooseStyle}>
+                  <Text style={sendCityName ? textClassName : textDisables}>
+                    {sendCityName || '请选择始发城市'}
                   </Text>
-                ) : (
-                  <Text style={styles.cityStyle}>请选择始发城市</Text>
-                )}
-                <Text style={styles.iconStyle}>&#xe61d;</Text>
+                  <Text style={styles.iconStyle}>&#xe61d;</Text>
+                </TouchableOpacity>
               </View>
               <View style={styles.chooseCity}>
                 <Text style={styles.titleStyle}>目的地：</Text>
-                {receiveCityName ? (
-                  <Text style={[styles.titleStyle, styles.chooseCityName]}>
-                    {receiveCityName}
+                <TouchableOpacity
+                  onPress={this.chooseCity.bind(this, 'receiveCity')}
+                  style={styles.chooseStyle}>
+                  <Text style={receiveCityName ? textClassName : textDisables}>
+                    {receiveCityName || '请选择目的城市'}
                   </Text>
-                ) : (
-                  <Text style={styles.cityStyle}>请选择目的城市</Text>
-                )}
-                <Text style={styles.iconStyle}>&#xe61d;</Text>
+                  <Text style={styles.iconStyle}>&#xe61d;</Text>
+                </TouchableOpacity>
               </View>
             </View>
             <View style={styles.registerBtn}>
@@ -181,12 +212,20 @@ const styles = StyleSheet.create({
   chooseCityName: {
     flex: 1,
     textAlign: 'right',
+    fontSize: 15,
+    fontWeight: '700',
+    color: GlobalStyles.themeFontColor,
   },
   titleStyle: {
     width: 60,
     fontSize: 15,
     fontWeight: '700',
     color: GlobalStyles.themeFontColor,
+  },
+  chooseStyle: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   cityStyle: {
     flex: 1,

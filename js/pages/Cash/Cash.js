@@ -3,7 +3,7 @@
  * @description: 提现页面
  * @Date: 2019-12-26 17:05:08
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 19:07:20
+ * @LastEditTime : 2020-01-07 15:19:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,6 +14,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  DeviceEventEmitter,
 } from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
@@ -208,10 +209,9 @@ class CashDetails extends Component {
       otherSideAccount,
       otherSideBranchBank,
     };
-    console.log('提交sendData', sendData);
     api.account.getWithdrawData(sendData, this).then(res => {
-      console.log('res', res);
       this.toastRef.current.show('提现申请成功');
+      DeviceEventEmitter.emit('cashInfo', sendData);
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);

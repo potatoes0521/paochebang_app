@@ -3,12 +3,19 @@
  * @description: 常跑线路
  * @Date: 2019-12-27 15:19:24
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-06 10:28:34
+ * @LastEditTime : 2020-01-07 15:25:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  DeviceEventEmitter,
+} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import MineStyles from '../../assets/css/MineStyles';
@@ -37,14 +44,26 @@ class Line extends Component {
 
   componentDidMount() {
     this.getAllLineList();
+    this.handleEmit();
     this.backPress.componentDidMount();
   }
   componentWillUnmount() {
+    this.emitEditLine.remove();
     this.backPress.componentWillUnmount();
   }
   onBackPress() {
     NavigationUtil.goBack(this.props.navigation);
     return true;
+  }
+  /**
+   * 处理事件通知
+   * @return void
+   */
+  handleEmit() {
+    // 选择城市时候的通知
+    this.emitEditLine = DeviceEventEmitter.addListener('editLine', () => {
+      this.getAllLineList();
+    });
   }
   /**
    * 获取线路列表
@@ -67,6 +86,7 @@ class Line extends Component {
    * @return void
    */
   editLine(item) {
+    console.log('edit', item);
     NavigationUtil.goPage({pageType: 'edit', lineItem: item}, 'LineEditPage');
   }
   /**
@@ -99,21 +119,21 @@ class Line extends Component {
         return (
           <View key={key} item={item}>
             <View style={styles.listItem}>
-              <View
-                style={styles.listCity}
-                onPress={this.editLine.bind(this, item)}>
-                <Text style={styles.cityStyle}>
-                  {item.fromCityName && item.fromCityName.length > 5
-                    ? item.fromCityName.substr(0, 5) + '...'
-                    : item.fromCityName || ''}
-                </Text>
-                <Image style={styles.arrowImage} source={ArrowImage} />
-                <Text style={styles.cityStyle}>
-                  {item.toCityName && item.toCityName.length > 5
-                    ? item.toCityName.substr(0, 5) + '...'
-                    : item.toCityName || ''}
-                </Text>
-              </View>
+              <TouchableOpacity onPress={this.editLine.bind(this, item)}>
+                <View style={styles.listCity}>
+                  <Text style={styles.cityStyle}>
+                    {item.fromCityName && item.fromCityName.length > 4
+                      ? item.fromCityName.substr(0, 4) + '...'
+                      : item.fromCityName || ''}
+                  </Text>
+                  <Image style={styles.arrowImage} source={ArrowImage} />
+                  <Text style={styles.cityStyle}>
+                    {item.toCityName && item.toCityName.length > 4
+                      ? item.toCityName.substr(0, 4) + '...'
+                      : item.toCityName || ''}
+                  </Text>
+                </View>
+              </TouchableOpacity>
               <View style={styles.deleteIcon}>
                 <Text
                   style={styles.iconStyle}

@@ -3,12 +3,18 @@
  * @description: 我发布的空位列表
  * @Date: 2020-01-02 16:58:17
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 16:58:35
+ * @LastEditTime : 2020-01-07 14:22:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  RefreshControl,
+  DeviceEventEmitter,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import ListItem from './ListItem';
@@ -29,6 +35,17 @@ class VacancyList extends Component {
   }
   componentDidMount() {
     this.getVacancyList({});
+    this.handleEmit();
+  }
+  componentWillUnmount() {
+    this.emitRefresh.remove();
+  }
+  handleEmit() {
+    this.emitRefresh = DeviceEventEmitter.addListener('refreshVacancy', () => {
+      this.getVacancyList({
+        refresh: true,
+      });
+    });
   }
   /**
    * 获取空位列表

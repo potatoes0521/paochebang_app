@@ -3,7 +3,7 @@
  * @description: 账户体系
  * @Date: 2019-12-25 15:25:16
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-04 13:53:24
+ * @LastEditTime : 2020-01-07 15:19:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,6 +15,7 @@ import {
   FlatList,
   RefreshControl,
   TouchableOpacity,
+  DeviceEventEmitter,
 } from 'react-native';
 import {connect} from 'react-redux';
 import AccountItem from './components/AccountItem';
@@ -50,15 +51,27 @@ class AccountDetails extends Component {
   componentDidMount() {
     this.getAccountList();
     this.getAccountAmount();
+    this.handleEmit();
     this.backPress.componentDidMount();
   }
 
   componentWillUnmount() {
+    this.emitCashInfo.remove();
     this.backPress.componentWillUnmount();
   }
   onBackPress() {
     NavigationUtil.goBack(this.props.navigation);
     return true;
+  }
+  /**
+   * 处理事件通知
+   * @return void
+   */
+  handleEmit() {
+    this.emitCashInfo = DeviceEventEmitter.addListener('cashInfo', () => {
+      this.getAccountList();
+      this.getAccountAmount();
+    });
   }
   /**
    * 获取账户余额

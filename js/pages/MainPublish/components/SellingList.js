@@ -3,12 +3,18 @@
  * @description: 我发布的卖板列表
  * @Date: 2020-01-02 16:58:06
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 17:27:23
+ * @LastEditTime : 2020-01-07 14:24:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  RefreshControl,
+  DeviceEventEmitter,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import ListItem from './ListItem';
@@ -29,6 +35,17 @@ class SellingList extends Component {
   }
   componentDidMount() {
     this.getSellingList({});
+    this.handleEmit();
+  }
+  componentWillUnmount() {
+    this.emitRefresh.remove();
+  }
+  handleEmit() {
+    this.emitRefresh = DeviceEventEmitter.addListener('refreshSelling', () => {
+      this.getSellingList({
+        refresh: true,
+      });
+    });
   }
   /**
    * 获取卖板列表

@@ -3,7 +3,7 @@
  * @description: 编辑、添加司机信息
  * @Date: 2019-12-26 10:36:06
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 16:18:34
+ * @LastEditTime : 2020-01-07 15:30:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,6 +14,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  DeviceEventEmitter,
 } from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
@@ -220,7 +221,6 @@ class DriverEdit extends Component {
       carType,
       merchantName,
     };
-    console.log('sendData', sendData);
     api.driver.updateDriverData(sendData, this).then(res => {
       if (!res) {
         return;
@@ -230,6 +230,7 @@ class DriverEdit extends Component {
       } else {
         this.toastRef.current.show('添加成功');
       }
+      DeviceEventEmitter.emit('editDriver', sendData);
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);

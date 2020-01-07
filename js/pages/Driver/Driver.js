@@ -3,7 +3,7 @@
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 18:16:35
+ * @LastEditTime : 2020-01-07 15:35:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,6 +16,7 @@ import {
   FlatList,
   RefreshControl,
   TouchableOpacity,
+  DeviceEventEmitter,
 } from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -39,6 +40,7 @@ class Driver extends Component {
       totalCount: 0,
       driverListData: [],
       isLoading: false,
+      mineData: {},
     };
     this.pageParams = {};
     this.driverPage = 1;
@@ -55,16 +57,37 @@ class Driver extends Component {
     const {params} = state;
     console.log('params', params);
     this.pageParams = params || {};
+    this.handleEmit();
     this.getAllDriverList({});
     this.backPress.componentDidMount();
   }
 
   componentWillUnmount() {
+    this.emitMineDetails.remove();
+    this.emitEditDriver.remove();
     this.backPress.componentWillUnmount();
   }
   onBackPress() {
     NavigationUtil.goBack(this.props.navigation);
     return true;
+  }
+  /**
+   * 处理事件通知
+   * @return void
+   */
+  handleEmit() {
+    this.emitMineDetails = DeviceEventEmitter.addListener(
+      'mineDetails',
+      data => {
+        DeviceEventEmitter.emit('mineInfo', data);
+        NavigationUtil.goBack(this.props.navigation);
+      },
+    );
+    this.emitEditDriver = DeviceEventEmitter.addListener('editDriver', () => {
+      this.getAllDriverList({
+        refresh: true,
+      });
+    });
   }
   /**
    * 获取司机列表
@@ -139,7 +162,7 @@ class Driver extends Component {
   submitSearch() {
     this.driverPage = 1;
     this.driverFlag = false;
-    // this.getAllDriverList({selectParam: this.state.selectParam, this.driverPage});
+    this.getAllDriverList({selectParam: this.state.selectParam});
   }
   /**
    * 清除输入框内容
@@ -151,7 +174,7 @@ class Driver extends Component {
     });
     this.driverPage = 1;
     this.driverFlag = false;
-    // this.getAllDriverList({selectParam: '', this.driverPage});
+    this.getAllDriverList({selectParam: ''});
   }
   genIndicator() {
     let {driverListData} = this.state;
@@ -222,7 +245,12 @@ class Driver extends Component {
           <View style={styles.bottomWrapper}>
             <FlatList
               data={this.state.driverListData}
-              renderItem={data => <DriverItem itemData={data.item} />}
+              renderItem={data => (
+                <DriverItem
+                  type={this.pageParams.pageType}
+                  itemData={data.item}
+                />
+              )}
               refreshControl={
                 <RefreshControl
                   title="Loading..."
