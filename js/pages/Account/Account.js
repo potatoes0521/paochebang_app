@@ -3,7 +3,7 @@
  * @description: 账户体系
  * @Date: 2019-12-25 15:25:16
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 15:19:51
+ * @LastEditTime : 2020-01-07 16:37:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -137,6 +137,13 @@ class AccountDetails extends Component {
       <BottomLoading />
     ) : null;
   }
+  /**
+   * item之间的分割线
+   * @return void
+   */
+  dividingLine() {
+    return <View style={styles.line} />;
+  }
   render() {
     const {theme, navigation} = this.props;
     let {totalIncomeDesc, withdrawAmountDesc, blockedAmountDesc} = this.state;
@@ -181,6 +188,7 @@ class AccountDetails extends Component {
               renderItem={data => (
                 <AccountItem type={'account'} item={data.item} />
               )}
+              ItemSeparatorComponent={() => this.dividingLine()}
               refreshControl={
                 <RefreshControl
                   title="Loading..."
@@ -279,6 +287,10 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: GlobalStyles.themeFontColor,
     fontWeight: '700',
+  },
+  line: {
+    height: 1,
+    backgroundColor: '#f5f5f5',
   },
 });
 

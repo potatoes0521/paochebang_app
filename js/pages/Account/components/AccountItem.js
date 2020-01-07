@@ -3,7 +3,7 @@
  * @description: 收支明细
  * @Date: 2019-12-26 14:56:56
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 19:15:08
+ * @LastEditTime : 2020-01-07 16:33:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -48,7 +48,6 @@ export default class AccountItem extends Component {
             </View>
           </View>
         </View>
-        <View style={styles.line} />
       </View>
     );
   }
@@ -92,11 +91,6 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     color: GlobalStyles.themeHColor,
     fontSize: 12,
-  },
-  line: {
-    flex: 1,
-    height: 1,
-    backgroundColor: '#f5f5f5',
   },
 });
 AccountItem.defaultProps = {
