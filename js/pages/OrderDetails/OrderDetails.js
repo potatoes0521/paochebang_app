@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-02 10:30:00
+ * @LastEditTime : 2020-01-06 15:24:46
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -183,7 +183,8 @@ class OrderDetails extends Component {
       case 'pickUpListEdit': //上传提车单
         NavigationUtil.goPage(
           {
-            type: 'upload-pick',
+            type: 'upload',
+            pageType: 'pickUp',
             orderCode,
           },
           'UploadImagePage',
@@ -192,7 +193,8 @@ class OrderDetails extends Component {
       case 'pickUpListSee': //查看提车单
         NavigationUtil.goPage(
           {
-            type: 'see-pick',
+            type: 'see',
+            pageType: 'pickUp',
             orderCode,
           },
           'UploadImagePage',
@@ -201,7 +203,8 @@ class OrderDetails extends Component {
       case 'deliveryListEdit': //上传交车单
         NavigationUtil.goPage(
           {
-            type: 'upload-delivery',
+            type: 'upload',
+            pageType: 'delivery',
             orderCode,
           },
           'UploadImagePage',
@@ -210,7 +213,8 @@ class OrderDetails extends Component {
       case 'deliveryListSee': //查看交车单
         NavigationUtil.goPage(
           {
-            type: 'see-delivery',
+            type: 'see',
+            pageType: 'delivery',
             orderCode,
           },
           'UploadImagePage',

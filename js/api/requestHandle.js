@@ -4,7 +4,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 10:21:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-02 11:06:16
+ * @LastEditTime : 2020-01-04 13:41:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,11 +12,10 @@ import axios from 'axios';
 import {
   defaultApiURL,
   defaultResourceConfigURL,
+  defaultFileUrl,
 } from '../config/requestConfig.js';
 import createSignData from './secret.js';
-
 const sign_id = 'wxb633da0aa161b42c';
-const contentType = 'application/json;charset=UTF-8';
 export const appVersion = '1.0.0';
 
 class HttpRequest {
@@ -41,6 +40,11 @@ class HttpRequest {
   }
   getInsideConfig(options) {
     let {url, data, that, method} = options;
+    for (let i in data) {
+      if (options.data[i] === '') {
+        delete options.data[i];
+      }
+    }
     const sign = createSignData(data, sign_id)[1];
     // let loadingTimer = null;
     console.log(JSON.stringify(data), 'sign=' + sign, url);
@@ -53,10 +57,14 @@ class HttpRequest {
       unionId: userInfo.unionId,
       userType: userInfo.userType, // 0 驿站人员  1 自主注册   2 驿站人员添加客户 3 运力  4 司机
     });
-    if (url.indexOf('file/read') !== -1) {
-      this.baseUrl = url;
+    let contentType = 'application/json;charset=UTF-8';
+    let baseUrl = this.baseUrl;
+    if (url === 'file/upload' || url === 'file/read') {
+      baseUrl = defaultFileUrl;
     }
-    console.log(this.baseUrl);
+    if (url === 'file/upload') {
+      contentType = 'multipart/form-data;';
+    }
     let config = {
       method,
       headers: {
@@ -73,7 +81,7 @@ class HttpRequest {
         'app-type': 1, // 1 微信小程序 2 支付宝小程序  3 PC运营后台
         'system-id': 1, // 1 跑车帮   2 跑车物流  3 运营后台
       },
-      baseURL: this.baseUrl,
+      baseURL: baseUrl,
     };
     // get方式传参
     if (method === 'get') {
@@ -108,6 +116,7 @@ class HttpRequest {
           });
           return data;
         } else {
+          Promise.reject(res, 'xxxxxx');
           console.error('error 接口错误');
           that.setState({
             isLoading: false,
