@@ -50,7 +50,7 @@ export default class OrderItem extends Component {
         NavigationUtil.goPage(
           {
             type: 'upload',
-            pageType: 'pick',
+            pageType: 'pickUp',
             orderCode: orderData.orderCode,
           },
           'UploadImagePage',
@@ -60,7 +60,7 @@ export default class OrderItem extends Component {
         NavigationUtil.goPage(
           {
             type: 'see',
-            pageType: 'pick',
+            pageType: 'pickUp',
             orderCode: orderData.orderCode,
           },
           'UploadImagePage',

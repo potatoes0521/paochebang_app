@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 我发布的卖板和空位
  * @Date: 2019-12-27 11:21:19
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 15:43:49
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-02 16:13:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -172,31 +172,29 @@ class MainPublish extends Component {
             />
           )}
           {this.pageParams.pageType === 'selling' ? (
-            <View style={styles.listWrapper}>
-              <FlatList
-                data={this.state.sellingData}
-                renderItem={data => <ListItem type={'selling'} item={data} />}
-                refreshControl={
-                  <RefreshControl
-                    title="Loading..."
-                    colors={[GlobalStyles.themeColor]}
-                    refreshing={this.state.isLoading}
-                    onRefresh={() => this.getSellingList({refresh: true})}
-                    tintColor={GlobalStyles.themeColor}
-                  />
-                }
-                ListFooterComponent={() => this.sellingGenIndicator()}
-                onEndReached={() => {
-                  this.getSellingList.bind(this, {});
-                }}
-                ListEmptyComponent={() => {
-                  return <EmptyList {...this.props} pageType={'selling'} />;
-                }}
-                keyExtractor={data => {
-                  return data.saleToPalletId + 'selling';
-                }}
-              />
-            </View>
+            <FlatList
+              data={this.state.sellingData}
+              renderItem={data => <ListItem type={'selling'} item={data} />}
+              refreshControl={
+                <RefreshControl
+                  title="Loading..."
+                  colors={[GlobalStyles.themeColor]}
+                  refreshing={this.state.isLoading}
+                  onRefresh={() => this.getSellingList({refresh: true})}
+                  tintColor={GlobalStyles.themeColor}
+                />
+              }
+              ListFooterComponent={() => this.sellingGenIndicator()}
+              onEndReached={() => {
+                this.getSellingList.bind(this, {});
+              }}
+              ListEmptyComponent={() => {
+                return <EmptyList {...this.props} pageType={'selling'} />;
+              }}
+              keyExtractor={data => {
+                return data.saleToPalletId + 'selling';
+              }}
+            />
           ) : (
             <View style={styles.listWrapper}>
               <FlatList
