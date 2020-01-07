@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 15:33:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-07 11:01:05
+ * @LastEditTime : 2020-01-07 11:04:21
  * @mustParam: 必传参数
  * // pageType = delivery 交车单  pickUp 提车单
     // type=edit 编辑  see 看
@@ -79,9 +79,8 @@ class UploadImage extends Component {
       },
       () => {
         // if (params.type === 'see') {
-        //   this.handleSeeDetails();
-        // }
         this.handleSeeDetails();
+        // }
       },
     );
   }
@@ -403,13 +402,15 @@ class UploadImage extends Component {
               </>
             )}
           </ScrollView>
-          <View style={styles.btnWrapper}>
-            <Button
-              text={'提交'}
-              type={'round'}
-              onClick={this.submit.bind(this)}
-            />
-          </View>
+          {pageParams.type === 'see' ? null : (
+            <View style={styles.btnWrapper}>
+              <Button
+                text={'提交'}
+                type={'round'}
+                onClick={this.submit.bind(this)}
+              />
+            </View>
+          )}
           <Toast
             ref={this.toastRef}
             position={'center'}
