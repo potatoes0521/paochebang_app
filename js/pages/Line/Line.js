@@ -3,7 +3,7 @@
  * @description: 常跑线路
  * @Date: 2019-12-27 15:19:24
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 15:25:37
+ * @LastEditTime : 2020-01-08 10:29:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,6 +15,7 @@ import {
   Image,
   TouchableOpacity,
   DeviceEventEmitter,
+  Alert,
 } from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
@@ -96,6 +97,18 @@ class Line extends Component {
   addLine() {
     NavigationUtil.goPage({}, 'LineEditPage');
   }
+  showAlert(item) {
+    Alert.alert('', '是否删除选中的线路', [
+      {
+        text: '取消',
+        onPress: () => console.log('点击取消'),
+      },
+      {
+        text: '确定',
+        onPress: this.deleteLine.bind(this, item),
+      },
+    ]);
+  }
   /**
    * 删除线路
    * @return void
@@ -135,11 +148,10 @@ class Line extends Component {
                 </View>
               </TouchableOpacity>
               <View style={styles.deleteIcon}>
-                <Text
-                  style={styles.iconStyle}
-                  onPress={this.deleteLine.bind(this, item.lineId)}>
-                  &#xe673;
-                </Text>
+                <TouchableOpacity
+                  onPress={this.showAlert.bind(this, item.lineId)}>
+                  <Text style={styles.iconStyle}>&#xe673;</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
