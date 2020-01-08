@@ -3,7 +3,7 @@
  * @description: 常跑线路
  * @Date: 2019-12-27 15:19:24
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-08 10:29:31
+ * @LastEditTime : 2020-01-08 17:01:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -98,7 +98,7 @@ class Line extends Component {
     NavigationUtil.goPage({}, 'LineEditPage');
   }
   showAlert(item) {
-    Alert.alert('', '是否删除选中的线路', [
+    Alert.alert('提示', '是否删除选中的线路', [
       {
         text: '取消',
         onPress: () => console.log('点击取消'),
