@@ -3,12 +3,18 @@
  * @description: 确认司机页面
  * @Date: 2019-12-30 15:01:46
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 15:42:17
+ * @LastEditTime : 2020-01-07 14:57:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  DeviceEventEmitter,
+} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
@@ -41,10 +47,13 @@ class DriverConfirm extends Component {
     const {params} = state;
     console.log('params', params);
     this.pageParams = params || {};
+    this.handleEmit();
     this.getOrderDriver();
     this.backPress.componentDidMount();
   }
   componentWillUnmount() {
+    this.emitMineInfo.remove();
+    this.emitChooseDriver.remove();
     this.backPress.componentWillUnmount();
   }
   onBackPress() {
@@ -52,26 +61,50 @@ class DriverConfirm extends Component {
     return true;
   }
   /**
+   * 处理事件通知
+   * @return void
+   */
+  handleEmit() {
+    this.emitMineInfo = DeviceEventEmitter.addListener('mineInfo', data => {
+      this.setState({
+        realName: data.realName,
+        mobile: data.mobile,
+        idCard: data.idCard,
+      });
+    });
+    this.emitChooseDriver = DeviceEventEmitter.addListener(
+      'chooseDriver',
+      data => {
+        this.setState({
+          realName: data.realName,
+          mobile: data.mobile,
+          idCard: data.idCard,
+        });
+      },
+    );
+  }
+  /**
    * 获取订单的司机
    * @return void
    */
   getOrderDriver() {
-    if (!this.pageParams.order_code) {
+    if (!this.pageParams.orderCode) {
       this.toastRef.current.show('请传入订单Id或者订单Code');
       return;
     }
     let sendData = {
-      orderCode: this.pageParams.order_code,
+      orderCode: this.pageParams.orderCode,
     };
     api.order.getOrderDriver(sendData, this).then(res => {
-      if (!res) {
+      let data = res.data;
+      if (!data) {
         return;
       }
-      if (res && res.extractDriver) {
+      if (data && data.extractDriver) {
         this.setState({
-          realName: res.extractDriver,
-          mobile: res.extractDriverMobile,
-          idCard: res.extractDriverCardNo,
+          realName: data.extractDriver,
+          mobile: data.extractDriverMobile,
+          idCard: data.extractDriverCardNo,
         });
       } else {
         this.getUserInfo();
@@ -88,13 +121,14 @@ class DriverConfirm extends Component {
       userId: userInfo.userId,
     };
     api.user.getUserInfo(sendData, this).then(res => {
-      if (!res) {
+      let data = res.data;
+      if (!data) {
         return;
       }
       this.setState({
-        realName: res.realName,
-        mobile: res.mobile,
-        idCard: res.idCard,
+        realName: data.realName,
+        mobile: data.mobile,
+        idCard: data.idCard,
       });
     });
   }
@@ -106,7 +140,7 @@ class DriverConfirm extends Component {
     if (this.pageParams.type === 'see') {
       return;
     }
-    NavigationUtil.goBack({pageType: 'choose'}, 'DriverPage');
+    NavigationUtil.goPage({pageType: 'choose'}, 'DriverPage');
   }
   /**
    * 确认司机
@@ -122,12 +156,9 @@ class DriverConfirm extends Component {
       extractDriver: realName,
       extractDriverCardNo: idCard,
       extractDriverMobile: mobile,
-      orderCode: this.pageParams.order_code,
+      orderCode: this.pageParams.orderCode,
     };
     api.order.confirmDriver(sendData, this).then(res => {
-      if (!res) {
-        return;
-      }
       this.toastRef.current.show('提交成功');
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
@@ -148,23 +179,29 @@ class DriverConfirm extends Component {
           <View style={MineStyles.itemWrapper}>
             <View style={[MineStyles.itemStyle, MineStyles.line]}>
               <Text style={MineStyles.titleStyle}>司机信息</Text>
-              <Text style={MineStyles.textStyle}>
-                {realName || '请选择司机信息'}
-              </Text>
-              {this.pageParams.type !== 'see' ? (
-                <Text style={styles.iconStyle}>&#xe61d;</Text>
-              ) : (
-                <Text style={styles.selectIcon} />
-              )}
+              <TouchableOpacity
+                style={styles.touchStyle}
+                onPress={this.chooseDriver.bind(this)}>
+                <View style={styles.chooseWrapper}>
+                  <Text style={MineStyles.inputStyle}>
+                    {realName || '请选择司机信息'}
+                  </Text>
+                  {this.pageParams.type !== 'see' ? (
+                    <Text style={styles.iconStyle}>&#xe61d;</Text>
+                  ) : (
+                    <Text style={styles.selectIcon} />
+                  )}
+                </View>
+              </TouchableOpacity>
             </View>
             <View style={[MineStyles.itemStyle, MineStyles.line]}>
               <Text style={MineStyles.titleStyle}>联系方式</Text>
-              <Text style={MineStyles.textStyle}>{mobile || ''}</Text>
+              <Text style={MineStyles.inputStyle}>{mobile || ''}</Text>
               <Text style={styles.selectIcon} />
             </View>
             <View style={MineStyles.itemStyle}>
               <Text style={MineStyles.titleStyle}>身份证号码</Text>
-              <Text style={MineStyles.textStyle}>{idCard || ''}</Text>
+              <Text style={MineStyles.inputStyle}>{idCard || ''}</Text>
               <Text style={styles.selectIcon} />
             </View>
           </View>
@@ -191,6 +228,13 @@ class DriverConfirm extends Component {
 const styles = StyleSheet.create({
   pageWrapper: {
     flex: 1,
+  },
+  touchStyle: {
+    flex: 1,
+  },
+  chooseWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   iconStyle: {
     width: 12,

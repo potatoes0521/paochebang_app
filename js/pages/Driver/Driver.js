@@ -3,7 +3,7 @@
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 16:07:59
+ * @LastEditTime : 2020-01-07 17:15:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,6 +16,8 @@ import {
   FlatList,
   RefreshControl,
   TouchableOpacity,
+  DeviceEventEmitter,
+  Image,
 } from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -28,6 +30,7 @@ import DriverItem from './components/DriverItem.js';
 import EmptyList from '../../components/EmptyList/EmptyList.js';
 import api from '../../api/index';
 import BottomLoading from '../../components/BottomLoading/BottomLoading.js';
+import AddDriverImage from '../../assets/image/driver/add_driver.png';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import Toast from 'react-native-easy-toast';
 
@@ -39,6 +42,7 @@ class Driver extends Component {
       totalCount: 0,
       driverListData: [],
       isLoading: false,
+      mineData: {},
     };
     this.pageParams = {};
     this.driverPage = 1;
@@ -55,16 +59,37 @@ class Driver extends Component {
     const {params} = state;
     console.log('params', params);
     this.pageParams = params || {};
+    this.handleEmit();
     this.getAllDriverList({});
     this.backPress.componentDidMount();
   }
 
   componentWillUnmount() {
+    this.emitMineDetails.remove();
+    this.emitEditDriver.remove();
     this.backPress.componentWillUnmount();
   }
   onBackPress() {
     NavigationUtil.goBack(this.props.navigation);
     return true;
+  }
+  /**
+   * 处理事件通知
+   * @return void
+   */
+  handleEmit() {
+    this.emitMineDetails = DeviceEventEmitter.addListener(
+      'mineDetails',
+      data => {
+        DeviceEventEmitter.emit('mineInfo', data);
+        NavigationUtil.goBack(this.props.navigation);
+      },
+    );
+    this.emitEditDriver = DeviceEventEmitter.addListener('editDriver', () => {
+      this.getAllDriverList({
+        refresh: true,
+      });
+    });
   }
   /**
    * 获取司机列表
@@ -139,7 +164,7 @@ class Driver extends Component {
   submitSearch() {
     this.driverPage = 1;
     this.driverFlag = false;
-    // this.getAllDriverList({selectParam: this.state.selectParam, this.driverPage});
+    this.getAllDriverList({selectParam: this.state.selectParam});
   }
   /**
    * 清除输入框内容
@@ -151,7 +176,7 @@ class Driver extends Component {
     });
     this.driverPage = 1;
     this.driverFlag = false;
-    // this.getAllDriverList({selectParam: '', this.driverPage});
+    this.getAllDriverList({selectParam: ''});
   }
   genIndicator() {
     let {driverListData} = this.state;
@@ -172,6 +197,13 @@ class Driver extends Component {
     } else {
       NavigationUtil.goPage({}, 'MineDetailsPage');
     }
+  }
+  /**
+   * 添加司机
+   * @return void
+   */
+  addDriver() {
+    NavigationUtil.goPage({}, 'DriverEditPage');
   }
 
   render() {
@@ -222,7 +254,12 @@ class Driver extends Component {
           <View style={styles.bottomWrapper}>
             <FlatList
               data={this.state.driverListData}
-              renderItem={data => <DriverItem itemData={data.item} />}
+              renderItem={data => (
+                <DriverItem
+                  type={this.pageParams.pageType}
+                  itemData={data.item}
+                />
+              )}
               refreshControl={
                 <RefreshControl
                   title="Loading..."
@@ -243,6 +280,11 @@ class Driver extends Component {
                 return data.driverId + 'driver';
               }}
             />
+          </View>
+          <View style={styles.imageWrapper}>
+            <TouchableOpacity onPress={this.addDriver.bind(this)}>
+              <Image style={styles.imageStyle} source={AddDriverImage} />
+            </TouchableOpacity>
           </View>
           <Toast
             ref={this.toastRef}
@@ -334,6 +376,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'iconfont',
     color: GlobalStyles.themeHColor,
+  },
+  imageWrapper: {
+    position: 'absolute',
+    right: 12,
+    bottom: 59,
+    zIndex: 5,
+  },
+  imageStyle: {
+    width: 54,
+    height: 54,
   },
 });
 

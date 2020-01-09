@@ -3,7 +3,7 @@
  * @description: 提现页面
  * @Date: 2019-12-26 17:05:08
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 15:41:32
+ * @LastEditTime : 2020-01-07 15:19:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,6 +14,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  DeviceEventEmitter,
 } from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
@@ -74,11 +75,11 @@ class CashDetails extends Component {
       accountId: this.pageParams.accountId,
     };
     api.account.getAccountAmount(sendData, this).then(res => {
-      if (!res) {
+      if (!res.data) {
         return;
       }
       this.setState({
-        withdrawAmountDesc: res.withdrawAmountDesc,
+        withdrawAmountDesc: res.data.withdrawAmountDesc,
       });
     });
   }
@@ -88,14 +89,14 @@ class CashDetails extends Component {
    */
   getAccountInfo() {
     api.account.getAccountInfo({}, this).then(res => {
-      if (!res) {
+      if (!res.data) {
         return;
       }
       this.setState({
-        otherSideAccountName: res.accountHolder || '', //收款人
-        otherSideAccount: res.accountNum || '', //银行卡号
-        otherSideBank: res.bankName || '', //银行类型
-        otherSideBranchBank: res.openingBank || '', //支行名称
+        otherSideAccountName: res.data.accountHolder || '', //收款人
+        otherSideAccount: res.data.accountNum || '', //银行卡号
+        otherSideBank: res.data.bankName || '', //银行类型
+        otherSideBranchBank: res.data.openingBank || '', //支行名称
       });
     });
   }
@@ -209,10 +210,8 @@ class CashDetails extends Component {
       otherSideBranchBank,
     };
     api.account.getWithdrawData(sendData, this).then(res => {
-      if (!res) {
-        return;
-      }
       this.toastRef.current.show('提现申请成功');
+      DeviceEventEmitter.emit('cashInfo', sendData);
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);
@@ -331,7 +330,7 @@ const styles = StyleSheet.create({
   cashWrapper: {
     marginVertical: 10,
     paddingHorizontal: 24,
-    backgroundColor: GlobalStyles.backgroundColor,
+    backgroundColor: '#fff',
   },
   cashDetails: {
     flexDirection: 'row',
@@ -357,7 +356,7 @@ const styles = StyleSheet.create({
   },
   bankWrapper: {
     paddingHorizontal: 24,
-    backgroundColor: GlobalStyles.backgroundColor,
+    backgroundColor: '#fff',
   },
   btnWrapper: {
     flexDirection: 'row',

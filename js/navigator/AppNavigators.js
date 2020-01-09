@@ -3,7 +3,7 @@
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-04 09:23:53
+ * @LastEditTime : 2020-01-09 18:30:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */

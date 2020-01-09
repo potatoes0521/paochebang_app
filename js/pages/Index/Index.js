@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-29 15:28:01
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-04 10:49:49
+ * @LastEditTime : 2020-01-09 18:03:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,6 +30,7 @@ import recommendLeftImg from '../../assets/image/index/left.png';
 import recommendRightImg from '../../assets/image/index/right.png';
 import loadingImg from '../../assets/image/index/loading.png';
 import GlobalStyles from '../../assets/css/GlobalStyles';
+import BottomLoginTips from '../../components/BottomLoginTips/BottomLoginTips';
 
 class Index extends Component {
   constructor(props) {
@@ -193,6 +194,7 @@ class Index extends Component {
             )}
           </View>
         </ScrollView>
+        <BottomLoginTips />
       </View>
     );
   }

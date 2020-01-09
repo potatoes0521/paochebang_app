@@ -3,7 +3,7 @@
  * @description: 账户体系
  * @Date: 2019-12-25 15:25:16
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 15:40:14
+ * @LastEditTime : 2020-01-07 16:52:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,6 +15,7 @@ import {
   FlatList,
   RefreshControl,
   TouchableOpacity,
+  DeviceEventEmitter,
 } from 'react-native';
 import {connect} from 'react-redux';
 import AccountItem from './components/AccountItem';
@@ -48,11 +49,14 @@ class AccountDetails extends Component {
   }
 
   componentDidMount() {
-    // this.getAccountList();
+    this.getAccountList();
+    this.getAccountAmount();
+    this.handleEmit();
     this.backPress.componentDidMount();
   }
 
   componentWillUnmount() {
+    this.emitCashInfo.remove();
     this.backPress.componentWillUnmount();
   }
   onBackPress() {
@@ -60,19 +64,29 @@ class AccountDetails extends Component {
     return true;
   }
   /**
+   * 处理事件通知
+   * @return void
+   */
+  handleEmit() {
+    this.emitCashInfo = DeviceEventEmitter.addListener('cashInfo', () => {
+      this.getAccountList();
+      this.getAccountAmount();
+    });
+  }
+  /**
    * 获取账户余额
    * @return void
    */
   getAccountAmount() {
     api.account.getAccountAmount({}, this).then(res => {
-      if (!res) {
+      if (!res.data) {
         return;
       }
       this.setState({
-        accountId: res.accountId,
-        totalIncomeDesc: res.totalIncomeDesc,
-        withdrawAmountDesc: res.withdrawAmountDesc,
-        blockedAmountDesc: res.blockedAmountDesc,
+        accountId: res.data.accountId,
+        totalIncomeDesc: res.data.totalIncomeDesc,
+        withdrawAmountDesc: res.data.withdrawAmountDesc,
+        blockedAmountDesc: res.data.blockedAmountDesc,
       });
     });
   }
@@ -81,10 +95,10 @@ class AccountDetails extends Component {
    * @return void
    */
   applyCash() {
-    // if (this.state.withdrawAmountDesc <= 0) {
-    //   this.toastRef.current.show('亲,您没有可提现余额哦~');
-    //   return;
-    // }
+    if (this.state.withdrawAmountDesc <= 0) {
+      this.toastRef.current.show('亲,您没有可提现余额哦~');
+      return;
+    }
     NavigationUtil.goPage({accountId: this.state.accountId}, 'CashPage');
   }
   /**
@@ -98,20 +112,21 @@ class AccountDetails extends Component {
     };
     let {accountList} = this.state;
     api.account.getAccountList(sendData, this).then(res => {
-      if (!res) {
+      let data = res.data;
+      if (!data) {
         return;
       }
-      if (res && res.length < pageSize) {
+      if (data && data.length < pageSize) {
         this.accountFlag = true;
       }
       this.accountPage += 1;
       if (pageNum === 1) {
         this.setState({
-          accountList: [...res],
+          accountList: [...data],
         });
       } else {
         this.setState({
-          accountList: [...accountList, ...res],
+          accountList: [...accountList, ...data],
         });
       }
     });
@@ -121,6 +136,13 @@ class AccountDetails extends Component {
     return accountList && accountList.length > 10 && !this.accountFlag ? (
       <BottomLoading />
     ) : null;
+  }
+  /**
+   * item之间的分割线
+   * @return void
+   */
+  dividingLine() {
+    return <View style={styles.line} />;
   }
   render() {
     const {theme, navigation} = this.props;
@@ -161,12 +183,13 @@ class AccountDetails extends Component {
             <View style={styles.accountTitle}>
               <Text style={styles.detailsTitle}>收支明细</Text>
             </View>
-            <View style={styles.cashDetails}>
+            <View style={styles.listWrapper}>
               <FlatList
                 data={this.state.accountList}
                 renderItem={data => (
-                  <AccountItem type={'account'} item={data} />
+                  <AccountItem type={'account'} item={data.item} />
                 )}
+                ItemSeparatorComponent={() => this.dividingLine()}
                 refreshControl={
                   <RefreshControl
                     title="Loading..."
@@ -223,7 +246,7 @@ const styles = StyleSheet.create({
   titleStyle: {
     fontSize: 15,
     fontWeight: '700',
-    color: GlobalStyles.backgroundColor,
+    color: '#fff',
   },
   cardMoney: {
     flexDirection: 'row',
@@ -234,13 +257,13 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     fontSize: 18,
-    color: GlobalStyles.backgroundColor,
+    color: '#fff',
     marginRight: 6,
   },
   moneyStyle: {
     fontSize: 28,
     fontWeight: '700',
-    color: GlobalStyles.backgroundColor,
+    color: '#fff',
   },
   cardTips: {
     flexDirection: 'row',
@@ -249,14 +272,14 @@ const styles = StyleSheet.create({
   },
   tipsStyle: {
     fontSize: 14,
-    color: GlobalStyles.backgroundColor,
+    color: '#fff',
   },
   marginRight: {
     marginRight: 10,
   },
   accountTitle: {
     height: 54,
-    backgroundColor: GlobalStyles.backgroundColor,
+    backgroundColor: '#fff',
     paddingVertical: 16,
     paddingLeft: 15,
     borderBottomWidth: 1,
@@ -267,8 +290,14 @@ const styles = StyleSheet.create({
     color: GlobalStyles.themeFontColor,
     fontWeight: '700',
   },
-  cashDetails: {
+  listWrapper: {
     paddingHorizontal: 24,
+    backgroundColor: '#ffffff',
+  },
+  line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#f5f5f5',
   },
 });
 
