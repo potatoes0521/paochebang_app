@@ -3,7 +3,7 @@
  * @description: 编辑、添加司机信息
  * @Date: 2019-12-26 10:36:06
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 15:42:47
+ * @LastEditTime : 2020-01-07 15:30:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,6 +14,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  DeviceEventEmitter,
 } from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
@@ -48,6 +49,7 @@ class DriverEdit extends Component {
     };
     this.pageParams = {};
     this.driverInfo = {};
+    this.title = '';
     this.toastRef = React.createRef();
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
@@ -62,6 +64,9 @@ class DriverEdit extends Component {
     this.pageParams = params || {};
     if (this.pageParams.pageType === 'edit') {
       this.getDriverInfoDetails();
+      this.title = '编辑司机';
+    } else {
+      this.title = '添加司机';
     }
     this.getCarInfoType();
     this.backPress.componentDidMount();
@@ -216,7 +221,6 @@ class DriverEdit extends Component {
       carType,
       merchantName,
     };
-    console.log('sendData', sendData);
     api.driver.updateDriverData(sendData, this).then(res => {
       if (!res) {
         return;
@@ -226,6 +230,7 @@ class DriverEdit extends Component {
       } else {
         this.toastRef.current.show('添加成功');
       }
+      DeviceEventEmitter.emit('editDriver', sendData);
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);
@@ -245,19 +250,11 @@ class DriverEdit extends Component {
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
-          {this.pageParams.pageType === 'edit' ? (
-            <NavigationBar
-              navigation={navigation}
-              leftViewShow={true}
-              title={'编辑司机'}
-            />
-          ) : (
-            <NavigationBar
-              navigation={navigation}
-              leftViewShow={true}
-              title={'添加司机'}
-            />
-          )}
+          <NavigationBar
+            navigation={navigation}
+            leftViewShow={true}
+            title={this.title}
+          />
           <View style={MineStyles.itemWrapper}>
             <View style={[MineStyles.itemStyle, MineStyles.line]}>
               <Text style={styles.iconStyle}>*</Text>

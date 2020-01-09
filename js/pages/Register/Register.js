@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.themeColor,
     borderRadius: 20,
     fontSize: 17,
-    color: GlobalStyles.backgroundColor,
+    color: '#fff',
   },
 });
 // 如果需要引入store

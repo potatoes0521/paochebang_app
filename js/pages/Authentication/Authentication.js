@@ -3,7 +3,7 @@
  * @description: 实名认证
  * @Date: 2019-12-26 18:17:17
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 15:41:01
+ * @LastEditTime : 2020-01-04 13:40:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,6 +18,7 @@ import MineStyles from '../../assets/css/MineStyles';
 import Actions from '../../store/action/index.js';
 import Button from '../../components/Button/Button.js';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
+import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import Toast from 'react-native-easy-toast';
 import api from '../../api/index';
 class Authentication extends Component {
@@ -37,6 +38,9 @@ class Authentication extends Component {
       realFlag: false,
     };
     this.toastRef = React.createRef();
+    this.backPress = new BackPressComponent({
+      backPress: () => this.onBackPress(),
+    });
   }
   componentDidMount() {
     let {userInfo} = this.props;
@@ -411,14 +415,14 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
     borderBottomWidth: 10,
     borderBottomColor: '#F7F7F7',
-    backgroundColor: GlobalStyles.backgroundColor,
+    backgroundColor: '#fff',
   },
   middleWrapper: {
     paddingVertical: 12,
     paddingLeft: 24,
     borderBottomWidth: 10,
     borderBottomColor: '#F7F7F7',
-    backgroundColor: GlobalStyles.backgroundColor,
+    backgroundColor: '#fff',
   },
   tipsStyle: {
     fontSize: 13,
@@ -470,7 +474,7 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     fontFamily: 'iconfont',
-    color: GlobalStyles.backgroundColor,
+    color: '#fff',
     fontSize: 20,
   },
   textStyle: {
@@ -497,7 +501,7 @@ const styles = StyleSheet.create({
   },
   bottomWrapper: {
     paddingLeft: 24,
-    backgroundColor: GlobalStyles.backgroundColor,
+    backgroundColor: '#fff',
   },
   btnWrapper: {
     height: 40,

@@ -3,7 +3,7 @@
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 11:13:46
+ * @LastEditTime : 2020-01-07 14:04:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -49,6 +49,10 @@ class MineDetails extends Component {
     NavigationUtil.goBack(this.props.navigation);
     return true;
   }
+  /**
+   * 处理事件通知
+   * @return void
+   */
   handleEmit() {
     this.emitMineCarType = DeviceEventEmitter.addListener(
       'submitMineCarType',
@@ -56,6 +60,7 @@ class MineDetails extends Component {
         this.setState({
           carTypeDesc: data,
         });
+        this.getUserInfo();
       },
     );
     this.emitMineCarNum = DeviceEventEmitter.addListener(
@@ -64,6 +69,7 @@ class MineDetails extends Component {
         this.setState({
           carNum: data,
         });
+        this.getUserInfo();
       },
     );
   }
@@ -90,14 +96,21 @@ class MineDetails extends Component {
    * @return void
    */
   navigationEdit() {
-    NavigationUtil.goPage(
-      {userDetailsInfo: this.state.userDetailsInfo},
-      'MineEditPage',
-    );
+    let {userDetailsInfo} = this.state;
+    if (this.pageParams.pageType === 'choose') {
+      DeviceEventEmitter.emit('mineDetails', userDetailsInfo);
+      NavigationUtil.goBack(this.props.navigation);
+    } else {
+      NavigationUtil.goPage({userDetailsInfo}, 'MineEditPage');
+    }
   }
   render() {
     let {userDetailsInfo} = this.state;
     const {theme, navigation} = this.props;
+    const text =
+      this.pageParams && this.pageParams.pageType === 'choose'
+        ? '确认'
+        : '修改';
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -166,7 +179,7 @@ class MineDetails extends Component {
           </View>
           <View style={styles.btnWrapper}>
             <Button
-              text={'修改'}
+              text={text}
               type={'round'}
               onClick={this.navigationEdit.bind(this)}
             />
