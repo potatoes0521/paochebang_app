@@ -3,7 +3,7 @@
  * @description: 底部tabBar
  * @Date: 2019-11-29 11:38:36
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-09 18:01:05
+ * @LastEditTime : 2020-01-09 18:56:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,7 +21,7 @@ import Index from '../pages/Index/Index';
 import Offer from '../pages/Offer/Offer';
 import Order from '../pages/Order/Order';
 import Mine from '../pages/Mine/Mine';
-import Publish from '../pages/Publish/Publish.js';
+import PublishPage from '../pages/Publish/Publish.js';
 import GlobalStyles from '../assets/css/GlobalStyles';
 const styles = StyleSheet.create({
   icon: {
@@ -65,7 +65,7 @@ const TABS = {
     },
   },
   Publish: {
-    screen: Publish,
+    screen: PublishPage,
     navigationOptions: {
       title: '',
       tabBarLabel: '',
@@ -76,6 +76,16 @@ const TABS = {
           <Text style={[styles.icon, styles.publishIconText]}>&#xe668;</Text>
         </LinearGradient>
       ),
+      tabBarOnPress: ({navigation, defaultHandler}) => {
+        console.log('navigation', navigation);
+        if (global.signInStatus) {
+          console.log('11111', 11111);
+          navigation.navigate('PublishPage');
+        } else {
+          console.log('22222', 22222);
+          navigation.navigate('OfferDetailsPage');
+        }
+      },
     },
   },
   Order: {
@@ -109,11 +119,6 @@ class BottomTabBarNavigator extends Component {
     }
     return (this.Tabs = createAppContainer(
       createBottomTabNavigator(TABS, {
-        // tabBarComponent: props => {
-        //   return (
-        //     <TabBarComponent {...props} theme={this.props.theme.themeColor} />
-        //   );
-        // },
         tabBarOptions: {
           activeTintColor: GlobalStyles.themeColor,
           inactiveTintColor: GlobalStyles.themeHColor,
@@ -122,6 +127,11 @@ class BottomTabBarNavigator extends Component {
             borderTopWidth: 0,
           },
         },
+        // tabBarComponent: props => {
+        //   return (
+        //     <TabBarComponent {...props} theme={this.props.theme.themeColor} />
+        //   );
+        // },
       }),
     ));
   }
@@ -131,6 +141,7 @@ class BottomTabBarNavigator extends Component {
     return <Tab />;
   }
 }
+
 // class TabBarComponent extends React.Component {
 //   render() {
 //     console.log('this.props', this.props);
@@ -141,7 +152,7 @@ class BottomTabBarNavigator extends Component {
 // 如果需要引入store
 const mapStateToProps = state => {
   return {
-    // userInfo: state.user_msg.userInfo,
+    userInfo: state.user_info.userInfo,
     theme: state.theme.theme,
   };
 };
