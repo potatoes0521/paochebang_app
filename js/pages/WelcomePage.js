@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:11:20
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-26 13:50:43
+ * @LastEditTime : 2020-01-08 20:06:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,6 +13,7 @@ import NavigationUtil from '../navigator/NavigationUtils';
 import SplashScreen from 'react-native-splash-screen';
 import {connect} from 'react-redux';
 import SafeAreaViewPlus from '../components/SafeAreaViewPlus/SafeAreaViewPlus';
+import PushUtil from '../../native/PushUtil';
 
 class WelcomePage extends Component {
   // constructor(props) {
@@ -22,6 +23,12 @@ class WelcomePage extends Component {
   componentDidMount() {
     this.timer = setTimeout(() => {
       SplashScreen.hide();
+      PushUtil.appInfo(result => {
+        console.log('result', result);
+      });
+      // PushUtil.getDeviceToken().then(res => {
+      //   console.log('res', res);
+      // });
       // 跳转到首页
       NavigationUtil.resetToHomPage(this.props);
     }, 1000);

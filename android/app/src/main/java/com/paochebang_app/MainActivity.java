@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 13:51:52
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-06 14:05:45
+ * @LastEditTime : 2020-01-08 20:07:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,7 +17,10 @@ import com.facebook.react.ReactRootView;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 import com.facebook.react.ReactActivity;
 
-// react-native-splash-screen >= 0.3.1
+import com.umeng.message.PushAgent;
+import com.paoche56.help.PushModule;
+import com.umeng.message.IUmengRegisterCallback;
+
 import org.devio.rn.splashscreen.SplashScreen;
 
 public class MainActivity extends ReactActivity {
@@ -35,6 +38,19 @@ public class MainActivity extends ReactActivity {
   protected void onCreate(Bundle savedInstanceState) {
     SplashScreen.show(this); // here
     super.onCreate(savedInstanceState);
+    PushModule.initPushSDK(this);
+    PushAgent.getInstance(this).onAppStart();
+    // 注册推送服务，每次调用register方法都会回调该接口
+    PushAgent.getInstance(this).register(new IUmengRegisterCallback() {
+    @Override
+    public void onSuccess(String deviceToken) {
+    // 注册成功会返回deviceToken
+    }
+
+    @Override
+    public void onFailure(String s, String s1) {
+    }
+    });
   }
 
   /**
