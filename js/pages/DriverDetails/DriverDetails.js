@@ -3,12 +3,12 @@
  * @description: 司机详情
  * @Date: 2019-12-25 15:23:46
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 10:49:02
+ * @LastEditTime : 2020-01-07 15:33:25
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, DeviceEventEmitter} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
@@ -37,14 +37,21 @@ class DriverDetails extends Component {
     console.log('params', params);
     this.pageParams = params || {};
     this.getDriverDetails();
+    this.handleEmit();
     this.backPress.componentDidMount();
   }
   componentWillUnmount() {
+    this.emitEditDriver.remove();
     this.backPress.componentWillUnmount();
   }
   onBackPress() {
     NavigationUtil.goBack(this.props.navigation);
     return true;
+  }
+  handleEmit() {
+    this.emitEditDriver = DeviceEventEmitter.addListener('editDriver', () => {
+      this.getDriverDetails();
+    });
   }
   /**
    * 获取司机信息详情
@@ -68,7 +75,7 @@ class DriverDetails extends Component {
     });
   }
   /**
-   * 导航到客户详情
+   * 导航到司机详情
    * @return void
    */
   navigationEdit() {

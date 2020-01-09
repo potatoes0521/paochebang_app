@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-03 16:47:37
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-31 09:43:10
+ * @LastEditTime : 2020-01-04 16:36:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,7 +22,9 @@ import api from '../../api';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import DetailsStyle from '../../assets/css/DetailsStyle';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
+import Authentication from '../../components/Authentication/Authentication';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
+import NavigationUtil from '../../navigator/NavigationUtils';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import DatePicker from '../../components/DatePicker/datePicker.js';
 import Button from '../../components/Button/Button.js';
@@ -213,6 +215,16 @@ class OfferDetails extends Component {
       datePickerShow: false,
     });
   }
+  /**
+   * 查看订单详情
+   * @return void
+   */
+  navigateToOrder() {
+    NavigationUtil.goPage(
+      {orderCode: this.state.orderCode},
+      'OrderDetailsPage',
+    );
+  }
   render() {
     const {theme, navigation} = this.props;
     let {
@@ -236,6 +248,8 @@ class OfferDetails extends Component {
       usedType,
       status,
       datePickerShow,
+      statusDescs,
+      isShow,
     } = this.state;
     let statusClassName = [DetailsStyle.contentText];
     if (status === 10) {
@@ -256,7 +270,23 @@ class OfferDetails extends Component {
             leftViewShow={true}
             title={'报价详情'}
           />
+          {/* 实名认证弹框 */}
+          {isShow ? <Authentication /> : null}
           <ScrollView>
+            {statusDescs && statusDescs.length ? (
+              <View style={styles.statusWrapper}>
+                <View style={styles.statusStyle}>
+                  <Text style={styles.statusIcon}>&#xe658;</Text>
+                  <Text style={styles.statusText}>{statusDescs[0].name}</Text>
+                </View>
+                <TouchableOpacity onPress={this.navigateToOrder.bind(this)}>
+                  <View style={styles.seeStyle}>
+                    <Text style={styles.textStyle}>查看</Text>
+                    <Text style={styles.iconStyle}>&#xe61d;</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            ) : null}
             <View style={DetailsStyle.card}>
               {/* 报价状态 */}
               <View style={DetailsStyle.formItem}>
@@ -525,6 +555,43 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: GlobalStyles.themeFontColor,
     fontSize: 15,
+  },
+  statusWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 28,
+    paddingTop: 18,
+  },
+  statusStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  statusIcon: {
+    fontFamily: 'iconfont',
+    fontSize: 20,
+    color: GlobalStyles.themeSubColor,
+    marginRight: 4,
+  },
+  statusText: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: GlobalStyles.themeFontColor,
+  },
+  seeStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  textStyle: {
+    fontSize: 14,
+    color: GlobalStyles.themeSubColor,
+  },
+  iconStyle: {
+    fontFamily: 'iconfont',
+    fontSize: 12,
+    color: GlobalStyles.themeSubColor,
   },
 });
 // 如果需要引入store

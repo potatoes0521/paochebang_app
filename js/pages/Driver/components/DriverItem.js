@@ -3,12 +3,18 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-25 11:00:24
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 10:46:16
+ * @LastEditTime : 2020-01-07 17:17:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  DeviceEventEmitter,
+} from 'react-native';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
 import DetailsStyle from '../../../assets/css/DetailsStyle';
 import BackPressComponent from '../../../components/BackPressComponent/BackPressComponent';
@@ -31,10 +37,15 @@ export default class DriverItem extends Component {
   componentWillUnmount() {
     this.backPress.componentWillUnmount();
   }
-  navigatorDetails(item) {
-    console.log(item, 'itemData');
-    let pageUrl = 'DriverDetailsPage';
-    NavigationUtil.goPage({userId: item.userId}, pageUrl);
+  navigatorDetails() {
+    let {itemData} = this.props;
+    let {type} = this.props;
+    if (type === 'choose') {
+      DeviceEventEmitter.emit('chooseDriver', itemData);
+      NavigationUtil.goPage({}, 'DriverConfirmPage');
+    } else {
+      NavigationUtil.goPage({userId: itemData.userId}, 'DriverDetailsPage');
+    }
   }
   render() {
     let {itemData} = this.props;
@@ -51,14 +62,18 @@ export default class DriverItem extends Component {
                   {itemData.mobile || ''}
                 </Text>
               </View>
-              <View style={styles.userWrapper}>
-                <Text style={styles.fontStyle}>{itemData.carNum || ''}</Text>
-              </View>
-              <View style={styles.userWrapper}>
-                <Text style={styles.fontStyle}>
-                  {itemData.carTypeDesc || ''}
-                </Text>
-              </View>
+              {itemData.carNum ? (
+                <View style={styles.userWrapper}>
+                  <Text style={styles.fontStyle}>{itemData.carNum || ''}</Text>
+                </View>
+              ) : null}
+              {itemData.carTypeDesc ? (
+                <View style={styles.userWrapper}>
+                  <Text style={styles.fontStyle}>
+                    {itemData.carTypeDesc || ''}
+                  </Text>
+                </View>
+              ) : null}
             </View>
             <View style={styles.itemRight}>
               <Text style={styles.icon}>&#xe61d;</Text>
