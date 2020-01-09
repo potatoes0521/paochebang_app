@@ -3,26 +3,46 @@
  * @description: 底部tabBar
  * @Date: 2019-11-29 11:38:36
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 11:06:53
+ * @LastEditTime : 2020-01-09 18:01:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {createAppContainer} from 'react-navigation';
-import {createBottomTabNavigator, BottomTabBar} from 'react-navigation-tabs';
+// BottomTabBar
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {connect} from 'react-redux';
 // import EventBus from 'react-native-event-bus';
 // import EventTypes from '../util/EventTypes';
+import LinearGradient from 'react-native-linear-gradient';
 
 import Index from '../pages/Index/Index';
 import Offer from '../pages/Offer/Offer';
 import Order from '../pages/Order/Order';
 import Mine from '../pages/Mine/Mine';
+import Publish from '../pages/Publish/Publish.js';
+import GlobalStyles from '../assets/css/GlobalStyles';
 const styles = StyleSheet.create({
   icon: {
     fontSize: 28,
     fontFamily: 'iconfont',
+  },
+  publishIcon: {
+    backgroundColor: 'green',
+    width: 54,
+    height: 54,
+    position: 'absolute',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 27,
+    borderWidth: 5,
+    borderColor: '#fff',
+  },
+  publishIconText: {
+    color: '#fff',
+    fontSize: 21,
   },
 });
 const TABS = {
@@ -41,6 +61,20 @@ const TABS = {
       tabBarLabel: '报价/接单',
       tabBarIcon: ({tintColor, focused}) => (
         <Text style={[styles.icon, {color: tintColor}]}>&#xe607;</Text>
+      ),
+    },
+  },
+  Publish: {
+    screen: Publish,
+    navigationOptions: {
+      title: '',
+      tabBarLabel: '',
+      tabBarIcon: ({tintColor, focused}) => (
+        <LinearGradient
+          colors={['#FAD961', '#FF9A03', '#F76B1C']}
+          style={styles.publishIcon}>
+          <Text style={[styles.icon, styles.publishIconText]}>&#xe668;</Text>
+        </LinearGradient>
       ),
     },
   },
@@ -75,10 +109,18 @@ class BottomTabBarNavigator extends Component {
     }
     return (this.Tabs = createAppContainer(
       createBottomTabNavigator(TABS, {
-        tabBarComponent: props => {
-          return (
-            <TabBarComponent {...props} theme={this.props.theme.themeColor} />
-          );
+        // tabBarComponent: props => {
+        //   return (
+        //     <TabBarComponent {...props} theme={this.props.theme.themeColor} />
+        //   );
+        // },
+        tabBarOptions: {
+          activeTintColor: GlobalStyles.themeColor,
+          inactiveTintColor: GlobalStyles.themeHColor,
+          style: {
+            height: 50,
+            borderTopWidth: 0,
+          },
         },
       }),
     ));
@@ -89,11 +131,12 @@ class BottomTabBarNavigator extends Component {
     return <Tab />;
   }
 }
-class TabBarComponent extends React.Component {
-  render() {
-    return <BottomTabBar {...this.props} activeTintColor={this.props.theme} />;
-  }
-}
+// class TabBarComponent extends React.Component {
+//   render() {
+//     console.log('this.props', this.props);
+//     return <BottomTabBar {...this.props} activeTintColor={this.props.theme} />;
+//   }
+// }
 
 // 如果需要引入store
 const mapStateToProps = state => {
