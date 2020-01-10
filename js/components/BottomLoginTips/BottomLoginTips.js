@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-01-09 18:01:59
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-09 18:31:36
+ * @LastEditTime : 2020-01-10 09:44:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -37,7 +37,7 @@ export default class BottomLoginTips extends Component {
           </View>
           <View style={styles.tips}>
             <Text style={styles.tipsText}>欢迎来到跑车帮～</Text>
-            <Text style={styles.tipsText}>登录打开新世界～</Text>
+            <Text style={styles.tipsText}>登录享受定制化服务</Text>
           </View>
         </View>
         <View style={styles.rightBtn}>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   wrapper: {
     position: 'absolute',
     width: GlobalStyles.window_width,
-    paddingHorizontal: 24,
+    paddingHorizontal: 18,
     bottom: 0,
     height: 50,
     backgroundColor: 'rgba(0,0,0,0.62)',

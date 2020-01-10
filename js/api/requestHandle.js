@@ -4,7 +4,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 10:21:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-04 13:41:20
+ * @LastEditTime : 2020-01-09 20:40:11
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -107,7 +107,7 @@ class HttpRequest {
       res => {
         const {data} = res;
         if (!+data.code || +data.code === 200002 || +data.code === 200) {
-          console.log('data' + url, data);
+          // console.log('data' + url, data);
           return data;
         } else if (+data.code === 200003) {
           console.log('token shixiao');

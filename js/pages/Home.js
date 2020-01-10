@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 首页
  * @Date: 2019-11-22 16:48:04
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-10 17:53:01
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-10 10:52:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -43,7 +43,7 @@ class Home extends Component {
     NavigationUtil.navigation = this.props.navigation;
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
-        <BottomTabBarNavigator />
+        <BottomTabBarNavigator {...this.props} />
       </SafeAreaViewPlus>
     );
   }
