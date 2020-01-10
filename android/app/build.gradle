@@ -154,10 +154,10 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
+            storeFile file('paoche-help-debug.keystore')
+            storePassword 'paoche56.com'
+            keyAlias 'paoche-help-debug'
+            keyPassword 'paoche56.com'
         }
     }
     buildTypes {
