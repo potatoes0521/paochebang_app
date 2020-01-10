@@ -1,25 +1,28 @@
 package com.paoche56.help;
 
 import android.app.Activity;
-import java.util.List;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
+import com.paoche56.help.model.DeviceInfo;
+import com.paoche56.help.utils.JsonHelper;
 import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
 import com.umeng.message.common.UmengMessageDeviceConfig;
 import com.umeng.message.common.inter.ITagManager;
 import com.umeng.message.tag.TagManager;
+
+import java.util.List;
 
 /**
  * Created by wangfei on 17/8/30
@@ -51,9 +54,11 @@ public class PushModule extends ReactContextBaseJavaModule {
     public String getName() {
         return "UMPushModule";
     }
+
     private static void runOnMainThread(Runnable runnable) {
         mSDKHandler.postDelayed(runnable, 0);
     }
+
     @ReactMethod
     public void addTag(String tag, final Callback successCallback) {
         mPushAgent.getTagManager().addTags(new TagManager.TCallBack() {
@@ -61,14 +66,11 @@ public class PushModule extends ReactContextBaseJavaModule {
             public void onMessage(final boolean isSuccess, final ITagManager.Result result) {
 
 
-                        if (isSuccess) {
-                            successCallback.invoke(SUCCESS,result.remain);
-                        } else {
-                            successCallback.invoke(ERROR,0);
-                        }
-
-
-
+                if (isSuccess) {
+                    successCallback.invoke(SUCCESS, result.remain);
+                } else {
+                    successCallback.invoke(ERROR, 0);
+                }
 
 
             }
@@ -82,9 +84,9 @@ public class PushModule extends ReactContextBaseJavaModule {
             public void onMessage(boolean isSuccess, final ITagManager.Result result) {
                 Log.i(TAG, "isSuccess:" + isSuccess);
                 if (isSuccess) {
-                    successCallback.invoke(SUCCESS,result.remain);
+                    successCallback.invoke(SUCCESS, result.remain);
                 } else {
-                    successCallback.invoke(ERROR,0);
+                    successCallback.invoke(ERROR, 0);
                 }
             }
         }, tag);
@@ -101,12 +103,12 @@ public class PushModule extends ReactContextBaseJavaModule {
                         if (isSuccess) {
                             if (result != null) {
 
-                                successCallback.invoke(SUCCESS,resultToList(result));
+                                successCallback.invoke(SUCCESS, resultToList(result));
                             } else {
-                                successCallback.invoke(ERROR,resultToList(result));
+                                successCallback.invoke(ERROR, resultToList(result));
                             }
                         } else {
-                            successCallback.invoke(ERROR,resultToList(result));
+                            successCallback.invoke(ERROR, resultToList(result));
                         }
 
                     }
@@ -123,12 +125,12 @@ public class PushModule extends ReactContextBaseJavaModule {
             public void onMessage(final boolean isSuccess, final String message) {
                 Log.i(TAG, "isSuccess:" + isSuccess + "," + message);
 
-                        Log.e("xxxxxx","isuccess"+isSuccess);
-                        if (isSuccess) {
-                            successCallback.invoke(SUCCESS);
-                        } else {
-                            successCallback.invoke(ERROR);
-                        }
+                Log.e("xxxxxx", "isuccess" + isSuccess);
+                if (isSuccess) {
+                    successCallback.invoke(SUCCESS);
+                } else {
+                    successCallback.invoke(ERROR);
+                }
 
 
             }
@@ -137,7 +139,7 @@ public class PushModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void addAliasType() {
-        Toast.makeText(ma,"function will come soon",Toast.LENGTH_LONG);
+        Toast.makeText(ma, "function will come soon", Toast.LENGTH_LONG);
     }
 
     @ReactMethod
@@ -146,13 +148,12 @@ public class PushModule extends ReactContextBaseJavaModule {
             @Override
             public void onMessage(final boolean isSuccess, final String message) {
 
-                        Log.i(TAG, "isSuccess:" + isSuccess + "," + message);
-                        if (Boolean.TRUE.equals(isSuccess)) {
-                            successCallback.invoke(SUCCESS);
-                        }else {
-                            successCallback.invoke(ERROR);
-                        }
-
+                Log.i(TAG, "isSuccess:" + isSuccess + "," + message);
+                if (Boolean.TRUE.equals(isSuccess)) {
+                    successCallback.invoke(SUCCESS);
+                } else {
+                    successCallback.invoke(ERROR);
+                }
 
 
             }
@@ -166,7 +167,7 @@ public class PushModule extends ReactContextBaseJavaModule {
             public void onMessage(boolean isSuccess, String s) {
                 if (Boolean.TRUE.equals(isSuccess)) {
                     successCallback.invoke(SUCCESS);
-                }else {
+                } else {
                     successCallback.invoke(ERROR);
                 }
             }
@@ -176,31 +177,36 @@ public class PushModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void appInfo(final Callback successCallback) {
         String pkgName = context.getPackageName();
-        String info = String.format("DeviceToken:%s\n" + "SdkVersion:%s\nAppVersionCode:%s\nAppVersionName:%s",
-            mPushAgent.getRegistrationId(), MsgConstant.SDK_VERSION,
-            UmengMessageDeviceConfig.getAppVersionCode(context), UmengMessageDeviceConfig.getAppVersionName(context));
-        successCallback.invoke("应用包名:" + pkgName + "\n" + info);
+        DeviceInfo deviceInfo = new DeviceInfo();
+        deviceInfo.setPackageName(pkgName);
+        deviceInfo.setPushToken(mPushAgent.getRegistrationId());
+        deviceInfo.setMsgSdkVersion(MsgConstant.SDK_VERSION);
+        deviceInfo.setAppVersionCode(UmengMessageDeviceConfig.getAppVersionCode(context));
+        deviceInfo.setAppVersionName(UmengMessageDeviceConfig.getAppVersionName(context));
+        successCallback.invoke(JsonHelper.toJsonString(deviceInfo));
     }
-    private WritableMap resultToMap(ITagManager.Result result){
+
+    private WritableMap resultToMap(ITagManager.Result result) {
         WritableMap map = Arguments.createMap();
-        if (result!=null){
-            map.putString("status",result.status);
-            map.putInt("remain",result.remain);
-            map.putString("interval",result.interval+"");
-            map.putString("errors",result.errors);
-            map.putString("last_requestTime",result.last_requestTime+"");
-            map.putString("jsonString",result.jsonString);
+        if (result != null) {
+            map.putString("status", result.status);
+            map.putInt("remain", result.remain);
+            map.putString("interval", result.interval + "");
+            map.putString("errors", result.errors);
+            map.putString("last_requestTime", result.last_requestTime + "");
+            map.putString("jsonString", result.jsonString);
         }
         return map;
     }
-    private WritableArray resultToList(List<String> result){
+
+    private WritableArray resultToList(List<String> result) {
         WritableArray list = Arguments.createArray();
-        if (result!=null){
-            for (String key:result){
+        if (result != null) {
+            for (String key : result) {
                 list.pushString(key);
             }
         }
-        Log.e("xxxxxx","list="+list);
+        Log.e("xxxxxx", "list=" + list);
         return list;
     }
 }
