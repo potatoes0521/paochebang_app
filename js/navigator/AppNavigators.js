@@ -3,7 +3,7 @@
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-09 18:30:45
+ * @LastEditTime : 2020-01-10 10:54:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -34,6 +34,8 @@ import UploadImagePage from '../pages/UploadImage/UploadImage.js';
 import SellingPublishPage from '../pages/SellingPublish/SellingPublish.js';
 import VacancyPublishPage from '../pages/VacancyPublish/VacancyPublish.js';
 import RemarkPage from '../pages/Remark/Remark';
+import PublishPage from '../pages/Publish/Publish.js';
+
 export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一个初始化的路由名
 
 const InitNavigator = createStackNavigator({
@@ -50,6 +52,12 @@ const MainNavigator = createStackNavigator(
   {
     HomePage: {
       screen: HomePage,
+      navigationOptions: {
+        header: null, // 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
+      },
+    },
+    PublishPage: {
+      screen: PublishPage,
       navigationOptions: {
         header: null, // 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
       },
@@ -223,13 +231,14 @@ const MainNavigator = createStackNavigator(
 export default createAppContainer(
   createSwitchNavigator(
     {
-      [rootCom]: InitNavigator,
+      Init: InitNavigator,
       Main: MainNavigator,
     },
     {
       navigationOptions: {
         header: null,
       },
+      initialRouteName: 'Init',
     },
   ),
 );

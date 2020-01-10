@@ -3,7 +3,7 @@
  * @description: 底部tabBar
  * @Date: 2019-11-29 11:38:36
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-09 18:56:02
+ * @LastEditTime : 2020-01-10 10:53:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,7 +21,7 @@ import Index from '../pages/Index/Index';
 import Offer from '../pages/Offer/Offer';
 import Order from '../pages/Order/Order';
 import Mine from '../pages/Mine/Mine';
-import PublishPage from '../pages/Publish/Publish.js';
+// import PublishPage from '../pages/Publish/Publish.js';
 import GlobalStyles from '../assets/css/GlobalStyles';
 const styles = StyleSheet.create({
   icon: {
@@ -45,68 +45,7 @@ const styles = StyleSheet.create({
     fontSize: 21,
   },
 });
-const TABS = {
-  Index: {
-    screen: Index,
-    navigationOptions: {
-      tabBarLabel: '市场',
-      tabBarIcon: ({tintColor, focused}) => (
-        <Text style={[styles.icon, {color: tintColor}]}>&#xe60a;</Text>
-      ),
-    },
-  },
-  Offer: {
-    screen: Offer,
-    navigationOptions: {
-      tabBarLabel: '报价/接单',
-      tabBarIcon: ({tintColor, focused}) => (
-        <Text style={[styles.icon, {color: tintColor}]}>&#xe607;</Text>
-      ),
-    },
-  },
-  Publish: {
-    screen: PublishPage,
-    navigationOptions: {
-      title: '',
-      tabBarLabel: '',
-      tabBarIcon: ({tintColor, focused}) => (
-        <LinearGradient
-          colors={['#FAD961', '#FF9A03', '#F76B1C']}
-          style={styles.publishIcon}>
-          <Text style={[styles.icon, styles.publishIconText]}>&#xe668;</Text>
-        </LinearGradient>
-      ),
-      tabBarOnPress: ({navigation, defaultHandler}) => {
-        console.log('navigation', navigation);
-        if (global.signInStatus) {
-          console.log('11111', 11111);
-          navigation.navigate('PublishPage');
-        } else {
-          console.log('22222', 22222);
-          navigation.navigate('OfferDetailsPage');
-        }
-      },
-    },
-  },
-  Order: {
-    screen: Order,
-    navigationOptions: {
-      tabBarLabel: '订单',
-      tabBarIcon: ({tintColor, focused}) => (
-        <Text style={[styles.icon, {color: tintColor}]}>&#xe606;</Text>
-      ),
-    },
-  },
-  Mine: {
-    screen: Mine,
-    navigationOptions: {
-      tabBarLabel: '我的',
-      tabBarIcon: ({tintColor, focused}) => (
-        <Text style={[styles.icon, {color: tintColor}]}>&#xe605;</Text>
-      ),
-    },
-  },
-};
+
 class BottomTabBarNavigator extends Component {
   constructor(props) {
     super(props);
@@ -118,21 +57,84 @@ class BottomTabBarNavigator extends Component {
       return this.Tabs;
     }
     return (this.Tabs = createAppContainer(
-      createBottomTabNavigator(TABS, {
-        tabBarOptions: {
-          activeTintColor: GlobalStyles.themeColor,
-          inactiveTintColor: GlobalStyles.themeHColor,
-          style: {
-            height: 50,
-            borderTopWidth: 0,
+      createBottomTabNavigator(
+        {
+          Index: {
+            screen: Index,
+            navigationOptions: {
+              tabBarLabel: '市场',
+              tabBarIcon: ({tintColor, focused}) => (
+                <Text style={[styles.icon, {color: tintColor}]}>&#xe60a;</Text>
+              ),
+            },
+          },
+          Offer: {
+            screen: Offer,
+            navigationOptions: {
+              tabBarLabel: '报价/接单',
+              tabBarIcon: ({tintColor, focused}) => (
+                <Text style={[styles.icon, {color: tintColor}]}>&#xe607;</Text>
+              ),
+            },
+          },
+          Publish: {
+            screen: Index,
+            navigationOptions: {
+              title: '',
+              tabBarLabel: '',
+              tabBarIcon: ({tintColor, focused}) => (
+                <LinearGradient
+                  colors={['#FAD961', '#FF9A03', '#F76B1C']}
+                  style={styles.publishIcon}>
+                  <Text style={[styles.icon, styles.publishIconText]}>
+                    &#xe668;
+                  </Text>
+                </LinearGradient>
+              ),
+              tabBarOnPress: ({props}) => {
+                if (global.signInStatus) {
+                  this.props.navigation.navigate('PublishPage');
+                } else {
+                  this.props.navigation.navigate('PublishPage');
+                }
+              },
+            },
+          },
+          Order: {
+            screen: Order,
+            navigationOptions: {
+              tabBarLabel: '订单',
+              tabBarIcon: ({tintColor, focused}) => (
+                <Text style={[styles.icon, {color: tintColor}]}>&#xe606;</Text>
+              ),
+            },
+          },
+          Mine: {
+            screen: Mine,
+            navigationOptions: {
+              tabBarLabel: '我的',
+              tabBarIcon: ({tintColor, focused}) => (
+                <Text style={[styles.icon, {color: tintColor}]}>&#xe605;</Text>
+              ),
+            },
           },
         },
-        // tabBarComponent: props => {
-        //   return (
-        //     <TabBarComponent {...props} theme={this.props.theme.themeColor} />
-        //   );
-        // },
-      }),
+        {
+          tabBarOptions: {
+            activeTintColor: GlobalStyles.themeColor,
+            inactiveTintColor: GlobalStyles.themeHColor,
+            style: {
+              height: 50,
+              borderTopWidth: 0,
+            },
+          },
+          // tabBarComponent: props => {
+          //   return (
+          //     <TabBarComponent {...props} theme={this.props.theme.themeColor} />
+          //   );
+          // },
+        },
+      ),
     ));
   }
 
