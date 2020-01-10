@@ -183,7 +183,8 @@ public class PushModule extends ReactContextBaseJavaModule {
         deviceInfo.setMsgSdkVersion(MsgConstant.SDK_VERSION);
         deviceInfo.setAppVersionCode(UmengMessageDeviceConfig.getAppVersionCode(context));
         deviceInfo.setAppVersionName(UmengMessageDeviceConfig.getAppVersionName(context));
-        successCallback.invoke(JsonHelper.toJsonString(deviceInfo));
+        String deviceInfoJson = JsonHelper.toJsonString(deviceInfo);
+        successCallback.invoke(deviceInfoJson);
     }
 
     private WritableMap resultToMap(ITagManager.Result result) {
