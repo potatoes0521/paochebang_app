@@ -159,6 +159,12 @@ android {
             keyAlias 'paoche-help-debug'
             keyPassword 'paoche56.com'
         }
+        release{
+            storeFile file('paoche-help-release.keystore')
+            storePassword 'paoche56.com'
+            keyAlias 'paoche-help-release'
+            keyPassword 'paoche56.com'
+        }
     }
     buildTypes {
         debug {
