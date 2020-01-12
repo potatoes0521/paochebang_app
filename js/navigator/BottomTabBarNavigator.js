@@ -3,7 +3,7 @@
  * @description: 底部tabBar
  * @Date: 2019-11-29 11:38:36
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-10 10:53:47
+ * @LastEditTime : 2020-01-10 14:29:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     width: 54,
     height: 54,
-    position: 'absolute',
+    // position: 'absolute',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -92,6 +92,7 @@ class BottomTabBarNavigator extends Component {
                 </LinearGradient>
               ),
               tabBarOnPress: ({props}) => {
+                console.log('aaaa');
                 if (global.signInStatus) {
                   this.props.navigation.navigate('PublishPage');
                 } else {

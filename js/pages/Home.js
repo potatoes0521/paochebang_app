@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-22 16:48:04
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-10 10:52:08
+ * @LastEditTime : 2020-01-10 11:04:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -25,6 +25,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    console.log('this.props.userInfo', this.props.userInfo);
     this.backPress.componentDidMount();
   }
 
@@ -51,6 +52,7 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   theme: state.theme.theme,
+  userInfo: state.user_info.userInfo,
 });
 
 export default connect(mapStateToProps)(Home);
