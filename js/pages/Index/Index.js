@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-29 15:28:01
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-10 13:46:50
+ * @LastEditTime : 2020-01-13 18:13:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -120,9 +120,11 @@ class Index extends Component {
           </TouchableOpacity>
         );
       });
-    const recommendList = recommendData.map(item => {
-      return <SellingItem key={item.saleToPalletId} itemData={item} />;
-    });
+    const recommendList =
+      recommendData &&
+      recommendData.map(item => {
+        return <SellingItem key={item.saleToPalletId} itemData={item} />;
+      });
     return (
       <View style={styles.pageWrapper}>
         <NavigationBar title={'跑车帮'} />
