@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 请填写描述信息
  * @Date: 2019-12-25 11:00:24
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 17:17:17
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-13 20:38:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,7 +17,6 @@ import {
 } from 'react-native';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
 import DetailsStyle from '../../../assets/css/DetailsStyle';
-import BackPressComponent from '../../../components/BackPressComponent/BackPressComponent';
 import PropTypes from 'prop-types';
 import NavigationUtil from '../../../navigator/NavigationUtils';
 
@@ -25,17 +24,6 @@ export default class DriverItem extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.backPress = new BackPressComponent({
-      backPress: () => this.onBackPress(),
-    });
-  }
-
-  componentDidMount() {
-    this.backPress.componentDidMount();
-  }
-
-  componentWillUnmount() {
-    this.backPress.componentWillUnmount();
   }
   navigatorDetails() {
     let {itemData} = this.props;

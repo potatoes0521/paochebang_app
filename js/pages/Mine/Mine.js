@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 21:20:40
+ * @LastEditTime : 2020-01-13 21:21:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,7 +20,6 @@ import {appVersion} from '../../api/requestHandle.js';
 import {connect} from 'react-redux';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
-import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import MineStyles from '../../assets/css/MineStyles';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import accountImage from '../../assets/image/mine/account.png';
@@ -35,23 +34,8 @@ class Mine extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.backPress = new BackPressComponent({
-      backPress: () => this.onBackPress(),
-    });
   }
 
-  componentDidMount() {
-    console.log('userInfo', this.props.userInfo);
-    this.backPress.componentDidMount();
-  }
-
-  componentWillUnmount() {
-    this.backPress.componentWillUnmount();
-  }
-  onBackPress() {
-    NavigationUtil.goBack(this.props.navigation);
-    return true;
-  }
   /**
    * 跳转注册页
    * @return void
