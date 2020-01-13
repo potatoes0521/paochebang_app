@@ -3,8 +3,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-12-02 11:52:12
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-26 09:56:20
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-13 19:20:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,7 +21,7 @@ export default {
   },
   // 注册
   register(data, that) {
-    return requestHandle.post('user/expresslogin', data, that);
+    return requestHandle.post('user/appexpresslogin', data, that);
   },
   // 换手机号
   codeExchangePhone(data, that) {

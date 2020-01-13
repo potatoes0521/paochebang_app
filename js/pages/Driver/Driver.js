@@ -3,7 +3,7 @@
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 17:49:06
+ * @LastEditTime : 2020-01-13 19:06:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -123,11 +123,14 @@ class Driver extends Component {
     };
     let {driverListData} = this.state;
     api.driver.getDriverList(sendData, this).then(res => {
+      this.setState({
+        isLoading: false,
+      });
       const data = res.data;
       if (!data) {
         return;
       }
-      if (!data && selectParam) {
+      if (!data && this.state.selectParam) {
         this.toastRef.current.show('没搜索到结果');
         return;
       }
@@ -208,7 +211,7 @@ class Driver extends Component {
 
   render() {
     const {theme, navigation} = this.props;
-    let {selectParam, totalCount} = this.state;
+    let {selectParam, totalCount, driverListData} = this.state;
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -281,11 +284,13 @@ class Driver extends Component {
               }}
             />
           </View>
-          <View style={styles.imageWrapper}>
-            <TouchableOpacity onPress={this.addDriver.bind(this)}>
-              <Image style={styles.imageStyle} source={AddDriverImage} />
-            </TouchableOpacity>
-          </View>
+          {driverListData.length > 0 ? (
+            <View style={styles.imageWrapper}>
+              <TouchableOpacity onPress={this.addDriver.bind(this)}>
+                <Image style={styles.imageStyle} source={AddDriverImage} />
+              </TouchableOpacity>
+            </View>
+          ) : null}
           <Toast
             ref={this.toastRef}
             position={'center'}

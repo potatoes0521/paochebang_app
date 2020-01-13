@@ -3,7 +3,7 @@
  * @description: 编辑、添加司机信息
  * @Date: 2019-12-26 10:36:06
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 13:35:36
+ * @LastEditTime : 2020-01-13 18:38:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     width: 9,
-    color: GlobalStyles.themeColor,
+    color: '#ff672a',
     marginRight: 4,
   },
   input: {

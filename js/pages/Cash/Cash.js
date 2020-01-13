@@ -3,7 +3,7 @@
  * @description: 提现页面
  * @Date: 2019-12-26 17:05:08
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 15:19:00
+ * @LastEditTime : 2020-01-13 18:40:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     width: 9,
-    color: GlobalStyles.themeColor,
+    color: '#ff672a',
     marginRight: 4,
   },
   input: {

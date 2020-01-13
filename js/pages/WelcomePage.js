@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:11:20
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-10 14:00:09
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-13 21:01:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,9 +27,11 @@ class WelcomePage extends Component {
       console.log('Dimensions', Platform);
       if (Platform.OS === 'android') {
         PushUtil.appInfo(result => {
-          console.log('result', result);
+          // console.log('result', typeof JSON.parse(result));
+          let res = JSON.parse(result);
           this.props.changeUserInfo({
             deviceToken: 'deviceToken',
+            pushToken: res.pushToken,
           });
           // 跳转到首页
           NavigationUtil.resetToHomPage(this.props);

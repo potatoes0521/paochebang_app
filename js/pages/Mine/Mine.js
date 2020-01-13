@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-31 18:37:02
+ * @LastEditTime : 2020-01-13 21:20:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -116,61 +116,63 @@ class Mine extends Component {
     return (
       <View style={styles.pageWrapper}>
         <NavigationBar title={'我的'} />
-        <TouchableOpacity onPress={() => this.navigatorPage('mine')}>
-          <View style={styles.userWrapper}>
-            <TouchableOpacity onPress={this.navigatorRegister.bind(this)}>
-              <View style={styles.left}>
-                {userInfo.userId ? (
-                  <View style={styles.userImage}>
-                    <Image
-                      style={styles.imageStyle}
-                      source={{uri: userInfo.userPhoto}}
-                    />
+        <View style={styles.userWrapper}>
+          <TouchableOpacity onPress={this.navigatorRegister.bind(this)}>
+            <View style={styles.left}>
+              {userInfo.userId ? (
+                <View style={styles.userImage}>
+                  <Image
+                    style={styles.imageStyle}
+                    source={{uri: userInfo.userPhoto}}
+                  />
+                </View>
+              ) : (
+                <View style={styles.userImage}>
+                  <Image style={styles.imageStyle} source={defaultImage} />
+                </View>
+              )}
+              {userInfo.userId ? (
+                <View style={styles.userInfo}>
+                  <View style={styles.userName}>
+                    <Text style={MineStyles.labelText}>
+                      {userInfo.nickName}
+                    </Text>
                   </View>
-                ) : (
-                  <View style={styles.userImage}>
-                    <Image style={styles.imageStyle} source={defaultImage} />
+                  <View style={styles.certification}>
+                    {userInfo.realNameAuthStatus ? (
+                      <Image
+                        style={styles.certificationImage}
+                        source={{
+                          uri:
+                            'https://resource.paoche56.com/paochebang/mp_img/mine/already.png',
+                        }}
+                      />
+                    ) : (
+                      <Image
+                        style={styles.certificationImage}
+                        source={{
+                          uri:
+                            'https://resource.paoche56.com/paochebang/mp_img/mine/never.png',
+                        }}
+                      />
+                    )}
                   </View>
-                )}
-                {userInfo.userId ? (
-                  <View style={styles.userInfo}>
-                    <View style={styles.userName}>
-                      <Text style={MineStyles.labelText}>
-                        {userInfo.nickName}
-                      </Text>
-                    </View>
-                    <View style={styles.certification}>
-                      {userInfo.realNameAuthStatus ? (
-                        <Image
-                          style={styles.certificationImage}
-                          source={{
-                            uri:
-                              'https://resource.paoche56.com/paochebang/mp_img/mine/already.png',
-                          }}
-                        />
-                      ) : (
-                        <Image
-                          style={styles.certificationImage}
-                          source={{
-                            uri:
-                              'https://resource.paoche56.com/paochebang/mp_img/mine/never.png',
-                          }}
-                        />
-                      )}
-                    </View>
-                  </View>
-                ) : (
-                  <View style={styles.userInfo}>
-                    <Text style={MineStyles.labelText}>注册/登录</Text>
-                  </View>
-                )}
+                </View>
+              ) : (
+                <View style={styles.userInfo}>
+                  <Text style={MineStyles.labelText}>注册/登录</Text>
+                </View>
+              )}
+            </View>
+          </TouchableOpacity>
+          {userInfo.userId ? (
+            <TouchableOpacity onPress={() => this.navigatorPage('mine')}>
+              <View style={styles.right}>
+                <Text style={styles.icon}>&#xe61d;</Text>
               </View>
             </TouchableOpacity>
-            <View style={styles.right}>
-              <Text style={styles.icon}>&#xe61d;</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
+          ) : null}
+        </View>
         <View style={styles.menuWrapper}>
           <View style={[styles.menuList, styles.menuLine]}>
             <TouchableOpacity onPress={() => this.navigatorPage('account')}>

@@ -3,7 +3,7 @@
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
  * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 14:52:40
+ * @LastEditTime : 2020-01-13 21:17:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,7 +19,6 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import api from '../../api';
-import Actions from '../../store/action/index.js';
 import {phoneNumberPatter, verificationCodePatter} from '../../utils/patter.js';
 import Button from '../../components/Button/Button.js';
 import GlobalStyles from '../../assets/css/GlobalStyles';
@@ -28,6 +27,7 @@ import LoginLogo from '../../assets/image/register/paoche_logo.png';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
+import Actions from '../../store/action/index.js';
 import Toast from 'react-native-easy-toast';
 
 class Register extends Component {
@@ -144,7 +144,11 @@ class Register extends Component {
       this.toastRef.current.show('验证码格式有误');
       return;
     }
-    this.handleRegister(phoneNumber, verificationCode);
+    this.handleRegister(
+      phoneNumber,
+      verificationCode,
+      this.props.userInfo.pushToken,
+    );
   }
   /**
    * 注册
@@ -152,42 +156,19 @@ class Register extends Component {
    * @param {Type} verificationCode='' 验证码
    * @return void
    */
-  handleRegister(phoneNumber, verificationCode = '') {
+  handleRegister(phoneNumber, verificationCode = '', pushToken) {
     let sendData = {
       mobile: phoneNumber,
       verificationCode,
-      openId: this.props.userInfo.openId,
+      pushToken,
     };
     api.user.register(sendData, this).then(res => {
-      console.log(res, '1111');
-      // let resData = Object.assign({}, res.userInfo, res.userInfoExt);
-      // Actions.changeUserInfo(resData);
-      // this.login(this.props.userInfo.openId);
-    });
-  }
-  /**
-   * 使用openID登录
-   * @param {String} openid
-   * @return void
-   */
-  login(openId = this.props.userInfo.openId) {
-    let sendData = {
-      token: this.props.userInfo.token,
-      openId,
-    };
-    api.user.loginUseOpenID(sendData, this).then(res => {
-      if (res) {
-        console.log(res, 'res');
-        let resData = Object.assign({}, res);
-        // if (!sendData.token || sendData.token !== resData.token) {
-        //   // refreshToken.setNewToken(resData.token);
-        // }
-        Actions.changeUserInfo(resData);
-        // 给redux一个反应时间
-        // setTimeout(() => {
-        //   Taro.navigateBack()
-        // }, 300)
-      }
+      let resData = Object.assign({}, res);
+      Actions.changeUserInfo(resData);
+      this.toastRef.current.show('登录成功');
+      setTimeout(() => {
+        NavigationUtil.goBack(this.props.navigation);
+      }, 1800);
     });
   }
 
