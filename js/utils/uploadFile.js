@@ -5,7 +5,7 @@
  * @path: 引入路径
  * @Date: 2020-01-02 15:39:43
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-13 15:32:04
+ * @LastEditTime : 2020-01-13 16:10:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -43,6 +43,7 @@ export const uploadFile = ({
 }) => {
   return new Promise(resolve => {
     let imageArray = [];
+    that.businessType = businessType;
     if (openType === 'album') {
       ImagePicker.openPicker({
         multiple,

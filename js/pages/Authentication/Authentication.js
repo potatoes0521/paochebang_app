@@ -3,7 +3,7 @@
  * @description: 实名认证
  * @Date: 2019-12-26 18:17:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-13 15:34:02
+ * @LastEditTime : 2020-01-13 16:16:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -44,10 +44,10 @@ class Authentication extends Component {
       accountNum: '',
       bankName: '',
       openingBank: '', // 开户行
-      beforeImage: '',
-      afterImage: '',
-      licenseBeforeImage: '', // 驾驶证 1行驶本左面，2 右面
-      licenseAfterImage: '', // 行驶证
+      beforeImage: null,
+      afterImage: null,
+      licenseBeforeImage: null, // 驾驶证 1行驶本左面，2 右面
+      licenseAfterImage: null, // 行驶证
       realFlag: false,
     };
     this.toastRef = React.createRef();
@@ -338,13 +338,15 @@ class Authentication extends Component {
                   </View>
                   <View style={styles.imageWrapper}>
                     <View style={[styles.imageStyle, styles.imageLeft]}>
-                      <Image
-                        style={styles.swiperItemImage}
-                        resizeMode={'contain'}
-                        source={{
-                          uri: beforeImage,
-                        }}
-                      />
+                      {beforeImage && (
+                        <Image
+                          style={styles.image}
+                          resizeMode={'contain'}
+                          source={{
+                            uri: beforeImage || '',
+                          }}
+                        />
+                      )}
                       {beforeImage && !realFlag ? null : (
                         <TouchableOpacity
                           onPress={this.openActionSheet.bind(
@@ -366,13 +368,15 @@ class Authentication extends Component {
                       )}
                     </View>
                     <View style={[styles.imageStyle, styles.imageRight]}>
-                      <Image
-                        style={styles.swiperItemImage}
-                        resizeMode={'contain'}
-                        source={{
-                          uri: afterImage,
-                        }}
-                      />
+                      {afterImage && (
+                        <Image
+                          style={styles.image}
+                          resizeMode={'contain'}
+                          source={{
+                            uri: afterImage || '',
+                          }}
+                        />
+                      )}
                       {afterImage ? null : (
                         <TouchableOpacity
                           onPress={this.openActionSheet.bind(
@@ -443,13 +447,15 @@ class Authentication extends Component {
                 </View>
                 <View style={styles.imageWrapper}>
                   <View style={[styles.imageStyle, styles.imageLeft]}>
-                    <Image
-                      style={styles.swiperItemImage}
-                      resizeMode={'contain'}
-                      source={{
-                        uri: licenseBeforeImage,
-                      }}
-                    />
+                    {licenseBeforeImage && (
+                      <Image
+                        style={styles.image}
+                        resizeMode={'contain'}
+                        source={{
+                          uri: licenseBeforeImage || '',
+                        }}
+                      />
+                    )}
                     {licenseBeforeImage ? null : (
                       <TouchableOpacity
                         onPress={this.openActionSheet.bind(
@@ -471,13 +477,15 @@ class Authentication extends Component {
                     )}
                   </View>
                   <View style={[styles.imageStyle, styles.imageRight]}>
-                    <Image
-                      style={styles.swiperItemImage}
-                      resizeMode={'contain'}
-                      source={{
-                        uri: licenseAfterImage,
-                      }}
-                    />
+                    {licenseAfterImage && (
+                      <Image
+                        style={styles.image}
+                        resizeMode={'contain'}
+                        source={{
+                          uri: licenseAfterImage,
+                        }}
+                      />
+                    )}
                     {licenseAfterImage ? null : (
                       <TouchableOpacity
                         onPress={this.openActionSheet.bind(
@@ -546,7 +554,11 @@ class Authentication extends Component {
               </View>
             </View>
             <View style={styles.btnWrapper}>
-              <Button text={'提交'} type={'round'} />
+              <Button
+                onClick={this.submit.bind(this)}
+                text={'提交'}
+                type={'round'}
+              />
             </View>
           </ScrollView>
           <Toast
@@ -601,6 +613,9 @@ const styles = StyleSheet.create({
     borderColor: GlobalStyles.themeDisabled,
     borderRadius: 4,
     padding: 3,
+  },
+  image: {
+    flex: 1,
   },
   imageLeft: {
     marginRight: 9,
