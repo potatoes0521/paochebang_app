@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 15:33:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-07 11:13:01
+ * @LastEditTime : 2020-01-13 09:49:22
  * @mustParam: 必传参数
  * // pageType = delivery 交车单  pickUp 提车单
     // type=edit 编辑  see 看
@@ -290,7 +290,7 @@ class UploadImage extends Component {
             style={styles.imageItem}>
             <Image
               style={styles.image}
-              resizeMode={'contain'}
+              resizeMode={'cover'}
               source={{
                 uri: item,
               }}
@@ -316,7 +316,7 @@ class UploadImage extends Component {
             style={styles.imageItem}>
             <Image
               style={styles.image}
-              resizeMode={'contain'}
+              resizeMode={'cover'}
               source={{
                 uri: item,
               }}
@@ -342,7 +342,7 @@ class UploadImage extends Component {
             style={styles.imageItem}>
             <Image
               style={styles.image}
-              resizeMode={'contain'}
+              resizeMode={'cover'}
               source={{
                 uri: item,
               }}
