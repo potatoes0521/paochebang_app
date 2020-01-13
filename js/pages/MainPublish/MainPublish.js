@@ -3,7 +3,7 @@
  * @description: 我发布的卖板和空位
  * @Date: 2019-12-27 11:21:19
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 15:37:21
+ * @LastEditTime : 2020-01-13 14:35:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,9 +21,9 @@ class MainPublish extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageType: '',
       title: '',
     };
+    this.pageType = {};
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
     });
@@ -33,9 +33,9 @@ class MainPublish extends Component {
     const {navigation} = this.props;
     const {state} = navigation;
     const {params} = state;
-    if (params) {
-      this.getPageInfo(params);
-    }
+    console.log('params', params);
+    this.pageType = params.pageType;
+    this.handleTitle(this.pageType);
     this.backPress.componentDidMount();
   }
 
@@ -46,15 +46,12 @@ class MainPublish extends Component {
     NavigationUtil.goBack(this.props.navigation);
     return true;
   }
-  getPageInfo(params) {
-    this.setState({
-      pageType: params.pageType,
-    });
-    if (params.pageType === 'selling') {
+  handleTitle(pageType) {
+    if (pageType === 'selling') {
       this.setState({
         title: '卖板信息',
       });
-    } else {
+    } else if (pageType === 'vacancy') {
       this.setState({
         title: '空位信息',
       });
@@ -71,11 +68,7 @@ class MainPublish extends Component {
             leftViewShow={true}
             title={title}
           />
-          {this.state.pageType === 'selling' ? (
-            <SellingList />
-          ) : (
-            <VacancyList />
-          )}
+          {this.pageType === 'selling' ? <SellingList /> : <VacancyList />}
         </View>
       </SafeAreaViewPlus>
     );

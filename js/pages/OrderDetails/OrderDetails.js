@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-06 15:24:46
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-13 15:01:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -221,8 +221,22 @@ class OrderDetails extends Component {
         );
         break;
       case 'confirmDriverInfo': //确认司机信息
+        NavigationUtil.goPage(
+          {
+            type: 'edit',
+            orderCode,
+          },
+          'DriverConfirmPage',
+        );
         break;
       case 'seeDriverInfo': //查看司机信息
+        NavigationUtil.goPage(
+          {
+            type: 'see',
+            orderCode,
+          },
+          'DriverConfirmPage',
+        );
         break;
       case 'confirmLocation':
         break;

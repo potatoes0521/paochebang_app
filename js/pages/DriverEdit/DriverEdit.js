@@ -3,7 +3,7 @@
  * @description: 编辑、添加司机信息
  * @Date: 2019-12-26 10:36:06
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 15:30:12
+ * @LastEditTime : 2020-01-13 13:35:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -45,7 +45,6 @@ class DriverEdit extends Component {
       carNum: '',
       carTypeDesc: '',
       carTypeList: [],
-      carTypeName: [],
     };
     this.pageParams = {};
     this.driverInfo = {};
@@ -104,10 +103,8 @@ class DriverEdit extends Component {
       if (!res.data) {
         return;
       }
-      const carTypeName = res.data.map(item => item.carInfoName);
       this.setState({
         carTypeList: res.data,
-        carTypeName,
       });
     });
   }
@@ -244,9 +241,11 @@ class DriverEdit extends Component {
       merchantName,
       carNum,
       carTypeDesc,
-      carTypeName,
+      carTypeList,
     } = this.state;
     const {theme, navigation} = this.props;
+    const carTypeName = carTypeList.map(item => item.carInfoName);
+    carTypeName.push('取消');
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -343,7 +342,6 @@ class DriverEdit extends Component {
           {/* 动作指示器 */}
           <ActionSheet
             ref={o => (this.ActionSheet = o)}
-            title={'请选择车辆类型'}
             options={carTypeName}
             tintColor={GlobalStyles.themeFontColor}
             cancelButtonIndex={carTypeName.length - 1}

@@ -3,7 +3,7 @@
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-02 15:19:42
+ * @LastEditTime : 2020-01-13 13:37:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -39,7 +39,6 @@ class MineEdit extends Component {
       carNum: '',
       carTypeDesc: '',
       carTypeList: [],
-      carTypeName: [],
     };
     this.pageParams = {};
     this.toastRef = React.createRef();
@@ -91,10 +90,8 @@ class MineEdit extends Component {
       if (!res.data) {
         return;
       }
-      const carTypeName = res.data.map(item => item.carInfoName);
       this.setState({
         carTypeList: res.data,
-        carTypeName,
       });
     });
   }
@@ -162,9 +159,11 @@ class MineEdit extends Component {
       idCard,
       carNum,
       carTypeDesc,
-      carTypeName,
+      carTypeList,
     } = this.state;
     const {theme, navigation} = this.props;
+    const carTypeName = carTypeList.map(item => item.carInfoName);
+    carTypeName.push('取消');
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -226,7 +225,6 @@ class MineEdit extends Component {
           {/* 动作指示器 */}
           <ActionSheet
             ref={o => (this.ActionSheet = o)}
-            title={'请选择车辆类型'}
             options={carTypeName}
             tintColor={GlobalStyles.themeFontColor}
             cancelButtonIndex={carTypeName.length - 1}

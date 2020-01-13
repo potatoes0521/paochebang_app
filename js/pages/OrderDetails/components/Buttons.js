@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-27 14:52:01
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 15:17:50
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-13 15:07:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   btnRight: {
-    marginRight: 16,
+    marginLeft: 16,
   },
 });
 

@@ -3,7 +3,7 @@
  * @description: 账户体系
  * @Date: 2019-12-25 15:25:16
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 16:52:39
+ * @LastEditTime : 2020-01-13 12:46:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -208,7 +208,7 @@ class AccountDetails extends Component {
                   <EmptyList {...this.props} pageType={'account'} />
                 )}
                 keyExtractor={data => {
-                  return data.accountId + 'account';
+                  return data.billId + 'account';
                 }}
               />
             </View>

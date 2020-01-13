@@ -3,7 +3,7 @@
  * @description: 常跑线路
  * @Date: 2019-12-27 15:19:24
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-08 17:01:08
+ * @LastEditTime : 2020-01-13 17:47:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,7 +15,6 @@ import {
   Image,
   TouchableOpacity,
   DeviceEventEmitter,
-  Alert,
 } from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
@@ -27,6 +26,7 @@ import Button from '../../components/Button/Button.js';
 import Toast from 'react-native-easy-toast';
 import ArrowImage from '../../assets/image/line/arrow.png';
 import EmptyList from '../../components/EmptyList/EmptyList.js';
+import ShowModal from '../../components/ShowModal/ShowModal.js';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import api from '../../api';
 
@@ -36,7 +36,10 @@ class Line extends Component {
     this.state = {
       routeNumber: 0,
       lineList: [],
+      isShow: false,
+      lineId: '',
     };
+    this.lineId = '';
     this.toastRef = React.createRef();
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
@@ -87,7 +90,6 @@ class Line extends Component {
    * @return void
    */
   editLine(item) {
-    console.log('edit', item);
     NavigationUtil.goPage({pageType: 'edit', lineItem: item}, 'LineEditPage');
   }
   /**
@@ -98,16 +100,18 @@ class Line extends Component {
     NavigationUtil.goPage({}, 'LineEditPage');
   }
   showAlert(item) {
-    Alert.alert('提示', '是否删除选中的线路', [
-      {
-        text: '取消',
-        onPress: () => console.log('点击取消'),
-      },
-      {
-        text: '确定',
-        onPress: this.deleteLine.bind(this, item),
-      },
-    ]);
+    this.setState({
+      isShow: true,
+      lineId: item,
+    });
+  }
+  closeModal(type) {
+    this.setState({
+      isShow: false,
+    });
+    if (type === 'submit') {
+      this.deleteLine(this.state.lineId);
+    }
   }
   /**
    * 删除线路
@@ -124,7 +128,7 @@ class Line extends Component {
   }
   render() {
     const {theme, navigation} = this.props;
-    let {routeNumber, lineList} = this.state;
+    let {routeNumber, lineList, isShow} = this.state;
     const lineListData =
       lineList &&
       lineList.map(item => {
@@ -201,6 +205,7 @@ class Line extends Component {
             position={'center'}
             defaultCloseDelay={3000}
           />
+          {isShow ? <ShowModal onClick={this.closeModal.bind(this)} /> : null}
         </View>
       </SafeAreaViewPlus>
     );
