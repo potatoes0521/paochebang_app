@@ -5,7 +5,7 @@
  * @path: 引入路径
  * @Date: 2020-01-02 15:39:43
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-07 11:11:54
+ * @LastEditTime : 2020-01-13 15:32:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,7 +30,7 @@ import api from '../api/index';
 /**
  * 函数功能描述
  * @param {Boolean} multiple=false 是否多选
- * @param {String} openType='album' 是否从相册选择
+ * @param {String} openType='album' 是否从相册选择 camera
  * @param {Object} that this
  * @param {Number} businessType=1 文件类型
  * @return void
@@ -50,12 +50,17 @@ export const uploadFile = ({
         // includeBase64: true,
       })
         .then(images => {
-          imageArray = images;
+          if (multiple) {
+            imageArray = images;
+          } else {
+            imageArray[0] = images;
+          }
           uploadMultipleFiles(imageArray, that, businessType)
             .then(filePathArray => {
               resolve(filePathArray);
             })
             .catch(err => {
+              this.toastRef.current.show('上传图片失败');
               console.log('error', err);
             });
         })
@@ -64,11 +69,10 @@ export const uploadFile = ({
         });
     } else if (openType === 'camera') {
       ImagePicker.openCamera({
-        compressImageQuality: 0.4,
+        compressImageQuality: 0.3,
       })
         .then(images => {
-          console.log(images);
-          imageArray = images;
+          imageArray[0] = images;
           uploadMultipleFiles(imageArray, that, businessType).then(
             filePathArray => {
               resolve(filePathArray);
@@ -124,6 +128,7 @@ function uploadHandle({
     // });
   }
   let fd = new FormData();
+  console.log('filePathsArray', filePathsArray);
   fd.append('file', {
     uri: filePathsArray[count].path,
     type: 'multipart/form-data',
@@ -138,6 +143,7 @@ function uploadHandle({
       let sendData = {
         virthPath: filePath,
       };
+      console.log('res', res);
       const url = await splicingURL(sendData, that);
       completeFilePathsArray.push(url.data);
       if (count === filePathsArray.length) {
