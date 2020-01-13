@@ -3,7 +3,7 @@
  * @description: 市场
  * @Date: 2019-11-22 16:11:20
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-02 11:22:48
+ * @LastEditTime : 2020-01-13 20:17:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,18 +19,33 @@ import SellingList from './components/SellingList.js';
 import VacancyList from './components/VacancyList.js';
 import NavigationUtils from '../../navigator/NavigationUtils';
 import FloatPublishBtn from '../../components/FloatPublishBtn/FloatPublishBtn';
+import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
+
 class Information extends Component {
   constructor(props) {
     super(props);
     this.state = {
       tabType: 'selling',
     };
+    this.backPress = new BackPressComponent({
+      backPress: () => this.onBackPress(),
+    });
     // this.tabType = 'selling';
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.backPress.componentDidMount();
+  }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.backPress.componentWillUnmount();
+  }
+
+  onBackPress() {
+    const {navigation} = this.props;
+    navigation.goBack();
+    return true;
+  }
 
   render() {
     const {theme, navigation} = this.props;
