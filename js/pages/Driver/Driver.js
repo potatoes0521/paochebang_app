@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 17:15:17
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-13 20:41:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -277,7 +277,7 @@ class Driver extends Component {
                 <EmptyList {...this.props} pageType={'driver'} />
               )}
               keyExtractor={data => {
-                return data.driverId + 'driver';
+                return data.userId + 'driver';
               }}
             />
           </View>
