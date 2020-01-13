@@ -290,7 +290,7 @@ class UploadImage extends Component {
             style={styles.imageItem}>
             <Image
               style={styles.image}
-              resizeMode={'cover'}
+              resizeMode={'contain'}
               source={{
                 uri: item,
               }}
@@ -316,7 +316,7 @@ class UploadImage extends Component {
             style={styles.imageItem}>
             <Image
               style={styles.image}
-              resizeMode={'cover'}
+              resizeMode={'contain'}
               source={{
                 uri: item,
               }}
@@ -342,7 +342,7 @@ class UploadImage extends Component {
             style={styles.imageItem}>
             <Image
               style={styles.image}
-              resizeMode={'cover'}
+              resizeMode={'contain'}
               source={{
                 uri: item,
               }}
