@@ -4,7 +4,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 10:21:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-09 20:40:11
+ * @LastEditTime : 2020-01-13 18:18:41
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -50,6 +50,14 @@ class HttpRequest {
     console.log(JSON.stringify(data), 'sign=' + sign, url);
     const {userInfo} = that.props || {};
     const headerUserLogin = JSON.stringify({
+      token: userInfo.token || '',
+      mobile: userInfo.mobile || '',
+      openId: userInfo.openId || '',
+      userId: userInfo.userId || '', // 常用请求全部放在请求头上
+      unionId: userInfo.unionId || '',
+      userType: userInfo.userType || '', // 0 驿站人员  1 自主注册   2 驿站人员添加客户 3 运力  4 司机
+    });
+    console.log('headerUserLogin', {
       token: userInfo.token,
       mobile: userInfo.mobile,
       openId: userInfo.openId,
@@ -116,8 +124,8 @@ class HttpRequest {
           });
           return data;
         } else {
-          Promise.reject(res, 'xxxxxx');
-          console.error('error 接口错误');
+          // Promise.reject(res, 'xxxxxx');
+          // console.error('error 接口错误');
           that.setState({
             isLoading: false,
           });
