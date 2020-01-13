@@ -2,13 +2,22 @@
  * @Author: guorui
  * @description: 实名认证
  * @Date: 2019-12-26 18:17:17
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-04 13:40:42
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-13 16:16:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, ImageBackground, TextInput} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  ImageBackground,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import {connect} from 'react-redux';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import {validateIdCard, realNamePatter} from '../../utils/patter';
@@ -21,6 +30,10 @@ import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import Toast from 'react-native-easy-toast';
 import api from '../../api/index';
+import {defaultResourceImgURL} from '../../config/requestConfig';
+import ActionSheet from '../../components/ActionSheet/ActionSheet';
+import {uploadFile} from '../../utils/uploadFile.js';
+
 class Authentication extends Component {
   constructor(props) {
     super(props);
@@ -31,16 +44,18 @@ class Authentication extends Component {
       accountNum: '',
       bankName: '',
       openingBank: '', // 开户行
-      beforeImage: '',
-      afterImage: '',
-      licenseBeforeImage: '', // 驾驶证 1行驶本左面，2 右面
-      licenseAfterImage: '', // 行驶证
+      beforeImage: null,
+      afterImage: null,
+      licenseBeforeImage: null, // 驾驶证 1行驶本左面，2 右面
+      licenseAfterImage: null, // 行驶证
       realFlag: false,
     };
     this.toastRef = React.createRef();
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
     });
+    this.chooseType = '';
+    this.businessType = 0;
   }
   componentDidMount() {
     let {userInfo} = this.props;
@@ -62,34 +77,35 @@ class Authentication extends Component {
    */
   handleAlreadyAuthorize() {
     api.user.getUserAuthorizeMsg({}, this).then(res => {
-      if (!res) {
+      if (!res.data) {
         return;
       }
+      const data = res.data;
       let licenseBeforeImage = '';
       let licenseAfterImage = '';
-      if (res && res.imageList) {
+      if (data && data.imageList) {
         licenseBeforeImage =
-          res.imageList
+          data.imageList
             .filter(item => +item.imgType === 1)
             .map(item => {
               return item.imageUrl;
             })[0] || '';
         licenseAfterImage =
-          res.imageList
+          data.imageList
             .filter(item => +item.imgType === 2)
             .map(item => {
               return item.imageUrl;
             })[0] || '';
       }
       this.setState({
-        beforeImage: res.idCardFace || '',
-        afterImage: res.idCardBack || '',
-        idCard: res.idCard || '',
-        realName: res.realName || '',
-        bankName: res.bankName || '', // 银行类型
-        openingBank: res.openingBank || '', // 开户行
-        accountNum: res.accountNum || '', // 银行卡号
-        accountHolder: res.accountHolder || '', // 开户人
+        beforeImage: data.idCardFace || '',
+        afterImage: data.idCardBack || '',
+        idCard: data.idCard || '',
+        realName: data.realName || '',
+        bankName: data.bankName || '', // 银行类型
+        openingBank: data.openingBank || '', // 开户行
+        accountNum: data.accountNum || '', // 银行卡号
+        accountHolder: data.accountHolder || '', // 开户人
         licenseBeforeImage, // 驾驶证
         licenseAfterImage, // 行驶证
       });
@@ -143,6 +159,16 @@ class Authentication extends Component {
   bankNameOnInput(value) {
     this.setState({
       bankName: value,
+    });
+  }
+  /**
+   * 输入支行
+   * @param {Type} value 参数描述
+   * @return void
+   */
+  openingBankOnInput(value) {
+    this.setState({
+      openingBank: value,
     });
   }
   /**
@@ -220,7 +246,7 @@ class Authentication extends Component {
       accountHolder,
     };
     api.user.realNameAuthentication(sendData, this).then(res => {
-      if (!res) {
+      if (!res.data) {
         return;
       }
       this.toastRef.current.show('实名认证成功');
@@ -239,9 +265,58 @@ class Authentication extends Component {
       }, 1800);
     });
   }
+  openActionSheet(type) {
+    this.chooseType = type;
+    if (type === 'afterImage' || type === 'beforeImage') {
+      this.businessType = 1;
+    } else {
+      this.businessType = 5;
+    }
+    this.ActionSheet.show();
+  }
+  chooseActionSheet(index) {
+    if (index === 2) {
+      return;
+    }
+    let type = '';
+    if (index === 0) {
+      type = 'camera';
+    } else if (index === 1) {
+      type = 'album';
+    }
+    this.chooseImage(type);
+  }
+  chooseImage(type = 'album') {
+    uploadFile({
+      multiple: false,
+      that: this,
+      businessType: this.businessType,
+      openType: type,
+    }).then(res => {
+      let data = {};
+      data[this.chooseType] = [...res];
+      console.log('res', res, data);
+    });
+  }
   render() {
-    const {theme, navigation} = this.props;
-    let {realName, idCard, accountHolder, accountNum, bankName} = this.state;
+    const {theme, navigation, userInfo} = this.props;
+    let {
+      beforeImage,
+      afterImage,
+      idCard,
+      realName,
+      realFlag,
+      bankName,
+      openingBank,
+      accountNum,
+      accountHolder,
+      licenseBeforeImage, // 正面照片
+      licenseAfterImage, // 背面照片
+    } = this.state;
+    // let showEditIdCard = userInfo.realNameAuthStatus >= 0;
+    // let showEditLicenseCard = userInfo.realNameAuthStatus >= 1;
+    let showEditIdCard = 1;
+    let showEditLicenseCard = 1;
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -250,154 +325,255 @@ class Authentication extends Component {
             leftViewShow={true}
             title={'实名认证'}
           />
-          <View style={styles.topWrapper}>
-            <View style={styles.tipsWrapper}>
-              <Text style={styles.tipsStyle}>
-                拍摄二代身份证原件，请确保图片清晰，四角完整
-              </Text>
-            </View>
-            <View style={styles.imageWrapper}>
-              <View style={[styles.imageStyle, styles.marginRight]}>
-                <View style={styles.bgStyle}>
-                  <ImageBackground
-                    style={styles.bgImgStyle}
-                    source={{
-                      uri:
-                        'https://resource.paoche56.com/paochebang/mp_img/id_card/id_card_before.png',
-                    }}
-                  />
-                </View>
-                <View style={styles.bgWrapper}>
-                  <View style={styles.bgIcon}>
-                    <Text style={styles.iconStyle}>&#xe668;</Text>
+          <ScrollView style={styles.wrapper}>
+            {showEditIdCard && (
+              <>
+                <View style={styles.msgWrapper}>
+                  <View style={styles.tipsWrapper}>
+                    <Text style={styles.tipsStyle}>
+                      {userInfo.realNameAuthStatus
+                        ? '身份证照片'
+                        : '拍摄二代身份证原件，请确保图片清晰，四角完整'}
+                    </Text>
                   </View>
-                  <Text style={styles.textStyle}>拍摄人像页</Text>
+                  <View style={styles.imageWrapper}>
+                    <View style={[styles.imageStyle, styles.imageLeft]}>
+                      {beforeImage && (
+                        <Image
+                          style={styles.image}
+                          resizeMode={'contain'}
+                          source={{
+                            uri: beforeImage || '',
+                          }}
+                        />
+                      )}
+                      {beforeImage && !realFlag ? null : (
+                        <TouchableOpacity
+                          onPress={this.openActionSheet.bind(
+                            this,
+                            'beforeImage',
+                          )}
+                          style={styles.bgStyle}>
+                          <ImageBackground
+                            style={styles.bgImgStyle}
+                            source={{
+                              uri: `${defaultResourceImgURL}id_card/id_card_before.png`,
+                            }}>
+                            <View style={styles.bgIcon}>
+                              <Text style={styles.iconStyle}>&#xe668;</Text>
+                            </View>
+                            <Text style={styles.textStyle}>拍摄人像页</Text>
+                          </ImageBackground>
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                    <View style={[styles.imageStyle, styles.imageRight]}>
+                      {afterImage && (
+                        <Image
+                          style={styles.image}
+                          resizeMode={'contain'}
+                          source={{
+                            uri: afterImage || '',
+                          }}
+                        />
+                      )}
+                      {afterImage ? null : (
+                        <TouchableOpacity
+                          onPress={this.openActionSheet.bind(
+                            this,
+                            'afterImage',
+                          )}
+                          style={styles.bgStyle}>
+                          <ImageBackground
+                            style={styles.bgImgStyle}
+                            source={{
+                              uri: `${defaultResourceImgURL}id_card/id_card_after.png`,
+                            }}>
+                            <View style={styles.bgIcon}>
+                              <Text style={styles.iconStyle}>&#xe668;</Text>
+                            </View>
+                            <Text style={styles.textStyle}>拍摄国徽页</Text>
+                          </ImageBackground>
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.idCardWrapper}>
+                  <View style={[styles.cardItem, styles.line]}>
+                    <Text style={MineStyles.contentText}>真实姓名</Text>
+                    <View style={styles.inputWrapper}>
+                      {userInfo.realNameAuthStatus ? (
+                        <Text>{realName}</Text>
+                      ) : (
+                        <TextInput
+                          style={[styles.input, MineStyles.contentText]}
+                          placeholder="请输入真实姓名"
+                          maxLength={8}
+                          onChangeText={this.realNameOnInput.bind(this)}
+                          value={realName}
+                        />
+                      )}
+                    </View>
+                  </View>
+                  <View style={styles.cardItem}>
+                    <Text style={MineStyles.contentText}>身份证号</Text>
+                    <View style={styles.inputWrapper}>
+                      {userInfo.realNameAuthStatus ? (
+                        <Text>{idCard}</Text>
+                      ) : (
+                        <TextInput
+                          style={[styles.input, MineStyles.contentText]}
+                          placeholder="请输入身份证号"
+                          maxLength={20}
+                          onChangeText={this.idCardOnInput.bind(this)}
+                          value={idCard}
+                        />
+                      )}
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.wrapperLine} />
+              </>
+            )}
+            {showEditLicenseCard && (
+              <View style={styles.msgWrapper}>
+                <View style={styles.tipsWrapper}>
+                  <Text style={styles.tipsStyle}>
+                    {userInfo.realNameAuthStatus
+                      ? '行驶证照片'
+                      : '拍摄行驶证原件，请确保图片清晰，四角完整'}
+                  </Text>
+                </View>
+                <View style={styles.imageWrapper}>
+                  <View style={[styles.imageStyle, styles.imageLeft]}>
+                    {licenseBeforeImage && (
+                      <Image
+                        style={styles.image}
+                        resizeMode={'contain'}
+                        source={{
+                          uri: licenseBeforeImage || '',
+                        }}
+                      />
+                    )}
+                    {licenseBeforeImage ? null : (
+                      <TouchableOpacity
+                        onPress={this.openActionSheet.bind(
+                          this,
+                          'licenseBeforeImage',
+                        )}
+                        style={styles.bgStyle}>
+                        <ImageBackground
+                          style={styles.bgImgStyle}
+                          source={{
+                            uri: `${defaultResourceImgURL}id_card/id_card_before_license.png`,
+                          }}>
+                          <View style={styles.bgIcon}>
+                            <Text style={styles.iconStyle}>&#xe668;</Text>
+                          </View>
+                          <Text style={styles.textStyle}>拍摄驾驶证正面</Text>
+                        </ImageBackground>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                  <View style={[styles.imageStyle, styles.imageRight]}>
+                    {licenseAfterImage && (
+                      <Image
+                        style={styles.image}
+                        resizeMode={'contain'}
+                        source={{
+                          uri: licenseAfterImage,
+                        }}
+                      />
+                    )}
+                    {licenseAfterImage ? null : (
+                      <TouchableOpacity
+                        onPress={this.openActionSheet.bind(
+                          this,
+                          'licenseAfterImage',
+                        )}
+                        style={styles.bgStyle}>
+                        <ImageBackground
+                          style={styles.bgImgStyle}
+                          source={{
+                            uri: `${defaultResourceImgURL}id_card/id_card_after_license.png`,
+                          }}>
+                          <View style={styles.bgIcon}>
+                            <Text style={styles.iconStyle}>&#xe668;</Text>
+                          </View>
+                          <Text style={styles.textStyle}>拍摄驾驶证副页</Text>
+                        </ImageBackground>
+                      </TouchableOpacity>
+                    )}
+                  </View>
                 </View>
               </View>
-              <View style={styles.imageStyle}>
-                <View style={styles.bgStyle}>
-                  <ImageBackground
-                    style={styles.bgImgStyle}
-                    source={{
-                      uri:
-                        'https://resource.paoche56.com/paochebang/mp_img/id_card/id_card_after.png',
-                    }}
-                  />
-                </View>
-                <View style={styles.bgWrapper}>
-                  <View style={styles.bgIcon}>
-                    <Text style={styles.iconStyle}>&#xe668;</Text>
-                  </View>
-                  <Text style={styles.textStyle}>拍摄国徽页</Text>
-                </View>
-              </View>
-            </View>
+            )}
+            <View style={styles.wrapperLine} />
             <View style={styles.idCardWrapper}>
               <View style={[styles.cardItem, styles.line]}>
-                <Text style={MineStyles.contentText}>真实姓名</Text>
+                <Text style={MineStyles.contentText}>收款人姓名</Text>
                 <TextInput
                   style={[styles.input, MineStyles.contentText]}
-                  placeholder="请输入真实姓名"
+                  placeholder="请输入收款人姓名"
                   maxLength={8}
-                  onChangeText={this.realNameOnInput.bind(this)}
-                  value={realName}
+                  onChangeText={this.accountHolderOnInput.bind(this)}
+                  value={accountHolder}
+                />
+              </View>
+              <View style={[styles.cardItem, styles.line]}>
+                <Text style={MineStyles.contentText}>银行卡号</Text>
+                <TextInput
+                  style={[styles.input, MineStyles.contentText]}
+                  placeholder="请输入银行卡号"
+                  maxLength={20}
+                  keyboardType={'number-pad'}
+                  onChangeText={this.accountNumOnInput.bind(this)}
+                  value={accountNum}
                 />
               </View>
               <View style={styles.cardItem}>
-                <Text style={MineStyles.contentText}>身份证号</Text>
+                <Text style={MineStyles.contentText}>银行类型</Text>
                 <TextInput
                   style={[styles.input, MineStyles.contentText]}
-                  placeholder="请输入身份证号"
+                  placeholder="请输入银行类型"
                   maxLength={20}
-                  onChangeText={this.idCardOnInput.bind(this)}
-                  value={idCard}
+                  onChangeText={this.bankNameOnInput.bind(this)}
+                  value={bankName}
+                />
+              </View>
+              <View style={styles.cardItem}>
+                <Text style={MineStyles.contentText}>支行名称</Text>
+                <TextInput
+                  style={[styles.input, MineStyles.contentText]}
+                  placeholder="请输入支行名称"
+                  maxLength={20}
+                  onChangeText={this.openingBankOnInput.bind(this)}
+                  value={openingBank}
                 />
               </View>
             </View>
-          </View>
-          <View style={styles.middleWrapper}>
-            <View style={styles.tipsWrapper}>
-              <Text style={styles.tipsStyle}>
-                拍摄驾驶证原件，请确保图片清晰，四角完整
-              </Text>
-            </View>
-            <View style={styles.imageWrapper}>
-              <View style={[styles.imageStyle, styles.marginRight]}>
-                <View style={styles.bgStyle}>
-                  <ImageBackground
-                    style={styles.bgImgStyle}
-                    source={{
-                      uri:
-                        'https://resource.paoche56.com/paochebang/mp_img/id_card/id_card_before_license.png',
-                    }}
-                  />
-                </View>
-                <View style={styles.bgWrapper}>
-                  <View style={styles.bgIcon}>
-                    <Text style={styles.iconStyle}>&#xe668;</Text>
-                  </View>
-                  <Text style={styles.textStyle}>拍摄驾驶证正面</Text>
-                </View>
-              </View>
-              <View style={styles.imageStyle}>
-                <View style={styles.bgStyle}>
-                  <ImageBackground
-                    style={styles.bgImgStyle}
-                    source={{
-                      uri:
-                        'https://resource.paoche56.com/paochebang/mp_img/id_card/id_card_after_license.png',
-                    }}
-                  />
-                </View>
-                <View style={styles.bgWrapper}>
-                  <View style={styles.bgIcon}>
-                    <Text style={styles.iconStyle}>&#xe668;</Text>
-                  </View>
-                  <Text style={styles.textStyle}>拍摄驾驶证副页</Text>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View style={styles.bottomWrapper}>
-            <View style={[styles.cardItem, styles.line]}>
-              <Text style={MineStyles.contentText}>收款人姓名</Text>
-              <TextInput
-                style={[styles.input, MineStyles.contentText]}
-                placeholder="请输入收款人姓名"
-                maxLength={8}
-                onChangeText={this.accountHolderOnInput.bind(this)}
-                value={accountHolder}
+            <View style={styles.btnWrapper}>
+              <Button
+                onClick={this.submit.bind(this)}
+                text={'提交'}
+                type={'round'}
               />
             </View>
-            <View style={[styles.cardItem, styles.line]}>
-              <Text style={MineStyles.contentText}>银行卡号</Text>
-              <TextInput
-                style={[styles.input, MineStyles.contentText]}
-                placeholder="请输入银行卡号"
-                maxLength={20}
-                keyboardType={'number-pad'}
-                onChangeText={this.accountNumOnInput.bind(this)}
-                value={accountNum}
-              />
-            </View>
-            <View style={styles.cardItem}>
-              <Text style={MineStyles.contentText}>银行类型</Text>
-              <TextInput
-                style={[styles.input, MineStyles.contentText]}
-                placeholder="请输入银行类型"
-                maxLength={20}
-                onChangeText={this.bankNameOnInput.bind(this)}
-                value={bankName}
-              />
-            </View>
-          </View>
-          <View style={styles.btnWrapper}>
-            <Button text={'提交'} type={'round'} />
-          </View>
+          </ScrollView>
           <Toast
             ref={this.toastRef}
             position={'center'}
             defaultCloseDelay={3000}
+          />
+          {/* 动作指示器 */}
+          <ActionSheet
+            ref={o => (this.ActionSheet = o)}
+            title={'请选择结算方式'}
+            options={['相机', '相册', '取消']}
+            tintColor={GlobalStyles.themeFontColor}
+            cancelButtonIndex={2}
+            onPress={this.chooseActionSheet.bind(this)}
           />
         </View>
       </SafeAreaViewPlus>
@@ -410,31 +586,26 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
-  topWrapper: {
-    paddingTop: 12,
-    paddingLeft: 24,
-    borderBottomWidth: 10,
-    borderBottomColor: '#F7F7F7',
+  msgWrapper: {
+    paddingHorizontal: 24,
     backgroundColor: '#fff',
   },
-  middleWrapper: {
-    paddingVertical: 12,
-    paddingLeft: 24,
-    borderBottomWidth: 10,
-    borderBottomColor: '#F7F7F7',
-    backgroundColor: '#fff',
+  wrapperLine: {
+    height: 10,
+    backgroundColor: '#f7f7f7',
   },
   tipsStyle: {
     fontSize: 13,
+    paddingTop: 12,
     color: GlobalStyles.themeDisabled,
   },
   imageWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 12,
-    paddingRight: 24,
+    paddingVertical: 12,
   },
   imageStyle: {
+    position: 'relative',
     flex: 1,
     height: 89,
     borderStyle: 'dashed',
@@ -443,24 +614,28 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 3,
   },
-  marginRight: {
-    marginRight: 15,
+  image: {
+    flex: 1,
+  },
+  imageLeft: {
+    marginRight: 9,
+  },
+  imageRight: {
+    marginLeft: 9,
   },
   bgStyle: {
     flex: 1,
+    padding: 3,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0,
   },
   bgImgStyle: {
     flex: 1,
-  },
-  bgWrapper: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    margin: 0,
-    right: 0,
-    zIndex: 2,
     alignItems: 'center',
-    paddingVertical: 16,
+    justifyContent: 'center',
   },
   bgIcon: {
     width: 32,
@@ -482,14 +657,15 @@ const styles = StyleSheet.create({
     color: GlobalStyles.themeHColor,
   },
   idCardWrapper: {
-    marginTop: 20,
+    paddingLeft: 24,
+    backgroundColor: '#fff',
   },
   cardItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    height: 54,
     paddingRight: 24,
-    paddingVertical: 16,
   },
   input: {
     padding: 0,
@@ -498,10 +674,6 @@ const styles = StyleSheet.create({
   line: {
     borderBottomWidth: 1,
     borderBottomColor: '#f5f5f5',
-  },
-  bottomWrapper: {
-    paddingLeft: 24,
-    backgroundColor: '#fff',
   },
   btnWrapper: {
     height: 40,

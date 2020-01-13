@@ -3,17 +3,18 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:11:20
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-10 10:51:14
+ * @LastEditTime : 2020-01-10 14:00:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Platform} from 'react-native';
 import NavigationUtil from '../navigator/NavigationUtils';
 import SplashScreen from 'react-native-splash-screen';
 import {connect} from 'react-redux';
 import SafeAreaViewPlus from '../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import PushUtil from '../../native/PushUtil';
+import Actions from '../store/action/index.js';
 
 class WelcomePage extends Component {
   // constructor(props) {
@@ -23,14 +24,17 @@ class WelcomePage extends Component {
   componentDidMount() {
     this.timer = setTimeout(() => {
       SplashScreen.hide();
-      // PushUtil.appInfo(result => {
-      //   console.log('result', result);
-      // });
-      // PushUtil.getDeviceToken().then(res => {
-      //   console.log('res', res);
-      // });
-      // 跳转到首页
-      NavigationUtil.resetToHomPage(this.props);
+      console.log('Dimensions', Platform);
+      if (Platform.OS === 'android') {
+        PushUtil.appInfo(result => {
+          console.log('result', result);
+          this.props.changeUserInfo({
+            deviceToken: 'deviceToken',
+          });
+          // 跳转到首页
+          NavigationUtil.resetToHomPage(this.props);
+        });
+      }
     }, 1000);
   }
 
@@ -40,7 +44,6 @@ class WelcomePage extends Component {
 
   render() {
     let {theme} = this.props;
-    console.log('theme', theme);
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -56,7 +59,17 @@ const mapStateToProps = state => {
     theme: state.theme.theme,
   };
 };
-export default connect(mapStateToProps)(WelcomePage);
+// 如果需要引入actions
+const mapDispatchToProps = dispatch => {
+  return {
+    changeUserInfo: userInfo => dispatch(Actions.changeUserInfo(userInfo)),
+  };
+};
+// 如果不需要引入state  connect第一个参数可以放null 第二个参数就是放 mapDispatchToProps
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(WelcomePage);
 
 const styles = StyleSheet.create({
   pageWrapper: {

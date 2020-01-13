@@ -3,10 +3,10 @@
  * @description: 请填写描述信息
  * @Date: 2019-08-15 15:26:09
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-02 11:03:00
+ * @LastEditTime : 2020-01-10 14:02:20
  */
 
-import Types from '../../type';
+import Types from '../../type/index';
 
 // import api from '@api/index.js'
 
@@ -46,7 +46,7 @@ defaultState.userInfo = {
 
 export default function onAction(state = defaultState, action) {
   switch (action.type) {
-    case Types.CHANG_USER_INFO: // 修改用户信息
+    case Types.CHANGE_USER_INFO: // 修改用户信息
       if (!action.data) {
         return;
       }

@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 15:33:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-07 11:13:01
+ * @LastEditTime : 2020-01-13 10:46:53
  * @mustParam: 必传参数
  * // pageType = delivery 交车单  pickUp 提车单
     // type=edit 编辑  see 看
@@ -18,7 +18,6 @@ import {
   Image,
   PixelRatio,
   TouchableOpacity,
-  Modal,
   ScrollView,
 } from 'react-native';
 import {connect} from 'react-redux';
