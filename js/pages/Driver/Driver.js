@@ -3,7 +3,7 @@
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-14 17:25:39
+ * @LastEditTime : 2020-01-14 19:26:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -130,7 +130,7 @@ class Driver extends Component {
       if (!data) {
         return;
       }
-      if (!data && this.state.selectParam) {
+      if (!data.length && this.state.selectParam) {
         this.toastRef.current.show('没搜索到结果');
         return;
       }
