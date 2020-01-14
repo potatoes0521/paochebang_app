@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-01-14 16:33:57
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-14 16:43:09
+ * @LastEditTime : 2020-01-14 17:25:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -90,6 +90,6 @@ HotCity.defaultProps = {
 };
 
 HotCity.propTypes = {
-  hotCity: PropTypes.object.isRequired,
+  hotCity: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
 };

@@ -4,14 +4,14 @@
  * @path: 引入路径
  * @Date: 2020-01-14 16:50:46
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-14 16:55:05
+ * @LastEditTime : 2020-01-14 17:29:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import PropTypes from 'prop-types';
-import GlobalStyles from '../../../assets/css/GlobalStyles';
+// import GlobalStyles from '../../../assets/css/GlobalStyles';
 
 export default class CityChooseTitle extends Component {
   constructor(props) {
