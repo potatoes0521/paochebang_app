@@ -3,7 +3,7 @@
  * @description: 账户体系
  * @Date: 2019-12-25 15:25:16
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 12:46:52
+ * @LastEditTime : 2020-01-14 18:01:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -49,9 +49,9 @@ class AccountDetails extends Component {
   }
 
   componentDidMount() {
-    this.getAccountList();
-    this.getAccountAmount();
     this.handleEmit();
+    this.getAccountList({});
+    this.getAccountAmount();
     this.backPress.componentDidMount();
   }
 
@@ -69,7 +69,9 @@ class AccountDetails extends Component {
    */
   handleEmit() {
     this.emitCashInfo = DeviceEventEmitter.addListener('cashInfo', () => {
-      this.getAccountList();
+      this.getAccountList({
+        refresh: true,
+      });
       this.getAccountAmount();
     });
   }
@@ -105,13 +107,27 @@ class AccountDetails extends Component {
    * 获取收支明细列表
    * @return void
    */
-  getAccountList(pageNum = 1, pageSize = 10) {
+  getAccountList({pageNum = this.accountPage, pageSize = 10, refresh = false}) {
+    if (refresh) {
+      this.accountFlag = false;
+      this.accountPage = 1;
+      pageNum = 1;
+      this.setState({
+        isLoading: true,
+      });
+    }
+    if (this.accountFlag && !refresh) {
+      return;
+    }
     let sendData = {
       pageNum,
       pageSize,
     };
     let {accountList} = this.state;
     api.account.getAccountList(sendData, this).then(res => {
+      this.setState({
+        isLoading: false,
+      });
       let data = res.data;
       if (!data) {
         return;
@@ -155,64 +171,59 @@ class AccountDetails extends Component {
             leftViewShow={true}
             title={'账户体系'}
           />
-          <View style={styles.accountWrapper}>
-            <View style={styles.accountCard}>
-              <View style={styles.cardTitle}>
-                <Text style={styles.titleStyle}>总收入</Text>
-                <TouchableOpacity onPress={this.applyCash.bind(this)}>
-                  <Text style={styles.titleStyle}>申请提现</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.cardMoney}>
-                <Text style={styles.iconStyle}>￥</Text>
-                <Text style={styles.moneyStyle}>{totalIncomeDesc}</Text>
-              </View>
-              <View style={styles.cardTips}>
-                <Text style={[styles.tipsStyle, styles.marginRight]}>余额</Text>
-                <Text style={styles.tipsStyle}>￥</Text>
-                <Text style={[styles.tipsStyle, styles.marginRight]}>
-                  {withdrawAmountDesc}
-                </Text>
-                <Text style={[styles.tipsStyle, styles.marginRight]}>
-                  其中冻结金额
-                </Text>
-                <Text style={styles.tipsStyle}>￥</Text>
-                <Text style={styles.tipsStyle}>{blockedAmountDesc}</Text>
-              </View>
+          <View style={styles.accountCard}>
+            <View style={styles.cardTitle}>
+              <Text style={styles.titleStyle}>总收入</Text>
+              <TouchableOpacity onPress={this.applyCash.bind(this)}>
+                <Text style={styles.titleStyle}>申请提现</Text>
+              </TouchableOpacity>
             </View>
-            <View style={styles.accountTitle}>
-              <Text style={styles.detailsTitle}>收支明细</Text>
+            <View style={styles.cardMoney}>
+              <Text style={styles.iconStyle}>￥</Text>
+              <Text style={styles.moneyStyle}>{totalIncomeDesc}</Text>
             </View>
-            <View style={styles.listWrapper}>
-              <FlatList
-                data={this.state.accountList}
-                renderItem={data => (
-                  <AccountItem type={'account'} item={data.item} />
-                )}
-                ItemSeparatorComponent={() => this.dividingLine()}
-                refreshControl={
-                  <RefreshControl
-                    title="Loading..."
-                    colors={[GlobalStyles.themeColor]}
-                    refreshing={this.state.isLoading}
-                    onRefresh={() => this.getAccountList({refresh: true})}
-                    tintColor={GlobalStyles.themeColor}
-                    titleColor={GlobalStyles.themeTipColor}
-                  />
-                }
-                ListFooterComponent={() => this.genIndicator()}
-                onEndReached={() => {
-                  this.getAccountList.bind(this, {});
-                }}
-                ListEmptyComponent={() => (
-                  <EmptyList {...this.props} pageType={'account'} />
-                )}
-                keyExtractor={data => {
-                  return data.billId + 'account';
-                }}
-              />
+            <View style={styles.cardTips}>
+              <Text style={[styles.tipsStyle, styles.marginRight]}>余额</Text>
+              <Text style={styles.tipsStyle}>￥</Text>
+              <Text style={[styles.tipsStyle, styles.marginRight]}>
+                {withdrawAmountDesc}
+              </Text>
+              <Text style={[styles.tipsStyle, styles.marginRight]}>
+                其中冻结金额
+              </Text>
+              <Text style={styles.tipsStyle}>￥</Text>
+              <Text style={styles.tipsStyle}>{blockedAmountDesc}</Text>
             </View>
           </View>
+          <View style={styles.accountTitle}>
+            <Text style={styles.detailsTitle}>收支明细</Text>
+          </View>
+          <FlatList
+            data={this.state.accountList}
+            renderItem={data => (
+              <AccountItem type={'account'} item={data.item} />
+            )}
+            ItemSeparatorComponent={() => this.dividingLine()}
+            refreshControl={
+              <RefreshControl
+                title="Loading..."
+                colors={[GlobalStyles.themeColor]}
+                refreshing={this.state.isLoading}
+                onRefresh={() => this.getAccountList({refresh: true})}
+                tintColor={GlobalStyles.themeColor}
+              />
+            }
+            ListFooterComponent={() => this.genIndicator()}
+            onEndReached={() => {
+              this.getAccountList.bind(this, {});
+            }}
+            ListEmptyComponent={() => (
+              <EmptyList {...this.props} pageType={'account'} />
+            )}
+            keyExtractor={data => {
+              return data.billId + 'account';
+            }}
+          />
           <Toast
             ref={this.toastRef}
             position={'center'}
@@ -290,14 +301,8 @@ const styles = StyleSheet.create({
     color: GlobalStyles.themeFontColor,
     fontWeight: '700',
   },
-  listWrapper: {
-    paddingHorizontal: 24,
-    backgroundColor: '#ffffff',
-  },
   line: {
-    flex: 1,
     height: 1,
-    backgroundColor: '#f5f5f5',
   },
 });
 

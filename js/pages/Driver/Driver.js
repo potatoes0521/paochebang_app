@@ -3,7 +3,7 @@
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 21:22:10
+ * @LastEditTime : 2020-01-14 17:25:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -100,7 +100,7 @@ class Driver extends Component {
    */
   getAllDriverList({
     selectParam = this.state.selectParam,
-    pageNum = 1,
+    pageNum = this.driverPage,
     pageSize = 10,
     refresh = false,
   }) {
@@ -183,7 +183,7 @@ class Driver extends Component {
   }
   genIndicator() {
     let {driverListData} = this.state;
-    return driverListData && driverListData.length >= 10 && !this.driverFlag ? (
+    return driverListData && driverListData.length > 10 && !this.driverFlag ? (
       <BottomLoading />
     ) : null;
   }
@@ -254,36 +254,34 @@ class Driver extends Component {
               </View>
             </TouchableOpacity>
           </View>
-          <View style={styles.bottomWrapper}>
-            <FlatList
-              data={this.state.driverListData}
-              renderItem={data => (
-                <DriverItem
-                  type={this.pageParams.pageType}
-                  itemData={data.item}
-                />
-              )}
-              refreshControl={
-                <RefreshControl
-                  title="Loading..."
-                  colors={[GlobalStyles.themeColor]}
-                  refreshing={this.state.isLoading}
-                  onRefresh={() => this.getAllDriverList({refresh: true})}
-                  tintColor={GlobalStyles.themeColor}
-                />
-              }
-              ListFooterComponent={() => this.genIndicator()}
-              onEndReached={() => {
-                this.getAllDriverList(this, {});
-              }}
-              ListEmptyComponent={() => (
-                <EmptyList {...this.props} pageType={'driver'} />
-              )}
-              keyExtractor={data => {
-                return data.userId + 'driver';
-              }}
-            />
-          </View>
+          <FlatList
+            data={this.state.driverListData}
+            renderItem={data => (
+              <DriverItem
+                type={this.pageParams.pageType}
+                itemData={data.item}
+              />
+            )}
+            refreshControl={
+              <RefreshControl
+                title="Loading..."
+                colors={[GlobalStyles.themeColor]}
+                refreshing={this.state.isLoading}
+                onRefresh={() => this.getAllDriverList({refresh: true})}
+                tintColor={GlobalStyles.themeColor}
+              />
+            }
+            ListFooterComponent={() => this.genIndicator()}
+            onEndReached={() => {
+              this.getAllDriverList(this, {});
+            }}
+            ListEmptyComponent={() => (
+              <EmptyList {...this.props} pageType={'driver'} />
+            )}
+            keyExtractor={data => {
+              return data.userId + 'driver';
+            }}
+          />
           {driverListData.length > 0 ? (
             <View style={styles.imageWrapper}>
               <TouchableOpacity onPress={this.addDriver.bind(this)}>
