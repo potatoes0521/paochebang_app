@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-23 11:47:17
- * @LastEditors  : guorui
- * @LastEditTime : 2019-12-30 18:00:38
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-15 15:42:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -46,11 +46,13 @@ export default class EmptyList extends Component {
         navigation.navigate('Index');
         break;
       case 'login_offer':
+        NavigationUtil.goPage(pageType, 'RegisterPage');
         break;
       case 'line':
         NavigationUtil.goPage(pageType, 'LineEditPage');
         break;
       case 'login_order':
+        NavigationUtil.goPage(pageType, 'RegisterPage');
         break;
     }
   }

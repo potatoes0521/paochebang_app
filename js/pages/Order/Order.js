@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:02
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-25 10:02:30
+ * @LastEditTime : 2020-01-15 15:44:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,6 +15,7 @@ import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import {createAppContainer} from 'react-navigation';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import OrderList from './components/OrderList.js';
+import EmptyList from '../../components/EmptyList/EmptyList';
 
 class Order extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class Order extends Component {
 
   componentWillUnmount() {}
   render() {
+    let {userInfo} = this.props;
     const NavigatorTab = createAppContainer(
       createMaterialTopTabNavigator(
         {
@@ -72,7 +74,11 @@ class Order extends Component {
     return (
       <View style={styles.pageWrapper}>
         <NavigationBar title={'我的订单'} />
-        <NavigatorTab />
+        {!userInfo || !userInfo.userId || !userInfo.token ? (
+          <EmptyList pageType={'login_order'} />
+        ) : (
+          <NavigatorTab />
+        )}
       </View>
     );
   }

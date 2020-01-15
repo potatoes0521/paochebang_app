@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-01-09 18:01:59
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-10 09:44:42
+ * @LastEditTime : 2020-01-15 15:37:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,8 +15,9 @@ import GlobalStyles from '../../assets/css/GlobalStyles';
 import Button from '../Button/Button';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import defaultIcon from '../../assets/image/mine/default_icon.png';
+import {connect} from 'react-redux';
 
-export default class BottomLoginTips extends Component {
+class BottomLoginTips extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -29,14 +30,15 @@ export default class BottomLoginTips extends Component {
     NavigationUtil.goPage({}, 'RegisterPage');
   }
   render() {
-    return (
+    let {userInfo} = this.props;
+    return userInfo && userInfo.userId && userInfo.token ? null : (
       <View style={styles.wrapper}>
         <View style={styles.left}>
           <View style={styles.icon}>
             <Image style={styles.userIcon} source={defaultIcon} />
           </View>
           <View style={styles.tips}>
-            <Text style={styles.tipsText}>欢迎来到跑车帮～</Text>
+            {/* <Text style={styles.tipsText}>欢迎来到跑车帮～</Text> */}
             <Text style={styles.tipsText}>登录享受定制化服务</Text>
           </View>
         </View>
@@ -99,3 +101,10 @@ BottomLoginTips.defaultProps = {
 BottomLoginTips.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
+// 如果需要引入store
+const mapStateToProps = state => {
+  return {
+    userInfo: state.user_info.userInfo,
+  };
+};
+export default connect(mapStateToProps)(BottomLoginTips);

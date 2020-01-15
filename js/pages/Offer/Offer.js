@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:46:56
- * @LastEditors  : guorui
- * @LastEditTime : 2019-12-31 09:51:10
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-15 15:42:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,6 +20,7 @@ import Drawer from '../../components/Drawer/Drawer';
 import Button from '../../components/Button/Button';
 import DetailsStyle from '../../assets/css/DetailsStyle.js';
 import NavigationUtils from '../../navigator/NavigationUtils';
+import EmptyList from '../../components/EmptyList/EmptyList';
 class Offer extends Component {
   constructor(props) {
     super(props);
@@ -47,6 +48,7 @@ class Offer extends Component {
     NavigationUtils.goPage({type}, 'ChooseCityPage');
   }
   render() {
+    let {userInfo} = this.props;
     const NavigatorTab = createAppContainer(
       createMaterialTopTabNavigator(
         {
@@ -85,58 +87,64 @@ class Offer extends Component {
     return (
       <View style={styles.pageWrapper}>
         <NavigationBar title={'报价/接单'} />
-        <View style={styles.tabWrapper}>
-          <NavigatorTab />
-          <TouchableOpacity
-            style={styles.select}
-            onPress={this.openDrawer.bind(this)}>
-            <View style={styles.line} />
-            <View style={styles.selectMain}>
-              <Text>筛选</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <Drawer
-          visible={this.state.visible}
-          onClickModel={this.closeDrawer.bind(this)}>
-          <View style={styles.drawerList}>
-            <View
-              style={[styles.drawerItem, DetailsStyle.formItem]}
-              onPress={this.closeDrawer.bind(this)}>
-              <View style={DetailsStyle.formLabel}>
-                <Text style={DetailsStyle.labelText}>发车地点:</Text>
-              </View>
+        {!userInfo || !userInfo.userId || !userInfo.token ? (
+          <EmptyList pageType={'login_offer'} />
+        ) : (
+          <>
+            <View style={styles.tabWrapper}>
+              <NavigatorTab />
               <TouchableOpacity
-                onPress={this.navigatorTo.bind(this, 'sendCity')}
-                style={DetailsStyle.formContent}>
-                <Text style={DetailsStyle.contentText}>元/台</Text>
-                <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
+                style={styles.select}
+                onPress={this.openDrawer.bind(this)}>
+                <View style={styles.line} />
+                <View style={styles.selectMain}>
+                  <Text>筛选</Text>
+                </View>
               </TouchableOpacity>
             </View>
-            <View
-              style={[styles.drawerItem, DetailsStyle.formItem]}
-              onPress={this.closeDrawer.bind(this)}>
-              <View style={DetailsStyle.formLabel}>
-                <Text style={DetailsStyle.labelText}>发车地点:</Text>
+            <Drawer
+              visible={this.state.visible}
+              onClickModel={this.closeDrawer.bind(this)}>
+              <View style={styles.drawerList}>
+                <View
+                  style={[styles.drawerItem, DetailsStyle.formItem]}
+                  onPress={this.closeDrawer.bind(this)}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>发车地点:</Text>
+                  </View>
+                  <TouchableOpacity
+                    onPress={this.navigatorTo.bind(this, 'sendCity')}
+                    style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>元/台</Text>
+                    <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={[styles.drawerItem, DetailsStyle.formItem]}
+                  onPress={this.closeDrawer.bind(this)}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>发车地点:</Text>
+                  </View>
+                  <TouchableOpacity
+                    onPress={this.navigatorTo.bind(this, 'receiveCity')}
+                    style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>元/台</Text>
+                    <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-              <TouchableOpacity
-                onPress={this.navigatorTo.bind(this, 'receiveCity')}
-                style={DetailsStyle.formContent}>
-                <Text style={DetailsStyle.contentText}>元/台</Text>
-                <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.drawerBtn}>
-            <Button
-              text={'重置'}
-              btnStyle={[styles.btn, styles.btnReset]}
-              fontStyles={[styles.btnResetText]}
-              type={'plain'}
-            />
-            <Button text={'提交'} btnStyle={[styles.btn]} type={'round'} />
-          </View>
-        </Drawer>
+              <View style={styles.drawerBtn}>
+                <Button
+                  text={'重置'}
+                  btnStyle={[styles.btn, styles.btnReset]}
+                  fontStyles={[styles.btnResetText]}
+                  type={'plain'}
+                />
+                <Button text={'提交'} btnStyle={[styles.btn]} type={'round'} />
+              </View>
+            </Drawer>
+          </>
+        )}
       </View>
     );
   }
