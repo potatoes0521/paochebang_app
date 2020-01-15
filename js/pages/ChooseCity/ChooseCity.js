@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-26 09:24:29
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-14 19:56:01
+ * @LastEditTime : 2020-01-15 11:00:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -43,9 +43,11 @@ class ChooseCity extends Component {
       hotCity: [],
       filterCityList: [],
       provinceList: [],
-      cityList: ['请选择'],
-      areaList: ['请选择'],
+      cityList: [{locationName: '请选择', locationId: 1}],
+      areaList: [{locationName: '请选择', locationId: 1}],
       fixedTitle: false,
+      pageType: '',
+      throughCityNameList: [],
     };
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
@@ -69,7 +71,7 @@ class ChooseCity extends Component {
     const {params} = state;
     console.log('params', params);
     this.pageParams = params;
-    this.handleData();
+    this.handleData(params);
     this.backPress.componentDidMount();
   }
 
@@ -82,7 +84,16 @@ class ChooseCity extends Component {
     NavigationUtil.goBack(this.props.navigation);
     return true;
   }
-  handleData() {
+  /**
+   * 初始化数据
+   * @param {object} params 页面参数
+   * @return void
+   */
+  handleData(params) {
+    this.setState({
+      pageType: params.type,
+      fixedTitle: params.type === 'throughCity',
+    });
     Storage.getStorage('hotCity')
       .then(res => {
         this.handleHotCityData(res.data);
@@ -106,7 +117,7 @@ class ChooseCity extends Component {
       });
   }
   /**
-   * 获取位置信息
+   * 获取城市信息
    * @return void
    */
   getCityList() {
@@ -119,6 +130,10 @@ class ChooseCity extends Component {
       this.handleAllCityData(data.all);
     });
   }
+  /**
+   * 获取省市区信息
+   * @return void
+   */
   getAllProvinceList() {
     api.user.getAllProvinceList({}, this).then(res => {
       let data = res.data;
@@ -192,7 +207,11 @@ class ChooseCity extends Component {
       Storage.setStorage('allCityMsg', cities);
     }
   }
-
+  /**
+   * 选择省份
+   * @param {Object} city 选中的省份
+   * @return void
+   */
   chooseProvince(city) {
     console.log('city', city.checked);
     let {provinceList} = this.state;
@@ -205,16 +224,18 @@ class ChooseCity extends Component {
     });
     this.lastChoose = city;
   }
+  /**
+   * 选择城市
+   * @param {Object} city 选中的城市
+   * @return void
+   */
   chooseCity(city) {
     console.log('city', city);
-    if (
-      this.throughCityNameList.some(
-        item => item === this.lastChoose.locationName,
-      )
-    ) {
-      this.clearList(this.lastChoose);
+    if (city.locationId === 1) {
+      return;
     }
-    let {cityList} = this.state;
+    let {cityList, provinceList} = this.state;
+    this.handleFatherCity(city, provinceList);
     cityList = this.handleDataChooseData(city, cityList);
     this.backGoFirstLine();
     this.setState({
@@ -223,16 +244,19 @@ class ChooseCity extends Component {
     });
     this.lastChoose = city;
   }
+  /**
+   * 选择区\县
+   * @param {Object} city 选中的区\县
+   * @return void
+   */
   chooseArea(city) {
     console.log('city', city);
-    if (
-      this.throughCityNameList.some(
-        item => item === this.lastChoose.locationName,
-      )
-    ) {
-      this.clearList(this.lastChoose);
+    if (city.locationId === 1) {
+      return;
     }
-    let {areaList} = this.state;
+    let {areaList, cityList} = this.state;
+    // 找到当前区\县所在的城市  并判断这个城市是不是在现在的列表内
+    this.handleFatherCity(city, cityList);
     areaList = this.handleDataChooseData(city, areaList, this.lastChoose);
     this.backGoFirstLine();
     this.setState({
@@ -240,13 +264,25 @@ class ChooseCity extends Component {
     });
     this.lastChoose = city;
   }
+  /**
+   * 每次选中就滚动到顶部
+   *    选择途径城市的时候直接返回到0
+   *    如果不是因为有热门城市需要计算需要滚动的位置
+   * @return void
+   */
   backGoFirstLine() {
+    let num = 0;
+    if (this.state.pageType === 'throughCity') {
+      num = 0;
+    } else {
+      num = this.needScrollNumber + 40;
+    }
     this.scrollViewRef.current.scrollTo({
-      y: this.needScrollNumber + 40,
+      y: num,
     });
   }
   /**
-   * 判断是不是途经城市
+   * 判断是不是途经城市 并且处理数据
    * @return void
    */
   handleDataChooseData(city, data) {
@@ -268,6 +304,11 @@ class ChooseCity extends Component {
     });
     return data;
   }
+  /**
+   * 判断是选中还是取消选中
+   * @param {Object} city 城市信息
+   * @return void
+   */
   judgeThroughData(city) {
     if (this.pageParams.type === 'throughCity') {
       if (city.checked) {
@@ -277,16 +318,40 @@ class ChooseCity extends Component {
         console.log('append');
         this.throughCityNameList.push(city.locationName);
         this.throughCityIdList.push(city.locationId);
+        this.setState({
+          throughCityNameList: this.throughCityNameList,
+        });
       }
     }
     console.log('object', this.throughCityNameList);
   }
+  handleFatherCity(city, FatherCityList) {
+    let fatherCity = FatherCityList.filter(item => {
+      return item.children.some(ite => ite.locationId === city.locationId);
+    })[0];
+    if (
+      this.throughCityNameList.some(item => item === fatherCity.locationName)
+    ) {
+      this.clearList(fatherCity);
+    }
+  }
+  /**
+   * 清除当前选中列表内的这一项
+   * @param {Object} city 城市信息
+   * @return void
+   */
   clearList(city) {
+    if (city.from === 'delete') {
+      city.locationId = this.throughCityIdList[city.index];
+    }
     this.throughCityNameList = this.throughCityNameList.filter(item => {
       return item !== city.locationName;
     });
     this.throughCityIdList = this.throughCityIdList.filter(item => {
       return item !== city.locationId;
+    });
+    this.setState({
+      throughCityNameList: this.throughCityNameList,
     });
   }
   chooseSearchCity(city) {
@@ -294,6 +359,10 @@ class ChooseCity extends Component {
     DeviceEventEmitter.emit('chooseCity', city);
     NavigationUtil.goBack(this.props.navigation);
   }
+  /**
+   * 提交选中的城市
+   * @return void
+   */
   submitChooseCity() {
     if (JSON.stringify(this.lastChoose) === '{}') {
       this.toastRef.current.show('至少选择一个省/市/县');
@@ -332,6 +401,9 @@ class ChooseCity extends Component {
   onScroll(event) {
     // console.log(event.nativeEvent.contentOffset.x); //水平滚动距离
     const scrollNow = event.nativeEvent.contentOffset.y;
+    if (this.state.pageType === 'throughCity') {
+      return;
+    }
     if (scrollNow >= this.needScrollNumber && !this.state.fixedTitle) {
       this.setState({
         fixedTitle: true,
@@ -351,6 +423,8 @@ class ChooseCity extends Component {
       cityList,
       areaList,
       fixedTitle,
+      pageType,
+      throughCityNameList,
     } = this.state;
     const filterList = filterCityList.map(city => {
       const key = city.cityId;
@@ -388,33 +462,28 @@ class ChooseCity extends Component {
         </TouchableOpacity>
       );
     });
-    const cityListRender =
-      cityList &&
-      cityList.length &&
-      cityList.map(city => {
-        const key = city.locationId;
-        const textClassName = [styles.locationNameText];
-        if (city.checked) {
-          textClassName.push(styles.textHeighLight);
-        }
-        return (
-          <TouchableOpacity
-            onPress={this.chooseCity.bind(this, city)}
-            style={styles.allCityItem}
-            key={key}>
-            {city.checked && (
-              <Text style={[GlobalStyles.icon, styles.chooseIcon]}>
-                &#xe61e;
-              </Text>
-            )}
-            <Text style={textClassName}>
-              {city.locationName && city.locationName.length > 5
-                ? city.locationName.substr(0, 5) + '...'
-                : city.locationName}
-            </Text>
-          </TouchableOpacity>
-        );
-      });
+    const cityListRender = cityList.map(city => {
+      const key = city.locationId;
+      const textClassName = [styles.locationNameText];
+      if (city.checked) {
+        textClassName.push(styles.textHeighLight);
+      }
+      return (
+        <TouchableOpacity
+          onPress={this.chooseCity.bind(this, city)}
+          style={styles.allCityItem}
+          key={key}>
+          {city.checked && (
+            <Text style={[GlobalStyles.icon, styles.chooseIcon]}>&#xe61e;</Text>
+          )}
+          <Text style={textClassName}>
+            {city.locationName && city.locationName.length > 5
+              ? city.locationName.substr(0, 5) + '...'
+              : city.locationName}
+          </Text>
+        </TouchableOpacity>
+      );
+    });
     const areaListRender = areaList.map(city => {
       const key = city.locationId;
       const textClassName = [styles.locationNameText];
@@ -437,6 +506,21 @@ class ChooseCity extends Component {
         </TouchableOpacity>
       );
     });
+    const nowChooseListRender = throughCityNameList.map((city, index) => {
+      return (
+        <TouchableOpacity
+          onPress={this.clearList.bind(this, {
+            locationName: city,
+            from: 'delete',
+            index,
+          })}
+          style={styles.nowChooseItem}
+          key={city}>
+          <Text style={styles.text}>{city}</Text>
+          <Text style={[styles.text, GlobalStyles.icon]}>&#xe666;</Text>
+        </TouchableOpacity>
+      );
+    });
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -445,19 +529,27 @@ class ChooseCity extends Component {
             leftViewShow={true}
             title={'选择城市'}
           />
-          <View style={styles.searchWrapper}>
-            <View style={styles.searchIconWrapper}>
-              <Text style={styles.searchIcon}>&#xe604;</Text>
-            </View>
-            <View style={styles.inputWrapper}>
-              <TextInput
-                style={styles.input}
-                placeholder={'请输入城市名称进行搜索 如:北京'}
-                onChangeText={this.searchInput.bind(this)}
-              />
-            </View>
-          </View>
-          <View style={styles.line} />
+          {/* 途径城市不用出现搜索框 */}
+          {pageType === 'throughCity' ? null : (
+            <>
+              <View style={styles.searchWrapper}>
+                <View style={styles.searchIconWrapper}>
+                  <Text style={styles.searchIcon}>&#xe604;</Text>
+                </View>
+                <View style={styles.inputWrapper}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder={'请输入城市名称进行搜索 如:北京'}
+                    onChangeText={this.searchInput.bind(this)}
+                  />
+                </View>
+              </View>
+              <View style={styles.line} />
+            </>
+          )}
+          {/* 显示的吸顶的title */}
+          {/* 多选选中的省市区 */}
+          <View style={styles.nowChooseWrapper}>{nowChooseListRender}</View>
           {fixedTitle && <CityChooseTitle fixed={true} />}
           <ScrollView
             style={styles.scrollWrapper}
@@ -467,14 +559,17 @@ class ChooseCity extends Component {
               <View className="search-wrapper">{filterList}</View>
             ) : (
               <>
-                {/* <View onLayout={this.onLayout.bind(this)}> */}
-                <HotCity
-                  onChooseCity={this.chooseSearchCity.bind(this)}
-                  hotCity={hotCity}
-                  ref={this.pointRef}
-                />
-                {/* </View> */}
-                <CityChooseTitle />
+                {/* 途径城市不出现热门城市 */}
+                {pageType === 'throughCity' ? null : (
+                  <>
+                    <HotCity
+                      onChooseCity={this.chooseSearchCity.bind(this)}
+                      hotCity={hotCity}
+                      ref={this.pointRef}
+                    />
+                    <CityChooseTitle />
+                  </>
+                )}
                 <View style={styles.wrapperLine} />
                 <View style={styles.allCity}>
                   <View style={styles.public}>{provinceListRender}</View>
@@ -591,6 +686,29 @@ const styles = StyleSheet.create({
     color: GlobalStyles.themeHColor,
   },
   textHeighLight: {
+    color: GlobalStyles.themeColor,
+  },
+  nowChooseWrapper: {
+    paddingHorizontal: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    marginBottom: 9,
+  },
+  nowChooseItem: {
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    backgroundColor: '#F7F7F7',
+    borderRadius: 4,
+    marginRight: 10,
+    marginTop: 9,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    lineHeight: 22,
+  },
+  text: {
+    fontSize: 16,
     color: GlobalStyles.themeColor,
   },
 });
