@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-02 15:20:21
+ * @LastEditTime : 2020-01-14 19:57:57
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -101,6 +101,8 @@ class VacancyPublish extends Component {
       } else if (data.type === 'receiveCity') {
         state.receiveCityName = data.cityName;
         state.receiveCityId = data.cityId;
+      } else if (data.type === 'throughCity') {
+        state.throughCitys = data;
       }
       this.setState(state);
     });
@@ -280,6 +282,7 @@ class VacancyPublish extends Component {
       startTime,
       price,
       datePickerShow,
+      throughCitys,
     } = this.state;
     let textClassName = [DetailsStyle.contentText];
     let textThemeDisabled = [
@@ -332,7 +335,8 @@ class VacancyPublish extends Component {
                 </TouchableOpacity>
               </View>
               {/* 途径城市 */}
-              <View style={DetailsStyle.formItem}>
+              <View
+                style={[DetailsStyle.formItem, DetailsStyle.moreTextFormItem]}>
                 <View style={DetailsStyle.formLabel}>
                   <Text style={DetailsStyle.isRequired} />
                   <Text style={DetailsStyle.labelText}>途径城市:</Text>
@@ -340,12 +344,20 @@ class VacancyPublish extends Component {
                 <TouchableOpacity
                   onPress={this.navigationToChooseCity.bind(
                     this,
-                    'receiveCity',
+                    'throughCity',
                   )}
                   style={DetailsStyle.formContent}>
                   <Text
-                    style={receiveCityName ? textClassName : textThemeDisabled}>
-                    {receiveCityName || '请选择途径城市'}
+                    style={
+                      throughCitys.cityName && throughCitys.cityName.length
+                        ? textClassName
+                        : textThemeDisabled
+                    }>
+                    {(throughCitys.cityName &&
+                      throughCitys.cityName.length &&
+                      throughCitys.cityName &&
+                      throughCitys.cityName) ||
+                      '请选择途径城市'}
                   </Text>
                   <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
                 </TouchableOpacity>

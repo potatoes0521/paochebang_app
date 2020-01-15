@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-01-14 16:33:57
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-14 17:25:38
+ * @LastEditTime : 2020-01-14 18:29:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -25,13 +25,18 @@ export default class HotCity extends Component {
   componentDidMount() {}
 
   componentWillUnmount() {}
-
+  choose(city) {
+    this.props.onChooseCity(city);
+  }
   render() {
     let {hotCity} = this.props;
     const hotCityList = hotCity.map(city => {
       const key = city.cityId;
       return (
-        <TouchableOpacity style={styles.hotCityItem} key={key}>
+        <TouchableOpacity
+          onPress={this.choose.bind(this, city)}
+          style={styles.hotCityItem}
+          key={key}>
           <Text style={styles.hotCityItemText}>
             {city.cityName.substr(0, 4)}
           </Text>
@@ -86,10 +91,10 @@ const styles = StyleSheet.create({
 
 HotCity.defaultProps = {
   hotCity: {},
-  onClick: () => {},
+  onChooseCity: () => {},
 };
 
 HotCity.propTypes = {
   hotCity: PropTypes.array.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onChooseCity: PropTypes.func.isRequired,
 };
