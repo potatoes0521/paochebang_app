@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-01-09 18:01:59
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-15 15:27:30
+ * @LastEditTime : 2020-01-15 15:37:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -31,7 +31,6 @@ class BottomLoginTips extends Component {
   }
   render() {
     let {userInfo} = this.props;
-    console.log('userInfo', userInfo);
     return userInfo && userInfo.userId && userInfo.token ? null : (
       <View style={styles.wrapper}>
         <View style={styles.left}>
@@ -39,7 +38,7 @@ class BottomLoginTips extends Component {
             <Image style={styles.userIcon} source={defaultIcon} />
           </View>
           <View style={styles.tips}>
-            <Text style={styles.tipsText}>欢迎来到跑车帮～</Text>
+            {/* <Text style={styles.tipsText}>欢迎来到跑车帮～</Text> */}
             <Text style={styles.tipsText}>登录享受定制化服务</Text>
           </View>
         </View>

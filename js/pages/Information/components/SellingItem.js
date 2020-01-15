@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 14:14:44
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 12:04:52
+ * @LastEditTime : 2020-01-15 15:35:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,8 +12,10 @@ import {StyleSheet, Text, View, TouchableOpacity, Linking} from 'react-native';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
 import NavigationUtil from '../../../navigator/NavigationUtils';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+// 如果需要引入store
 
-export default class SellingItem extends Component {
+class SellingItem extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -24,7 +26,11 @@ export default class SellingItem extends Component {
   componentWillUnmount() {}
 
   navigatorDetails(item) {
-    console.log(item, 'itemData');
+    let {userInfo} = this.props;
+    if (!userInfo || !userInfo.userId || !userInfo.token) {
+      NavigationUtil.goPage({}, 'RegisterPage');
+      return;
+    }
     if ((item.isActive === 2 || item.isActive === 3) && !item.isEdit) {
       return;
     }
@@ -40,6 +46,11 @@ export default class SellingItem extends Component {
    * @return void
    */
   callBtn(item, e) {
+    let {userInfo} = this.props;
+    if (!userInfo || !userInfo.userId || !userInfo.token) {
+      NavigationUtil.goPage({}, 'RegisterPage');
+      return;
+    }
     e.stopPropagation();
     const tel = `tel:${item.mobile}`;
     if (item.isActive !== 1) {
@@ -238,3 +249,9 @@ SellingItem.defaultProps = {
 SellingItem.propTypes = {
   itemData: PropTypes.object,
 };
+const mapStateToProps = state => {
+  return {
+    userInfo: state.user_info.userInfo,
+  };
+};
+export default connect(mapStateToProps)(SellingItem);
