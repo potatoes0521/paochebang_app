@@ -3,7 +3,7 @@
  * @description: 收支明细
  * @Date: 2019-12-26 14:56:56
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 16:52:56
+ * @LastEditTime : 2020-01-14 16:51:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -56,6 +56,8 @@ export default class AccountItem extends Component {
 const styles = StyleSheet.create({
   itemWrapper: {
     flex: 1,
+    paddingHorizontal: 24,
+    backgroundColor: '#ffffff',
   },
   cashWrapper: {
     paddingVertical: 16,

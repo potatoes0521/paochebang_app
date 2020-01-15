@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 21:21:58
+ * @LastEditTime : 2020-01-14 14:56:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,12 +29,14 @@ import realNameImage from '../../assets/image/mine/real_name.png';
 import sellingImage from '../../assets/image/mine/selling_new.png';
 import vacancyImage from '../../assets/image/mine/vacancy_new.png';
 import defaultImage from '../../assets/image/mine/default_icon.png';
+import {defaultResourceImgURL} from '../../config/requestConfig';
 
 class Mine extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
+  componentDidMount() {}
 
   /**
    * 跳转注册页
@@ -103,7 +105,7 @@ class Mine extends Component {
         <View style={styles.userWrapper}>
           <TouchableOpacity onPress={this.navigatorRegister.bind(this)}>
             <View style={styles.left}>
-              {userInfo.userId ? (
+              {userInfo.userPhoto ? (
                 <View style={styles.userImage}>
                   <Image
                     style={styles.imageStyle}
@@ -118,25 +120,29 @@ class Mine extends Component {
               {userInfo.userId ? (
                 <View style={styles.userInfo}>
                   <View style={styles.userName}>
-                    <Text style={MineStyles.labelText}>
-                      {userInfo.nickName}
-                    </Text>
+                    {userInfo.nickName ? (
+                      <Text style={MineStyles.labelText}>
+                        {userInfo.nickName}
+                      </Text>
+                    ) : (
+                      <Text style={MineStyles.labelText}>
+                        {userInfo.mobile}
+                      </Text>
+                    )}
                   </View>
                   <View style={styles.certification}>
                     {userInfo.realNameAuthStatus ? (
                       <Image
                         style={styles.certificationImage}
                         source={{
-                          uri:
-                            'https://resource.paoche56.com/paochebang/mp_img/mine/already.png',
+                          uri: `${defaultResourceImgURL}mine/already.png`,
                         }}
                       />
                     ) : (
                       <Image
                         style={styles.certificationImage}
                         source={{
-                          uri:
-                            'https://resource.paoche56.com/paochebang/mp_img/mine/never.png',
+                          uri: `${defaultResourceImgURL}mine/never.png`,
                         }}
                       />
                     )}

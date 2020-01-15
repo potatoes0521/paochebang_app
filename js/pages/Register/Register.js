@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 21:17:26
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-15 16:00:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -28,6 +28,7 @@ import BackPressComponent from '../../components/BackPressComponent/BackPressCom
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import Actions from '../../store/action/index.js';
+import Storage from '../../utils/Storage.js';
 import Toast from 'react-native-easy-toast';
 
 class Register extends Component {
@@ -163,17 +164,21 @@ class Register extends Component {
       pushToken,
     };
     api.user.register(sendData, this).then(res => {
-      let resData = Object.assign({}, res);
-      Actions.changeUserInfo(resData);
       this.toastRef.current.show('登录成功');
-      setTimeout(() => {
-        NavigationUtil.goBack(this.props.navigation);
-      }, 1800);
+      Storage.setStorage('userInfo', res.data);
+      this.props.changeUserInfo(res.data);
+      NavigationUtil.goBack(this.props.navigation);
     });
   }
 
   render() {
     let {phoneNumber, verificationCode, timerFlag, countDown} = this.state;
+    let btnBorderStyle = [styles.codeBtn];
+    let btnTextStyle = [styles.codeColor];
+    if (timerFlag) {
+      btnBorderStyle.push(styles.borderStyle);
+      btnTextStyle.push(styles.textStyle);
+    }
     const {theme, navigation} = this.props;
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
@@ -207,8 +212,8 @@ class Register extends Component {
                 value={verificationCode}
               />
               <TouchableOpacity onPress={this.getVerificationCode.bind(this)}>
-                <View style={styles.codeBtn}>
-                  <Text style={styles.codeColor}>
+                <View style={btnBorderStyle}>
+                  <Text style={btnTextStyle}>
                     {!timerFlag ? '获取验证码' : `${countDown}S后重试`}
                   </Text>
                 </View>
@@ -278,12 +283,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: GlobalStyles.themeDisabled,
+    borderColor: GlobalStyles.themeColor,
     borderRadius: 18,
   },
   codeColor: {
     fontSize: 14,
-    color: GlobalStyles.themeDisabled,
+    color: GlobalStyles.themeColor,
   },
   registerBtn: {
     paddingHorizontal: 24,
@@ -297,12 +302,25 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: '#fff',
   },
+  borderStyle: {
+    borderColor: GlobalStyles.themeDisabled,
+  },
+  textStyle: {
+    color: GlobalStyles.themeDisabled,
+  },
 });
-// 如果需要引入store
 const mapStateToProps = state => {
   return {
     userInfo: state.user_info.userInfo,
     theme: state.theme.theme,
   };
 };
-export default connect(mapStateToProps)(Register);
+const mapDispatchToProps = dispatch => {
+  return {
+    changeUserInfo: userInfo => dispatch(Actions.changeUserInfo(userInfo)),
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Register);

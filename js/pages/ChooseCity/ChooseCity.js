@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-26 09:24:29
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-15 11:00:30
+ * @LastEditTime : 2020-01-15 15:08:25
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -297,7 +297,12 @@ class ChooseCity extends Component {
     this.judgeThroughData(city);
     data.forEach(item => {
       if (item.locationId === city.locationId) {
-        item.checked = !item.checked;
+        // 如果子集有选中的 他就不是取消
+        if (item.children && item.children.some(ite => ite.checked)) {
+          item.checked = true;
+        } else {
+          item.checked = !item.checked;
+        }
       } else if (this.pageParams.type !== 'throughCity') {
         item.checked = false;
       }
@@ -325,10 +330,15 @@ class ChooseCity extends Component {
     }
     console.log('object', this.throughCityNameList);
   }
-  handleFatherCity(city, FatherCityList) {
+  handleFatherCity(city, FatherCityList, onlyFind) {
     let fatherCity = FatherCityList.filter(item => {
-      return item.children.some(ite => ite.locationId === city.locationId);
+      return item.children
+        ? item.children.some(ite => ite.locationId === city.locationId)
+        : item.locationId === city.locationId;
     })[0];
+    if (onlyFind) {
+      return fatherCity;
+    }
     if (
       this.throughCityNameList.some(item => item === fatherCity.locationName)
     ) {
@@ -343,6 +353,47 @@ class ChooseCity extends Component {
   clearList(city) {
     if (city.from === 'delete') {
       city.locationId = this.throughCityIdList[city.index];
+      console.log(city);
+      let {provinceList} = this.state;
+      // 删除标准数据的时候要清除滚动列表里的选中状态
+      this.diff(provinceList, [city]);
+      let fatherCity = [];
+      provinceList.forEach(item => {
+        if (item.children) {
+          item.children.forEach(ite => {
+            if (ite.children) {
+              let arr = ite.children.some(
+                it => it.locationId === city.locationId,
+              );
+              if (arr) {
+                // 找到父级判断子级是否全部选中如果都没选中那就把父级添加进去
+                let allChecked = ite.children.some(it => it.checked);
+                if (!allChecked) {
+                  this.throughCityNameList.push(ite.locationName);
+                  this.throughCityIdList.push(ite.locationId);
+                  this.setState({
+                    throughCityNameList: this.throughCityNameList,
+                  });
+                }
+              }
+            }
+            if (ite.locationId === city.locationId) {
+              let allChecked = item.children.some(it => it.checked);
+              if (!allChecked) {
+                this.throughCityNameList.push(item.locationName);
+                this.throughCityIdList.push(item.locationId);
+                this.setState({
+                  throughCityNameList: this.throughCityNameList,
+                });
+              }
+            }
+          });
+        }
+      });
+      console.log('fatherCity', fatherCity);
+      this.setState({
+        provinceList,
+      });
     }
     this.throughCityNameList = this.throughCityNameList.filter(item => {
       return item !== city.locationName;
@@ -353,6 +404,27 @@ class ChooseCity extends Component {
     this.setState({
       throughCityNameList: this.throughCityNameList,
     });
+  }
+  diff(needCleanData, standardData) {
+    const map = standardData.reduce(
+      (res, item) => ({
+        ...res,
+        [item.locationId]: item,
+      }),
+      {},
+    );
+    this.dfs(needCleanData, map);
+  }
+  dfs(arr, map) {
+    // eslint-disable-next-line no-unused-vars
+    for (const item of arr) {
+      if (item.children) {
+        this.dfs(item.children, map);
+      }
+      if (item.locationId in map) {
+        item.checked = false;
+      }
+    }
   }
   chooseSearchCity(city) {
     city.type = this.pageParams.type;
@@ -369,6 +441,7 @@ class ChooseCity extends Component {
       return;
     }
     console.log('submit', this.throughCityNameList);
+    console.log('submit', this.throughCityIdList);
     if (this.pageParams.type !== 'throughCity') {
       this.chooseSearchCity({
         cityId: this.lastChoose.locationId,

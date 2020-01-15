@@ -3,7 +3,7 @@
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 14:04:09
+ * @LastEditTime : 2020-01-14 18:43:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -56,19 +56,13 @@ class MineDetails extends Component {
   handleEmit() {
     this.emitMineCarType = DeviceEventEmitter.addListener(
       'submitMineCarType',
-      data => {
-        this.setState({
-          carTypeDesc: data,
-        });
+      () => {
         this.getUserInfo();
       },
     );
     this.emitMineCarNum = DeviceEventEmitter.addListener(
       'submitMineCarNum',
-      data => {
-        this.setState({
-          carNum: data,
-        });
+      () => {
         this.getUserInfo();
       },
     );

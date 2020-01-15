@@ -3,7 +3,7 @@
  * @description: 底部tabBar
  * @Date: 2019-11-29 11:38:36
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-13 20:21:57
+ * @LastEditTime : 2020-01-15 15:46:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -92,8 +92,9 @@ class BottomTabBarNavigator extends Component {
                 </LinearGradient>
               ),
               tabBarOnPress: ({props}) => {
-                if (global.signInStatus) {
-                  this.props.navigation.navigate('PublishPage');
+                let {userInfo} = this.props;
+                if (!userInfo || !userInfo.userId || !userInfo.token) {
+                  this.props.navigation.navigate('RegisterPage');
                 } else {
                   this.props.navigation.navigate('PublishPage');
                 }

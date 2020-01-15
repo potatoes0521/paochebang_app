@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 15:52:50
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-23 17:03:09
+ * @LastEditTime : 2020-01-15 15:34:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,7 +13,9 @@ import {StyleSheet, Text, View, TouchableOpacity, Linking} from 'react-native';
 import PropTypes from 'prop-types';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
 import NavigationUtil from '../../../navigator/NavigationUtils.js';
-export default class VacancyItem extends Component {
+import {connect} from 'react-redux';
+
+class VacancyItem extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -23,7 +25,10 @@ export default class VacancyItem extends Component {
 
   componentWillUnmount() {}
   navigatorDetails() {
-    let {itemData} = this.props;
+    let {itemData, userInfo} = this.props;
+    if (!userInfo && !userInfo.userId && !userInfo.token) {
+      NavigationUtil.goPage({}, 'RegisterPage');
+    }
     if (
       (itemData.isActive === 2 || itemData.isActive === 3) &&
       !itemData.isEdit
@@ -222,3 +227,11 @@ VacancyItem.defaultProps = {
 VacancyItem.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
+
+// 如果需要引入store
+const mapStateToProps = state => {
+  return {
+    userInfo: state.user_info.userInfo,
+  };
+};
+export default connect(mapStateToProps)(VacancyItem);

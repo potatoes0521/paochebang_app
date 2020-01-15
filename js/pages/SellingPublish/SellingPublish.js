@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-02 11:40:01
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-14 18:11:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -278,7 +278,7 @@ class SellingPublish extends Component {
       userId: this.props.userInfo.userId,
       sourceId: 1,
     };
-    if (this.pageParams.pageType === 'edit') {
+    if (this.pageParams && this.pageParams.pageType === 'edit') {
       this.editSellingData(sendData);
     } else {
       this.addSellingData(sendData);
