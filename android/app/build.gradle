@@ -213,6 +213,8 @@ dependencies {
     // 引入 commons.lang https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
 
+    implementation project(':react-native-gesture-handler')
+
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")
