@@ -4,7 +4,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 11:52:12
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 19:20:17
+ * @LastEditTime : 2020-01-14 14:39:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,6 +18,10 @@ export default {
   // openID登录
   loginUseOpenID(data, that) {
     return requestHandle.post('user/login', data, that, false);
+  },
+  // 判断用户token等信息是否过期
+  checkToken(data, that) {
+    return requestHandle.post('user/appvalidatelogin', data, that, false);
   },
   // 注册
   register(data, that) {

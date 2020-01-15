@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:11:20
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 21:01:33
+ * @LastEditTime : 2020-01-14 18:51:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,6 +15,8 @@ import {connect} from 'react-redux';
 import SafeAreaViewPlus from '../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import PushUtil from '../../native/PushUtil';
 import Actions from '../store/action/index.js';
+import Storage from '../utils/Storage.js';
+import api from '../api';
 
 class WelcomePage extends Component {
   // constructor(props) {
@@ -24,17 +26,16 @@ class WelcomePage extends Component {
   componentDidMount() {
     this.timer = setTimeout(() => {
       SplashScreen.hide();
-      console.log('Dimensions', Platform);
+      // console.log('Dimensions', Platform);
       if (Platform.OS === 'android') {
         PushUtil.appInfo(result => {
-          // console.log('result', typeof JSON.parse(result));
+          // console.log('result', result);
           let res = JSON.parse(result);
+          this.getStorage();
           this.props.changeUserInfo({
             deviceToken: 'deviceToken',
             pushToken: res.pushToken,
           });
-          // 跳转到首页
-          NavigationUtil.resetToHomPage(this.props);
         });
       }
     }, 1000);
@@ -42,6 +43,27 @@ class WelcomePage extends Component {
 
   componentWillUnmount() {
     this.timer && clearTimeout(this.timer);
+  }
+  /**
+   * 获取缓存信息
+   * @return void
+   */
+  getStorage() {
+    Storage.getStorage('userInfo')
+      .then(res => {
+        let sendData = res.data.data;
+        api.user.checkToken(sendData, this).then(resInfo => {
+          if (resInfo.data) {
+            let resData = Object.assign({}, resInfo.data);
+            Actions.changeUserInfo(resData);
+          } else {
+            NavigationUtil.resetToHomPage(this.props);
+          }
+        });
+      })
+      .catch(() => {
+        NavigationUtil.resetToHomPage(this.props);
+      });
   }
 
   render() {

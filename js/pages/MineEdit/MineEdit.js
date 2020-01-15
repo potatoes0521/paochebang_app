@@ -3,7 +3,7 @@
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 13:37:16
+ * @LastEditTime : 2020-01-14 18:45:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -143,10 +143,10 @@ class MineEdit extends Component {
       carType,
       carNum,
     };
-    DeviceEventEmitter.emit('submitMineCarType', this.state.carType);
-    DeviceEventEmitter.emit('submitMineCarNum', this.state.carNum);
     api.user.editUserInfo(sendData, this).then(() => {
       this.toastRef.current.show('编辑成功');
+      DeviceEventEmitter.emit('submitMineCarType', carType);
+      DeviceEventEmitter.emit('submitMineCarNum', carNum);
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);
