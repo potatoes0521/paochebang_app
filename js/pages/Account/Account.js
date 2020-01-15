@@ -3,7 +3,7 @@
  * @description: 账户体系
  * @Date: 2019-12-25 15:25:16
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-14 19:38:14
+ * @LastEditTime : 2020-01-15 14:54:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -215,7 +215,7 @@ class AccountDetails extends Component {
             }
             ListFooterComponent={() => this.genIndicator()}
             onEndReached={() => {
-              this.getAccountList.bind(this, {});
+              this.getAccountList(this, {});
             }}
             ListEmptyComponent={() => (
               <EmptyList {...this.props} pageType={'account'} />

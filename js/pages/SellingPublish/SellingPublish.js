@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-14 18:11:27
+ * @LastEditTime : 2020-01-15 14:26:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -45,6 +45,7 @@ class SellingPublish extends Component {
       isActive: 1, // 订单状态
       payType: '', // 支付方式
       returnPrice: '',
+      price: '',
       pubTime: '', // 发布时间
       receiveCityName: '', // 收车城市
       remarks: '', // 备注

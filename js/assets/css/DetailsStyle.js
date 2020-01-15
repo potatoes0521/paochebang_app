@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 详情通用css
  * @Date: 2019-12-04 11:36:02
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-02 11:58:13
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-15 14:37:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -60,6 +60,10 @@ export default {
   contentText: {
     fontSize: 15,
     color: GlobalStyles.themeFontColor,
+  },
+  offerText: {
+    fontSize: 15,
+    color: GlobalStyles.themeColor,
   },
   iconRight: {
     fontSize: 12,

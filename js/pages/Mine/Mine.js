@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-14 14:56:56
+ * @LastEditTime : 2020-01-15 09:48:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -234,12 +234,12 @@ class Mine extends Component {
             <Text style={MineStyles.contentText}>版本</Text>
             <Text style={styles.versionNum}>{appVersion}</Text>
           </View>
-          <TouchableOpacity onPress={() => this.callService()}>
-            <View style={styles.versionList}>
-              <Text style={MineStyles.contentText}>联系跑车</Text>
+          <View style={styles.versionList}>
+            <Text style={MineStyles.contentText}>联系跑车</Text>
+            <TouchableOpacity onPress={() => this.callService()}>
               <Text style={styles.versionNum}>400-9698-256</Text>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
