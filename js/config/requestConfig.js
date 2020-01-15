@@ -3,7 +3,7 @@
  * @description: 服务器状态码错误配置
  * @Date: 2019-08-13 12:22:58
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-04 13:31:37
+ * @LastEditTime : 2020-01-15 19:30:32
  */
 // api地址
 export const defaultApiURL = 'http://api.bang.paoche56.in/'; // 测试环境
@@ -12,8 +12,8 @@ export const defaultApiURL = 'http://api.bang.paoche56.in/'; // 测试环境
 // export const defaultApiURL = 'http://api-doc.paoche56.in/mock/19/' // mock
 
 // 上传文件地址
-// export const defaultFileUrl = 'http://192.168.3.142:8081/';
-export const defaultFileUrl = 'http://api.user.paoche56.in/';
+export const defaultFileUrl = 'http://192.168.3.191:8081/';
+// export const defaultFileUrl = 'http://api.user.paoche56.in/';
 // export const defaultFileUrl = 'https://api.user.paoche56.com/';
 // 图片资源服务器
 export const defaultResourceImgURL =
