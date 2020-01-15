@@ -2,13 +2,13 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:11:20
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-14 18:51:26
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-15 16:16:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Platform} from 'react-native';
+import {StyleSheet, View, Platform} from 'react-native';
 import NavigationUtil from '../navigator/NavigationUtils';
 import SplashScreen from 'react-native-splash-screen';
 import {connect} from 'react-redux';
@@ -24,21 +24,16 @@ class WelcomePage extends Component {
   // }
 
   componentDidMount() {
-    this.timer = setTimeout(() => {
-      SplashScreen.hide();
-      // console.log('Dimensions', Platform);
-      if (Platform.OS === 'android') {
-        PushUtil.appInfo(result => {
-          // console.log('result', result);
-          let res = JSON.parse(result);
-          this.getStorage();
-          this.props.changeUserInfo({
-            deviceToken: 'deviceToken',
-            pushToken: res.pushToken,
-          });
+    if (Platform.OS === 'android') {
+      PushUtil.appInfo(result => {
+        // console.log('result', result);
+        let res = JSON.parse(result);
+        this.props.changeUserInfo({
+          pushToken: res.pushToken,
         });
-      }
-    }, 1000);
+        this.getStorage();
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -51,17 +46,21 @@ class WelcomePage extends Component {
   getStorage() {
     Storage.getStorage('userInfo')
       .then(res => {
-        let sendData = res.data.data;
-        api.user.checkToken(sendData, this).then(resInfo => {
-          if (resInfo.data) {
-            let resData = Object.assign({}, resInfo.data);
-            Actions.changeUserInfo(resData);
+        console.log('res', res);
+        let sendData = res.data;
+        api.user.checkToken(sendData, this).then(checkData => {
+          console.log('res', checkData);
+          if (checkData.data) {
+            this.props.changeUserInfo(sendData);
           } else {
-            NavigationUtil.resetToHomPage(this.props);
+            Storage.setStorage('userInfo', {});
           }
+          SplashScreen.hide();
+          NavigationUtil.resetToHomPage(this.props);
         });
       })
       .catch(() => {
+        SplashScreen.hide();
         NavigationUtil.resetToHomPage(this.props);
       });
   }
@@ -70,9 +69,7 @@ class WelcomePage extends Component {
     let {theme} = this.props;
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
-        <View style={styles.pageWrapper}>
-          <Text>欢迎页</Text>
-        </View>
+        <View style={styles.pageWrapper}>{/* <Text>欢迎页</Text> */}</View>
       </SafeAreaViewPlus>
     );
   }
