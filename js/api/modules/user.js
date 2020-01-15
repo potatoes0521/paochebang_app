@@ -39,6 +39,9 @@ export default {
   getCityList(data, that) {
     return requestHandle.get('location/cities', data, that);
   },
+  getAllProvinceList(data, that) {
+    return requestHandle.get('location/provincecollection', data, that);
+  },
   // 获取手机验证码
   getVerificationCode(data, that) {
     return requestHandle.post(
