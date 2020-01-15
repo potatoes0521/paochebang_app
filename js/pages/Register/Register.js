@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-14 15:12:20
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-15 16:00:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -165,12 +165,9 @@ class Register extends Component {
     };
     api.user.register(sendData, this).then(res => {
       this.toastRef.current.show('登录成功');
-      Storage.setStorage('userInfo', res);
-      let resData = Object.assign({}, res);
-      Actions.changeUserInfo(resData);
-      setTimeout(() => {
-        NavigationUtil.goBack(this.props.navigation);
-      }, 1800);
+      Storage.setStorage('userInfo', res.data);
+      this.props.changeUserInfo(res.data);
+      NavigationUtil.goBack(this.props.navigation);
     });
   }
 
@@ -312,11 +309,18 @@ const styles = StyleSheet.create({
     color: GlobalStyles.themeDisabled,
   },
 });
-// 如果需要引入store
 const mapStateToProps = state => {
   return {
     userInfo: state.user_info.userInfo,
     theme: state.theme.theme,
   };
 };
-export default connect(mapStateToProps)(Register);
+const mapDispatchToProps = dispatch => {
+  return {
+    changeUserInfo: userInfo => dispatch(Actions.changeUserInfo(userInfo)),
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Register);
