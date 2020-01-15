@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-22 16:58:23
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 10:50:51
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-15 15:23:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -105,7 +105,7 @@ class OfferList extends Component {
           }
           ListFooterComponent={() => this.genIndicator()}
           onEndReached={() => {
-            this.getOfferList.bind(this, {});
+            this.getOfferList(this, {});
           }}
           ListEmptyComponent={() => (
             <EmptyList {...this.props} pageType={'offer'} />

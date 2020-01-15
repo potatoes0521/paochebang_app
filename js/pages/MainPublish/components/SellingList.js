@@ -3,7 +3,7 @@
  * @description: 我发布的卖板列表
  * @Date: 2020-01-02 16:58:06
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 14:24:16
+ * @LastEditTime : 2020-01-15 15:22:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -117,7 +117,7 @@ class SellingList extends Component {
           }
           ListFooterComponent={() => this.genIndicator()}
           onEndReached={() => {
-            this.getSellingList.bind(this, {});
+            this.getSellingList(this, {});
           }}
           ListEmptyComponent={() => (
             <EmptyList {...this.props} pageType={'selling'} />

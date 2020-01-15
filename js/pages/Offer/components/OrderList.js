@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-22 16:58:23
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 10:51:00
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-15 15:24:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -125,7 +125,7 @@ class OrderList extends Component {
           }
           ListFooterComponent={() => this.genIndicator()}
           onEndReached={() => {
-            this.getOrderList.bind(this, {});
+            this.getOrderList(this, {});
           }}
           ListEmptyComponent={() => {
             return <EmptyList {...this.props} pageType={'offer'} />;
