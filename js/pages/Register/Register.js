@@ -3,7 +3,7 @@
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-15 17:17:49
+ * @LastEditTime : 2020-01-16 10:43:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -43,6 +43,8 @@ class Register extends Component {
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
     });
+    this.timer = null;
+    this.timeout = null;
     this.toastRef = React.createRef();
   }
 
@@ -52,6 +54,7 @@ class Register extends Component {
 
   componentWillUnmount() {
     clearInterval(this.timer);
+    clearTimeout(this.timeout);
     this.backPress.componentWillUnmount();
   }
 
@@ -120,7 +123,8 @@ class Register extends Component {
         this.setState({
           timerFlag: false,
         });
-        setTimeout(() => {
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
           this.setState({
             countDown: 90,
           });
