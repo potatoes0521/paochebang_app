@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-26 09:24:29
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 20:14:13
+ * @LastEditTime : 2020-01-16 20:17:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -242,6 +242,7 @@ class ChooseCity extends Component {
       cityList,
       areaList: city.children || [],
     });
+    city.type = 'city';
     this.lastChoose = city;
   }
   /**
@@ -441,12 +442,16 @@ class ChooseCity extends Component {
    */
   submitChooseCity() {
     if (JSON.stringify(this.lastChoose) === '{}') {
-      this.toastRef.current.show('至少选择一个省/市/县');
+      this.toastRef.current.show('至少选择一个省/市');
       return;
     }
     console.log('submit', this.throughCityNameList);
     console.log('submit', this.throughCityIdList);
     if (this.pageParams.type !== 'throughCity') {
+      if (this.lastChoose.type !== 'city') {
+        this.toastRef.current.show('至少精确到市哦~');
+        return;
+      }
       this.chooseSearchCity({
         cityId: this.lastChoose.locationId,
         cityName: this.lastChoose.locationName,
