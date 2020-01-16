@@ -3,7 +3,7 @@
  * @description: 公共导航
  * @Date: 2019-11-25 10:58:56
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 18:04:42
+ * @LastEditTime : 2020-01-16 19:03:26
  * @mustParam: 必传参数
  * title: PropTypes.string,
  *  导航栏标题
@@ -100,15 +100,15 @@ export default class NavigationBar extends Component {
             </Text>
           </View>
           <View style={styles.rightBtnView}>
-            {rightViewShow && (
-              <TouchableOpacity
-                underlayColor={'transparent'}
-                onPress={this.share.bind(this)}>
-                <Text style={[GlobalStyles.icon, styles.shareIcon]}>
-                  &#xe699;
-                </Text>
-              </TouchableOpacity>
-            )}
+            {rightViewShow && null
+            // <TouchableOpacity
+            //   underlayColor={'transparent'}
+            //   onPress={this.share.bind(this)}>
+            //   <Text style={[GlobalStyles.icon, styles.shareIcon]}>
+            //     &#xe699;
+            //   </Text>
+            // </TouchableOpacity>
+            }
           </View>
         </View>
       </View>
