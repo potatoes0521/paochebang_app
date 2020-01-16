@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 15:52:50
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 21:00:04
+ * @LastEditTime : 2020-01-16 21:35:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,7 +27,7 @@ class VacancyItem extends Component {
   componentWillUnmount() {}
   navigatorDetails() {
     let {itemData, userInfo} = this.props;
-    if (!userInfo && !userInfo.userId && !userInfo.token) {
+    if (!userInfo || !userInfo.userId || !userInfo.token) {
       NavigationUtil.goPage({}, 'RegisterPage');
       return;
     }
@@ -47,7 +47,7 @@ class VacancyItem extends Component {
   callBtn(item, e) {
     e.stopPropagation();
     let {userInfo} = this.props;
-    if (!userInfo && !userInfo.userId && !userInfo.token) {
+    if (!userInfo || !userInfo.userId || !userInfo.token) {
       NavigationUtil.goPage({}, 'RegisterPage');
       return;
     }
