@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-03 16:47:37
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-04 16:36:36
+ * @LastEditTime : 2020-01-15 14:44:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -304,7 +304,7 @@ class OfferDetails extends Component {
                     <Text style={DetailsStyle.labelText}>报价:</Text>
                   </View>
                   <View style={DetailsStyle.formContent}>
-                    <Text style={DetailsStyle.contentText}>
+                    <Text style={DetailsStyle.offerText}>
                       {quotedPriceDesc || ''} 元/台
                     </Text>
                   </View>
@@ -317,7 +317,7 @@ class OfferDetails extends Component {
                     <Text style={DetailsStyle.labelText}>总价:</Text>
                   </View>
                   <View style={DetailsStyle.formContent}>
-                    <Text style={DetailsStyle.contentText}>
+                    <Text style={DetailsStyle.offerText}>
                       ￥{totalPriceDesc || ''}
                     </Text>
                   </View>
@@ -349,17 +349,20 @@ class OfferDetails extends Component {
                   </View>
                 </View>
               )}
+              {status === 20 && <View style={styles.line} />}
               {/* 发车时间 */}
-              <View style={DetailsStyle.formItem}>
-                <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>预计发车时间:</Text>
+              {status === 10 && (
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>预计发车时间:</Text>
+                  </View>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
+                      {sendTimeDesc || ''}
+                    </Text>
+                  </View>
                 </View>
-                <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
-                    {sendTimeDesc || ''}
-                  </Text>
-                </View>
-              </View>
+              )}
               {/* 发车城市 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
@@ -408,16 +411,18 @@ class OfferDetails extends Component {
                 </View>
               </View>
               {/* 车辆类型 */}
-              <View style={DetailsStyle.formItem}>
-                <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.labelText}>车辆类型:</Text>
+              {status === 20 && (
+                <View style={DetailsStyle.formItem}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>车辆类型:</Text>
+                  </View>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
+                      {usedType === 1 ? '新车' : '二手车'}
+                    </Text>
+                  </View>
                 </View>
-                <View style={DetailsStyle.formContent}>
-                  <Text style={DetailsStyle.contentText}>
-                    {usedType === 1 ? '新车' : '二手车'}
-                  </Text>
-                </View>
-              </View>
+              )}
               {/* 台数信息 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
@@ -592,6 +597,12 @@ const styles = StyleSheet.create({
     fontFamily: 'iconfont',
     fontSize: 12,
     color: GlobalStyles.themeSubColor,
+  },
+  line: {
+    paddingHorizontal: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F5F5F5',
+    marginVertical: 16,
   },
 });
 // 如果需要引入store

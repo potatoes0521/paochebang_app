@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-14 14:56:56
+ * @LastEditTime : 2020-01-15 15:54:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -51,6 +51,11 @@ class Mine extends Component {
    * @return void
    */
   navigatorPage(pageName) {
+    let {userInfo} = this.props;
+    if (!userInfo || !userInfo.userId || !userInfo.token) {
+      NavigationUtil.goPage({}, 'RegisterPage');
+      return;
+    }
     if (!pageName) {
       return;
     }
@@ -102,67 +107,65 @@ class Mine extends Component {
     return (
       <View style={styles.pageWrapper}>
         <NavigationBar title={'我的'} />
-        <View style={styles.userWrapper}>
-          <TouchableOpacity onPress={this.navigatorRegister.bind(this)}>
-            <View style={styles.left}>
-              {userInfo.userPhoto ? (
-                <View style={styles.userImage}>
-                  <Image
-                    style={styles.imageStyle}
-                    source={{uri: userInfo.userPhoto}}
-                  />
-                </View>
-              ) : (
-                <View style={styles.userImage}>
-                  <Image style={styles.imageStyle} source={defaultImage} />
-                </View>
-              )}
-              {userInfo.userId ? (
-                <View style={styles.userInfo}>
-                  <View style={styles.userName}>
-                    {userInfo.nickName ? (
-                      <Text style={MineStyles.labelText}>
-                        {userInfo.nickName}
-                      </Text>
-                    ) : (
-                      <Text style={MineStyles.labelText}>
-                        {userInfo.mobile}
-                      </Text>
-                    )}
+        <TouchableOpacity onPress={() => this.navigatorPage('mine')}>
+          <View style={styles.userWrapper}>
+            <TouchableOpacity onPress={this.navigatorRegister.bind(this)}>
+              <View style={styles.left}>
+                {userInfo.userPhoto ? (
+                  <View style={styles.userImage}>
+                    <Image
+                      style={styles.imageStyle}
+                      source={{uri: userInfo.userPhoto}}
+                    />
                   </View>
-                  <View style={styles.certification}>
-                    {userInfo.realNameAuthStatus ? (
-                      <Image
-                        style={styles.certificationImage}
-                        source={{
-                          uri: `${defaultResourceImgURL}mine/already.png`,
-                        }}
-                      />
-                    ) : (
-                      <Image
-                        style={styles.certificationImage}
-                        source={{
-                          uri: `${defaultResourceImgURL}mine/never.png`,
-                        }}
-                      />
-                    )}
+                ) : (
+                  <View style={styles.userImage}>
+                    <Image style={styles.imageStyle} source={defaultImage} />
                   </View>
-                </View>
-              ) : (
-                <View style={styles.userInfo}>
-                  <Text style={MineStyles.labelText}>注册/登录</Text>
-                </View>
-              )}
-            </View>
-          </TouchableOpacity>
-          {userInfo.userId ? (
-            <TouchableOpacity onPress={() => this.navigatorPage('mine')}>
-              <View style={styles.right}>
-                <Text style={styles.icon}>&#xe61d;</Text>
+                )}
+                {userInfo.userId ? (
+                  <View style={styles.userInfo}>
+                    <View style={styles.userName}>
+                      {userInfo.nickName ? (
+                        <Text style={MineStyles.labelText}>
+                          {userInfo.nickName}
+                        </Text>
+                      ) : (
+                        <Text style={MineStyles.labelText}>
+                          {userInfo.mobile}
+                        </Text>
+                      )}
+                    </View>
+                    <View style={styles.certification}>
+                      {userInfo.realNameAuthStatus ? (
+                        <Image
+                          style={styles.certificationImage}
+                          source={{
+                            uri: `${defaultResourceImgURL}mine/already.png`,
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          style={styles.certificationImage}
+                          source={{
+                            uri: `${defaultResourceImgURL}mine/never.png`,
+                          }}
+                        />
+                      )}
+                    </View>
+                  </View>
+                ) : (
+                  <View style={styles.userInfo}>
+                    <Text style={MineStyles.labelText}>注册/登录</Text>
+                  </View>
+                )}
               </View>
             </TouchableOpacity>
-          ) : null}
-        </View>
+            <View style={styles.right}>
+              <Text style={styles.icon}>&#xe61d;</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
         <View style={styles.menuWrapper}>
           <View style={[styles.menuList, styles.menuLine]}>
             <TouchableOpacity onPress={() => this.navigatorPage('account')}>
@@ -234,12 +237,12 @@ class Mine extends Component {
             <Text style={MineStyles.contentText}>版本</Text>
             <Text style={styles.versionNum}>{appVersion}</Text>
           </View>
-          <TouchableOpacity onPress={() => this.callService()}>
-            <View style={styles.versionList}>
-              <Text style={MineStyles.contentText}>联系跑车</Text>
+          <View style={styles.versionList}>
+            <Text style={MineStyles.contentText}>联系跑车</Text>
+            <TouchableOpacity onPress={() => this.callService()}>
               <Text style={styles.versionNum}>400-9698-256</Text>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );

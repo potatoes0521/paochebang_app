@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-15 16:00:16
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-15 17:17:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -51,6 +51,7 @@ class Register extends Component {
   }
 
   componentWillUnmount() {
+    clearInterval(this.timer);
     this.backPress.componentWillUnmount();
   }
 

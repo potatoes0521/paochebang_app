@@ -3,7 +3,7 @@
  * @description: 我发布的空位列表
  * @Date: 2020-01-02 16:58:17
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 14:22:26
+ * @LastEditTime : 2020-01-15 15:23:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -117,7 +117,7 @@ class VacancyList extends Component {
           }
           ListFooterComponent={() => this.genIndicator()}
           onEndReached={() => {
-            this.getVacancyList.bind(this, {});
+            this.getVacancyList(this, {});
           }}
           ListEmptyComponent={() => (
             <EmptyList {...this.props} pageType={'vacancy'} />

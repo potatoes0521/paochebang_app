@@ -3,7 +3,7 @@
  * @description: 添加编辑路线
  * @Date: 2019-12-30 09:35:08
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 15:13:38
+ * @LastEditTime : 2020-01-15 13:53:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,9 +29,9 @@ class LineEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sendCityId: '630100',
+      sendCityId: '',
       sendCityName: '', //发车城市
-      receiveCityId: '231100',
+      receiveCityId: '',
       receiveCityName: '', //收车城市
     };
     this.pageParams = {};
@@ -45,7 +45,7 @@ class LineEdit extends Component {
     const {navigation} = this.props;
     const {state} = navigation;
     const {params} = state;
-    console.log('params', params);
+    // console.log('params', params);
     this.pageParams = params || {};
     this.handleEmit();
     if (this.pageParams.pageType === 'edit') {
@@ -91,12 +91,7 @@ class LineEdit extends Component {
     this.pageParams.lineItem.receiveCityName = this.pageParams.lineItem.toCityName;
     this.pageParams.lineItem.sendCityId = this.pageParams.lineItem.fromCityId;
     this.pageParams.lineItem.receiveCityId = this.pageParams.lineItem.toCityId;
-    this.setState({
-      sendCityId: this.pageParams.lineItem.sendCityId,
-      sendCityName: this.pageParams.lineItem.sendCityName,
-      receiveCityId: this.pageParams.lineItem.receiveCityId,
-      receiveCityName: this.pageParams.lineItem.receiveCityName,
-    });
+    this.setState(this.pageParams.lineItem);
   }
   /**
    * 添加线路

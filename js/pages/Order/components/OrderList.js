@@ -119,7 +119,7 @@ class OrderList extends Component {
           }
           ListFooterComponent={() => this.genIndicator()}
           onEndReached={() => {
-            this.getOrderList.bind(this, {});
+            this.getOrderList(this, {});
           }}
           ListEmptyComponent={() => (
             <EmptyList {...this.props} pageType={'order'} />
