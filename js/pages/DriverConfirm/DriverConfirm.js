@@ -3,7 +3,7 @@
  * @description: 确认司机页面
  * @Date: 2019-12-30 15:01:46
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 14:57:50
+ * @LastEditTime : 2020-01-16 16:58:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -160,6 +160,7 @@ class DriverConfirm extends Component {
     };
     api.order.confirmDriver(sendData, this).then(res => {
       this.toastRef.current.show('提交成功');
+      DeviceEventEmitter.emit('confirmDriver', sendData);
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);

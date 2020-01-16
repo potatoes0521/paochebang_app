@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 15:01:16
+ * @LastEditTime : 2020-01-16 17:30:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,10 +18,12 @@ import NavigationUtil from '../../navigator/NavigationUtils';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
+import Authentication from '../../components/Authentication/Authentication';
 import Toast from 'react-native-easy-toast';
 import {handleOrderButtons} from '../../config/button_config.js';
 import ButtonItem from './components/Buttons';
 import GlobalStyles from '../../assets/css/GlobalStyles';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 class OrderDetails extends Component {
   constructor(props) {
     super(props);
@@ -65,6 +67,7 @@ class OrderDetails extends Component {
     const {state} = navigation;
     const {params} = state;
     this.pageParams = params || {};
+    console.log('this.props', this.props.userInfo);
     this.getOrderDetail();
     this.backPress.componentDidMount();
   }
@@ -134,18 +137,17 @@ class OrderDetails extends Component {
     if (this.state.isActive !== 1) {
       return;
     }
-    // if (+this.props.userInfo.realNameAuthStatus < 2) {
-    //   this.setState({
-    //     isShow: true,
-    //   });
-    //   return;
-    // }
+    if (this.props.userInfo.realNameAuthStatus < 2) {
+      this.setState({
+        isShow: true,
+      });
+      return;
+    }
     let sendData = {
       orderCode: this.state.orderCode,
     };
     api.order.receiptOrderData(sendData, this).then(() => {
       this.toastRef.current.show('接单成功');
-      console.log('this', this);
       this.getOrderDetails();
     });
   }
@@ -244,6 +246,16 @@ class OrderDetails extends Component {
         return;
     }
   }
+  /**
+   * 关闭认证弹框
+   * @return void
+   */
+  changeCertification() {
+    let {isShow} = this.state;
+    this.setState({
+      isShow: !isShow,
+    });
+  }
 
   render() {
     const {theme, navigation} = this.props;
@@ -270,7 +282,7 @@ class OrderDetails extends Component {
       transferSettlePriceDesc,
       abandonTimeDesc,
       buttons,
-      // isShow,
+      isShow,
       statusDescs,
     } = this.state;
     const buttonsList =
@@ -299,6 +311,12 @@ class OrderDetails extends Component {
             leftViewShow={true}
             title={'订单详情'}
           />
+          {/* 实名认证弹框 */}
+          {isShow ? (
+            <TouchableOpacity onPress={this.changeCertification.bind(this)}>
+              <Authentication />
+            </TouchableOpacity>
+          ) : null}
           <ScrollView>
             {statusDescs.length ? (
               <View style={styles.statusWrapper}>

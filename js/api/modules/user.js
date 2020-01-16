@@ -4,7 +4,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 11:52:12
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-14 14:39:24
+ * @LastEditTime : 2020-01-16 17:49:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -69,5 +69,9 @@ export default {
   // 获取实名信息
   getUserAuthorizeMsg(data, that) {
     return requestHandle.get('user/idcard', data, that);
+  },
+  // 获取注册服务协议
+  getAgreementFile(that) {
+    return requestHandle.getJson('agreement.json', that);
   },
 };

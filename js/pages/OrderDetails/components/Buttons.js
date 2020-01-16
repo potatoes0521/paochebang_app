@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 14:52:01
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 15:07:39
+ * @LastEditTime : 2020-01-16 16:47:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -36,7 +36,7 @@ export default class Buttons extends Component {
       btnStyle = [styles.btnStyle];
       fontStyles = [];
     }
-    if (item.key === 'confirmDriverInfo') {
+    if (item.key === 'deliveryListEdit' || item.key === 'deliveryListSee') {
       btnStyle = [styles.btnStyle, styles.btnBorder];
     }
     return (

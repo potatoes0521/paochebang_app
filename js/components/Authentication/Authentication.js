@@ -3,7 +3,7 @@
  * @description: 实名认证弹框
  * @Date: 2020-01-04 10:45:41
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-04 16:10:11
+ * @LastEditTime : 2020-01-16 18:07:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -25,12 +25,22 @@ export default class Authentication extends Component {
   componentWillUnmount() {}
   goToAuthentication() {
     NavigationUtil.goPage({pageBack: '1'}, 'AuthenticationPage');
+    this.closeAuthentication();
+  }
+  stopPropagation(e) {
+    e.stopPropagation();
+  }
+  closeAuthentication() {
     this.props.onClick();
   }
   render() {
     return (
-      <View style={styles.AuthenticationWrapper}>
-        <View style={styles.cardStyle}>
+      <View
+        style={styles.AuthenticationWrapper}
+        onPress={this.closeAuthentication.bind(this)}>
+        <View
+          style={styles.cardStyle}
+          onPress={this.stopPropagation.bind(this)}>
           <Image style={styles.imgStyle} source={authenticationImage} />
           <Text style={styles.titleStyle}>实名认证</Text>
           <Text style={styles.tipsStyle}>请提交身份信息，完成认证</Text>
@@ -57,7 +67,7 @@ const styles = StyleSheet.create({
     width: GlobalStyles.window_width,
     height: GlobalStyles.window_height,
     backgroundColor: 'rgba(0,0,0,0.4)',
-    zIndex: 5,
+    zIndex: 50,
   },
   cardStyle: {
     width: 264,

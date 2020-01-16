@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 10:51:34
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 10:20:09
+ * @LastEditTime : 2020-01-16 16:51:11
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -115,6 +115,12 @@ export default class OrderItem extends Component {
       itemData: {item},
     } = this.props;
     let {inquiryOrder} = item || {};
+    let statusStyle = [styles.statusText];
+    let priceStyle = [styles.priceText];
+    if (item.isActive !== 1) {
+      statusStyle.push(styles.disabledStyle);
+      priceStyle.push(styles.textStyle);
+    }
     const buttons = handleOrderButtons(item.buttons);
     const buttonsList =
       buttons &&
@@ -149,7 +155,7 @@ export default class OrderItem extends Component {
               </Text>
             </View>
             <View style={styles.statusWrapper}>
-              <Text style={styles.statusText}>{item.statusDesc || ''}</Text>
+              <Text style={statusStyle}>{item.statusDesc || ''}</Text>
             </View>
           </View>
           <View style={styles.item}>
@@ -160,9 +166,7 @@ export default class OrderItem extends Component {
               <Text style={styles.carInfoText}>{inquiryOrder.carAmount}台</Text>
             </View>
             <View style={styles.priceWrapper}>
-              <Text style={styles.priceText}>
-                ¥{item.transferSettlePriceDesc}
-              </Text>
+              <Text style={priceStyle}>¥{item.transferSettlePriceDesc}</Text>
             </View>
           </View>
           {!inquiryOrder.storePickup && !inquiryOrder.homeDelivery ? null : (
@@ -230,6 +234,7 @@ const styles = StyleSheet.create({
   statusText: {
     fontWeight: '700',
     fontSize: 16,
+    color: GlobalStyles.themeColor,
   },
   carInfo: {
     flex: 1,
@@ -252,6 +257,12 @@ const styles = StyleSheet.create({
     color: GlobalStyles.themeColor,
     fontWeight: '700',
     fontSize: 15,
+  },
+  disabledStyle: {
+    color: GlobalStyles.themeDisabled,
+  },
+  textStyle: {
+    color: GlobalStyles.themeFontColor,
   },
   btnWrapper: {
     paddingVertical: 16,

@@ -9,7 +9,13 @@
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  RefreshControl,
+  DeviceEventEmitter,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
@@ -30,10 +36,27 @@ class OrderList extends Component {
   }
 
   componentDidMount() {
+    this.handleEmit();
     this.getOrderList({});
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.emitConfirmDriver.remove();
+  }
+  /**
+   * 处理事件通知
+   * @return void
+   */
+  handleEmit() {
+    this.emitConfirmDriver = DeviceEventEmitter.addListener(
+      'confirmDriver',
+      () => {
+        this.getOrderList({
+          refresh: true,
+        });
+      },
+    );
+  }
 
   /**
    * 函数功能描述
