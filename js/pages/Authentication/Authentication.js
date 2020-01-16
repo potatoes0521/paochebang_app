@@ -3,7 +3,7 @@
  * @description: 实名认证
  * @Date: 2019-12-26 18:17:17
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-16 20:46:56
+ * @LastEditTime : 2020-01-16 21:21:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -450,7 +450,10 @@ class Authentication extends Component {
                 </View>
                 <View style={styles.idCardWrapper}>
                   <View style={[styles.cardItem, styles.line]}>
-                    <Text style={MineStyles.contentText}>真实姓名</Text>
+                    <View style={styles.itemStyle}>
+                      <Text style={styles.isRequired}>*</Text>
+                      <Text style={MineStyles.contentText}>真实姓名</Text>
+                    </View>
                     <View style={styles.inputWrapper}>
                       {userInfo.realNameAuthStatus ? (
                         <Text>{realName}</Text>
@@ -466,7 +469,10 @@ class Authentication extends Component {
                     </View>
                   </View>
                   <View style={styles.cardItem}>
-                    <Text style={MineStyles.contentText}>身份证号</Text>
+                    <View style={styles.itemStyle}>
+                      <Text style={styles.isRequired}>*</Text>
+                      <Text style={MineStyles.contentText}>身份证号</Text>
+                    </View>
                     <View style={styles.inputWrapper}>
                       {userInfo.realNameAuthStatus ? (
                         <Text>{idCard}</Text>
@@ -729,6 +735,16 @@ const styles = StyleSheet.create({
     height: 40,
     paddingHorizontal: 20,
     marginTop: 24,
+  },
+  isRequired: {
+    color: '#FF672A',
+    width: 9,
+    marginRight: 4,
+  },
+  itemStyle: {
+    width: 120,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

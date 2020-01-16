@@ -3,7 +3,7 @@
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-14 19:26:04
+ * @LastEditTime : 2020-01-16 21:22:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -282,7 +282,7 @@ class Driver extends Component {
               return data.userId + 'driver';
             }}
           />
-          {driverListData.length > 0 ? (
+          {driverListData && driverListData.length ? (
             <View style={styles.imageWrapper}>
               <TouchableOpacity onPress={this.addDriver.bind(this)}>
                 <Image style={styles.imageStyle} source={AddDriverImage} />
