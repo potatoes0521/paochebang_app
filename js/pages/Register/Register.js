@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-16 18:26:49
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-16 18:54:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -238,15 +238,15 @@ class Register extends Component {
           {item.text}
         </Text>
       ));
-    let textClassName = [styles.agreementsFont];
     const agreementsList =
       agreementsMainList &&
-      agreementsMainList.map(item => {
-        if (item.weight === 1) {
+      agreementsMainList.map((item, index) => {
+        const textClassName = [styles.agreementsFont];
+        if (item.weight === '1') {
           textClassName.push(styles.agreementsFontBold);
         }
         return (
-          <Text style={textClassName} key={item}>
+          <Text style={textClassName} key={index}>
             {item.text}
           </Text>
         );
@@ -478,6 +478,7 @@ const styles = StyleSheet.create({
   agreementsFont: {
     color: GlobalStyles.themeTipColor,
     textAlign: 'justify',
+    lineHeight: 22,
   },
   agreementsFontBold: {
     fontWeight: '700',
