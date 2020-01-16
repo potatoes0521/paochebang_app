@@ -3,13 +3,13 @@
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-10 10:54:07
+ * @LastEditTime : 2020-01-15 20:47:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import WelcomePage from '../pages/WelcomePage';
+// import WelcomePage from '../pages/WelcomePage';
 import HomePage from '../pages/Home';
 import OfferDetailsPage from '../pages/OfferDetails/OfferDetails';
 import OrderDetailsPage from '../pages/OrderDetails/OrderDetails';
@@ -38,15 +38,15 @@ import PublishPage from '../pages/Publish/Publish.js';
 
 export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一个初始化的路由名
 
-const InitNavigator = createStackNavigator({
-  WelcomePage: {
-    screen: WelcomePage,
-    // screen: UploadImagePage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
-    navigationOptions: {
-      header: null, // 隐藏头部
-    },
-  },
-});
+// const InitNavigator = createStackNavigator({
+//   WelcomePage: {
+//     screen: WelcomePage,
+//     // screen: UploadImagePage, // 调试界面可以吧这个写成你调试的界面 不用一直一级一级点进去
+//     navigationOptions: {
+//       header: null, // 隐藏头部
+//     },
+//   },
+// });
 
 const MainNavigator = createStackNavigator(
   {
@@ -231,7 +231,7 @@ const MainNavigator = createStackNavigator(
 export default createAppContainer(
   createSwitchNavigator(
     {
-      Init: InitNavigator,
+      Init: MainNavigator,
       Main: MainNavigator,
     },
     {

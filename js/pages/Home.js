@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-22 16:48:04
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-15 18:04:25
+ * @LastEditTime : 2020-01-15 20:55:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,9 +23,9 @@ import api from '../api';
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.backPress = new BackPressComponent({
-      backPress: this.onBackPress,
-    });
+    // this.backPress = new BackPressComponent({
+    //   backPress: this.onBackPress,
+    // });
     console.disableYellowBox = true;
   }
 
@@ -41,11 +41,11 @@ class Home extends Component {
         this.getStorage();
       });
     }
-    this.backPress.componentDidMount();
+    // this.backPress.componentDidMount();
   }
 
   componentWillUnmount() {
-    this.backPress.componentWillUnmount();
+    // this.backPress.componentWillUnmount();
   }
 
   onBackPress = () => {
@@ -70,12 +70,12 @@ class Home extends Component {
             Storage.setStorage('userInfo', {});
           }
           SplashScreen.hide();
-          NavigationUtil.resetToHomPage(this.props);
+          // NavigationUtil.resetToHomPage(this.props);
         });
       })
       .catch(() => {
         SplashScreen.hide();
-        NavigationUtil.resetToHomPage(this.props);
+        // NavigationUtil.resetToHomPage(this.props);
       });
   }
   render() {
