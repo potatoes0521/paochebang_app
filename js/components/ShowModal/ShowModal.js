@@ -3,7 +3,7 @@
  * @description: 删除线路提示框
  * @Date: 2020-01-13 15:16:39
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 17:26:46
+ * @LastEditTime : 2020-01-16 16:15:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,10 @@ import Button from '../Button/Button';
 export default class ShowModal extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      title: '提示',
+      text: '是否删除选中的线路',
+    };
   }
 
   componentDidMount() {}
@@ -32,12 +35,13 @@ export default class ShowModal extends Component {
     e.stopPropagation();
   }
   render() {
+    let {title, text} = this.state;
     return (
       <View style={styles.alertWrapper}>
         <View style={styles.alertCard} onClick={this.stopTipsCard.bind(this)}>
           <View style={styles.titleStyle}>
-            <Text style={styles.title}>标题</Text>
-            <Text style={styles.tips}>是否删除选中的线路</Text>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.tips}>{text}</Text>
           </View>
           <View style={styles.btnStyle}>
             <Button

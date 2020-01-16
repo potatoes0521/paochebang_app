@@ -3,7 +3,7 @@
  * @description: 账户体系
  * @Date: 2019-12-25 15:25:16
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-15 14:54:22
+ * @LastEditTime : 2020-01-16 11:09:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -198,32 +198,34 @@ class AccountDetails extends Component {
           <View style={styles.accountTitle}>
             <Text style={styles.detailsTitle}>收支明细</Text>
           </View>
-          <FlatList
-            data={this.state.accountList}
-            renderItem={data => (
-              <AccountItem type={'account'} item={data.item} />
-            )}
-            ItemSeparatorComponent={() => this.dividingLine()}
-            refreshControl={
-              <RefreshControl
-                title="Loading..."
-                colors={[GlobalStyles.themeColor]}
-                refreshing={this.state.isLoading}
-                onRefresh={() => this.getAccountList({refresh: true})}
-                tintColor={GlobalStyles.themeColor}
-              />
-            }
-            ListFooterComponent={() => this.genIndicator()}
-            onEndReached={() => {
-              this.getAccountList(this, {});
-            }}
-            ListEmptyComponent={() => (
-              <EmptyList {...this.props} pageType={'account'} />
-            )}
-            keyExtractor={data => {
-              return data.billId + 'account';
-            }}
-          />
+          <View style={styles.listWrapper}>
+            <FlatList
+              data={this.state.accountList}
+              renderItem={data => (
+                <AccountItem type={'account'} item={data.item} />
+              )}
+              ItemSeparatorComponent={() => this.dividingLine()}
+              refreshControl={
+                <RefreshControl
+                  title="Loading..."
+                  colors={[GlobalStyles.themeColor]}
+                  refreshing={this.state.isLoading}
+                  onRefresh={() => this.getAccountList({refresh: true})}
+                  tintColor={GlobalStyles.themeColor}
+                />
+              }
+              ListFooterComponent={() => this.genIndicator()}
+              onEndReached={() => {
+                this.getAccountList(this, {});
+              }}
+              ListEmptyComponent={() => (
+                <EmptyList {...this.props} pageType={'account'} />
+              )}
+              keyExtractor={data => {
+                return data.billId + 'account';
+              }}
+            />
+          </View>
           <Toast
             ref={this.toastRef}
             position={'center'}
@@ -304,6 +306,12 @@ const styles = StyleSheet.create({
   line: {
     height: 1,
     backgroundColor: '#f5f5f5',
+  },
+  listWrapper: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingLeft: 24,
+    paddingRight: 12,
   },
 });
 

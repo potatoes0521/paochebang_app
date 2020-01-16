@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-03 16:47:37
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-15 14:44:59
+ * @LastEditTime : 2020-01-16 17:30:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -74,6 +74,7 @@ class OfferDetails extends Component {
     const {state} = navigation;
     const {params} = state;
     console.log('params', params);
+    console.log('this.props', this.props.userInfo);
     this.pageParams = params || {};
     this.initData();
     this.backPress.componentDidMount();
@@ -162,12 +163,12 @@ class OfferDetails extends Component {
   }
   quote() {
     let {inquiryCode, inquiryId, quotedPrice, dueTime} = this.state;
-    // if (+this.props.userInfo.realNameAuthStatus < 1) {
-    //   this.setState({
-    //     isShow: true,
-    //   });
-    //   return;
-    // }
+    if (this.props.userInfo.realNameAuthStatus < 1) {
+      this.setState({
+        isShow: true,
+      });
+      return;
+    }
     if (!Number(quotedPrice)) {
       this.toastRef.current.show('请输入正确的金额格式');
       return;
@@ -190,7 +191,7 @@ class OfferDetails extends Component {
       quotedPrice: quotedPrice * 100,
       dueTime,
     };
-    console.log('sendData', sendData);
+    // console.log('sendData', sendData);
     api.offer.submitOfferData(sendData, this).then(res => {
       if (!res) {
         return;
@@ -224,6 +225,16 @@ class OfferDetails extends Component {
       {orderCode: this.state.orderCode},
       'OrderDetailsPage',
     );
+  }
+  /**
+   * 关闭认证弹框
+   * @return void
+   */
+  changeCertification() {
+    let {isShow} = this.state;
+    this.setState({
+      isShow: !isShow,
+    });
   }
   render() {
     const {theme, navigation} = this.props;
@@ -271,7 +282,11 @@ class OfferDetails extends Component {
             title={'报价详情'}
           />
           {/* 实名认证弹框 */}
-          {isShow ? <Authentication /> : null}
+          {isShow ? (
+            <TouchableOpacity onPress={this.changeCertification.bind(this)}>
+              <Authentication />
+            </TouchableOpacity>
+          ) : null}
           <ScrollView>
             {statusDescs && statusDescs.length ? (
               <View style={styles.statusWrapper}>
