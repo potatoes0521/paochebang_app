@@ -3,7 +3,7 @@
  * @description: 页面/navigator配置
  * @Date: 2019-11-22 16:52:09
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-15 20:47:33
+ * @LastEditTime : 2020-01-16 14:13:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -35,7 +35,7 @@ import SellingPublishPage from '../pages/SellingPublish/SellingPublish.js';
 import VacancyPublishPage from '../pages/VacancyPublish/VacancyPublish.js';
 import RemarkPage from '../pages/Remark/Remark';
 import PublishPage from '../pages/Publish/Publish.js';
-
+import WebViewPage from '../pages/WebView/WebView.js';
 export const rootCom = 'Init'; //设置根路由，对应RootNavigator中第一个初始化的路由名
 
 // const InitNavigator = createStackNavigator({
@@ -216,6 +216,12 @@ const MainNavigator = createStackNavigator(
     },
     ChooseCityPage: {
       screen: ChooseCityPage,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    WebViewPage: {
+      screen: WebViewPage,
       navigationOptions: {
         header: null,
       },

@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-29 15:28:01
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-15 18:02:03
+ * @LastEditTime : 2020-01-16 14:16:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -109,13 +109,23 @@ class Index extends Component {
     // }
     NavigationUtil.goPage({type: type}, 'InformationPage');
   }
+  navigatorToActivity(item) {
+    console.log('item', item);
+    if (!item.locationUrl) {
+      return;
+    }
+    NavigationUtil.goPage(item, 'WebViewPage');
+  }
   render() {
     let {bannerListData, recommendData, failLoading} = this.state;
     const bannerList =
       bannerListData &&
       bannerListData.map(item => {
         return (
-          <TouchableOpacity style={styles.swiperItem} key={item.id}>
+          <TouchableOpacity
+            onPress={this.navigatorToActivity.bind(this, item)}
+            style={styles.swiperItem}
+            key={item.id}>
             <Image
               style={styles.swiperItemImage}
               source={{
