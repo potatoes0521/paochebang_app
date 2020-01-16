@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-24 11:45:16
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 18:11:31
+ * @LastEditTime : 2020-01-16 20:43:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -116,6 +116,12 @@ class SellingDetails extends Component {
         if (!supported) {
           console.log('Can not handle tel:' + tel);
         } else {
+          let sendData = {
+            infoType: 1,
+            objectId: this.state.saleToPalletId,
+            behaviourSource: 3,
+          };
+          api.statistics.callPhone(sendData, this).then(() => {});
           return Linking.openURL(tel);
         }
       })

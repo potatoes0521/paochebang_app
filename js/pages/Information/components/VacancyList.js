@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:53:33
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 14:20:18
+ * @LastEditTime : 2020-01-16 20:41:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -128,7 +128,7 @@ class VacancyList extends Component {
       <View style={styles.pageWrapper}>
         <FlatList
           data={this.state.listData}
-          renderItem={data => <VacancyItem itemData={data.item} />}
+          renderItem={data => <VacancyItem from={2} itemData={data.item} />}
           refreshControl={
             <RefreshControl
               title="Loading..."

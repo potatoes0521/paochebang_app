@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 14:14:44
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-15 15:35:40
+ * @LastEditTime : 2020-01-16 20:37:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,6 +13,7 @@ import GlobalStyles from '../../../assets/css/GlobalStyles';
 import NavigationUtil from '../../../navigator/NavigationUtils';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import api from '../../../api';
 // 如果需要引入store
 
 class SellingItem extends Component {
@@ -61,6 +62,12 @@ class SellingItem extends Component {
         if (!supported) {
           console.log('Can not handle tel:' + tel);
         } else {
+          let sendData = {
+            infoType: 1,
+            objectId: item.saleToPalletId,
+            behaviourSource: this.props.from,
+          };
+          api.statistics.callPhone(sendData, this).then(() => {});
           return Linking.openURL(tel);
         }
       })
@@ -243,10 +250,13 @@ const styles = StyleSheet.create({
 });
 
 SellingItem.defaultProps = {
+  // 1 精选推荐 2 列表 3 详情
+  from: 0,
   itemData: {},
 };
 
 SellingItem.propTypes = {
+  from: PropTypes.number.isRequired,
   itemData: PropTypes.object,
 };
 const mapStateToProps = state => {

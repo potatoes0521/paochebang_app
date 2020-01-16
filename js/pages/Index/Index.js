@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-29 15:28:01
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 14:16:58
+ * @LastEditTime : 2020-01-16 20:36:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -138,7 +138,9 @@ class Index extends Component {
     const recommendList =
       recommendData &&
       recommendData.map(item => {
-        return <SellingItem key={item.saleToPalletId} itemData={item} />;
+        return (
+          <SellingItem key={item.saleToPalletId} from={1} itemData={item} />
+        );
       });
     return (
       <View style={styles.pageWrapper}>

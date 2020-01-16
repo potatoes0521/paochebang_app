@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 15:52:50
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-15 15:34:26
+ * @LastEditTime : 2020-01-16 20:41:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
 import NavigationUtil from '../../../navigator/NavigationUtils.js';
 import {connect} from 'react-redux';
+import api from '../../../api';
 
 class VacancyItem extends Component {
   constructor(props) {
@@ -53,6 +54,12 @@ class VacancyItem extends Component {
         if (!supported) {
           console.log('Can not handle tel:' + tel);
         } else {
+          let sendData = {
+            infoType: 2,
+            objectId: item.vacantPalletId,
+            behaviourSource: this.props.from,
+          };
+          api.statistics.callPhone(sendData, this).then(() => {});
           return Linking.openURL(tel);
         }
       })
@@ -221,10 +228,12 @@ const styles = StyleSheet.create({
 });
 
 VacancyItem.defaultProps = {
+  from: 0,
   onClick: () => {},
 };
 
 VacancyItem.propTypes = {
+  from: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

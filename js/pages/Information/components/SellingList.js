@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:53:33
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 13:55:58
+ * @LastEditTime : 2020-01-16 20:37:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -125,7 +125,7 @@ class SellingList extends Component {
       <View style={styles.pageWrapper}>
         <FlatList
           data={this.state.listData}
-          renderItem={data => <SellingItem itemData={data.item} />}
+          renderItem={data => <SellingItem itemData={data.item} from={2} />}
           refreshControl={
             <RefreshControl
               title="Loading..."
