@@ -54,7 +54,6 @@ class OfferList extends Component {
       data => {
         this.sendCityId = data.sendCityId;
         this.receiveCityId = data.receiveCityId;
-        console.log(this.sendCityId, this.receiveCityId);
         this.getOfferList({
           sendCityId: this.sendCityId,
           receiveCityId: this.receiveCityId,
