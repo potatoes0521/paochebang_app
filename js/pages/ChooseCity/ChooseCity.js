@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-26 09:24:29
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 13:54:27
+ * @LastEditTime : 2020-01-16 20:14:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -498,7 +498,7 @@ class ChooseCity extends Component {
       filterCityList,
       provinceList,
       cityList,
-      areaList,
+      // areaList,
       fixedTitle,
       pageType,
       throughCityNameList,
@@ -561,28 +561,28 @@ class ChooseCity extends Component {
         </TouchableOpacity>
       );
     });
-    const areaListRender = areaList.map(city => {
-      const key = city.locationId;
-      const textClassName = [styles.locationNameText];
-      if (city.checked) {
-        textClassName.push(styles.textHeighLight);
-      }
-      return (
-        <TouchableOpacity
-          onPress={this.chooseArea.bind(this, city)}
-          style={styles.allCityItem}
-          key={key}>
-          {city.checked && (
-            <Text style={[GlobalStyles.icon, styles.chooseIcon]}>&#xe61e;</Text>
-          )}
-          <Text style={textClassName}>
-            {city.locationName && city.locationName.length > 5
-              ? city.locationName.substr(0, 5) + '...'
-              : city.locationName}
-          </Text>
-        </TouchableOpacity>
-      );
-    });
+    // const areaListRender = areaList.map(city => {
+    //   const key = city.locationId;
+    //   const textClassName = [styles.locationNameText];
+    //   if (city.checked) {
+    //     textClassName.push(styles.textHeighLight);
+    //   }
+    //   return (
+    //     <TouchableOpacity
+    //       onPress={this.chooseArea.bind(this, city)}
+    //       style={styles.allCityItem}
+    //       key={key}>
+    //       {city.checked && (
+    //         <Text style={[GlobalStyles.icon, styles.chooseIcon]}>&#xe61e;</Text>
+    //       )}
+    //       <Text style={textClassName}>
+    //         {city.locationName && city.locationName.length > 5
+    //           ? city.locationName.substr(0, 5) + '...'
+    //           : city.locationName}
+    //       </Text>
+    //     </TouchableOpacity>
+    //   );
+    // });
     const nowChooseListRender = throughCityNameList.map((city, index) => {
       return (
         <TouchableOpacity
@@ -651,7 +651,7 @@ class ChooseCity extends Component {
                 <View style={styles.allCity}>
                   <View style={styles.public}>{provinceListRender}</View>
                   <View style={styles.public}>{cityListRender}</View>
-                  <View style={styles.public}>{areaListRender}</View>
+                  {/* <View style={styles.public}>{areaListRender}</View> */}
                 </View>
               </>
             )}

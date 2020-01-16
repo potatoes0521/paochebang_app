@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-01-14 16:50:46
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-14 17:29:03
+ * @LastEditTime : 2020-01-16 20:13:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -41,11 +41,11 @@ export default class CityChooseTitle extends Component {
             <Text style={styles.text}>城市</Text>
           </View>
         </View>
-        <View style={styles.public}>
+        {/* <View style={styles.public}>
           <View style={[styles.title, styles.allCityItem]}>
             <Text style={styles.text}>区县</Text>
           </View>
-        </View>
+        </View> */}
       </View>
     );
   }
