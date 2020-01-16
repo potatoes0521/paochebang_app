@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-14 19:57:57
+ * @LastEditTime : 2020-01-16 20:25:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -234,7 +234,7 @@ class VacancyPublish extends Component {
       userId: this.props.userInfo.userId,
       sourceId: 1,
     };
-    if (this.pageParams.pageType === 'edit') {
+    if (this.pageParams && this.pageParams.pageType === 'edit') {
       this.editVacancyData(sendData);
     } else {
       this.addVacancyData(sendData);
