@@ -3,7 +3,7 @@
  * @description: 公共导航
  * @Date: 2019-11-25 10:58:56
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-26 16:09:33
+ * @LastEditTime : 2020-01-16 18:04:42
  * @mustParam: 必传参数
  * title: PropTypes.string,
  *  导航栏标题
@@ -32,6 +32,7 @@ import PropTypes from 'prop-types';
 import GlobalStyles from '../../assets/css/GlobalStyles.js';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import NavigationUtil from '../../navigator/NavigationUtils';
+import ShareUtil from '../../../native/ShareUtil';
 
 const NAV_BAR_HEIGHT_IOS = 50; //导航栏在iOS中的高度
 const NAV_BAR_HEIGHT_ANDROID = 50; //导航栏在Android中的高度
@@ -63,7 +64,20 @@ export default class NavigationBar extends Component {
       NavigationUtil.goBack(this.props.navigation);
     }
   }
-  share() {}
+  share() {
+    ShareUtil.share(
+      'sssss',
+      'http://dev.umeng.com/images/tab2_1.png',
+      'http://www.umeng.com/',
+      'title',
+      2,
+      (code, message) => {
+        this.setState({
+          result: message,
+        });
+      },
+    );
+  }
   render() {
     let {leftViewShow, rightViewShow, title} = this.props;
     return (
@@ -85,16 +99,14 @@ export default class NavigationBar extends Component {
               {title}
             </Text>
           </View>
-          <View style={styles.navBarButton}>
+          <View style={styles.rightBtnView}>
             {rightViewShow && (
               <TouchableOpacity
                 underlayColor={'transparent'}
-                onPress={this.share}>
-                <Ionicons
-                  name={'md-share'}
-                  size={20}
-                  style={styles.shareIcon}
-                />
+                onPress={this.share.bind(this)}>
+                <Text style={[GlobalStyles.icon, styles.shareIcon]}>
+                  &#xe699;
+                </Text>
               </TouchableOpacity>
             )}
           </View>
@@ -110,9 +122,6 @@ const styles = StyleSheet.create({
     borderBottomColor: '#e9e9e9',
     borderBottomWidth: 1,
     borderStyle: 'solid',
-  },
-  navBarButton: {
-    alignItems: 'center',
   },
   navBar: {
     flexDirection: 'row',
@@ -138,17 +147,22 @@ const styles = StyleSheet.create({
     height: STATUS_BAR_HEIGHT,
   },
   leftBackBtn: {
-    padding: 8,
     paddingLeft: 12,
     width: 50,
   },
   iconLeft: {
     color: GlobalStyles.themeFontColor,
   },
+  rightBtnView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingRight: 12,
+    // backgroundColor: 'red',
+  },
   shareIcon: {
-    opacity: 0.9,
-    marginRight: 10,
-    // color: 'white',
+    fontSize: 20,
+    color: GlobalStyles.themeFontColor,
   },
 });
 

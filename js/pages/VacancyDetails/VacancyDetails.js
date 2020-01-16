@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-24 11:48:37
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-02 15:19:42
+ * @LastEditTime : 2020-01-16 18:11:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -183,6 +183,7 @@ class VacancyDetsils extends Component {
           <NavigationBar
             navigation={navigation}
             leftViewShow={true}
+            rightViewShow={true}
             title={'空位详情'}
           />
           <ScrollView>
@@ -255,7 +256,7 @@ class VacancyDetsils extends Component {
                   <Text style={labelTextClassName}>报价:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={textClassName}>{returnPrice || ''}</Text>
+                  <Text style={textClassName}>{returnPrice || '价格私聊'}</Text>
                 </View>
               </View>
               {/* 备注 */}

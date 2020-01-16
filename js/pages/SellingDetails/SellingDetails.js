@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-24 11:45:16
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-02 12:02:26
+ * @LastEditTime : 2020-01-16 18:11:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -187,6 +187,7 @@ class SellingDetails extends Component {
           <NavigationBar
             navigation={navigation}
             leftViewShow={true}
+            rightViewShow={true}
             title={'卖板详情'}
           />
           <ScrollView>
@@ -270,7 +271,7 @@ class SellingDetails extends Component {
                   <Text style={labelTextClassName}>报价:</Text>
                 </View>
                 <View style={DetailsStyle.formContent}>
-                  <Text style={textClassName}>{returnPrice || '私聊'}</Text>
+                  <Text style={textClassName}>{returnPrice || '价格私聊'}</Text>
                 </View>
               </View>
               {/* 有效期至 */}

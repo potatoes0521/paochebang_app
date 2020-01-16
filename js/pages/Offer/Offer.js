@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:46:56
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 16:40:42
+ * @LastEditTime : 2020-01-16 18:10:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -164,7 +164,7 @@ class Offer extends Component {
     const NavigatorTab = this._NavigatorTab();
     return (
       <View style={styles.pageWrapper}>
-        <NavigationBar title={'报价/接单'} />
+        <NavigationBar title={'报价/接单'} rightViewShow={true} />
         {!userInfo || !userInfo.userId || !userInfo.token ? (
           <EmptyList pageType={'login_offer'} />
         ) : (

@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 15:33:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 17:09:25
+ * @LastEditTime : 2020-01-16 17:59:52
  * @mustParam: 必传参数
  * // pageType = delivery 交车单  pickUp 提车单
     // type=edit 编辑  see 看
@@ -81,9 +81,9 @@ class UploadImage extends Component {
         pageParams: params,
       },
       () => {
-        // if (params.type === 'see') {
-        this.handleSeeDetails();
-        // }
+        if (params.type === 'see') {
+          this.handleSeeDetails();
+        }
       },
     );
   }
