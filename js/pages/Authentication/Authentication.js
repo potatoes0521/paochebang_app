@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 实名认证
  * @Date: 2019-12-26 18:17:17
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 17:06:25
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-16 20:46:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -691,7 +691,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    borderRadius: 50,
+    borderRadius: 16,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
