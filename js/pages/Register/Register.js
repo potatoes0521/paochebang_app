@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 18:54:03
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-16 19:40:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,6 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
-  ScrollView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import api from '../../api';
@@ -28,6 +27,7 @@ import LoginLogo from '../../assets/image/register/paoche_logo.png';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
+import Agreement from '../../components/Agreement/Agreement';
 import Actions from '../../store/action/index.js';
 import Storage from '../../utils/Storage.js';
 import Toast from 'react-native-easy-toast';
@@ -40,9 +40,7 @@ class Register extends Component {
       timerFlag: false,
       phoneNumber: '', //手机号
       verificationCode: '', //验证码
-      isShow: false,
-      agreementsParagraphList: [], //协议内容，weight:0  字体加粗， weight:1 字体不加错
-      agreementsMainList: [],
+      visible: false,
     };
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
@@ -53,7 +51,6 @@ class Register extends Component {
   }
 
   componentDidMount() {
-    this.getAgreementFile();
     this.backPress.componentDidMount();
   }
 
@@ -181,27 +178,12 @@ class Register extends Component {
     });
   }
   /**
-   * 获取注册协议
-   * @return void
-   */
-  getAgreementFile() {
-    api.user.getAgreementFile({}, this).then(res => {
-      if (!res) {
-        return;
-      }
-      this.setState({
-        agreementsMainList: res.main,
-        agreementsParagraphList: res.paragraph,
-      });
-    });
-  }
-  /**
    * 打开用户协议
    * @return void
    */
   showRegistrationAgreement() {
     this.setState({
-      isShow: true,
+      visible: true,
     });
   }
   /**
@@ -210,7 +192,7 @@ class Register extends Component {
    */
   closeRegistrationAgreement() {
     this.setState({
-      isShow: false,
+      visible: false,
     });
   }
 
@@ -220,9 +202,7 @@ class Register extends Component {
       verificationCode,
       timerFlag,
       countDown,
-      isShow,
-      agreementsParagraphList, //协议内容，weight:1  字体加粗， weight:0 字体不加错
-      agreementsMainList,
+      visible,
     } = this.state;
     let btnBorderStyle = [styles.codeBtn];
     let btnTextStyle = [styles.codeColor];
@@ -231,26 +211,6 @@ class Register extends Component {
       btnTextStyle.push(styles.textStyle);
     }
     const {theme, navigation} = this.props;
-    const agreementsParagraphListR =
-      agreementsParagraphList &&
-      agreementsParagraphList.map(item => (
-        <Text style={[styles.paragraph, styles.agreementsFont]} key={item}>
-          {item.text}
-        </Text>
-      ));
-    const agreementsList =
-      agreementsMainList &&
-      agreementsMainList.map((item, index) => {
-        const textClassName = [styles.agreementsFont];
-        if (item.weight === '1') {
-          textClassName.push(styles.agreementsFontBold);
-        }
-        return (
-          <Text style={textClassName} key={index}>
-            {item.text}
-          </Text>
-        );
-      });
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -306,34 +266,14 @@ class Register extends Component {
               <Text style={styles.themeColor}>注册服务协议</Text>
             </TouchableOpacity>
           </View>
-          {isShow ? (
-            <View style={styles.agreementsWrapper}>
-              <View style={styles.agreementsBox}>
-                <Text style={styles.agreementsTitle}>
-                  跑车帮用户注册服务协议
-                </Text>
-                <View style={styles.line} />
-                <ScrollView>
-                  <View style={styles.agreementsContent}>
-                    {agreementsParagraphListR}
-                    {agreementsList}
-                  </View>
-                </ScrollView>
-                <View style={styles.agreementBtn}>
-                  <Button
-                    btnStyle={[styles.agreementsButton]}
-                    type={'round'}
-                    text={'我知道了'}
-                    onClick={this.closeRegistrationAgreement.bind(this)}
-                  />
-                </View>
-              </View>
-            </View>
-          ) : null}
           <Toast
             ref={this.toastRef}
             position={'center'}
             defaultCloseDelay={3000}
+          />
+          <Agreement
+            visible={visible}
+            onClick={this.closeRegistrationAgreement.bind(this)}
           />
         </View>
       </SafeAreaViewPlus>
@@ -424,65 +364,6 @@ const styles = StyleSheet.create({
   themeColor: {
     fontSize: 12,
     color: GlobalStyles.themeColor,
-  },
-  agreementsWrapper: {
-    flex: 1,
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    zIndex: 5,
-  },
-  agreementsBox: {
-    flex: 1,
-    height: 381,
-    backgroundColor: '#fff',
-    position: 'absolute',
-    top: 0,
-    // bottom: 0,
-    left: 0,
-    right: 0,
-    marginHorizontal: 44,
-    paddingHorizontal: 11,
-    paddingVertical: 16,
-    borderRadius: 8,
-    marginTop: 152,
-  },
-  agreementsTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: GlobalStyles.themeFontColor,
-    textAlign: 'center',
-  },
-  line: {
-    height: 1,
-    marginVertical: 14,
-    backgroundColor: '#F5F5F5',
-  },
-  agreementsContent: {
-    flex: 1,
-  },
-  agreementBtn: {
-    height: 40,
-    marginTop: 16,
-  },
-  agreementsButton: {
-    flex: 1,
-  },
-  paragraph: {
-    marginBottom: 10,
-    lineHeight: 22,
-  },
-  agreementsFont: {
-    color: GlobalStyles.themeTipColor,
-    textAlign: 'justify',
-    lineHeight: 22,
-  },
-  agreementsFontBold: {
-    fontWeight: '700',
-    color: GlobalStyles.themeFontColor,
   },
 });
 const mapStateToProps = state => {
