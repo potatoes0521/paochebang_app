@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-27 14:52:01
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-16 18:28:47
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-16 18:56:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,7 +30,7 @@ export default class Buttons extends Component {
     let {item} = this.props;
     let btnType = 'plain';
     let fontStyles = [styles.fontStyle];
-    let btnStyle = [styles.btnStyle, styles.btnRight, styles.btnBorder];
+    let btnStyle = [styles.btnStyle, styles.btnBorder];
     if (item.key === 'receiptOrder') {
       btnType = 'round';
       fontStyles = [];
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    marginLeft: 16,
   },
   btnBorder: {
     borderWidth: 1,
@@ -66,9 +67,6 @@ const styles = StyleSheet.create({
   fontStyle: {
     color: GlobalStyles.themeFontColor,
     fontSize: 14,
-  },
-  btnRight: {
-    marginLeft: 16,
   },
 });
 
