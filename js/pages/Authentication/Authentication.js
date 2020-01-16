@@ -3,7 +3,7 @@
  * @description: 实名认证
  * @Date: 2019-12-26 18:17:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-15 21:11:24
+ * @LastEditTime : 2020-01-16 17:06:25
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -34,6 +34,8 @@ import {defaultResourceImgURL} from '../../config/requestConfig';
 import ActionSheet from '../../components/ActionSheet/ActionSheet';
 import {uploadFile} from '../../utils/uploadFile.js';
 import Storage from '../../utils/Storage.js';
+import Loading from '../../components/Loading/Loading.js';
+
 class Authentication extends Component {
   constructor(props) {
     super(props);
@@ -49,6 +51,8 @@ class Authentication extends Component {
       licenseBeforeImage: null, // 驾驶证 1行驶本左面，2 右面
       licenseAfterImage: null, // 行驶证
       realFlag: false,
+      uploadLoading: false,
+      showText: '',
     };
     this.toastRef = React.createRef();
     this.backPress = new BackPressComponent({
@@ -354,6 +358,8 @@ class Authentication extends Component {
       accountHolder,
       licenseBeforeImage, // 正面照片
       licenseAfterImage, // 背面照片
+      uploadLoading,
+      showText,
     } = this.state;
     // let showEditIdCard = userInfo.realNameAuthStatus >= 0;
     // let showEditLicenseCard = userInfo.realNameAuthStatus >= 1;
@@ -618,6 +624,7 @@ class Authentication extends Component {
             cancelButtonIndex={2}
             onPress={this.chooseActionSheet.bind(this)}
           />
+          {uploadLoading && <Loading LoadingText={showText} />}
         </View>
       </SafeAreaViewPlus>
     );

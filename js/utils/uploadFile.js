@@ -5,7 +5,7 @@
  * @path: 引入路径
  * @Date: 2020-01-02 15:39:43
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-15 20:32:08
+ * @LastEditTime : 2020-01-16 17:04:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -126,8 +126,12 @@ function uploadHandle({
 }) {
   if (filePathsArray.length > 1) {
     // Taro.showLoading({
-    //   title: '正在上传第' + count + '张图片',
+    //   title: ,
     // });
+    that.setState({
+      uploadLoading: true,
+      showText: `正在上传第${count}张图片`,
+    });
   }
   let fd = new FormData();
   console.log('filePathsArray', filePathsArray);
@@ -149,6 +153,11 @@ function uploadHandle({
       const url = await splicingURL(sendData, that);
       completeFilePathsArray.push(url.data);
       if (count === filePathsArray.length) {
+        that.setState({
+          uploadLoading: false,
+          showText: '',
+        });
+        that.toastRef.current.show('上传成功');
         resolve(completeFilePathsArray);
       } else {
         uploadHandle({

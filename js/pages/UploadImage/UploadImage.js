@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 15:33:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-15 21:37:13
+ * @LastEditTime : 2020-01-16 17:00:38
  * @mustParam: 必传参数
  * // pageType = delivery 交车单  pickUp 提车单
     // type=edit 编辑  see 看
@@ -34,6 +34,7 @@ import Toast from 'react-native-easy-toast';
 // import PreviewImage from 'react-native-image-zoom-viewer';
 import Button from '../../components/Button/Button.js';
 import ActionSheet from '../../components/ActionSheet/ActionSheet';
+import Loading from '../../components/Loading/Loading.js';
 
 class UploadImage extends Component {
   constructor(props) {
@@ -46,6 +47,8 @@ class UploadImage extends Component {
       showPreviewImage: false,
       currentArray: [],
       current: 0,
+      uploadLoading: false,
+      showText: '',
     };
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
@@ -285,13 +288,15 @@ class UploadImage extends Component {
   render() {
     const {theme, navigation} = this.props;
     const {
-      showPreviewImage,
-      currentArray,
-      current,
+      // showPreviewImage,
+      // currentArray,
+      // current,
       carList,
       pickUpCarList,
       deliveryCarList,
       pageParams,
+      uploadLoading,
+      showText,
     } = this.state;
     console.log('currentArray', carList, pickUpCarList, deliveryCarList);
     // 验车照片
@@ -462,6 +467,7 @@ class UploadImage extends Component {
           {/* <Modal visible={showPreviewImage}>
             <PreviewImage imageUrls={currentArray} index={current} />
           </Modal> */}
+          {uploadLoading && <Loading LoadingText={showText} />}
         </View>
       </SafeAreaViewPlus>
     );
