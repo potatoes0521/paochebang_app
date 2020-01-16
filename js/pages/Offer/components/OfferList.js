@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-22 16:58:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 09:55:28
+ * @LastEditTime : 2020-01-16 11:28:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -52,7 +52,6 @@ class OfferList extends Component {
     this.emitSelectMsg = DeviceEventEmitter.addListener(
       'selectMsgLikeCity',
       data => {
-        console.log('data emit', data);
         this.sendCityId = data.sendCityId;
         this.receiveCityId = data.receiveCityId;
         console.log(this.sendCityId, this.receiveCityId);
@@ -88,8 +87,6 @@ class OfferList extends Component {
       sendCityId,
       receiveCityId,
     };
-    console.log(this.sendCityId, this.receiveCityId);
-    console.log('sendData', sendData);
     api.offer.getOfferList(sendData, this).then(res => {
       this.setState({
         isLoading: false,

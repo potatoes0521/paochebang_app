@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-22 16:48:04
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 10:09:17
+ * @LastEditTime : 2020-01-16 10:15:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -38,7 +38,9 @@ class Home extends Component {
         this.props.changeUserInfo({
           pushToken: res.pushToken,
         });
-        this.getStorage();
+        this.checkLoginState({
+          pushToken: res.pushToken,
+        });
       });
     }
     // this.backPress.componentDidMount();
@@ -57,17 +59,16 @@ class Home extends Component {
    * 获取缓存信息
    * @return void
    */
-  getStorage() {
+  checkLoginState(pushToken) {
     Storage.getStorage('userInfo')
       .then(res => {
-        console.log('res', res);
         let sendData = res.data;
         this.props.changeUserInfo(sendData);
         api.user.checkToken(sendData, this).then(checkData => {
-          console.log('res', checkData);
           if (!checkData.data) {
-            Storage.setStorage('userInfo', {});
+            Storage.setStorage('userInfo', pushToken);
             this.props.changeUserInfo({});
+            this.props.changeUserInfo(pushToken);
           }
           SplashScreen.hide();
           // NavigationUtil.resetToHomPage(this.props);

@@ -4,20 +4,14 @@
  * @path: 引入路径
  * @Date: 2019-12-25 16:42:43
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-26 09:43:39
+ * @LastEditTime : 2020-01-16 10:29:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  Modal,
-  SafeAreaView,
-  View,
-} from 'react-native';
+import {StyleSheet, TouchableOpacity, SafeAreaView, View} from 'react-native';
 import PropTypes from 'prop-types';
-// import GlobalStyles from '../../assets/css/GlobalStyles';
+import GlobalStyles from '../../assets/css/GlobalStyles';
 
 export default class Drawer extends Component {
   constructor(props) {
@@ -36,12 +30,8 @@ export default class Drawer extends Component {
   }
   render() {
     console.log('this.prop.visible', this.props.visible);
-    return (
-      <Modal
-        hardwareAccelerated={true}
-        transparent={true}
-        animationType={'fade'}
-        visible={this.props.visible}>
+    return this.props.visible ? (
+      <SafeAreaView style={styles.drawerWrapperPosition}>
         <View style={styles.drawerWrapper}>
           <TouchableOpacity
             style={styles.drawerModelLeft}
@@ -57,21 +47,26 @@ export default class Drawer extends Component {
             </View>
           </SafeAreaView>
         </View>
-      </Modal>
-    );
+      </SafeAreaView>
+    ) : null;
   }
 }
 
 const styles = StyleSheet.create({
-  pageWrapper: {
-    flex: 1,
+  drawerWrapperPosition: {
+    width: GlobalStyles.window_width,
+    height: GlobalStyles.window_height - 50,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 10,
   },
   drawerWrapper: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   drawerModelLeft: {
     flex: 1,

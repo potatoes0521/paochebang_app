@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:46:56
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-15 21:58:56
+ * @LastEditTime : 2020-01-16 11:18:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,6 +27,8 @@ import Button from '../../components/Button/Button';
 import DetailsStyle from '../../assets/css/DetailsStyle.js';
 import NavigationUtils from '../../navigator/NavigationUtils';
 import EmptyList from '../../components/EmptyList/EmptyList';
+import Toast from 'react-native-easy-toast';
+
 class Offer extends Component {
   constructor(props) {
     super(props);
@@ -77,7 +79,6 @@ class Offer extends Component {
     });
   }
   navigatorTo(type) {
-    this.closeDrawer();
     console.log('type', type);
     NavigationUtils.goPage({type}, 'ChooseCityPage');
   }
@@ -95,16 +96,21 @@ class Offer extends Component {
     });
   }
   submitCityMsg() {
+    if (!this.sendCityId && !this.receiveCityId) {
+      this.toastRef.current.show('收车城市或发车城市至少选择一个哦~');
+      this.return;
+    }
     DeviceEventEmitter.emit('selectMsgLikeCity', {
       sendCityId: this.sendCityId,
       receiveCityId: this.receiveCityId,
     });
     this.closeDrawer();
   }
-  render() {
-    let {userInfo} = this.props;
-    let {sendCityName, receiveCityName} = this.state;
-    const NavigatorTab = createAppContainer(
+  _NavigatorTab() {
+    if (this.NavigatorTab) {
+      return this.NavigatorTab;
+    }
+    return (this.NavigatorTab = createAppContainer(
       createMaterialTopTabNavigator(
         {
           SellingTab: {
@@ -138,7 +144,11 @@ class Offer extends Component {
           },
         },
       ),
-    );
+    ));
+  }
+  render() {
+    let {userInfo} = this.props;
+    let {sendCityName, receiveCityName} = this.state;
     const sendCityTextClassName = [DetailsStyle.contentText];
     const receiveCityTextClassName = [DetailsStyle.contentText];
     if (!sendCityName) {
@@ -147,6 +157,7 @@ class Offer extends Component {
     if (!receiveCityName) {
       receiveCityTextClassName.push(styles.disabledText);
     }
+    const NavigatorTab = this._NavigatorTab();
     return (
       <View style={styles.pageWrapper}>
         <NavigationBar title={'报价/接单'} />
@@ -216,6 +227,11 @@ class Offer extends Component {
                 />
               </View>
             </Drawer>
+            <Toast
+              ref={this.toastRef}
+              position={'center'}
+              defaultCloseDelay={3000}
+            />
           </>
         )}
       </View>
