@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 15:33:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-13 10:46:53
+ * @LastEditTime : 2020-01-15 21:37:13
  * @mustParam: 必传参数
  * // pageType = delivery 交车单  pickUp 提车单
     // type=edit 编辑  see 看
@@ -31,8 +31,9 @@ import Title from './components/Title.js';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import api from '../../api/index.js';
 import Toast from 'react-native-easy-toast';
-import PreviewImage from 'react-native-image-zoom-viewer';
+// import PreviewImage from 'react-native-image-zoom-viewer';
 import Button from '../../components/Button/Button.js';
+import ActionSheet from '../../components/ActionSheet/ActionSheet';
 
 class UploadImage extends Component {
   constructor(props) {
@@ -123,35 +124,33 @@ class UploadImage extends Component {
   chooseImage(type) {
     let {carList, pickUpCarList, deliveryCarList} = this.state;
     let count = 9;
-    let businessType = 1;
     // 判断是那个要添加图片
-    if (type === 'delivery') {
+    if (this.chooseType === 'delivery') {
       count -= deliveryCarList.length;
-      businessType = 4;
-    } else if (type === 'car') {
+    } else if (this.chooseType === 'car') {
       count -= carList.length;
-      businessType = 3;
-    } else if (type === 'pickUp') {
+    } else if (this.chooseType === 'pickUp') {
       count -= pickUpCarList.length;
-      businessType = 2;
     }
     uploadFile({
       multiple: true,
       that: this,
-      businessType,
+      businessType: this.businessType,
+      openType: type,
     })
       .then(res => {
         let data = {};
+        console.log('res', res);
         // 判断更新哪个数组
-        if (type === 'delivery') {
+        if (this.chooseType === 'delivery') {
           data = {
             deliveryCarList: [...deliveryCarList, ...res],
           };
-        } else if (type === 'car') {
+        } else if (this.chooseType === 'car') {
           data = {
             carList: [...carList, ...res],
           };
-        } else if (type === 'pickUp') {
+        } else if (this.chooseType === 'pickUp') {
           data = {
             pickUpCarList: [...pickUpCarList, ...res],
           };
@@ -243,21 +242,45 @@ class UploadImage extends Component {
     });
   }
   showImage(type, index) {
-    let {carList, pickUpCarList, deliveryCarList} = this.state;
-    let current = index;
-    let currentArray = [];
-    if (type === 'delivery') {
-      currentArray = deliveryCarList;
+    return;
+    // let {carList, pickUpCarList, deliveryCarList} = this.state;
+    // let current = index;
+    // let currentArray = [];
+    // if (type === 'delivery') {
+    //   currentArray = deliveryCarList;
+    // } else if (type === 'car') {
+    //   currentArray = carList;
+    // } else if (type === 'pickUp') {
+    //   currentArray = pickUpCarList;
+    // }
+    // this.setState({
+    //   currentArray,
+    //   current,
+    //   showPreviewImage: true,
+    // });
+  }
+  openActionSheet(type) {
+    this.chooseType = type;
+    if (type === 'pickUp') {
+      this.businessType = 2;
     } else if (type === 'car') {
-      currentArray = carList;
-    } else if (type === 'pickUp') {
-      currentArray = pickUpCarList;
+      this.businessType = 3;
+    } else {
+      this.businessType = 4;
     }
-    this.setState({
-      currentArray,
-      current,
-      showPreviewImage: true,
-    });
+    this.ActionSheet.show();
+  }
+  chooseActionSheet(index) {
+    if (index === 2) {
+      return;
+    }
+    let type = '';
+    if (index === 0) {
+      type = 'camera';
+    } else if (index === 1) {
+      type = 'album';
+    }
+    this.chooseImage(type);
   }
   render() {
     const {theme, navigation} = this.props;
@@ -274,7 +297,7 @@ class UploadImage extends Component {
     // 验车照片
     const carListRender = carList.map((item, index) => {
       return (
-        <View style={styles.itemWrapper}>
+        <View style={styles.itemWrapper} key={index}>
           {pageParams.type !== 'see' ? (
             <TouchableOpacity
               onPress={this.deleteImage.bind(this, 'car', index)}
@@ -291,7 +314,7 @@ class UploadImage extends Component {
               style={styles.image}
               resizeMode={'contain'}
               source={{
-                uri: item,
+                uri: item || '',
               }}
             />
           </TouchableOpacity>
@@ -300,7 +323,7 @@ class UploadImage extends Component {
     });
     const pickUpCarListRender = pickUpCarList.map((item, index) => {
       return (
-        <View style={styles.itemWrapper}>
+        <View style={styles.itemWrapper} key={index}>
           {pageParams.type !== 'see' ? (
             <TouchableOpacity
               onPress={this.deleteImage.bind(this, 'pickUp', index)}
@@ -325,6 +348,7 @@ class UploadImage extends Component {
       );
     });
     const deliveryCarListRender = deliveryCarList.map((item, index) => {
+      console.log('item', item);
       return (
         <View style={styles.itemWrapper}>
           {pageParams.type !== 'see' ? (
@@ -364,28 +388,32 @@ class UploadImage extends Component {
                 <Title title={'提车单照片'} />
                 <View style={styles.imagesWrapper}>
                   {pickUpCarListRender}
-                  <TouchableOpacity
-                    onPress={this.chooseImage.bind(this, 'pickUp')}
-                    style={[styles.imageItem, styles.addItem]}>
-                    <View style={styles.imageAdd}>
-                      <Text style={[GlobalStyles.icon, styles.addIcon]}>
-                        &#xe668;
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
+                  {pageParams.type !== 'see' ? (
+                    <TouchableOpacity
+                      onPress={this.openActionSheet.bind(this, 'pickUp')}
+                      style={[styles.imageItem, styles.addItem]}>
+                      <View style={styles.imageAdd}>
+                        <Text style={[GlobalStyles.icon, styles.addIcon]}>
+                          &#xe668;
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  ) : null}
                 </View>
                 <Title title={'验车照片'} />
                 <View style={styles.imagesWrapper}>
                   {carListRender}
-                  <TouchableOpacity
-                    onPress={this.chooseImage.bind(this, 'car')}
-                    style={[styles.imageItem, styles.addItem]}>
-                    <View style={styles.imageAdd}>
-                      <Text style={[GlobalStyles.icon, styles.addIcon]}>
-                        &#xe668;
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
+                  {pageParams.type !== 'see' ? (
+                    <TouchableOpacity
+                      onPress={this.openActionSheet.bind(this, 'car')}
+                      style={[styles.imageItem, styles.addItem]}>
+                      <View style={styles.imageAdd}>
+                        <Text style={[GlobalStyles.icon, styles.addIcon]}>
+                          &#xe668;
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  ) : null}
                 </View>
               </>
             ) : (
@@ -393,15 +421,17 @@ class UploadImage extends Component {
                 <Title title={'交车单照片'} />
                 <View style={styles.imagesWrapper}>
                   {deliveryCarListRender}
-                  <TouchableOpacity
-                    onPress={this.chooseImage.bind(this, 'delivery')}
-                    style={[styles.imageItem, styles.addItem]}>
-                    <View style={styles.imageAdd}>
-                      <Text style={[GlobalStyles.icon, styles.addIcon]}>
-                        &#xe668;
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
+                  {pageParams.type !== 'see' ? (
+                    <TouchableOpacity
+                      onPress={this.openActionSheet.bind(this, 'delivery')}
+                      style={[styles.imageItem, styles.addItem]}>
+                      <View style={styles.imageAdd}>
+                        <Text style={[GlobalStyles.icon, styles.addIcon]}>
+                          &#xe668;
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  ) : null}
                 </View>
               </>
             )}
@@ -419,6 +449,15 @@ class UploadImage extends Component {
             ref={this.toastRef}
             position={'center'}
             defaultCloseDelay={3000}
+          />
+          {/* 动作指示器 */}
+          <ActionSheet
+            ref={o => (this.ActionSheet = o)}
+            title={'请选择结算方式'}
+            options={['相机', '相册', '取消']}
+            tintColor={GlobalStyles.themeFontColor}
+            cancelButtonIndex={2}
+            onPress={this.chooseActionSheet.bind(this)}
           />
           {/* <Modal visible={showPreviewImage}>
             <PreviewImage imageUrls={currentArray} index={current} />
@@ -475,6 +514,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 1,
   },
   deleteIcon: {
     color: '#fff',
@@ -490,7 +530,8 @@ const styles = StyleSheet.create({
     borderRadius: 31,
   },
   image: {
-    flex: 1,
+    width: parseInt((GlobalStyles.window_width - 80) / 3, 10),
+    height: parseInt((GlobalStyles.window_width - 80) / 3, 10),
     borderRadius: 4,
     backgroundColor: '#F5FAFF',
   },

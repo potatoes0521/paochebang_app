@@ -3,7 +3,7 @@
  * @description: 实名认证
  * @Date: 2019-12-26 18:17:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-13 16:16:56
+ * @LastEditTime : 2020-01-15 21:11:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -33,7 +33,7 @@ import api from '../../api/index';
 import {defaultResourceImgURL} from '../../config/requestConfig';
 import ActionSheet from '../../components/ActionSheet/ActionSheet';
 import {uploadFile} from '../../utils/uploadFile.js';
-
+import Storage from '../../utils/Storage.js';
 class Authentication extends Component {
   constructor(props) {
     super(props);
@@ -251,14 +251,15 @@ class Authentication extends Component {
       }
       this.toastRef.current.show('实名认证成功');
       if (licenseBeforeImage) {
-        Actions.changeUserInfo({
+        this.props.changeUserInfo({
           realNameAuthStatus: 2,
         });
       } else {
-        Actions.changeUserInfo({
+        this.props.changeUserInfo({
           realNameAuthStatus: 1,
         });
       }
+      Storage.setStorage('userInfo', this.props.userInfo);
       this.handleAlreadyAuthorize();
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
@@ -293,9 +294,50 @@ class Authentication extends Component {
       businessType: this.businessType,
       openType: type,
     }).then(res => {
-      let data = {};
-      data[this.chooseType] = [...res];
-      console.log('res', res, data);
+      if (this.chooseType === 'beforeImage') {
+        this.setState({
+          beforeImage: res[0],
+        });
+        this.imageOCR(res[0]);
+      } else if (this.chooseType === 'afterImage') {
+        this.setState({
+          afterImage: res[0],
+        });
+      } else if (this.chooseType === 'licenseBeforeImage') {
+        this.setState({
+          licenseBeforeImage: res[0],
+        });
+      } else if (this.chooseType === 'licenseAfterImage') {
+        this.setState({
+          licenseAfterImage: res[0],
+        });
+      }
+    });
+  }
+  /**
+   * 身份证ocr识别
+   * @param {String} imageUrl url
+   * @return void
+   */
+  imageOCR(imageUrl) {
+    let sendData = {
+      idCardFace: imageUrl,
+    };
+    api.user.OCR(sendData, this).then(res => {
+      console.log('res', res.data);
+      const data = JSON.parse(res.data);
+      if (data.errcode === 0 && data.errmsg === 'ok') {
+        this.setState({
+          idCard: data.id,
+          realName: data.name,
+          realFlag: false,
+        });
+      } else {
+        this.setState({
+          realFlag: true,
+        });
+        this.toastRef.current.show('识别失败,请换一张试试~');
+      }
     });
   }
   render() {
@@ -333,12 +375,13 @@ class Authentication extends Component {
                     <Text style={styles.tipsStyle}>
                       {userInfo.realNameAuthStatus
                         ? '身份证照片'
-                        : '拍摄二代身份证原件，请确保图片清晰，四角完整'}
+                        : '拍摄二代身份证原件，请确保图片清晰，四角完整' +
+                          beforeImage}
                     </Text>
                   </View>
                   <View style={styles.imageWrapper}>
                     <View style={[styles.imageStyle, styles.imageLeft]}>
-                      {beforeImage && (
+                      {beforeImage ? (
                         <Image
                           style={styles.image}
                           resizeMode={'contain'}
@@ -346,7 +389,7 @@ class Authentication extends Component {
                             uri: beforeImage || '',
                           }}
                         />
-                      )}
+                      ) : null}
                       {beforeImage && !realFlag ? null : (
                         <TouchableOpacity
                           onPress={this.openActionSheet.bind(
@@ -368,7 +411,7 @@ class Authentication extends Component {
                       )}
                     </View>
                     <View style={[styles.imageStyle, styles.imageRight]}>
-                      {afterImage && (
+                      {afterImage ? (
                         <Image
                           style={styles.image}
                           resizeMode={'contain'}
@@ -376,7 +419,7 @@ class Authentication extends Component {
                             uri: afterImage || '',
                           }}
                         />
-                      )}
+                      ) : null}
                       {afterImage ? null : (
                         <TouchableOpacity
                           onPress={this.openActionSheet.bind(
@@ -447,7 +490,7 @@ class Authentication extends Component {
                 </View>
                 <View style={styles.imageWrapper}>
                   <View style={[styles.imageStyle, styles.imageLeft]}>
-                    {licenseBeforeImage && (
+                    {licenseBeforeImage ? (
                       <Image
                         style={styles.image}
                         resizeMode={'contain'}
@@ -455,7 +498,7 @@ class Authentication extends Component {
                           uri: licenseBeforeImage || '',
                         }}
                       />
-                    )}
+                    ) : null}
                     {licenseBeforeImage ? null : (
                       <TouchableOpacity
                         onPress={this.openActionSheet.bind(
@@ -477,7 +520,7 @@ class Authentication extends Component {
                     )}
                   </View>
                   <View style={[styles.imageStyle, styles.imageRight]}>
-                    {licenseAfterImage && (
+                    {licenseAfterImage ? (
                       <Image
                         style={styles.image}
                         resizeMode={'contain'}
@@ -485,7 +528,7 @@ class Authentication extends Component {
                           uri: licenseAfterImage,
                         }}
                       />
-                    )}
+                    ) : null}
                     {licenseAfterImage ? null : (
                       <TouchableOpacity
                         onPress={this.openActionSheet.bind(
@@ -689,4 +732,12 @@ const mapStateToProps = state => {
     theme: state.theme.theme,
   };
 };
-export default connect(mapStateToProps)(Authentication);
+const mapDispatchToProps = dispatch => {
+  return {
+    changeUserInfo: userInfo => dispatch(Actions.changeUserInfo(userInfo)),
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Authentication);

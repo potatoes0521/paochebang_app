@@ -3,13 +3,19 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-22 16:58:23
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-15 15:23:54
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-16 09:55:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  RefreshControl,
+  DeviceEventEmitter,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import ListItem from './ListItem';
@@ -31,7 +37,32 @@ class OfferList extends Component {
     this.receiveCityId = '';
   }
   componentDidMount() {
+    this.handleEmit();
     this.getOfferList({});
+  }
+  componentWillUnmount() {
+    this.emitSelectMsg.remove();
+  }
+  /**
+   * 处理事件通知
+   * @return void
+   */
+  handleEmit() {
+    // 选择城市时候的通知
+    this.emitSelectMsg = DeviceEventEmitter.addListener(
+      'selectMsgLikeCity',
+      data => {
+        console.log('data emit', data);
+        this.sendCityId = data.sendCityId;
+        this.receiveCityId = data.receiveCityId;
+        console.log(this.sendCityId, this.receiveCityId);
+        this.getOfferList({
+          sendCityId: this.sendCityId,
+          receiveCityId: this.receiveCityId,
+          refresh: true,
+        });
+      },
+    );
   }
   getOfferList({
     pageNum = this.offerPage,
@@ -57,6 +88,8 @@ class OfferList extends Component {
       sendCityId,
       receiveCityId,
     };
+    console.log(this.sendCityId, this.receiveCityId);
+    console.log('sendData', sendData);
     api.offer.getOfferList(sendData, this).then(res => {
       this.setState({
         isLoading: false,
