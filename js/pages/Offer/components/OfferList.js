@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-22 16:58:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 11:28:20
+ * @LastEditTime : 2020-01-16 13:47:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -50,7 +50,7 @@ class OfferList extends Component {
   handleEmit() {
     // 选择城市时候的通知
     this.emitSelectMsg = DeviceEventEmitter.addListener(
-      'selectMsgLikeCity',
+      'selectMsgLikeCity_offer',
       data => {
         this.sendCityId = data.sendCityId;
         this.receiveCityId = data.receiveCityId;

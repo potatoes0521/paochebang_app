@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-25 16:42:43
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 10:29:44
+ * @LastEditTime : 2020-01-16 13:42:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,7 +29,6 @@ export default class Drawer extends Component {
     this.props.onClickModel();
   }
   render() {
-    console.log('this.prop.visible', this.props.visible);
     return this.props.visible ? (
       <SafeAreaView style={styles.drawerWrapperPosition}>
         <View style={styles.drawerWrapper}>

@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-26 09:24:29
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-15 15:08:25
+ * @LastEditTime : 2020-01-16 13:54:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -428,7 +428,11 @@ class ChooseCity extends Component {
   }
   chooseSearchCity(city) {
     city.type = this.pageParams.type;
-    DeviceEventEmitter.emit('chooseCity', city);
+    if (this.pageParams.from) {
+      DeviceEventEmitter.emit(`chooseCity_${this.pageParams.from}`, city);
+    } else {
+      DeviceEventEmitter.emit('chooseCity', city);
+    }
     NavigationUtil.goBack(this.props.navigation);
   }
   /**

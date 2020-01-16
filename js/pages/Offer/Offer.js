@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:46:56
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 11:18:48
+ * @LastEditTime : 2020-01-16 13:50:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,12 +22,10 @@ import {createAppContainer} from 'react-navigation';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import OfferList from './components/OfferList.js';
 import OrderList from './components/OrderList.js';
-import Drawer from '../../components/Drawer/Drawer';
-import Button from '../../components/Button/Button';
-import DetailsStyle from '../../assets/css/DetailsStyle.js';
-import NavigationUtils from '../../navigator/NavigationUtils';
 import EmptyList from '../../components/EmptyList/EmptyList';
 import Toast from 'react-native-easy-toast';
+import Drawer from '../../components/Drawer/Drawer';
+import SelectCondition from '../../components/SelectCondition/SelectCondition.js';
 
 class Offer extends Component {
   constructor(props) {
@@ -54,34 +52,43 @@ class Offer extends Component {
    */
   handleEmit() {
     // 选择城市时候的通知
-    this.emitChooseCity = DeviceEventEmitter.addListener('chooseCity', data => {
-      let state = {
-        visible: true,
-      };
-      if (data.type === 'sendCity') {
-        state.sendCityName = data.cityName;
-        this.sendCityId = data.cityId;
-      } else if (data.type === 'receiveCity') {
-        state.receiveCityName = data.cityName;
-        this.receiveCityId = data.cityId;
-      }
-      this.setState(state);
-    });
+    this.emitChooseCity = DeviceEventEmitter.addListener(
+      'chooseCity_offer',
+      data => {
+        let state = {};
+        if (data.type === 'sendCity') {
+          state.sendCityName = data.cityName;
+          this.sendCityId = data.cityId;
+        } else if (data.type === 'receiveCity') {
+          state.receiveCityName = data.cityName;
+          this.receiveCityId = data.cityId;
+        }
+        this.setState(state);
+      },
+    );
   }
+  /**
+   * 打开抽屉
+   * @return void
+   */
   openDrawer() {
     this.setState({
       visible: true,
     });
   }
+  /**
+   * 关闭抽屉
+   * @return void
+   */
   closeDrawer() {
     this.setState({
       visible: false,
     });
   }
-  navigatorTo(type) {
-    console.log('type', type);
-    NavigationUtils.goPage({type}, 'ChooseCityPage');
-  }
+  /**
+   * 清除城市信息
+   * @return void
+   */
   resetCityMsg() {
     this.setState({
       visible: false,
@@ -90,17 +97,21 @@ class Offer extends Component {
     });
     this.sendCityId = '';
     this.receiveCityId = '';
-    DeviceEventEmitter.emit('selectMsgLikeCity', {
+    DeviceEventEmitter.emit('selectMsgLikeCity_offer', {
       sendCityId: '',
       receiveCityId: '',
     });
   }
+  /**
+   * 提交城市信息
+   * @return void
+   */
   submitCityMsg() {
     if (!this.sendCityId && !this.receiveCityId) {
       this.toastRef.current.show('收车城市或发车城市至少选择一个哦~');
       this.return;
     }
-    DeviceEventEmitter.emit('selectMsgLikeCity', {
+    DeviceEventEmitter.emit('selectMsgLikeCity_offer', {
       sendCityId: this.sendCityId,
       receiveCityId: this.receiveCityId,
     });
@@ -149,14 +160,7 @@ class Offer extends Component {
   render() {
     let {userInfo} = this.props;
     let {sendCityName, receiveCityName} = this.state;
-    const sendCityTextClassName = [DetailsStyle.contentText];
-    const receiveCityTextClassName = [DetailsStyle.contentText];
-    if (!sendCityName) {
-      sendCityTextClassName.push(styles.disabledText);
-    }
-    if (!receiveCityName) {
-      receiveCityTextClassName.push(styles.disabledText);
-    }
+
     const NavigatorTab = this._NavigatorTab();
     return (
       <View style={styles.pageWrapper}>
@@ -179,53 +183,13 @@ class Offer extends Component {
             <Drawer
               visible={this.state.visible}
               onClickModel={this.closeDrawer.bind(this)}>
-              <View style={styles.drawerList}>
-                <View
-                  style={[styles.drawerItem, DetailsStyle.formItem]}
-                  onPress={this.closeDrawer.bind(this)}>
-                  <View style={DetailsStyle.formLabel}>
-                    <Text style={DetailsStyle.labelText}>发车城市:</Text>
-                  </View>
-                  <TouchableOpacity
-                    onPress={this.navigatorTo.bind(this, 'sendCity')}
-                    style={DetailsStyle.formContent}>
-                    <Text style={sendCityTextClassName}>
-                      {sendCityName || '请选择收车城市'}
-                    </Text>
-                    <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
-                  </TouchableOpacity>
-                </View>
-                <View
-                  style={[styles.drawerItem, DetailsStyle.formItem]}
-                  onPress={this.closeDrawer.bind(this)}>
-                  <View style={DetailsStyle.formLabel}>
-                    <Text style={DetailsStyle.labelText}>收车城市:</Text>
-                  </View>
-                  <TouchableOpacity
-                    onPress={this.navigatorTo.bind(this, 'receiveCity')}
-                    style={DetailsStyle.formContent}>
-                    <Text style={receiveCityTextClassName}>
-                      {receiveCityName || '请选择收车城市'}
-                    </Text>
-                    <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-              <View style={styles.drawerBtn}>
-                <Button
-                  text={'重置'}
-                  btnStyle={[styles.btn, styles.btnReset]}
-                  fontStyles={[styles.btnResetText]}
-                  onClick={this.resetCityMsg.bind(this)}
-                  type={'plain'}
-                />
-                <Button
-                  text={'提交'}
-                  btnStyle={[styles.btn]}
-                  type={'round'}
-                  onClick={this.submitCityMsg.bind(this)}
-                />
-              </View>
+              <SelectCondition
+                from={'offer'}
+                sendCityName={sendCityName}
+                receiveCityName={receiveCityName}
+                onCancel={this.resetCityMsg.bind(this)}
+                onSubmit={this.submitCityMsg.bind(this)}
+              />
             </Drawer>
             <Toast
               ref={this.toastRef}
@@ -284,33 +248,6 @@ const styles = StyleSheet.create({
     width: 60,
     marginLeft: itemWidth - itemWidth / 2 - 30,
     backgroundColor: GlobalStyles.themeColor,
-  },
-  drawerList: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-  drawerItem: {
-    paddingVertical: 8,
-  },
-  drawerBtn: {
-    height: 40,
-    flexDirection: 'row',
-    overflow: 'hidden',
-    alignItems: 'center',
-  },
-  btn: {
-    borderRadius: 0,
-    height: 40,
-  },
-  btnReset: {
-    borderColor: '#f5f5f5',
-  },
-  btnResetText: {
-    color: GlobalStyles.themeHColor,
-  },
-  disabledText: {
-    color: GlobalStyles.themeDisabled,
   },
 });
 // 如果需要引入store

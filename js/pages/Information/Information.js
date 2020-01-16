@@ -3,12 +3,18 @@
  * @description: 市场
  * @Date: 2019-11-22 16:11:20
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-13 20:17:03
+ * @LastEditTime : 2020-01-16 13:50:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  DeviceEventEmitter,
+} from 'react-native';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import {createAppContainer} from 'react-navigation';
 import {connect} from 'react-redux';
@@ -17,16 +23,22 @@ import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import SellingList from './components/SellingList.js';
 import VacancyList from './components/VacancyList.js';
-import NavigationUtils from '../../navigator/NavigationUtils';
 import FloatPublishBtn from '../../components/FloatPublishBtn/FloatPublishBtn';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
-
+import Toast from 'react-native-easy-toast';
+import Drawer from '../../components/Drawer/Drawer';
+import SelectCondition from '../../components/SelectCondition/SelectCondition.js';
 class Information extends Component {
   constructor(props) {
     super(props);
     this.state = {
       tabType: 'selling',
+      sendCityName: '',
+      receiveCityName: '',
+      visible: false,
     };
+    this.sendCityId = '';
+    this.receiveCityId = '';
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
     });
@@ -34,10 +46,12 @@ class Information extends Component {
   }
 
   componentDidMount() {
+    this.handleEmit();
     this.backPress.componentDidMount();
   }
 
   componentWillUnmount() {
+    this.emitChooseCity.remove(); // 销毁要接受的通知
     this.backPress.componentWillUnmount();
   }
 
@@ -46,13 +60,83 @@ class Information extends Component {
     navigation.goBack();
     return true;
   }
-
-  render() {
-    const {theme, navigation} = this.props;
-    const {state} = navigation;
-    const {params} = state;
-    console.log('params', params);
-    const NavigatorTab = createAppContainer(
+  /**
+   * 处理事件通知
+   * @return void
+   */
+  handleEmit() {
+    // 选择城市时候的通知
+    this.emitChooseCity = DeviceEventEmitter.addListener(
+      'chooseCity_information',
+      data => {
+        let state = {};
+        console.log(data);
+        if (data.type === 'sendCity') {
+          state.sendCityName = data.cityName;
+          this.sendCityId = data.cityId;
+        } else if (data.type === 'receiveCity') {
+          state.receiveCityName = data.cityName;
+          this.receiveCityId = data.cityId;
+        }
+        this.setState(state);
+      },
+    );
+  }
+  /**
+   * 打开抽屉
+   * @return void
+   */
+  openDrawer() {
+    this.setState({
+      visible: true,
+    });
+  }
+  /**
+   * 关闭抽屉
+   * @return void
+   */
+  closeDrawer() {
+    this.setState({
+      visible: false,
+    });
+  }
+  /**
+   * 清除城市信息
+   * @return void
+   */
+  resetCityMsg() {
+    this.setState({
+      visible: false,
+      sendCityName: '',
+      receiveCityName: '',
+    });
+    this.sendCityId = '';
+    this.receiveCityId = '';
+    DeviceEventEmitter.emit('selectMsgLikeCity_information', {
+      sendCityId: '',
+      receiveCityId: '',
+    });
+  }
+  /**
+   * 提交城市信息
+   * @return void
+   */
+  submitCityMsg() {
+    if (!this.sendCityId && !this.receiveCityId) {
+      this.toastRef.current.show('收车城市或发车城市至少选择一个哦~');
+      this.return;
+    }
+    DeviceEventEmitter.emit('selectMsgLikeCity_information', {
+      sendCityId: this.sendCityId,
+      receiveCityId: this.receiveCityId,
+    });
+    this.closeDrawer();
+  }
+  _NavigatorTab(params) {
+    if (this.NavigatorTab) {
+      return this.NavigatorTab;
+    }
+    return (this.NavigatorTab = createAppContainer(
       createMaterialTopTabNavigator(
         {
           SellingTab: {
@@ -87,7 +171,15 @@ class Information extends Component {
           },
         },
       ),
-    );
+    ));
+  }
+
+  render() {
+    const {theme, navigation} = this.props;
+    const {state} = navigation;
+    const {params} = state;
+    const {sendCityName, receiveCityName} = this.state;
+    const NavigatorTab = this._NavigatorTab(params);
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <NavigationBar
@@ -97,17 +189,31 @@ class Information extends Component {
         />
         <View style={styles.tabWrapper}>
           <NavigatorTab />
-          <View style={styles.select}>
+          <TouchableOpacity
+            onPress={this.openDrawer.bind(this)}
+            style={styles.select}>
             <View style={styles.line} />
-            <TouchableOpacity
-              onPress={() => {
-                NavigationUtils.goPage({}, 'SellingPublishPage');
-              }}
-              style={styles.selectMain}>
+            <View style={styles.selectMain}>
               <Text>筛选</Text>
-            </TouchableOpacity>
-          </View>
+            </View>
+          </TouchableOpacity>
           <FloatPublishBtn type={this.tabType} />
+          <Drawer
+            visible={this.state.visible}
+            onClickModel={this.closeDrawer.bind(this)}>
+            <SelectCondition
+              from={'information'}
+              sendCityName={sendCityName}
+              receiveCityName={receiveCityName}
+              onCancel={this.resetCityMsg.bind(this)}
+              onSubmit={this.submitCityMsg.bind(this)}
+            />
+          </Drawer>
+          <Toast
+            ref={this.toastRef}
+            position={'center'}
+            defaultCloseDelay={3000}
+          />
         </View>
       </SafeAreaViewPlus>
     );

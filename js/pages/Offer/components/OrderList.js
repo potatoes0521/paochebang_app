@@ -50,7 +50,7 @@ class OrderList extends Component {
   handleEmit() {
     // 选择城市时候的通知
     this.emitSelectMsg = DeviceEventEmitter.addListener(
-      'selectMsgLikeCity',
+      'selectMsgLikeCity_offer',
       data => {
         this.sendCityId = data.sendCityId;
         this.receiveCityId = data.receiveCityId;

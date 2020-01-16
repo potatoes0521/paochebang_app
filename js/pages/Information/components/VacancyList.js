@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:53:33
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-02 15:21:22
+ * @LastEditTime : 2020-01-16 13:57:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -42,6 +42,7 @@ class VacancyList extends Component {
 
   componentWillUnmount() {
     this.emitRefresh.remove();
+    this.emitSelectMsg.remove();
   }
   handleEmit() {
     this.emitRefresh = DeviceEventEmitter.addListener('refreshVacancy', () => {
@@ -49,6 +50,18 @@ class VacancyList extends Component {
         refresh: true,
       });
     });
+    this.emitSelectMsg = DeviceEventEmitter.addListener(
+      'selectMsgLikeCity_information',
+      data => {
+        this.sendCityId = data.sendCityId;
+        this.receiveCityId = data.receiveCityId;
+        this.getSellingList({
+          sendCityId: this.sendCityId,
+          receiveCityId: this.receiveCityId,
+          refresh: true,
+        });
+      },
+    );
   }
   /**
    * 获取卖板详情
