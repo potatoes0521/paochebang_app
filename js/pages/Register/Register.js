@@ -3,7 +3,7 @@
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-16 18:09:22
+ * @LastEditTime : 2020-01-16 18:26:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -238,10 +238,10 @@ class Register extends Component {
           {item.text}
         </Text>
       ));
+    let textClassName = [styles.agreementsFont];
     const agreementsList =
       agreementsMainList &&
       agreementsMainList.map(item => {
-        let textClassName = [styles.agreementsFont];
         if (item.weight === 1) {
           textClassName.push(styles.agreementsFontBold);
         }
@@ -461,7 +461,6 @@ const styles = StyleSheet.create({
     marginVertical: 14,
     backgroundColor: '#F5F5F5',
   },
-  wrapper: {},
   agreementsContent: {
     flex: 1,
   },

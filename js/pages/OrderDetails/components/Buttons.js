@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 14:52:01
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-16 16:47:29
+ * @LastEditTime : 2020-01-16 18:28:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -33,7 +33,6 @@ export default class Buttons extends Component {
     let btnStyle = [styles.btnStyle, styles.btnRight, styles.btnBorder];
     if (item.key === 'receiptOrder') {
       btnType = 'round';
-      btnStyle = [styles.btnStyle];
       fontStyles = [];
     }
     if (item.key === 'deliveryListEdit' || item.key === 'deliveryListSee') {
