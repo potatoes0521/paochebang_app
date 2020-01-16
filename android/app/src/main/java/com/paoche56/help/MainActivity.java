@@ -3,13 +3,14 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 13:51:52
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-08 20:07:52
+ * @LastEditTime : 2020-01-16 15:01:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 package com.paoche56.help;
 
 import android.os.Bundle; // here
+import android.content.Intent;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -19,6 +20,8 @@ import com.facebook.react.ReactActivity;
 
 import com.umeng.message.PushAgent;
 import com.paoche56.help.PushModule;
+import com.paoche56.help.ShareModule;
+import com.umeng.socialize.UMShareAPI;
 import com.umeng.message.IUmengRegisterCallback;
 
 import org.devio.rn.splashscreen.SplashScreen;
@@ -39,6 +42,7 @@ public class MainActivity extends ReactActivity {
     SplashScreen.show(this); // here
     super.onCreate(savedInstanceState);
     PushModule.initPushSDK(this);
+    ShareModule.initSocialSDK(this);
     PushAgent.getInstance(this).onAppStart();
     // 注册推送服务，每次调用register方法都会回调该接口
     PushAgent.getInstance(this).register(new IUmengRegisterCallback() {
@@ -51,6 +55,12 @@ public class MainActivity extends ReactActivity {
     public void onFailure(String s, String s1) {
     }
     });
+  }
+  
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
   }
 
   /**

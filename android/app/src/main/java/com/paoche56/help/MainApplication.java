@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-31 09:16:47
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-08 20:03:23
+ * @LastEditTime : 2020-01-16 15:14:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -31,6 +31,7 @@ import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
 import com.umeng.message.UmengMessageHandler;
+import com.umeng.socialize.PlatformConfig;
 import com.umeng.message.UmengNotificationClickHandler;
 // import com.umeng.message.common.UmLog;
 import com.paoche56.help.DplusReactPackage;
@@ -219,5 +220,9 @@ public class MainApplication extends Application implements ReactApplication {
     });
     
     // PushAgent.getInstance(this).onAppStart();
+  }
+  
+  {
+    PlatformConfig.setWeixin("wxdc1e388c3822c80b", "3baf1193c85774b3fd9d18447d76cab0");
   }
 }
