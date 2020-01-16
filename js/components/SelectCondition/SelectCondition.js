@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-01-16 13:25:56
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 13:49:41
+ * @LastEditTime : 2020-01-16 19:02:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -141,7 +141,7 @@ SelectCondition.defaultProps = {
 };
 
 SelectCondition.propTypes = {
-  from: PropTypes.func.isRequired,
+  from: PropTypes.string.isRequired,
   onCancel: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
