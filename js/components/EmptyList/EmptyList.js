@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 11:47:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-15 15:42:49
+ * @LastEditTime : 2020-01-16 16:34:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -61,6 +61,7 @@ export default class EmptyList extends Component {
     let imgSrc = noOrderImage;
     let text = '立即发布';
     let tips = '亲，您还未发布任何消息哦～';
+    let imageClassName = styles.image;
     switch (pageType) {
       case 'selling_index':
         tips = '亲，没有相关消息哦～';
@@ -94,17 +95,20 @@ export default class EmptyList extends Component {
         imgSrc = noCustomer;
         tips = '亲，登录后才可以报价哦～';
         text = '去登录';
+        imageClassName = styles.imageLogin;
         break;
       case 'login_order':
         imgSrc = noCustomer;
         tips = '亲，登录后才可以下单哦～';
         text = '去登录';
+        imageClassName = styles.imageLogin;
         break;
     }
+
     return (
       <View style={styles.pageWrapper}>
         <View style={styles.imageWrapper}>
-          <Image style={styles.image} source={imgSrc} />
+          <Image style={imageClassName} source={imgSrc} />
         </View>
         <Text style={styles.tips}>{tips}</Text>
         {text ? (
@@ -143,6 +147,10 @@ const styles = StyleSheet.create({
   image: {
     width: 132,
     height: 111,
+  },
+  imageLogin: {
+    width: 132,
+    height: 123,
   },
   tips: {
     fontSize: 16,

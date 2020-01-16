@@ -3,7 +3,7 @@
  * @description: 底部tabBar
  * @Date: 2019-11-29 11:38:36
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-15 15:46:21
+ * @LastEditTime : 2020-01-16 16:35:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -25,7 +25,7 @@ import Mine from '../pages/Mine/Mine';
 import GlobalStyles from '../assets/css/GlobalStyles';
 const styles = StyleSheet.create({
   icon: {
-    fontSize: 28,
+    fontSize: 26,
     fontFamily: 'iconfont',
   },
   publishIcon: {
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   publishIconText: {
     color: '#fff',
-    fontSize: 21,
+    fontSize: 20,
   },
 });
 
@@ -128,6 +128,15 @@ class BottomTabBarNavigator extends Component {
               height: 50,
               borderTopWidth: 0,
             },
+            tabStyle: {
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+            },
+            labelStyle: {
+              height: 18,
+            },
+            labelPosition: 'below-icon',
+            adaptive: true,
           },
           // tabBarComponent: props => {
           //   return (
