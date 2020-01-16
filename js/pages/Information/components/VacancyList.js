@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:53:33
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 13:57:04
+ * @LastEditTime : 2020-01-16 14:20:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -55,7 +55,7 @@ class VacancyList extends Component {
       data => {
         this.sendCityId = data.sendCityId;
         this.receiveCityId = data.receiveCityId;
-        this.getSellingList({
+        this.getVacancyList({
           sendCityId: this.sendCityId,
           receiveCityId: this.receiveCityId,
           refresh: true,
