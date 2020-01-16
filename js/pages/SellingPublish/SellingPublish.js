@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 21:05:56
+ * @LastEditTime : 2020-01-16 21:18:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -569,6 +569,7 @@ class SellingPublish extends Component {
 const styles = StyleSheet.create({
   pageWrapper: {
     flex: 1,
+    height: GlobalStyles.window_height,
     backgroundColor: '#f5f5f5',
   },
 });

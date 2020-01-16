@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-30 14:00:52
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-30 15:04:58
+ * @LastEditTime : 2020-01-16 21:29:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,12 +29,16 @@ export default class NumberInput extends Component {
 
   componentDidMount() {
     // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({
-      number: this.props.initNumber || '1',
-    });
+    this.timer = setTimeout(() => {
+      this.setState({
+        number: this.props.initNumber + '' || '1',
+      });
+    }, 50);
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
   input(value) {
     if (value && isNaN(value)) {
       value = parseInt(value, 10) + '';

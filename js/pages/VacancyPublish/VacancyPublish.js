@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 20:25:08
+ * @LastEditTime : 2020-01-16 21:20:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -284,6 +284,7 @@ class VacancyPublish extends Component {
       datePickerShow,
       throughCitys,
     } = this.state;
+    console.log('vacantAmount', vacantAmount);
     let textClassName = [DetailsStyle.contentText];
     let textThemeDisabled = [
       DetailsStyle.contentText,
@@ -349,11 +350,14 @@ class VacancyPublish extends Component {
                   style={DetailsStyle.formContent}>
                   <Text
                     style={
-                      throughCitys.cityName && throughCitys.cityName.length
+                      throughCitys &&
+                      throughCitys.cityName &&
+                      throughCitys.cityName.length
                         ? textClassName
                         : textThemeDisabled
                     }>
-                    {(throughCitys.cityName &&
+                    {(throughCitys &&
+                      throughCitys.cityName &&
                       throughCitys.cityName.length &&
                       throughCitys.cityName &&
                       throughCitys.cityName) ||
@@ -487,6 +491,7 @@ class VacancyPublish extends Component {
 const styles = StyleSheet.create({
   pageWrapper: {
     flex: 1,
+    height: GlobalStyles.window_height,
     backgroundColor: '#f5f5f5',
   },
 });
