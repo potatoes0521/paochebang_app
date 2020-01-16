@@ -3,7 +3,7 @@
  * @description: 我发布的空位列表
  * @Date: 2020-01-02 16:58:17
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-15 15:23:13
+ * @LastEditTime : 2020-01-16 20:42:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,6 +21,7 @@ import ListItem from './ListItem';
 import BottomLoading from '../../../components/BottomLoading/BottomLoading.js';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
 import EmptyList from '../../../components/EmptyList/EmptyList.js';
+import FloatPublishBtn from '../../../components/FloatPublishBtn/FloatPublishBtn';
 import api from '../../../api/index';
 
 class VacancyList extends Component {
@@ -101,6 +102,7 @@ class VacancyList extends Component {
     ) : null;
   }
   render() {
+    let {vacancyData} = this.state;
     return (
       <View style={styles.listWrapper}>
         <FlatList
@@ -126,6 +128,9 @@ class VacancyList extends Component {
             return data.vacantPalletId + 'vacancy';
           }}
         />
+        {vacancyData && vacancyData.length ? (
+          <FloatPublishBtn type={this.tabType} />
+        ) : null}
       </View>
     );
   }

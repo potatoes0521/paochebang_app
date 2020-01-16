@@ -3,7 +3,7 @@
  * @description: 我发布的卖板列表
  * @Date: 2020-01-02 16:58:06
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-15 15:22:59
+ * @LastEditTime : 2020-01-16 20:43:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,6 +21,7 @@ import ListItem from './ListItem';
 import BottomLoading from '../../../components/BottomLoading/BottomLoading.js';
 import GlobalStyles from '../../../assets/css/GlobalStyles';
 import EmptyList from '../../../components/EmptyList/EmptyList.js';
+import FloatPublishBtn from '../../../components/FloatPublishBtn/FloatPublishBtn';
 import api from '../../../api/index';
 
 class SellingList extends Component {
@@ -101,6 +102,7 @@ class SellingList extends Component {
     ) : null;
   }
   render() {
+    let {sellingData} = this.state;
     return (
       <View style={styles.listWrapper}>
         <FlatList
@@ -126,6 +128,9 @@ class SellingList extends Component {
             return data.saleToPalletId + 'selling';
           }}
         />
+        {sellingData && sellingData.length ? (
+          <FloatPublishBtn type={this.tabType} />
+        ) : null}
       </View>
     );
   }
