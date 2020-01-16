@@ -4,7 +4,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 10:21:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 20:02:40
+ * @LastEditTime : 2020-01-16 21:13:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,6 +15,8 @@ import {
   defaultFileUrl,
 } from '../config/requestConfig.js';
 import createSignData from './secret.js';
+import NavigationUtil from '../navigator/NavigationUtils';
+import Action from '../store/action';
 const sign_id = 'wxb633da0aa161b42c';
 export const appVersion = '0.8.0';
 
@@ -111,7 +113,8 @@ class HttpRequest {
           // console.log('data' + url, data);
           return data;
         } else if (+data.code === 200003) {
-          console.log('token shixiao');
+          Action.changeUserInfo({});
+          NavigationUtil.goPage({noBack: true}, 'RegisterPage');
           that.setState({
             isLoading: false,
           });

@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-16 19:40:52
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-16 21:12:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -42,27 +42,40 @@ class Register extends Component {
       verificationCode: '', //验证码
       visible: false,
     };
-    this.backPress = new BackPressComponent({
-      backPress: () => this.onBackPress(),
-    });
+    // this.backPress = new BackPressComponent({
+    //   backPress: () => this.onBackPress(),
+    // });
     this.timer = null;
     this.timeout = null;
     this.toastRef = React.createRef();
   }
 
   componentDidMount() {
-    this.backPress.componentDidMount();
+    const {navigation} = this.props;
+    const {state} = navigation;
+    const {params} = state;
+    console.log('params', params);
+    this.handelData(params);
+    // this.backPress.componentDidMount();
   }
 
   componentWillUnmount() {
     clearInterval(this.timer);
     clearTimeout(this.timeout);
-    this.backPress.componentWillUnmount();
+    // this.backPress.componentWillUnmount();
   }
 
   onBackPress() {
-    NavigationUtil.goBack(this.props.navigation);
-    return true;
+    if (!this.state.noBack) {
+      console.log('1', 1);
+      NavigationUtil.goBack(this.props.navigation);
+      return true;
+    }
+  }
+  handelData(params) {
+    this.setState({
+      noBack: params.noBack,
+    });
   }
   /**
    * 输入手机号
@@ -203,6 +216,7 @@ class Register extends Component {
       timerFlag,
       countDown,
       visible,
+      noBack,
     } = this.state;
     let btnBorderStyle = [styles.codeBtn];
     let btnTextStyle = [styles.codeColor];
@@ -216,7 +230,7 @@ class Register extends Component {
         <View style={styles.pageWrapper}>
           <NavigationBar
             navigation={navigation}
-            leftViewShow={true}
+            leftViewShow={!noBack}
             title={'跑车帮'}
           />
           <View style={styles.imgWrapper}>

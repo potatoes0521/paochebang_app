@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 15:52:50
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 20:41:24
+ * @LastEditTime : 2020-01-16 21:00:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,6 +29,7 @@ class VacancyItem extends Component {
     let {itemData, userInfo} = this.props;
     if (!userInfo && !userInfo.userId && !userInfo.token) {
       NavigationUtil.goPage({}, 'RegisterPage');
+      return;
     }
     if (
       (itemData.isActive === 2 || itemData.isActive === 3) &&
@@ -45,6 +46,11 @@ class VacancyItem extends Component {
    */
   callBtn(item, e) {
     e.stopPropagation();
+    let {userInfo} = this.props;
+    if (!userInfo && !userInfo.userId && !userInfo.token) {
+      NavigationUtil.goPage({}, 'RegisterPage');
+      return;
+    }
     const tel = `tel:${item.mobile}`;
     if (item.isActive !== 1) {
       return;

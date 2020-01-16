@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-15 14:26:52
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-16 21:05:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -416,7 +416,7 @@ class SellingPublish extends Component {
                     maxLength={20}
                     value={carInfo}
                     placeholderTextColor={GlobalStyles.themeDisabled}
-                    placeholder={'请输入车辆信息，如大众迈腾'}
+                    placeholder={'请输入车辆信息，如大众'}
                     onChangeText={this.carInfoInput.bind(this)}
                   />
                 </View>
