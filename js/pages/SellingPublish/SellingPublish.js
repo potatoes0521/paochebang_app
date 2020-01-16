@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 21:18:31
+ * @LastEditTime : 2020-01-16 21:38:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -349,217 +349,211 @@ class SellingPublish extends Component {
             leftViewShow={true}
             title={'卖板发布'}
           />
-          <ScrollView>
-            <View style={DetailsStyle.card}>
-              {/* 发车城市 */}
-              <View style={DetailsStyle.formItem}>
-                <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.isRequired}>*</Text>
-                  <Text style={DetailsStyle.labelText}>发车城市:</Text>
-                </View>
-                <TouchableOpacity
-                  onPress={this.navigationToChooseCity.bind(this, 'sendCity')}
-                  style={DetailsStyle.formContent}>
-                  <Text
-                    style={sendCityName ? textClassName : textThemeDisabled}>
-                    {sendCityName || '请选择发车城市'}
-                  </Text>
-                  <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
-                </TouchableOpacity>
+          <View style={DetailsStyle.card}>
+            {/* 发车城市 */}
+            <View style={DetailsStyle.formItem}>
+              <View style={DetailsStyle.formLabel}>
+                <Text style={DetailsStyle.isRequired}>*</Text>
+                <Text style={DetailsStyle.labelText}>发车城市:</Text>
               </View>
-              {/* 收车城市 */}
-              <View style={DetailsStyle.formItem}>
-                <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.isRequired}>*</Text>
-                  <Text style={DetailsStyle.labelText}>收车城市:</Text>
-                </View>
-                <TouchableOpacity
-                  onPress={this.navigationToChooseCity.bind(
-                    this,
-                    'receiveCity',
-                  )}
-                  style={DetailsStyle.formContent}>
-                  <Text
-                    style={receiveCityName ? textClassName : textThemeDisabled}>
-                    {receiveCityName || '请选择收车城市'}
-                  </Text>
-                  <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
-                </TouchableOpacity>
+              <TouchableOpacity
+                onPress={this.navigationToChooseCity.bind(this, 'sendCity')}
+                style={DetailsStyle.formContent}>
+                <Text style={sendCityName ? textClassName : textThemeDisabled}>
+                  {sendCityName || '请选择发车城市'}
+                </Text>
+                <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
+              </TouchableOpacity>
+            </View>
+            {/* 收车城市 */}
+            <View style={DetailsStyle.formItem}>
+              <View style={DetailsStyle.formLabel}>
+                <Text style={DetailsStyle.isRequired}>*</Text>
+                <Text style={DetailsStyle.labelText}>收车城市:</Text>
               </View>
-              {/* 预计发车时间 */}
-              <View style={DetailsStyle.formItem}>
-                <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.isRequired}>*</Text>
-                  <Text style={DetailsStyle.labelText}>预计发车时间:</Text>
-                </View>
-                <TouchableOpacity
-                  onPress={this.handleShowDate.bind(this, 'sendTime')}
-                  style={DetailsStyle.formContent}>
-                  <Text
-                    style={
-                      sendTime.split('T')[0] ? textClassName : textThemeDisabled
-                    }>
-                    {sendTime.split('T')[0] || '请选择发车时间'}
-                  </Text>
-                  <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
-                </TouchableOpacity>
+              <TouchableOpacity
+                onPress={this.navigationToChooseCity.bind(this, 'receiveCity')}
+                style={DetailsStyle.formContent}>
+                <Text
+                  style={receiveCityName ? textClassName : textThemeDisabled}>
+                  {receiveCityName || '请选择收车城市'}
+                </Text>
+                <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
+              </TouchableOpacity>
+            </View>
+            {/* 预计发车时间 */}
+            <View style={DetailsStyle.formItem}>
+              <View style={DetailsStyle.formLabel}>
+                <Text style={DetailsStyle.isRequired}>*</Text>
+                <Text style={DetailsStyle.labelText}>预计发车时间:</Text>
               </View>
-              {/* 车辆信息 */}
-              <View style={DetailsStyle.formItem}>
-                <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.isRequired}>*</Text>
-                  <Text style={DetailsStyle.labelText}>车辆信息:</Text>
-                </View>
-                <View style={DetailsStyle.formContent}>
-                  <TextInput
-                    style={DetailsStyle.textInput}
-                    maxLength={20}
-                    value={carInfo}
-                    placeholderTextColor={GlobalStyles.themeDisabled}
-                    placeholder={'请输入车辆信息，如大众'}
-                    onChangeText={this.carInfoInput.bind(this)}
-                  />
-                </View>
+              <TouchableOpacity
+                onPress={this.handleShowDate.bind(this, 'sendTime')}
+                style={DetailsStyle.formContent}>
+                <Text
+                  style={
+                    sendTime.split('T')[0] ? textClassName : textThemeDisabled
+                  }>
+                  {sendTime.split('T')[0] || '请选择发车时间'}
+                </Text>
+                <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
+              </TouchableOpacity>
+            </View>
+            {/* 车辆信息 */}
+            <View style={DetailsStyle.formItem}>
+              <View style={DetailsStyle.formLabel}>
+                <Text style={DetailsStyle.isRequired}>*</Text>
+                <Text style={DetailsStyle.labelText}>车辆信息:</Text>
               </View>
-              {/* 车辆性质 */}
-              <View style={DetailsStyle.formItem}>
-                <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.isRequired}>*</Text>
-                  <Text style={DetailsStyle.labelText}>车辆性质:</Text>
-                </View>
-                <View style={DetailsStyle.formContent}>
-                  <Radio
-                    options={carNatureList}
-                    activeIndex={radioActiveIndex}
-                    onClick={this.chooseRadio.bind(this)}
-                  />
-                </View>
-              </View>
-              {/* 台数 */}
-              <View style={DetailsStyle.formItem}>
-                <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.isRequired}>*</Text>
-                  <Text style={DetailsStyle.labelText}>台数:</Text>
-                </View>
-                <View style={DetailsStyle.formContent}>
-                  <NumberInput
-                    initNumber={carAmount}
-                    onInputTextChange={this.numberInputChange.bind(this)}
-                  />
-                  <Text style={DetailsStyle.unit}>台</Text>
-                </View>
-              </View>
-              {/* 有效期至 */}
-              <View style={DetailsStyle.formItem}>
-                <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.isRequired}>*</Text>
-                  <Text style={DetailsStyle.labelText}>有效期至:</Text>
-                </View>
-                <TouchableOpacity
-                  onPress={this.handleShowDate.bind(this, 'dueTime')}
-                  style={DetailsStyle.formContent}>
-                  <Text
-                    style={
-                      dueTime.split('T')[0] ? textClassName : textThemeDisabled
-                    }>
-                    {dueTime.split('T')[0] || '请选择发车时间'}
-                  </Text>
-                  <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
-                </TouchableOpacity>
-              </View>
-              {/* 结算方式 */}
-              <View style={DetailsStyle.formItem}>
-                <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.isRequired}>*</Text>
-                  <Text style={DetailsStyle.labelText}>结算方式:</Text>
-                </View>
-                <TouchableOpacity
-                  onPress={this.showActionSheet.bind(this)}
-                  style={DetailsStyle.formContent}>
-                  <Text
-                    style={
-                      payWeyText && payWeyText.name
-                        ? textClassName
-                        : textThemeDisabled
-                    }>
-                    {payWeyText ? payWeyText.name : '请选择结算方式'}
-                  </Text>
-                  <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
-                </TouchableOpacity>
-              </View>
-              {/* 报价 */}
-              <View style={DetailsStyle.formItem}>
-                <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.isRequired} />
-                  <Text style={DetailsStyle.labelText}>报价:</Text>
-                </View>
-                <View style={DetailsStyle.formContent}>
-                  <TextInput
-                    style={DetailsStyle.textInput}
-                    maxLength={8}
-                    value={price}
-                    keyboardType={'numeric'}
-                    placeholderTextColor={GlobalStyles.themeDisabled}
-                    placeholder={'请填写报价，不填默认私聊'}
-                    onChangeText={this.priceInput.bind(this)}
-                  />
-                </View>
-              </View>
-              <View style={DetailsStyle.formItem}>
-                <View style={DetailsStyle.formLabel}>
-                  <Text style={DetailsStyle.isRequired} />
-                  <Text style={DetailsStyle.labelText}>备注:</Text>
-                </View>
-                <TouchableOpacity
-                  onPress={this.navigationToRemark.bind(this)}
-                  style={[
-                    DetailsStyle.formContent,
-                    DetailsStyle.moreTextFormItem,
-                  ]}>
-                  <Text style={remark ? textClassName : textThemeDisabled}>
-                    {remark || '请输入备注信息'}
-                  </Text>
-                  <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
-                </TouchableOpacity>
+              <View style={DetailsStyle.formContent}>
+                <TextInput
+                  style={DetailsStyle.textInput}
+                  maxLength={20}
+                  value={carInfo}
+                  placeholderTextColor={GlobalStyles.themeDisabled}
+                  placeholder={'请输入车辆信息，如大众'}
+                  onChangeText={this.carInfoInput.bind(this)}
+                />
               </View>
             </View>
-            {/* button */}
-            <View style={DetailsStyle.btnWrapper}>
-              <Button
-                type={'plain'}
-                btnStyle={[DetailsStyle.btnLeft]}
-                text={'取消'}
-                onClick={this.cancel.bind(this)}
-              />
-              <Button
-                btnStyle={[DetailsStyle.btnRight]}
-                text={'提交'}
-                type={'round'}
-                onClick={this.submit.bind(this)}
-              />
+            {/* 车辆性质 */}
+            <View style={DetailsStyle.formItem}>
+              <View style={DetailsStyle.formLabel}>
+                <Text style={DetailsStyle.isRequired}>*</Text>
+                <Text style={DetailsStyle.labelText}>车辆性质:</Text>
+              </View>
+              <View style={DetailsStyle.formContent}>
+                <Radio
+                  options={carNatureList}
+                  activeIndex={radioActiveIndex}
+                  onClick={this.chooseRadio.bind(this)}
+                />
+              </View>
             </View>
-            {/* 动作指示器 */}
-            <ActionSheet
-              ref={o => (this.ActionSheet = o)}
-              title={'请选择结算方式'}
-              options={payWeyList}
-              tintColor={GlobalStyles.themeFontColor}
-              cancelButtonIndex={payWeyList.length - 1}
-              onPress={this.chooseActionSheet.bind(this)}
+            {/* 台数 */}
+            <View style={DetailsStyle.formItem}>
+              <View style={DetailsStyle.formLabel}>
+                <Text style={DetailsStyle.isRequired}>*</Text>
+                <Text style={DetailsStyle.labelText}>台数:</Text>
+              </View>
+              <View style={DetailsStyle.formContent}>
+                <NumberInput
+                  initNumber={carAmount}
+                  onInputTextChange={this.numberInputChange.bind(this)}
+                />
+                <Text style={DetailsStyle.unit}>台</Text>
+              </View>
+            </View>
+            {/* 有效期至 */}
+            <View style={DetailsStyle.formItem}>
+              <View style={DetailsStyle.formLabel}>
+                <Text style={DetailsStyle.isRequired}>*</Text>
+                <Text style={DetailsStyle.labelText}>有效期至:</Text>
+              </View>
+              <TouchableOpacity
+                onPress={this.handleShowDate.bind(this, 'dueTime')}
+                style={DetailsStyle.formContent}>
+                <Text
+                  style={
+                    dueTime.split('T')[0] ? textClassName : textThemeDisabled
+                  }>
+                  {dueTime.split('T')[0] || '请选择发车时间'}
+                </Text>
+                <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
+              </TouchableOpacity>
+            </View>
+            {/* 结算方式 */}
+            <View style={DetailsStyle.formItem}>
+              <View style={DetailsStyle.formLabel}>
+                <Text style={DetailsStyle.isRequired}>*</Text>
+                <Text style={DetailsStyle.labelText}>结算方式:</Text>
+              </View>
+              <TouchableOpacity
+                onPress={this.showActionSheet.bind(this)}
+                style={DetailsStyle.formContent}>
+                <Text
+                  style={
+                    payWeyText && payWeyText.name
+                      ? textClassName
+                      : textThemeDisabled
+                  }>
+                  {payWeyText ? payWeyText.name : '请选择结算方式'}
+                </Text>
+                <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
+              </TouchableOpacity>
+            </View>
+            {/* 报价 */}
+            <View style={DetailsStyle.formItem}>
+              <View style={DetailsStyle.formLabel}>
+                <Text style={DetailsStyle.isRequired} />
+                <Text style={DetailsStyle.labelText}>报价:</Text>
+              </View>
+              <View style={DetailsStyle.formContent}>
+                <TextInput
+                  style={DetailsStyle.textInput}
+                  maxLength={8}
+                  value={price}
+                  keyboardType={'numeric'}
+                  placeholderTextColor={GlobalStyles.themeDisabled}
+                  placeholder={'请填写报价，不填默认私聊'}
+                  onChangeText={this.priceInput.bind(this)}
+                />
+              </View>
+            </View>
+            <View style={DetailsStyle.formItem}>
+              <View style={DetailsStyle.formLabel}>
+                <Text style={DetailsStyle.isRequired} />
+                <Text style={DetailsStyle.labelText}>备注:</Text>
+              </View>
+              <TouchableOpacity
+                onPress={this.navigationToRemark.bind(this)}
+                style={[
+                  DetailsStyle.formContent,
+                  DetailsStyle.moreTextFormItem,
+                ]}>
+                <Text style={remark ? textClassName : textThemeDisabled}>
+                  {remark || '请输入备注信息'}
+                </Text>
+                <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          {/* button */}
+          <View style={DetailsStyle.btnWrapper}>
+            <Button
+              type={'plain'}
+              btnStyle={[DetailsStyle.btnLeft]}
+              text={'取消'}
+              onClick={this.cancel.bind(this)}
             />
-            {/* 时间组件 */}
-            <DatePicker
-              isShow={datePickerShow}
-              chooseBeforeTime={false}
-              onConfirm={this.dateConfirm.bind(this)}
-              onCancel={this.dateCancel.bind(this)}
+            <Button
+              btnStyle={[DetailsStyle.btnRight]}
+              text={'提交'}
+              type={'round'}
+              onClick={this.submit.bind(this)}
             />
-            <Toast
-              ref={this.toastRef}
-              position={'center'}
-              defaultCloseDelay={3000}
-            />
-          </ScrollView>
+          </View>
+          {/* 动作指示器 */}
+          <ActionSheet
+            ref={o => (this.ActionSheet = o)}
+            title={'请选择结算方式'}
+            options={payWeyList}
+            tintColor={GlobalStyles.themeFontColor}
+            cancelButtonIndex={payWeyList.length - 1}
+            onPress={this.chooseActionSheet.bind(this)}
+          />
+          {/* 时间组件 */}
+          <DatePicker
+            isShow={datePickerShow}
+            chooseBeforeTime={false}
+            onConfirm={this.dateConfirm.bind(this)}
+            onCancel={this.dateCancel.bind(this)}
+          />
+          <Toast
+            ref={this.toastRef}
+            position={'center'}
+            defaultCloseDelay={3000}
+          />
         </View>
       </SafeAreaViewPlus>
     );
