@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-16 16:18:57
+ * @LastEditTime : 2020-01-16 20:08:46
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -104,6 +104,7 @@ class Mine extends Component {
 
   render() {
     let {userInfo} = this.props;
+    let userName = decodeURIComponent(userInfo.nickName);
     return (
       <View style={styles.pageWrapper}>
         <NavigationBar title={'我的'} />
@@ -126,9 +127,7 @@ class Mine extends Component {
                 <View style={styles.userInfo}>
                   <View style={styles.userName}>
                     {userInfo.nickName ? (
-                      <Text style={MineStyles.labelText}>
-                        {userInfo.nickName}
-                      </Text>
+                      <Text style={MineStyles.labelText}>{userName}</Text>
                     ) : (
                       <Text style={MineStyles.labelText}>
                         {userInfo.mobile}
