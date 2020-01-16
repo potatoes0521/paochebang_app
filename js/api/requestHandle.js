@@ -4,7 +4,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-02 10:21:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-15 20:45:26
+ * @LastEditTime : 2020-01-16 20:02:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,7 @@ import {
 } from '../config/requestConfig.js';
 import createSignData from './secret.js';
 const sign_id = 'wxb633da0aa161b42c';
-export const appVersion = '1.0.0';
+export const appVersion = '0.8.0';
 
 class HttpRequest {
   constructor(baseUrl) {
