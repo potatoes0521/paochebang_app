@@ -3,7 +3,7 @@
  * @description: 我发布的卖板和空位
  * @Date: 2019-12-27 11:21:19
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-14 19:09:04
+ * @LastEditTime : 2020-01-16 20:30:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,10 +14,8 @@ import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import NavigationUtil from '../../navigator/NavigationUtils';
-import FloatPublishBtn from '../../components/FloatPublishBtn/FloatPublishBtn';
 import SellingList from './components/SellingList';
 import VacancyList from './components/VacancyList';
-import PropTypes from 'prop-types';
 class MainPublish extends Component {
   constructor(props) {
     super(props);
@@ -71,7 +69,6 @@ class MainPublish extends Component {
             title={title}
           />
           {this.pageType === 'selling' ? <SellingList /> : <VacancyList />}
-          <FloatPublishBtn type={this.tabType} />
         </View>
       </SafeAreaViewPlus>
     );
@@ -84,13 +81,6 @@ const styles = StyleSheet.create({
   },
 });
 
-MainPublish.defaultProps = {
-  onClick: () => {},
-};
-
-MainPublish.propTypes = {
-  onClick: PropTypes.func.isRequired,
-};
 // 如果需要引入store
 const mapStateToProps = state => {
   return {
