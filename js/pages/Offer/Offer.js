@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:46:56
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 13:50:55
+ * @LastEditTime : 2020-01-16 16:40:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -177,6 +177,9 @@ class Offer extends Component {
                 <View style={styles.line} />
                 <View style={styles.selectMain}>
                   <Text>筛选</Text>
+                  <Text style={[GlobalStyles.icon, styles.selectIcon]}>
+                    &#xe665;
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -230,8 +233,13 @@ const styles = StyleSheet.create({
   },
   selectMain: {
     flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  selectIcon: {
+    fontSize: 12,
+    marginLeft: 4,
   },
   tabStyle: {
     borderBottomColor: GlobalStyles.themeColor,
