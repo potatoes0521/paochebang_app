@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 实名认证弹框
  * @Date: 2020-01-04 10:45:41
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-16 18:07:44
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-16 18:26:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,30 +27,28 @@ export default class Authentication extends Component {
     NavigationUtil.goPage({pageBack: '1'}, 'AuthenticationPage');
     this.closeAuthentication();
   }
-  stopPropagation(e) {
-    e.stopPropagation();
-  }
   closeAuthentication() {
     this.props.onClick();
   }
   render() {
+    let {visible} = this.props;
     return (
-      <View
-        style={styles.AuthenticationWrapper}
-        onPress={this.closeAuthentication.bind(this)}>
-        <View
-          style={styles.cardStyle}
-          onPress={this.stopPropagation.bind(this)}>
-          <Image style={styles.imgStyle} source={authenticationImage} />
-          <Text style={styles.titleStyle}>实名认证</Text>
-          <Text style={styles.tipsStyle}>请提交身份信息，完成认证</Text>
-          <TouchableOpacity onPress={this.goToAuthentication.bind(this)}>
-            <View style={styles.btnWrapper}>
-              <Text style={styles.btnStyle}>去认证</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
+      visible && (
+        <TouchableOpacity
+          style={styles.AuthenticationWrapper}
+          onPress={this.closeAuthentication.bind(this)}>
+          <View style={styles.cardStyle}>
+            <Image style={styles.imgStyle} source={authenticationImage} />
+            <Text style={styles.titleStyle}>实名认证</Text>
+            <Text style={styles.tipsStyle}>请提交身份信息，完成认证</Text>
+            <TouchableOpacity onPress={this.goToAuthentication.bind(this)}>
+              <View style={styles.btnWrapper}>
+                <Text style={styles.btnStyle}>去认证</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+      )
     );
   }
 }
@@ -61,7 +59,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     width: GlobalStyles.window_width,

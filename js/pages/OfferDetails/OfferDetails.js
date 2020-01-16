@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-12-03 16:47:37
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-16 17:30:56
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-16 18:24:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -281,12 +281,6 @@ class OfferDetails extends Component {
             leftViewShow={true}
             title={'报价详情'}
           />
-          {/* 实名认证弹框 */}
-          {isShow ? (
-            <TouchableOpacity onPress={this.changeCertification.bind(this)}>
-              <Authentication />
-            </TouchableOpacity>
-          ) : null}
           <ScrollView>
             {statusDescs && statusDescs.length ? (
               <View style={styles.statusWrapper}>
@@ -550,6 +544,11 @@ class OfferDetails extends Component {
             ref={this.toastRef}
             position={'center'}
             defaultCloseDelay={3000}
+          />
+          {/* 实名认证弹框 */}
+          <Authentication
+            visible={isShow}
+            onClick={this.changeCertification.bind(this)}
           />
         </View>
       </SafeAreaViewPlus>
