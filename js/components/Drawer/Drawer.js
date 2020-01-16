@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-25 16:42:43
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 13:42:14
+ * @LastEditTime : 2020-01-16 20:09:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -38,13 +38,13 @@ export default class Drawer extends Component {
             onPress={this.handleClickModel.bind(this)}>
             <View style={styles.drawerModelLeft} />
           </TouchableOpacity>
-          <SafeAreaView style={styles.drawerMain}>
+          <View style={styles.drawerMain}>
             <View
               style={[styles.drawerMain, styles.drawerMainLine]}
               onPress={this.stopPropagation.bind(this)}>
               {this.props.children}
             </View>
-          </SafeAreaView>
+          </View>
         </View>
       </SafeAreaView>
     ) : null;
@@ -54,11 +54,12 @@ export default class Drawer extends Component {
 const styles = StyleSheet.create({
   drawerWrapperPosition: {
     width: GlobalStyles.window_width,
-    height: GlobalStyles.window_height - 50,
     backgroundColor: 'rgba(0,0,0,0.5)',
     position: 'absolute',
     top: 0,
     left: 0,
+    right: 0,
+    bottom: 0,
     zIndex: 10,
   },
   drawerWrapper: {
