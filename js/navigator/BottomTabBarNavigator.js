@@ -3,7 +3,7 @@
  * @description: 底部tabBar
  * @Date: 2019-11-29 11:38:36
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 16:35:48
+ * @LastEditTime : 2020-01-17 10:27:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -62,7 +62,7 @@ class BottomTabBarNavigator extends Component {
           Index: {
             screen: Index,
             navigationOptions: {
-              tabBarLabel: '市场',
+              tabBarLabel: '首页',
               tabBarIcon: ({tintColor, focused}) => (
                 <Text style={[styles.icon, {color: tintColor}]}>&#xe60a;</Text>
               ),
