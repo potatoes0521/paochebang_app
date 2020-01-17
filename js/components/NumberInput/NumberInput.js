@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-30 14:00:52
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 21:29:22
+ * @LastEditTime : 2020-01-17 11:13:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,57 +18,74 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import GlobalStyles from '../../assets/css/GlobalStyles';
+import _toString from 'lodash/toString';
+
+// 格式化数字，处理01变成1,并且不处理1. 这种情况
+function parseValue(num) {
+  if (num === '') {
+    return '';
+  }
+
+  const numStr = _toString(num);
+  if (numStr.indexOf('0') === 0 && numStr.indexOf('.') === -1) {
+    // 处理01变成1,并且不处理1.
+    return _toString(parseFloat(num, 10));
+  }
+  return _toString(num);
+}
 
 export default class NumberInput extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      number: '1',
-    };
-  }
-
-  componentDidMount() {
-    // eslint-disable-next-line react/no-did-mount-set-state
-    this.timer = setTimeout(() => {
-      this.setState({
-        number: this.props.initNumber + '' || '1',
-      });
-    }, 50);
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.timer);
   }
   input(value) {
-    if (value && isNaN(value)) {
+    if (value && !isNaN(value)) {
       value = parseInt(value, 10) + '';
     } else {
       value = '';
     }
-    this.setState({
-      number: value,
-    });
-    this.props.onInputTextChange(value);
+    let newNumber = this.handleValue(value);
+    this.props.onInputTextChange(newNumber);
   }
   handleClick(type) {
-    let {number} = this.state;
-    number = +number || '';
+    let {initNumber} = this.props;
+    initNumber = +initNumber || '';
     if (type === 'sub') {
-      if (number < 1) {
-        number = '';
+      if (initNumber < 1) {
+        initNumber = '';
       } else {
-        number -= 1;
+        initNumber -= 1;
       }
     } else {
-      number += 1;
+      initNumber += 1;
     }
-    this.setState({
-      number: number + '',
-    });
-    this.props.onInputTextChange(number);
+    let newNumber = this.handleValue(initNumber);
+    this.props.onInputTextChange(newNumber);
+  }
+  handleValue(value) {
+    const {max, min} = this.props;
+    let resultValue = value === '' ? min : value;
+    // 此处不能使用 Math.max，会是字符串变数字，并丢失 .
+    if (resultValue > max) {
+      resultValue = max;
+      this.handleError({
+        type: 'OVER',
+        errorValue: resultValue,
+      });
+    }
+    if (resultValue < min) {
+      resultValue = min;
+      this.handleError({
+        type: 'LOW',
+        errorValue: resultValue,
+      });
+    }
+    resultValue = parseValue(resultValue);
+    return resultValue;
   }
   render() {
-    let {number} = this.state;
+    const {initNumber} = this.props;
+    const number = this.handleValue(initNumber);
     let subClassName = [styles.btnText];
     if (number <= 0 || !number) {
       subClassName = [styles.disabledText];
