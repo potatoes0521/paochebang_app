@@ -3,7 +3,7 @@
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 21:12:38
+ * @LastEditTime : 2020-01-17 10:43:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -74,7 +74,7 @@ class Register extends Component {
   }
   handelData(params) {
     this.setState({
-      noBack: params.noBack,
+      noBack: (params && params.noBack) || false,
     });
   }
   /**
