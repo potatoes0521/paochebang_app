@@ -4,15 +4,15 @@
  * @path: 引入路径
  * @Date: 2020-01-04 10:52:39
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 16:17:09
+ * @LastEditTime : 2020-01-17 16:26:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, TouchableOpacity, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import GlobalStyles from '../../assets/css/GlobalStyles';
-import Swiper from 'react-native-swiper';
+// import Swiper from 'react-native-swiper';
 
 export default class PreviewImage extends Component {
   constructor(props) {
