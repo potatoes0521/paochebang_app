@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-26 09:24:29
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 16:57:26
+ * @LastEditTime : 2020-01-17 17:00:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -447,8 +447,6 @@ class ChooseCity extends Component {
       this.toastRef.current.show('至少选择一个省/市');
       return;
     }
-    console.log('submit', this.throughCityNameList);
-    console.log('submit', this.throughCityIdList);
     if (this.pageParams.type !== 'throughCity') {
       if (this.lastChoose.type !== 'city') {
         this.toastRef.current.show('至少精确到市哦~');
@@ -501,17 +499,14 @@ class ChooseCity extends Component {
   computeScrollViewHeight() {
     let {wrapperHeight, hotCityHeight} = this.state;
     let scrollHeight = wrapperHeight - hotCityHeight - 70 - 50;
-    console.log('scrollHeight', scrollHeight);
     return scrollHeight;
   }
   onWrapperLayout(event) {
-    console.log('e', event.nativeEvent.layout.height);
     this.setState({
       wrapperHeight: event.nativeEvent.layout.height,
     });
   }
   onHotCityLayout(event) {
-    console.log('e', event.nativeEvent.layout.height);
     this.setState({
       hotCityHeight: event.nativeEvent.layout.height,
     });
@@ -629,7 +624,6 @@ class ChooseCity extends Component {
     });
     const scrollHeight =
       this.computeScrollViewHeight() < 0 ? 999 : this.computeScrollViewHeight();
-    console.log('sc', scrollHeight);
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View
