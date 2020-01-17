@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-01-16 13:25:56
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 19:02:30
+ * @LastEditTime : 2020-01-17 17:15:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -63,7 +63,7 @@ export default class SelectCondition extends Component {
               onPress={this.navigatorTo.bind(this, 'sendCity')}
               style={DetailsStyle.formContent}>
               <Text style={sendCityTextClassName}>
-                {sendCityName || '请选择收车城市'}
+                {sendCityName || '请选择发车城市'}
               </Text>
               <Text style={DetailsStyle.iconRight}>&#xe61d;</Text>
             </TouchableOpacity>
