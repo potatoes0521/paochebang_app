@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 11:47:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 16:34:58
+ * @LastEditTime : 2020-01-17 10:40:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,27 +32,27 @@ export default class EmptyList extends Component {
     switch (pageType) {
       case 'selling':
       case 'selling_index':
-        NavigationUtil.goPage(pageType, 'SellingPublishPage');
+        NavigationUtil.goPage({}, 'SellingPublishPage');
         break;
       case 'vacancy':
       case 'vacancy_index':
-        NavigationUtil.goPage(pageType, 'VacancyPublishPage');
+        NavigationUtil.goPage({}, 'VacancyPublishPage');
         break;
       case 'driver':
-        NavigationUtil.goPage(pageType, 'DriverEditPage');
+        NavigationUtil.goPage({}, 'DriverEditPage');
         break;
       case 'order':
       case 'offer':
         navigation.navigate('Index');
         break;
       case 'login_offer':
-        NavigationUtil.goPage(pageType, 'RegisterPage');
+        NavigationUtil.goPage({}, 'RegisterPage');
         break;
       case 'line':
-        NavigationUtil.goPage(pageType, 'LineEditPage');
+        NavigationUtil.goPage({}, 'LineEditPage');
         break;
       case 'login_order':
-        NavigationUtil.goPage(pageType, 'RegisterPage');
+        NavigationUtil.goPage({}, 'RegisterPage');
         break;
     }
   }
@@ -65,9 +65,11 @@ export default class EmptyList extends Component {
     switch (pageType) {
       case 'selling_index':
         tips = '亲，没有相关消息哦～';
+        text = '去发布';
         break;
       case 'vacancy_index':
         tips = '亲，没有相关消息哦～';
+        text = '去发布';
         break;
       case 'driver':
         imgSrc = noCustomer;
