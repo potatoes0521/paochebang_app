@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-22 16:48:04
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 10:15:55
+ * @LastEditTime : 2020-01-17 11:50:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -66,9 +66,11 @@ class Home extends Component {
         this.props.changeUserInfo(sendData);
         api.user.checkToken(sendData, this).then(checkData => {
           if (!checkData.data) {
+            console.log(pushToken);
             Storage.setStorage('userInfo', pushToken);
             this.props.changeUserInfo({});
             this.props.changeUserInfo(pushToken);
+            console.log('this.props.userInfo', this.props.userInfo);
           }
           SplashScreen.hide();
           // NavigationUtil.resetToHomPage(this.props);
