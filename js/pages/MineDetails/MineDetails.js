@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-14 18:43:54
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-17 18:41:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -55,13 +55,7 @@ class MineDetails extends Component {
    */
   handleEmit() {
     this.emitMineCarType = DeviceEventEmitter.addListener(
-      'submitMineCarType',
-      () => {
-        this.getUserInfo();
-      },
-    );
-    this.emitMineCarNum = DeviceEventEmitter.addListener(
-      'submitMineCarNum',
+      'refreshUserInfo',
       () => {
         this.getUserInfo();
       },
@@ -92,7 +86,7 @@ class MineDetails extends Component {
   navigationEdit() {
     let {userDetailsInfo} = this.state;
     if (this.pageParams.pageType === 'choose') {
-      DeviceEventEmitter.emit('mineDetails', userDetailsInfo);
+      DeviceEventEmitter.emit('chooseDriverInMine', userDetailsInfo);
       NavigationUtil.goBack(this.props.navigation);
     } else {
       NavigationUtil.goPage({userDetailsInfo}, 'MineEditPage');
