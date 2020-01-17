@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-30 16:09:01
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 17:03:54
+ * @LastEditTime : 2020-01-17 17:04:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -48,6 +48,7 @@ class Remark extends Component {
   }
 
   onBackPress() {
+    NavigationUtil.goBack(this.props.navigation);
     return true;
   }
   handleData(params) {
