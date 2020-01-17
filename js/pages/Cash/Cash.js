@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 提现页面
  * @Date: 2019-12-26 17:05:08
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 18:40:29
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-17 18:47:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -211,7 +211,7 @@ class CashDetails extends Component {
     };
     api.account.getWithdrawData(sendData, this).then(res => {
       this.toastRef.current.show('提现申请成功');
-      DeviceEventEmitter.emit('cashInfo', sendData);
+      DeviceEventEmitter.emit('refreshAccountList', {});
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);

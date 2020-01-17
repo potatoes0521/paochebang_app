@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 常跑线路
  * @Date: 2019-12-27 15:19:24
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 17:47:13
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-17 18:48:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -52,7 +52,7 @@ class Line extends Component {
     this.backPress.componentDidMount();
   }
   componentWillUnmount() {
-    this.emitEditLine.remove();
+    this.emitRefreshLineList.remove();
     this.backPress.componentWillUnmount();
   }
   onBackPress() {
@@ -65,9 +65,12 @@ class Line extends Component {
    */
   handleEmit() {
     // 选择城市时候的通知
-    this.emitEditLine = DeviceEventEmitter.addListener('editLine', () => {
-      this.getAllLineList();
-    });
+    this.emitRefreshLineList = DeviceEventEmitter.addListener(
+      'refreshLineList',
+      () => {
+        this.getAllLineList();
+      },
+    );
   }
   /**
    * 获取线路列表

@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 添加编辑路线
  * @Date: 2019-12-30 09:35:08
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-15 13:53:59
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-17 18:49:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -120,7 +120,7 @@ class LineEdit extends Component {
         this.toastRef.current.show('编辑成功');
       }
       this.toastRef.current.show('添加成功');
-      DeviceEventEmitter.emit('editLine', sendData);
+      DeviceEventEmitter.emit('refreshLineList', sendData);
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);

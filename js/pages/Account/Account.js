@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 账户体系
  * @Date: 2019-12-25 15:25:16
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-16 11:09:02
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-17 18:47:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -56,7 +56,7 @@ class AccountDetails extends Component {
   }
 
   componentWillUnmount() {
-    this.emitCashInfo.remove();
+    this.emitRefreshAccountList.remove();
     this.backPress.componentWillUnmount();
   }
   onBackPress() {
@@ -68,12 +68,15 @@ class AccountDetails extends Component {
    * @return void
    */
   handleEmit() {
-    this.emitCashInfo = DeviceEventEmitter.addListener('cashInfo', () => {
-      this.getAccountList({
-        refresh: true,
-      });
-      this.getAccountAmount();
-    });
+    this.emitRefreshAccountList = DeviceEventEmitter.addListener(
+      'refreshAccountList',
+      () => {
+        this.getAccountList({
+          refresh: true,
+        });
+        this.getAccountAmount();
+      },
+    );
   }
   /**
    * 获取账户余额

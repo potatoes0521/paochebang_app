@@ -3,7 +3,7 @@
  * @description: 我的基本信息
  * @Date: 2019-12-25 15:10:15
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 18:41:53
+ * @LastEditTime : 2020-01-17 18:45:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -41,8 +41,7 @@ class MineDetails extends Component {
     this.backPress.componentDidMount();
   }
   componentWillUnmount() {
-    this.emitMineCarType.remove();
-    this.emitMineCarNum.remove();
+    this.emitRefreshUserInfo.remove();
     this.backPress.componentWillUnmount();
   }
   onBackPress() {
@@ -54,7 +53,7 @@ class MineDetails extends Component {
    * @return void
    */
   handleEmit() {
-    this.emitMineCarType = DeviceEventEmitter.addListener(
+    this.emitRefreshUserInfo = DeviceEventEmitter.addListener(
       'refreshUserInfo',
       () => {
         this.getUserInfo();

@@ -3,7 +3,7 @@
  * @description: 司机详情
  * @Date: 2019-12-25 15:23:46
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 18:32:52
+ * @LastEditTime : 2020-01-17 18:44:41
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -41,7 +41,7 @@ class DriverDetails extends Component {
     this.backPress.componentDidMount();
   }
   componentWillUnmount() {
-    this.emitEditDriver.remove();
+    this.emitUpdateDriverDetailsInfo.remove();
     this.backPress.componentWillUnmount();
   }
   onBackPress() {
@@ -49,7 +49,7 @@ class DriverDetails extends Component {
     return true;
   }
   handleEmit() {
-    this.emitEditDriver = DeviceEventEmitter.addListener(
+    this.emitUpdateDriverDetailsInfo = DeviceEventEmitter.addListener(
       'updateDriverDetailsInfo',
       () => {
         this.getDriverDetails();
