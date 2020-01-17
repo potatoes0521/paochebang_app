@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-26 09:24:29
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 15:08:42
+ * @LastEditTime : 2020-01-17 16:57:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -48,6 +48,9 @@ class ChooseCity extends Component {
       fixedTitle: false,
       pageType: '',
       throughCityNameList: [],
+      wrapperHeight: 0,
+      hotCityHeight: 0,
+      btnWrapperHeight: 0,
     };
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
@@ -59,7 +62,6 @@ class ChooseCity extends Component {
     this.pageParams = {};
     this.allCityMsg = {};
     this.needScrollNumber = 999;
-    this.pointRef = React.createRef();
     this.toastRef = React.createRef();
     this.scrollViewRef = React.createRef();
     this.lastChoose = {};
@@ -497,32 +499,22 @@ class ChooseCity extends Component {
     }
   }
   computeScrollViewHeight() {
-    let {hotCity} = this.state;
-    let scrollHeight = 0;
-    if (this.pageParams.type !== 'throughCity') {
-      const line =
-        Math.floor(hotCity.length / LINE_NUMBER) +
-        (hotCity.length % LINE_NUMBER ? 1 : 0);
-      scrollHeight =
-        GlobalStyles.window_height -
-        55 - // 搜索框的高度
-        line * HOT_ITEM_HEIGHT - // 热门城市的行数 * 热门城市的高度
-        TITLE_HEIGHT - // 热门城市的title
-        WRAPPER_PADDING - // 热门城市的padding
-        55 - // 固定的省市区的高度
-        10 - // 间隔padding
-        70 - // 底部按钮
-        50; // 导航栏
-    } else {
-      // 固定的省市区的高度 - 导航栏 - 底部按钮
-      scrollHeight =
-        GlobalStyles.window_height -
-        55 -
-        50 -
-        80 -
-        (this.throughCityNameList.length ? 86 : 0);
-    }
+    let {wrapperHeight, hotCityHeight} = this.state;
+    let scrollHeight = wrapperHeight - hotCityHeight - 70 - 50;
+    console.log('scrollHeight', scrollHeight);
     return scrollHeight;
+  }
+  onWrapperLayout(event) {
+    console.log('e', event.nativeEvent.layout.height);
+    this.setState({
+      wrapperHeight: event.nativeEvent.layout.height,
+    });
+  }
+  onHotCityLayout(event) {
+    console.log('e', event.nativeEvent.layout.height);
+    this.setState({
+      hotCityHeight: event.nativeEvent.layout.height,
+    });
   }
   render() {
     const {theme, navigation} = this.props;
@@ -635,61 +627,65 @@ class ChooseCity extends Component {
         </TouchableOpacity>
       );
     });
-    const scrollHeight = this.computeScrollViewHeight();
-    console.log('scrollHeight', scrollHeight);
+    const scrollHeight =
+      this.computeScrollViewHeight() < 0 ? 999 : this.computeScrollViewHeight();
+    console.log('sc', scrollHeight);
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
-        <View style={styles.pageWrapper}>
+        <View
+          style={styles.pageWrapper}
+          onLayout={this.onWrapperLayout.bind(this)}>
           <NavigationBar
             navigation={navigation}
             leftViewShow={true}
             title={'选择城市'}
           />
-          {/* 途径城市不用出现搜索框 */}
-          {pageType === 'throughCity' ? null : (
-            <>
-              <View style={styles.searchWrapper}>
-                <View style={styles.searchIconWrapper}>
-                  <Text style={styles.searchIcon}>&#xe604;</Text>
+          <View onLayout={this.onHotCityLayout.bind(this)}>
+            {/* 途径城市不用出现搜索框 */}
+            {pageType === 'throughCity' ? null : (
+              <>
+                <View style={styles.searchWrapper}>
+                  <View style={styles.searchIconWrapper}>
+                    <Text style={styles.searchIcon}>&#xe604;</Text>
+                  </View>
+                  <View style={styles.inputWrapper}>
+                    <TextInput
+                      style={styles.input}
+                      placeholder={'请输入城市名称进行搜索 如:北京'}
+                      onChangeText={this.searchInput.bind(this)}
+                    />
+                  </View>
                 </View>
-                <View style={styles.inputWrapper}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder={'请输入城市名称进行搜索 如:北京'}
-                    onChangeText={this.searchInput.bind(this)}
-                  />
-                </View>
-              </View>
-              <View style={styles.line} />
-            </>
-          )}
-          {/* 显示的吸顶的title */}
-          {/* 多选选中的省市区 */}
-          {throughCityNameList.length ? (
-            <View style={styles.nowChooseWrapper}>{nowChooseListRender}</View>
-          ) : null}
-          {fixedTitle && <CityChooseTitle fixed={true} />}
-          {filterCityList.length ? (
-            <ScrollView
-              ref={this.scrollViewRef}
-              // onScroll={this.onScroll.bind(this)}
-            >
-              <View className="search-wrapper">{filterList}</View>
-            </ScrollView>
-          ) : null}
-          {/* <Indexes data={allCity} onClick={this.chooseCity.bind(this)} /> */}
-          {/* 途径城市不出现热门城市 */}
-          {pageType === 'throughCity' ? null : (
-            <>
-              <HotCity
-                onChooseCity={this.chooseSearchCity.bind(this)}
-                hotCity={hotCity}
-                ref={this.pointRef}
-              />
-              <View style={styles.wrapperLine} />
-              <CityChooseTitle />
-            </>
-          )}
+                <View style={styles.line} />
+              </>
+            )}
+            {/* 显示的吸顶的title */}
+            {/* 多选选中的省市区 */}
+            {throughCityNameList.length ? (
+              <View style={styles.nowChooseWrapper}>{nowChooseListRender}</View>
+            ) : null}
+            {fixedTitle && <CityChooseTitle fixed={true} />}
+            {filterCityList.length ? (
+              <ScrollView
+                ref={this.scrollViewRef}
+                // onScroll={this.onScroll.bind(this)}
+              >
+                <View className="search-wrapper">{filterList}</View>
+              </ScrollView>
+            ) : null}
+            {/* <Indexes data={allCity} onClick={this.chooseCity.bind(this)} /> */}
+            {/* 途径城市不出现热门城市 */}
+            {pageType === 'throughCity' ? null : (
+              <>
+                <HotCity
+                  onChooseCity={this.chooseSearchCity.bind(this)}
+                  hotCity={hotCity}
+                />
+                <View style={styles.wrapperLine} />
+                <CityChooseTitle />
+              </>
+            )}
+          </View>
           {!filterCityList.length ? (
             <>
               <View
