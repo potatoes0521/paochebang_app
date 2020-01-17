@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:53:33
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 20:37:19
+ * @LastEditTime : 2020-01-17 10:39:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,6 +22,7 @@ import GlobalStyles from '../../../assets/css/GlobalStyles';
 import api from '../../../api/index';
 import BottomLoading from '../../../components/BottomLoading/BottomLoading.js';
 import SellingItem from './SellingItem.js';
+import EmptyList from '../../../components/EmptyList/EmptyList';
 
 class SellingList extends Component {
   constructor(props) {
@@ -136,6 +137,9 @@ class SellingList extends Component {
             />
           }
           ListFooterComponent={() => this.genIndicator()}
+          ListEmptyComponent={() => (
+            <EmptyList {...this.props} pageType={'selling_index'} />
+          )}
           onEndReached={() => {
             this.getSellingList(this, {});
           }}

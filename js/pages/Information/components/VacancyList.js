@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:53:33
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 20:41:49
+ * @LastEditTime : 2020-01-17 10:39:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,6 +22,7 @@ import GlobalStyles from '../../../assets/css/GlobalStyles';
 import api from '../../../api/index';
 import BottomLoading from '../../../components/BottomLoading/BottomLoading.js';
 import VacancyItem from './VacancyItem.js';
+import EmptyList from '../../../components/EmptyList/EmptyList';
 
 class VacancyList extends Component {
   constructor(props) {
@@ -142,6 +143,9 @@ class VacancyList extends Component {
           onEndReached={() => {
             this.getVacancyList(this, {});
           }}
+          ListEmptyComponent={() => (
+            <EmptyList {...this.props} pageType={'vacancy_index'} />
+          )}
           keyExtractor={data => {
             return data.vacantPalletId + 'vacancy';
           }}
