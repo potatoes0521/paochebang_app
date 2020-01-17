@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 实名认证
  * @Date: 2019-12-26 18:17:17
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-16 21:21:48
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-17 10:38:25
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -381,8 +381,7 @@ class Authentication extends Component {
                     <Text style={styles.tipsStyle}>
                       {userInfo.realNameAuthStatus
                         ? '身份证照片'
-                        : '拍摄二代身份证原件，请确保图片清晰，四角完整' +
-                          beforeImage}
+                        : '拍摄二代身份证原件，请确保图片清晰，四角完整'}
                     </Text>
                   </View>
                   <View style={styles.imageWrapper}>
