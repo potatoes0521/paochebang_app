@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-01-04 10:52:39
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-04 11:54:34
+ * @LastEditTime : 2020-01-17 16:17:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,41 +23,23 @@ export default class PreviewImage extends Component {
   componentDidMount() {}
 
   componentWillUnmount() {}
-
+  close() {
+    this.props.onClose();
+  }
   render() {
-    let {visible, imageListData} = this.props;
-    const imageList =
-      imageListData &&
-      imageListData.map(item => {
-        return (
-          <TouchableOpacity style={styles.swiperItem} key={item}>
-            <Image
-              // resizeMode={'contain'}
-              style={styles.swiperItemImage}
-              source={{
-                uri: item,
-              }}
-            />
-          </TouchableOpacity>
-        );
-      });
-    console.log('imageList', imageListData);
-    return (
-      <>
-        {visible ? (
-          <View style={styles.wrapper}>
-            {imageListData ? (
-              <Swiper
-                style={styles.swiperWrapper}
-                key={item => item}
-                autoplay={true}>
-                {imageList}
-              </Swiper>
-            ) : null}
-          </View>
-        ) : null}
-      </>
-    );
+    let {image} = this.props;
+    console.log('image', image);
+    return image && image.length ? (
+      <TouchableOpacity onPress={this.close.bind(this)} style={styles.wrapper}>
+        <Image
+          resizeMode={'contain'}
+          style={styles.swiperItemImage}
+          source={{
+            uri: image,
+          }}
+        />
+      </TouchableOpacity>
+    ) : null;
   }
 }
 
@@ -68,21 +50,16 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
     left: 0,
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.3)',
-  },
-  swiperWrapper: {
-    flex: 1,
+    zIndex: 99,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  swiperItem: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.8)',
   },
   swiperItemImage: {
-    flex: 1,
+    width: GlobalStyles.window_width,
+    height: GlobalStyles.window_height,
+    // height: (GlobalStyles.window_width / 5) * 3,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -92,12 +69,12 @@ PreviewImage.defaultProps = {
   visible: true,
   imageListData: [],
   activeIndex: 0,
-  onClick: () => {},
+  onClose: () => {},
 };
 
 PreviewImage.propTypes = {
   visible: PropTypes.bool.isRequired,
   imageListData: PropTypes.array.isRequired,
   activeIndex: PropTypes.number,
-  onClick: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };

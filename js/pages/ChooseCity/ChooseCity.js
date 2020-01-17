@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-26 09:24:29
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 14:46:10
+ * @LastEditTime : 2020-01-17 15:08:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -505,16 +505,22 @@ class ChooseCity extends Component {
         (hotCity.length % LINE_NUMBER ? 1 : 0);
       scrollHeight =
         GlobalStyles.window_height -
-        55 -
-        line * HOT_ITEM_HEIGHT -
-        TITLE_HEIGHT -
-        WRAPPER_PADDING -
-        55 -
-        10 -
-        70 -
-        50;
+        55 - // 搜索框的高度
+        line * HOT_ITEM_HEIGHT - // 热门城市的行数 * 热门城市的高度
+        TITLE_HEIGHT - // 热门城市的title
+        WRAPPER_PADDING - // 热门城市的padding
+        55 - // 固定的省市区的高度
+        10 - // 间隔padding
+        70 - // 底部按钮
+        50; // 导航栏
     } else {
-      scrollHeight = GlobalStyles.window_height - 55 - 50 - 70;
+      // 固定的省市区的高度 - 导航栏 - 底部按钮
+      scrollHeight =
+        GlobalStyles.window_height -
+        55 -
+        50 -
+        80 -
+        (this.throughCityNameList.length ? 86 : 0);
     }
     return scrollHeight;
   }

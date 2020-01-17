@@ -3,7 +3,7 @@
  * @description: 公共导航
  * @Date: 2019-11-25 10:58:56
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 19:03:26
+ * @LastEditTime : 2020-01-17 15:42:36
  * @mustParam: 必传参数
  * title: PropTypes.string,
  *  导航栏标题

@@ -3,7 +3,7 @@
  * @description: 实名认证
  * @Date: 2019-12-26 18:17:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 14:02:34
+ * @LastEditTime : 2020-01-17 16:07:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -35,6 +35,7 @@ import ActionSheet from '../../components/ActionSheet/ActionSheet';
 import {uploadFile} from '../../utils/uploadFile.js';
 import Storage from '../../utils/Storage.js';
 import Loading from '../../components/Loading/Loading.js';
+import PreviewImage from '../../components/PreviewImage/PreviewImage';
 
 class Authentication extends Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class Authentication extends Component {
       realFlag: false,
       uploadLoading: false,
       showText: '',
+      image: '',
     };
     this.toastRef = React.createRef();
     this.backPress = new BackPressComponent({
@@ -345,6 +347,16 @@ class Authentication extends Component {
       }
     });
   }
+  previewImageShow(image) {
+    this.setState({
+      image,
+    });
+  }
+  previewImageHide() {
+    this.setState({
+      image: '',
+    });
+  }
   render() {
     const {theme, navigation, userInfo} = this.props;
     let {
@@ -361,6 +373,7 @@ class Authentication extends Component {
       licenseAfterImage, // 背面照片
       uploadLoading,
       showText,
+      image,
     } = this.state;
     // let showEditIdCard = userInfo.realNameAuthStatus >= 0;
     // let showEditLicenseCard = userInfo.realNameAuthStatus >= 1;
@@ -374,7 +387,7 @@ class Authentication extends Component {
             leftViewShow={true}
             title={'实名认证'}
           />
-          <ScrollView style={styles.wrapper}>
+          <ScrollView>
             {showEditIdCard && (
               <>
                 <View style={styles.msgWrapper}>
@@ -388,13 +401,20 @@ class Authentication extends Component {
                   <View style={styles.imageWrapper}>
                     <View style={[styles.imageStyle, styles.imageLeft]}>
                       {beforeImage ? (
-                        <Image
+                        <TouchableOpacity
                           style={styles.image}
-                          resizeMode={'contain'}
-                          source={{
-                            uri: beforeImage || '',
-                          }}
-                        />
+                          onPress={this.previewImageShow.bind(
+                            this,
+                            beforeImage,
+                          )}>
+                          <Image
+                            style={styles.image}
+                            resizeMode={'contain'}
+                            source={{
+                              uri: beforeImage || '',
+                            }}
+                          />
+                        </TouchableOpacity>
                       ) : null}
                       {beforeImage && !realFlag ? null : (
                         <TouchableOpacity
@@ -418,13 +438,20 @@ class Authentication extends Component {
                     </View>
                     <View style={[styles.imageStyle, styles.imageRight]}>
                       {afterImage ? (
-                        <Image
+                        <TouchableOpacity
                           style={styles.image}
-                          resizeMode={'contain'}
-                          source={{
-                            uri: afterImage || '',
-                          }}
-                        />
+                          onPress={this.previewImageShow.bind(
+                            this,
+                            afterImage,
+                          )}>
+                          <Image
+                            style={styles.image}
+                            resizeMode={'contain'}
+                            source={{
+                              uri: afterImage || '',
+                            }}
+                          />
+                        </TouchableOpacity>
                       ) : null}
                       {afterImage ? null : (
                         <TouchableOpacity
@@ -503,13 +530,20 @@ class Authentication extends Component {
                 <View style={styles.imageWrapper}>
                   <View style={[styles.imageStyle, styles.imageLeft]}>
                     {licenseBeforeImage ? (
-                      <Image
+                      <TouchableOpacity
                         style={styles.image}
-                        resizeMode={'contain'}
-                        source={{
-                          uri: licenseBeforeImage || '',
-                        }}
-                      />
+                        onPress={this.previewImageShow.bind(
+                          this,
+                          licenseBeforeImage,
+                        )}>
+                        <Image
+                          style={styles.image}
+                          resizeMode={'contain'}
+                          source={{
+                            uri: licenseBeforeImage || '',
+                          }}
+                        />
+                      </TouchableOpacity>
                     ) : null}
                     {licenseBeforeImage ? null : (
                       <TouchableOpacity
@@ -533,13 +567,20 @@ class Authentication extends Component {
                   </View>
                   <View style={[styles.imageStyle, styles.imageRight]}>
                     {licenseAfterImage ? (
-                      <Image
+                      <TouchableOpacity
                         style={styles.image}
-                        resizeMode={'contain'}
-                        source={{
-                          uri: licenseAfterImage,
-                        }}
-                      />
+                        onPress={this.previewImageShow.bind(
+                          this,
+                          licenseAfterImage,
+                        )}>
+                        <Image
+                          style={styles.image}
+                          resizeMode={'contain'}
+                          source={{
+                            uri: licenseAfterImage,
+                          }}
+                        />
+                      </TouchableOpacity>
                     ) : null}
                     {licenseAfterImage ? null : (
                       <TouchableOpacity
@@ -630,6 +671,10 @@ class Authentication extends Component {
             cancelButtonIndex={2}
             onPress={this.chooseActionSheet.bind(this)}
           />
+          <PreviewImage
+            image={image}
+            onClose={this.previewImageHide.bind(this)}
+          />
           {uploadLoading && <Loading LoadingText={showText} />}
         </View>
       </SafeAreaViewPlus>
@@ -672,7 +717,17 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
+    position: 'relative',
   },
+  // touch: {
+  //   position: 'absolute',
+  //   zIndex: 1,
+  //   top: 0,
+  //   bottom: 0,
+  //   left: 0,
+  //   right: 0,
+  //   backgroundColor: 'red',
+  // },
   imageLeft: {
     marginRight: 9,
   },

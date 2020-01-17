@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-03 16:47:37
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 18:24:01
+ * @LastEditTime : 2020-01-17 15:14:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -279,6 +279,7 @@ class OfferDetails extends Component {
           <NavigationBar
             navigation={navigation}
             leftViewShow={true}
+            rightViewShow={true}
             title={'报价详情'}
           />
           <ScrollView>

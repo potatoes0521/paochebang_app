@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-31 09:16:47
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 15:14:18
+ * @LastEditTime : 2020-01-17 15:29:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -223,6 +223,6 @@ public class MainApplication extends Application implements ReactApplication {
   }
   
   {
-    PlatformConfig.setWeixin("wxdc1e388c3822c80b", "3baf1193c85774b3fd9d18447d76cab0");
+    PlatformConfig.setWeixin("wx13cce845934fd75d", "c34d75cd89954c72d783930609eb5fcf");
   }
 }

@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-11-22 16:48:04
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 11:50:58
+ * @LastEditTime : 2020-01-17 15:07:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,7 +13,7 @@ import {connect} from 'react-redux';
 import {Platform} from 'react-native';
 import NavigationUtil from '../navigator/NavigationUtils';
 import BottomTabBarNavigator from '../navigator/BottomTabBarNavigator';
-import BackPressComponent from '../components/BackPressComponent/BackPressComponent';
+// import BackPressComponent from '../components/BackPressComponent/BackPressComponent';
 import SplashScreen from 'react-native-splash-screen';
 import SafeAreaViewPlus from '../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import Storage from '../utils/Storage.js';
