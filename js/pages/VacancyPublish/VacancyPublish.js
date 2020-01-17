@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 11:42:48
+ * @LastEditTime : 2020-01-17 17:01:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -194,7 +194,7 @@ class VacancyPublish extends Component {
    * @return void
    */
   navigationToRemark() {
-    NavigationUtil.goPage({}, 'RemarkPage');
+    NavigationUtil.goPage({remark: this.state.remark}, 'RemarkPage');
   }
   navigationToChooseCity(type) {
     NavigationUtil.goPage({type}, 'ChooseCityPage');
