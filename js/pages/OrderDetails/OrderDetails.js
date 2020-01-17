@@ -3,13 +3,19 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-16 18:38:46
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-17 18:05:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  // TouchableOpacity,
+} from 'react-native';
 import {connect} from 'react-redux';
 import api from '../../api';
 // import GlobalStyles from '../../assets/css/GlobalStyles';
@@ -23,7 +29,6 @@ import Toast from 'react-native-easy-toast';
 import {handleOrderButtons} from '../../config/button_config.js';
 import ButtonItem from './components/Buttons';
 import GlobalStyles from '../../assets/css/GlobalStyles';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 class OrderDetails extends Component {
   constructor(props) {
     super(props);
@@ -148,7 +153,7 @@ class OrderDetails extends Component {
     };
     api.order.receiptOrderData(sendData, this).then(() => {
       this.toastRef.current.show('接单成功');
-      this.getOrderDetails();
+      this.getOrderDetail();
     });
   }
   /**
@@ -164,7 +169,7 @@ class OrderDetails extends Component {
     };
     api.order.abandonOrderData(sendData, this).then(() => {
       this.toastRef.current.show('放弃接单成功');
-      this.getOrderDetails();
+      this.getOrderDetail();
     });
   }
   /**

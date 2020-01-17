@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 14:52:01
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 18:56:45
+ * @LastEditTime : 2020-01-17 18:02:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -33,6 +33,7 @@ export default class Buttons extends Component {
     let btnStyle = [styles.btnStyle, styles.btnBorder];
     if (item.key === 'receiptOrder') {
       btnType = 'round';
+      btnStyle.push(styles.receiptOrderBorder);
       fontStyles = [];
     }
     if (item.key === 'deliveryListEdit' || item.key === 'deliveryListSee') {
@@ -63,6 +64,9 @@ const styles = StyleSheet.create({
   btnBorder: {
     borderWidth: 1,
     borderColor: GlobalStyles.themeDisabled,
+  },
+  receiptOrderBorder: {
+    borderColor: GlobalStyles.themeColor,
   },
   fontStyle: {
     color: GlobalStyles.themeFontColor,
