@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-29 11:26:06
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 10:53:36
+ * @LastEditTime : 2020-01-17 11:42:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -120,6 +120,7 @@ class VacancyPublish extends Component {
         return;
       }
       res.data.price = res.data.price / 100 + '';
+      res.data.price = res.data.price / 100 + '';
       this.setState(res.data);
     });
   }
@@ -227,7 +228,10 @@ class VacancyPublish extends Component {
       dueTime: dueTime,
       price: price * 100,
       receiveCityId: receiveCityId,
-      throughCitys: throughCitys ? throughCitys.toString() : '',
+      throughCitys:
+        throughCitys && throughCitys.cityId
+          ? throughCitys.cityId.toString()
+          : '',
       remark: remark,
       sendCityId: sendCityId,
       startTime: startTime,
