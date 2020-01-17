@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 18:05:36
+ * @LastEditTime : 2020-01-17 18:25:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,7 +14,7 @@ import {
   Text,
   View,
   ScrollView,
-  // TouchableOpacity,
+  DeviceEventEmitter,
 } from 'react-native';
 import {connect} from 'react-redux';
 import api from '../../api';
@@ -74,10 +74,12 @@ class OrderDetails extends Component {
     this.pageParams = params || {};
     console.log('this.props', this.props.userInfo);
     this.getOrderDetail();
+    this.handleEmit();
     this.backPress.componentDidMount();
   }
 
   componentWillUnmount() {
+    this.emitRefreshOrderDetails.remove();
     this.backPress.componentWillUnmount();
   }
 
@@ -86,6 +88,18 @@ class OrderDetails extends Component {
     return true;
   }
 
+  /**
+   * 处理事件通知
+   * @return void
+   */
+  handleEmit() {
+    this.emitRefreshOrderDetails = DeviceEventEmitter.addListener(
+      'refreshOrderDetails',
+      () => {
+        this.getOrderDetail();
+      },
+    );
+  }
   /**
    * 获取订单详情
    * @return void

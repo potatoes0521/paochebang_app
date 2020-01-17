@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 司机列表页面
  * @Date: 2019-12-23 18:09:23
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-16 21:22:24
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-17 18:30:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -81,7 +81,7 @@ class Driver extends Component {
     this.emitMineDetails = DeviceEventEmitter.addListener(
       'mineDetails',
       data => {
-        DeviceEventEmitter.emit('mineInfo', data);
+        DeviceEventEmitter.emit('updateDriverInfo', data);
         NavigationUtil.goBack(this.props.navigation);
       },
     );

@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-23 11:30:10
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-02 10:28:24
+ * @LastEditTime : 2020-01-17 18:27:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -49,7 +49,7 @@ class OrderList extends Component {
    */
   handleEmit() {
     this.emitConfirmDriver = DeviceEventEmitter.addListener(
-      'confirmDriver',
+      'refreshOrderList',
       () => {
         this.getOrderList({
           refresh: true,

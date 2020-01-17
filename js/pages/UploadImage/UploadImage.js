@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 15:33:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 16:31:00
+ * @LastEditTime : 2020-01-17 18:27:49
  * @mustParam: 必传参数
  * // pageType = delivery 交车单  pickUp 提车单
     // type=edit 编辑  see 看
@@ -19,6 +19,7 @@ import {
   PixelRatio,
   TouchableOpacity,
   ScrollView,
+  DeviceEventEmitter,
 } from 'react-native';
 import {connect} from 'react-redux';
 // import GlobalStyles from '../../assets/css/GlobalStyles';
@@ -240,6 +241,8 @@ class UploadImage extends Component {
     };
     api.order.editOrderFiles(sendData, this).then(() => {
       this.toastRef.current.show('提交成功');
+      DeviceEventEmitter.emit('refreshOrderDetails', {});
+      DeviceEventEmitter.emit('refreshOrderList', {});
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);

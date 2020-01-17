@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-25 11:00:24
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-13 20:38:19
+ * @LastEditTime : 2020-01-17 18:30:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,7 +29,7 @@ export default class DriverItem extends Component {
     let {itemData} = this.props;
     let {type} = this.props;
     if (type === 'choose') {
-      DeviceEventEmitter.emit('chooseDriver', itemData);
+      DeviceEventEmitter.emit('updateDriverInfo', itemData);
       NavigationUtil.goPage({}, 'DriverConfirmPage');
     } else {
       NavigationUtil.goPage({userId: itemData.userId}, 'DriverDetailsPage');

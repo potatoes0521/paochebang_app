@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 确认司机页面
  * @Date: 2019-12-30 15:01:46
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-16 16:58:29
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-17 18:29:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -52,8 +52,7 @@ class DriverConfirm extends Component {
     this.backPress.componentDidMount();
   }
   componentWillUnmount() {
-    this.emitMineInfo.remove();
-    this.emitChooseDriver.remove();
+    this.emitUpdateDriverInfo.remove();
     this.backPress.componentWillUnmount();
   }
   onBackPress() {
@@ -65,15 +64,8 @@ class DriverConfirm extends Component {
    * @return void
    */
   handleEmit() {
-    this.emitMineInfo = DeviceEventEmitter.addListener('mineInfo', data => {
-      this.setState({
-        realName: data.realName,
-        mobile: data.mobile,
-        idCard: data.idCard,
-      });
-    });
-    this.emitChooseDriver = DeviceEventEmitter.addListener(
-      'chooseDriver',
+    this.emitUpdateDriverInfo = DeviceEventEmitter.addListener(
+      'updateDriverInfo',
       data => {
         this.setState({
           realName: data.realName,
@@ -160,7 +152,8 @@ class DriverConfirm extends Component {
     };
     api.order.confirmDriver(sendData, this).then(res => {
       this.toastRef.current.show('提交成功');
-      DeviceEventEmitter.emit('confirmDriver', sendData);
+      DeviceEventEmitter.emit('refreshOrderDetails', {});
+      DeviceEventEmitter.emit('refreshOrderList', {});
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);
