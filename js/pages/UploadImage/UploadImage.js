@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-27 15:33:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 17:59:52
+ * @LastEditTime : 2020-01-17 16:31:00
  * @mustParam: 必传参数
  * // pageType = delivery 交车单  pickUp 提车单
     // type=edit 编辑  see 看
@@ -31,10 +31,10 @@ import Title from './components/Title.js';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import api from '../../api/index.js';
 import Toast from 'react-native-easy-toast';
-// import PreviewImage from 'react-native-image-zoom-viewer';
 import Button from '../../components/Button/Button.js';
 import ActionSheet from '../../components/ActionSheet/ActionSheet';
 import Loading from '../../components/Loading/Loading.js';
+import PreviewImage from '../../components/PreviewImage/PreviewImage';
 
 class UploadImage extends Component {
   constructor(props) {
@@ -49,6 +49,7 @@ class UploadImage extends Component {
       current: 0,
       uploadLoading: false,
       showText: '',
+      image: '',
     };
     this.backPress = new BackPressComponent({
       backPress: () => this.onBackPress(),
@@ -244,24 +245,6 @@ class UploadImage extends Component {
       }, 1800);
     });
   }
-  showImage(type, index) {
-    return;
-    // let {carList, pickUpCarList, deliveryCarList} = this.state;
-    // let current = index;
-    // let currentArray = [];
-    // if (type === 'delivery') {
-    //   currentArray = deliveryCarList;
-    // } else if (type === 'car') {
-    //   currentArray = carList;
-    // } else if (type === 'pickUp') {
-    //   currentArray = pickUpCarList;
-    // }
-    // this.setState({
-    //   currentArray,
-    //   current,
-    //   showPreviewImage: true,
-    // });
-  }
   openActionSheet(type) {
     this.chooseType = type;
     if (type === 'pickUp') {
@@ -285,12 +268,20 @@ class UploadImage extends Component {
     }
     this.chooseImage(type);
   }
+  previewImageShow(image) {
+    this.setState({
+      image,
+    });
+  }
+  previewImageHide() {
+    this.setState({
+      image: '',
+    });
+  }
   render() {
     const {theme, navigation} = this.props;
     const {
-      // showPreviewImage,
-      // currentArray,
-      // current,
+      image,
       carList,
       pickUpCarList,
       deliveryCarList,
@@ -313,7 +304,7 @@ class UploadImage extends Component {
             </TouchableOpacity>
           ) : null}
           <TouchableOpacity
-            onPress={this.showImage.bind(this)}
+            onPress={this.previewImageShow.bind(this, item)}
             style={styles.imageItem}>
             <Image
               style={styles.image}
@@ -339,7 +330,7 @@ class UploadImage extends Component {
             </TouchableOpacity>
           ) : null}
           <TouchableOpacity
-            onPress={this.showImage.bind(this)}
+            onPress={this.previewImageShow.bind(this, item)}
             style={styles.imageItem}>
             <Image
               style={styles.image}
@@ -366,7 +357,7 @@ class UploadImage extends Component {
             </TouchableOpacity>
           ) : null}
           <TouchableOpacity
-            onPress={this.showImage.bind(this)}
+            onPress={this.previewImageShow.bind(this, item)}
             style={styles.imageItem}>
             <Image
               style={styles.image}
@@ -464,9 +455,10 @@ class UploadImage extends Component {
             cancelButtonIndex={2}
             onPress={this.chooseActionSheet.bind(this)}
           />
-          {/* <Modal visible={showPreviewImage}>
-            <PreviewImage imageUrls={currentArray} index={current} />
-          </Modal> */}
+          <PreviewImage
+            image={image}
+            onClose={this.previewImageHide.bind(this)}
+          />
           {uploadLoading && <Loading LoadingText={showText} />}
         </View>
       </SafeAreaViewPlus>
