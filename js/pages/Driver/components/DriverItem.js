@@ -29,7 +29,7 @@ export default class DriverItem extends Component {
     let {itemData} = this.props;
     let {type} = this.props;
     if (type === 'choose') {
-      DeviceEventEmitter.emit('updateDriverInfo', itemData);
+      DeviceEventEmitter.emit('updateConfirmDriverInfo', itemData);
       NavigationUtil.goPage({}, 'DriverConfirmPage');
     } else {
       NavigationUtil.goPage({userId: itemData.userId}, 'DriverDetailsPage');

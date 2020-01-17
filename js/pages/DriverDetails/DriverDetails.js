@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 司机详情
  * @Date: 2019-12-25 15:23:46
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-07 15:33:25
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-17 18:32:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -49,9 +49,12 @@ class DriverDetails extends Component {
     return true;
   }
   handleEmit() {
-    this.emitEditDriver = DeviceEventEmitter.addListener('editDriver', () => {
-      this.getDriverDetails();
-    });
+    this.emitEditDriver = DeviceEventEmitter.addListener(
+      'updateDriverDetailsInfo',
+      () => {
+        this.getDriverDetails();
+      },
+    );
   }
   /**
    * 获取司机信息详情

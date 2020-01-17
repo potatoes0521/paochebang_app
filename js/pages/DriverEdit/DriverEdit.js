@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 编辑、添加司机信息
  * @Date: 2019-12-26 10:36:06
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 18:38:58
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-17 18:32:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -227,7 +227,7 @@ class DriverEdit extends Component {
       } else {
         this.toastRef.current.show('添加成功');
       }
-      DeviceEventEmitter.emit('editDriver', sendData);
+      DeviceEventEmitter.emit('updateDriverDetailsInfo', sendData);
       setTimeout(() => {
         NavigationUtil.goBack(this.props.navigation);
       }, 1800);

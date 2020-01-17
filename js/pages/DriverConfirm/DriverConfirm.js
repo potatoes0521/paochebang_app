@@ -3,7 +3,7 @@
  * @description: 确认司机页面
  * @Date: 2019-12-30 15:01:46
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 18:29:43
+ * @LastEditTime : 2020-01-17 18:34:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -52,7 +52,7 @@ class DriverConfirm extends Component {
     this.backPress.componentDidMount();
   }
   componentWillUnmount() {
-    this.emitUpdateDriverInfo.remove();
+    this.emitUpdateConfirmDriverInfo.remove();
     this.backPress.componentWillUnmount();
   }
   onBackPress() {
@@ -64,8 +64,8 @@ class DriverConfirm extends Component {
    * @return void
    */
   handleEmit() {
-    this.emitUpdateDriverInfo = DeviceEventEmitter.addListener(
-      'updateDriverInfo',
+    this.emitUpdateConfirmDriverInfo = DeviceEventEmitter.addListener(
+      'updateConfirmDriverInfo',
       data => {
         this.setState({
           realName: data.realName,
