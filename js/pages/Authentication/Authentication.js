@@ -3,7 +3,7 @@
  * @description: 实名认证
  * @Date: 2019-12-26 18:17:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 16:07:22
+ * @LastEditTime : 2020-01-17 17:53:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -375,10 +375,8 @@ class Authentication extends Component {
       showText,
       image,
     } = this.state;
-    // let showEditIdCard = userInfo.realNameAuthStatus >= 0;
-    // let showEditLicenseCard = userInfo.realNameAuthStatus >= 1;
-    let showEditIdCard = 1;
-    let showEditLicenseCard = 1;
+    let showEditIdCard = userInfo.realNameAuthStatus >= 0;
+    let showEditLicenseCard = userInfo.realNameAuthStatus >= 1;
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
