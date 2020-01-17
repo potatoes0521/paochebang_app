@@ -13,7 +13,7 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
+  // ScrollView,
   TextInput,
   TouchableOpacity,
   DeviceEventEmitter,

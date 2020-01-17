@@ -3,7 +3,7 @@
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 10:43:27
+ * @LastEditTime : 2020-01-17 10:53:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -24,7 +24,7 @@ import Button from '../../components/Button/Button.js';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
 import LoginLogo from '../../assets/image/register/paoche_logo.png';
-import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
+// import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
 import Agreement from '../../components/Agreement/Agreement';
