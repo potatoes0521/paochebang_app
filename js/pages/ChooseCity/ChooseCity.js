@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2019-12-26 09:24:29
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 20:17:08
+ * @LastEditTime : 2020-01-17 14:46:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -216,7 +216,7 @@ class ChooseCity extends Component {
     console.log('city', city.checked);
     let {provinceList} = this.state;
     provinceList = this.handleDataChooseData(city, provinceList);
-    this.backGoFirstLine();
+    // this.backGoFirstLine();
     this.setState({
       provinceList,
       cityList: city.children,
@@ -237,7 +237,7 @@ class ChooseCity extends Component {
     let {cityList, provinceList} = this.state;
     this.handleFatherCity(city, provinceList);
     cityList = this.handleDataChooseData(city, cityList);
-    this.backGoFirstLine();
+    // this.backGoFirstLine();
     this.setState({
       cityList,
       areaList: city.children || [],
@@ -259,7 +259,7 @@ class ChooseCity extends Component {
     // 找到当前区\县所在的城市  并判断这个城市是不是在现在的列表内
     this.handleFatherCity(city, cityList);
     areaList = this.handleDataChooseData(city, areaList, this.lastChoose);
-    this.backGoFirstLine();
+    // this.backGoFirstLine();
     this.setState({
       areaList,
     });
@@ -496,6 +496,28 @@ class ChooseCity extends Component {
       });
     }
   }
+  computeScrollViewHeight() {
+    let {hotCity} = this.state;
+    let scrollHeight = 0;
+    if (this.pageParams.type !== 'throughCity') {
+      const line =
+        Math.floor(hotCity.length / LINE_NUMBER) +
+        (hotCity.length % LINE_NUMBER ? 1 : 0);
+      scrollHeight =
+        GlobalStyles.window_height -
+        55 -
+        line * HOT_ITEM_HEIGHT -
+        TITLE_HEIGHT -
+        WRAPPER_PADDING -
+        55 -
+        10 -
+        70 -
+        50;
+    } else {
+      scrollHeight = GlobalStyles.window_height - 55 - 50 - 70;
+    }
+    return scrollHeight;
+  }
   render() {
     const {theme, navigation} = this.props;
     const {
@@ -533,8 +555,10 @@ class ChooseCity extends Component {
           onPress={this.chooseProvince.bind(this, city)}
           style={styles.allCityItem}
           key={key}>
-          {city.checked && (
+          {city.checked ? (
             <Text style={[GlobalStyles.icon, styles.chooseIcon]}>&#xe61e;</Text>
+          ) : (
+            <Text style={styles.chooseIcon} />
           )}
           <Text style={textClassName}>
             {city.locationName && city.locationName.length > 5
@@ -555,8 +579,10 @@ class ChooseCity extends Component {
           onPress={this.chooseCity.bind(this, city)}
           style={styles.allCityItem}
           key={key}>
-          {city.checked && (
+          {city.checked ? (
             <Text style={[GlobalStyles.icon, styles.chooseIcon]}>&#xe61e;</Text>
+          ) : (
+            <Text style={styles.chooseIcon} />
           )}
           <Text style={textClassName}>
             {city.locationName && city.locationName.length > 5
@@ -603,6 +629,8 @@ class ChooseCity extends Component {
         </TouchableOpacity>
       );
     });
+    const scrollHeight = this.computeScrollViewHeight();
+    console.log('scrollHeight', scrollHeight);
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <View style={styles.pageWrapper}>
@@ -631,44 +659,61 @@ class ChooseCity extends Component {
           )}
           {/* 显示的吸顶的title */}
           {/* 多选选中的省市区 */}
-          <View style={styles.nowChooseWrapper}>{nowChooseListRender}</View>
+          {throughCityNameList.length ? (
+            <View style={styles.nowChooseWrapper}>{nowChooseListRender}</View>
+          ) : null}
           {fixedTitle && <CityChooseTitle fixed={true} />}
-          <ScrollView
-            style={styles.scrollWrapper}
-            ref={this.scrollViewRef}
-            onScroll={this.onScroll.bind(this)}>
-            {filterCityList.length ? (
+          {filterCityList.length ? (
+            <ScrollView
+              ref={this.scrollViewRef}
+              // onScroll={this.onScroll.bind(this)}
+            >
               <View className="search-wrapper">{filterList}</View>
-            ) : (
-              <>
-                {/* 途径城市不出现热门城市 */}
-                {pageType === 'throughCity' ? null : (
-                  <>
-                    <HotCity
-                      onChooseCity={this.chooseSearchCity.bind(this)}
-                      hotCity={hotCity}
-                      ref={this.pointRef}
-                    />
-                    <CityChooseTitle />
-                  </>
-                )}
-                <View style={styles.wrapperLine} />
-                <View style={styles.allCity}>
-                  <View style={styles.public}>{provinceListRender}</View>
-                  <View style={styles.public}>{cityListRender}</View>
-                  {/* <View style={styles.public}>{areaListRender}</View> */}
+            </ScrollView>
+          ) : null}
+          {/* <Indexes data={allCity} onClick={this.chooseCity.bind(this)} /> */}
+          {/* 途径城市不出现热门城市 */}
+          {pageType === 'throughCity' ? null : (
+            <>
+              <HotCity
+                onChooseCity={this.chooseSearchCity.bind(this)}
+                hotCity={hotCity}
+                ref={this.pointRef}
+              />
+              <View style={styles.wrapperLine} />
+              <CityChooseTitle />
+            </>
+          )}
+          {!filterCityList.length ? (
+            <>
+              <View
+                style={[
+                  styles.allCity,
+                  {
+                    height: scrollHeight,
+                  },
+                ]}>
+                <View style={styles.public}>
+                  <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    indicatorStyle={'white'}>
+                    {provinceListRender}
+                  </ScrollView>
                 </View>
-              </>
-            )}
-            {/* <Indexes data={allCity} onClick={this.chooseCity.bind(this)} /> */}
-          </ScrollView>
-          <View style={styles.btnWrapper}>
-            <Button
-              text={'确定'}
-              type={'round'}
-              onClick={this.submitChooseCity.bind(this)}
-            />
-          </View>
+                <View style={styles.public}>
+                  <ScrollView>{cityListRender}</ScrollView>
+                </View>
+                {/* <View style={styles.public}><ScrollView>{areaListRender} </ScrollView></View>*/}
+              </View>
+              <View style={styles.btnWrapper}>
+                <Button
+                  text={'确定'}
+                  type={'round'}
+                  onClick={this.submitChooseCity.bind(this)}
+                />
+              </View>
+            </>
+          ) : null}
           <Toast
             ref={this.toastRef}
             position={'center'}
@@ -755,8 +800,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   btnWrapper: {
-    height: 80,
-    paddingVertical: 20,
+    height: 70,
+    paddingVertical: 15,
     paddingHorizontal: 28,
   },
   chooseIcon: {

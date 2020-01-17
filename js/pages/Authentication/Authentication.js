@@ -3,7 +3,7 @@
  * @description: 实名认证
  * @Date: 2019-12-26 18:17:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 10:38:25
+ * @LastEditTime : 2020-01-17 14:02:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -339,6 +339,7 @@ class Authentication extends Component {
       } else {
         this.setState({
           realFlag: true,
+          beforeImage: '',
         });
         this.toastRef.current.show('识别失败,请换一张试试~');
       }
