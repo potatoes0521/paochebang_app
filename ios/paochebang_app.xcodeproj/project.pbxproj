@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* paochebang_appTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* paochebang_appTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -18,6 +19,7 @@
 		7E74FA991D6E16042799795C /* libPods-paochebang_app-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF3F6783246419138868CD84 /* libPods-paochebang_app-tvOSTests.a */; };
 		918FC8A876AE19FE22AE0BEF /* libPods-paochebang_app.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52C7C7AAECA08E1027087CF5 /* libPods-paochebang_app.a */; };
 		D22959D9DB997CB7CFB55E2C /* libPods-paochebang_app-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB05D840A035B5770039F8F /* libPods-paochebang_app-tvOS.a */; };
+		F094F8E4239504D9001D293A /* iconfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F094F8E3239504D9001D293A /* iconfont.ttf */; };
 		F88EBE8D40121C82585C6E1F /* libPods-paochebang_appTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC27195EFE725DF60ED28F49 /* libPods-paochebang_appTests.a */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +65,7 @@
 		DAB05D840A035B5770039F8F /* libPods-paochebang_app-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-paochebang_app-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F094F8E3239504D9001D293A /* iconfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = iconfont.ttf; path = paochebang_app/iconfont.ttf; sourceTree = "<group>"; };
 		FB2A02DA23E32B70F4CE9868 /* Pods-paochebang_app-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-paochebang_app-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-paochebang_app-tvOS/Pods-paochebang_app-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		FC27195EFE725DF60ED28F49 /* libPods-paochebang_appTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-paochebang_appTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF3F6783246419138868CD84 /* libPods-paochebang_app-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-paochebang_app-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,7 +163,6 @@
 				9F6B0F2D534CB0BA56C1630F /* Pods-paochebang_appTests.debug.xcconfig */,
 				6DE2287DDFE927AD702DC2E7 /* Pods-paochebang_appTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -174,6 +176,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				F094F8E3239504D9001D293A /* iconfont.ttf */,
 				13B07FAE1A68108700A75B9A /* paochebang_app */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* paochebang_appTests */,
@@ -203,7 +206,6 @@
 			children = (
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -317,6 +319,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -347,6 +350,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				F094F8E4239504D9001D293A /* iconfont.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,7 +384,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -469,6 +473,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-paochebang_app/Pods-paochebang_app-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/QBImagePickerController/QBImagePicker.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
@@ -485,9 +490,11 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+				"${PODS_ROOT}/RSKImageCropper/RSKImageCropper/RSKImageCropperStrings.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
@@ -504,6 +511,7 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RSKImageCropperStrings.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

@@ -1,3 +1,13 @@
+/*
+ * @Author: liuYang
+ * @description: 请填写描述信息
+ * @path: 引入路径
+ * @Date: 2019-12-30 15:38:59
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-19 12:19:42
+ * @mustParam: 必传参数
+ * @optionalParam: 选传参数
+ */
 import AsyncStorage from '@react-native-community/async-storage';
 
 export default {
@@ -8,20 +18,24 @@ export default {
    * @param {Function} callback 回调函数
    * @return void
    */
-  saveData(key, data, callback) {
+  setStorage(key, data, callback) {
     if (!data || !key) {
       return;
     }
-    AsyncStorage.setItem(key, JSON.stringify(this.wrapData(data)), callback);
+    AsyncStorage.setItem(
+      'pao-che-' + key,
+      JSON.stringify(this.wrapData(data)),
+      callback,
+    );
   },
   /**
    * 获取本地数据
    * @param {String} key 要获取的数据的key
    * @returns {Promise}
    */
-  fetchLocalData(key) {
+  getStorage(key) {
     return new Promise((resolve, reject) => {
-      AsyncStorage.getItem(key, (error, result) => {
+      AsyncStorage.getItem('pao-che-' + key, (error, result) => {
         if (!error) {
           try {
             resolve(JSON.parse(result));

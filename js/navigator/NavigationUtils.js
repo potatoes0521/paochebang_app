@@ -3,7 +3,7 @@
  * @description: 公共导航方法
  * @Date: 2019-11-22 17:00:17
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-19 12:13:56
+ * @LastEditTime : 2019-12-25 10:33:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,7 +15,7 @@ export default class NavigationUtil {
    * @return void
    */
   static goPage(params, page) {
-    const navigation = NavigationUtil.navigation;
+    const navigation = NavigationUtil.navigation || params.navigation;
     if (!navigation) {
       console.log('NavigationUtil.navigation can not be null');
       return;

@@ -132,26 +132,38 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.paochebang_app"
+        applicationId "com.paoche56.help"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "0.8"
+        vectorDrawables.useSupportLibrary = true
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a','mpis','mpis-64','x86','x86_64'
+        }
     }
     splits {
         abi {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
             universalApk false  // If true, also generate a universal APK
-            include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+            include "armeabi","armeabi-v7a", "arm64-v8a","mips","mips-64", "x86", "x86_64"
         }
     }
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
+            storeFile file('paoche-help-debug.keystore')
+            storePassword 'paoche56.com'
+            keyAlias 'paoche-help-debug'
+            keyPassword 'paoche56.com'
+        }
+        release{
+            storeFile file('paoche-help-release.keystore')
+            storePassword 'paoche56.com'
+            keyAlias 'paoche-help-release'
+            keyPassword 'paoche56.com'
         }
     }
     buildTypes {
@@ -180,11 +192,27 @@ android {
 
         }
     }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    // compile 'com.umeng.umsdk:analytics:8.0.0'
+    // compile 'com.umeng.umsdk:common:2.0.1'
+    // compile 'com.umeng.umsdk:push:5.0.2'
+    // compile project(':push')
+    // 引入 gson https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+    //引入 lombok https://mvnrepository.com/artifact/org.projectlombok/lombok
+    implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
+    // 引入 commons.lang https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
+
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
