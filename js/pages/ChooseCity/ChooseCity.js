@@ -4,12 +4,20 @@
  * @path: 引入路径
  * @Date: 2019-12-26 09:24:29
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 17:00:09
+ * @LastEditTime : 2020-01-20 09:31:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, DeviceEventEmitter} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  DeviceEventEmitter,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import {connect} from 'react-redux';
 import GlobalStyles from '../../assets/css/GlobalStyles';
 import NavigationUtil from '../../navigator/NavigationUtils';
@@ -19,11 +27,6 @@ import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus
 // import Indexes from '../../components/Indexes/Indexes';
 import _flattenDeep from 'lodash/flattenDeep';
 import api from '../../api/index';
-import {
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native-gesture-handler';
 import Storage from '../../utils/Storage.js';
 import HotCity from './components/HotCity';
 import Button from '../../components/Button/Button.js';
