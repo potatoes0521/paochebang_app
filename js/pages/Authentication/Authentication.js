@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 实名认证
  * @Date: 2019-12-26 18:17:17
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 17:53:04
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-27 14:21:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -343,6 +343,10 @@ class Authentication extends Component {
           realFlag: true,
           beforeImage: '',
         });
+        let sendDataImage = {
+          virthPath: imageUrl,
+        };
+        api.upload.deleteImage(sendDataImage, this);
         this.toastRef.current.show('识别失败,请换一张试试~');
       }
     });

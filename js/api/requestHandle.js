@@ -3,8 +3,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-12-02 10:21:17
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 21:13:51
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-27 14:16:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -61,7 +61,11 @@ class HttpRequest {
     });
     let contentType = 'application/json;charset=UTF-8';
     let baseUrl = this.baseUrl;
-    if (url.indexOf('file/upload') !== -1 || url === 'file/read') {
+    if (
+      url.indexOf('file/upload') !== -1 ||
+      url === 'file/read' ||
+      url.indexOf('file/delete') !== -1
+    ) {
       baseUrl = defaultFileUrl;
     }
     if (url.indexOf('file/upload') !== -1) {

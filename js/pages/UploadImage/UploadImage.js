@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-27 15:33:23
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 18:27:49
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-27 14:22:12
  * @mustParam: 必传参数
  * // pageType = delivery 交车单  pickUp 提车单
     // type=edit 编辑  see 看
@@ -170,12 +170,13 @@ class UploadImage extends Component {
   deleteImage(type, index) {
     let {carList, pickUpCarList, deliveryCarList} = this.state;
     let data = {};
+    let img = [];
     // 判断更新哪个数组
     if (type === 'delivery') {
       if (deliveryCarList.length <= 0) {
         return;
       }
-      deliveryCarList.splice(index, 1);
+      img = deliveryCarList.splice(index, 1);
       data = {
         deliveryCarList,
       };
@@ -183,7 +184,7 @@ class UploadImage extends Component {
       if (carList.length <= 0) {
         return;
       }
-      carList.splice(index, 1);
+      img = carList.splice(index, 1);
       data = {
         carList,
       };
@@ -191,11 +192,15 @@ class UploadImage extends Component {
       if (pickUpCarList.length <= 0) {
         return;
       }
-      pickUpCarList.splice(index, 1);
+      img = pickUpCarList.splice(index, 1);
       data = {
         pickUpCarList,
       };
     }
+    let sendData = {
+      virthPath: img[0],
+    };
+    api.upload.deleteImage(sendData, this);
     this.setState(data);
   }
   submit() {
