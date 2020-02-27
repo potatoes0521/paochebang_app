@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-12-03 16:47:37
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-20 09:09:50
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-27 14:29:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -249,6 +249,8 @@ class OfferDetails extends Component {
       carInfo,
       inquiryTimeDesc,
       receiveCityName,
+      receiveAddress,
+      sendAddress,
       sendCityName,
       homeDelivery,
       homeDeliveryDesc,
@@ -390,6 +392,22 @@ class OfferDetails extends Component {
                   </Text>
                 </View>
               </View>
+              {sendAddress ? (
+                <View
+                  style={[
+                    DetailsStyle.formItem,
+                    DetailsStyle.moreTextFormItem,
+                  ]}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>详细地址:</Text>
+                  </View>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
+                      {sendAddress || ''}
+                    </Text>
+                  </View>
+                </View>
+              ) : null}
               {/* 收车城市 */}
               <View style={DetailsStyle.formItem}>
                 <View style={DetailsStyle.formLabel}>
@@ -401,6 +419,22 @@ class OfferDetails extends Component {
                   </Text>
                 </View>
               </View>
+              {receiveAddress ? (
+                <View
+                  style={[
+                    DetailsStyle.formItem,
+                    DetailsStyle.moreTextFormItem,
+                  ]}>
+                  <View style={DetailsStyle.formLabel}>
+                    <Text style={DetailsStyle.labelText}>详细地址:</Text>
+                  </View>
+                  <View style={DetailsStyle.formContent}>
+                    <Text style={DetailsStyle.contentText}>
+                      {receiveAddress || ''}
+                    </Text>
+                  </View>
+                </View>
+              ) : null}
               {/* 服务 */}
               {storePickup || homeDelivery ? (
                 <View style={DetailsStyle.formItem}>

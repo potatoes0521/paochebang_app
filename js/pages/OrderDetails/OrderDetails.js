@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2019-12-23 14:38:28
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 18:25:43
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-27 14:30:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -367,20 +367,22 @@ class OrderDetails extends Component {
                     </Text>
                   </View>
                 </View>
-                <View
-                  style={[
-                    DetailsStyle.formItem,
-                    DetailsStyle.moreTextFormItem,
-                  ]}>
-                  <View style={DetailsStyle.formLabel}>
-                    <Text style={DetailsStyle.labelText}>详细地址:</Text>
+                {sendAddress ? (
+                  <View
+                    style={[
+                      DetailsStyle.formItem,
+                      DetailsStyle.moreTextFormItem,
+                    ]}>
+                    <View style={DetailsStyle.formLabel}>
+                      <Text style={DetailsStyle.labelText}>详细地址:</Text>
+                    </View>
+                    <View style={DetailsStyle.formContent}>
+                      <Text style={DetailsStyle.contentText}>
+                        {sendAddress || ''}
+                      </Text>
+                    </View>
                   </View>
-                  <View style={DetailsStyle.formContent}>
-                    <Text style={DetailsStyle.contentText}>
-                      {sendAddress || ''}
-                    </Text>
-                  </View>
-                </View>
+                ) : null}
                 <View style={DetailsStyle.formItem}>
                   <View style={DetailsStyle.formLabel}>
                     <Text style={DetailsStyle.labelText}>联系人:</Text>
@@ -426,20 +428,22 @@ class OrderDetails extends Component {
                     </Text>
                   </View>
                 </View>
-                <View
-                  style={[
-                    DetailsStyle.formItem,
-                    DetailsStyle.moreTextFormItem,
-                  ]}>
-                  <View style={DetailsStyle.formLabel}>
-                    <Text style={DetailsStyle.labelText}>详细地址:</Text>
+                {receiveAddress ? (
+                  <View
+                    style={[
+                      DetailsStyle.formItem,
+                      DetailsStyle.moreTextFormItem,
+                    ]}>
+                    <View style={DetailsStyle.formLabel}>
+                      <Text style={DetailsStyle.labelText}>详细地址:</Text>
+                    </View>
+                    <View style={DetailsStyle.formContent}>
+                      <Text style={DetailsStyle.contentText}>
+                        {receiveAddress || ''}
+                      </Text>
+                    </View>
                   </View>
-                  <View style={DetailsStyle.formContent}>
-                    <Text style={DetailsStyle.contentText}>
-                      {receiveAddress || ''}
-                    </Text>
-                  </View>
-                </View>
+                ) : null}
                 <View style={DetailsStyle.formItem}>
                   <View style={DetailsStyle.formLabel}>
                     <Text style={DetailsStyle.labelText}>联系人:</Text>
