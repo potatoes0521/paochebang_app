@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-11-22 16:47:53
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-16 20:46:20
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-03-25 17:34:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -80,6 +80,9 @@ class Mine extends Component {
         break;
       case 'line':
         NavigationUtil.goPage({}, 'LinePage');
+        break;
+      case 'privacy':
+        NavigationUtil.goPage({type: 'privacy'}, 'AgreementPage');
         break;
       default:
         return;
@@ -236,6 +239,12 @@ class Mine extends Component {
             <Text style={MineStyles.contentText}>版本</Text>
             <Text style={styles.versionNum}>{appVersion}</Text>
           </View>
+          <TouchableOpacity
+            onPress={() => this.navigatorPage('privacy')}
+            style={[styles.versionList, styles.versionLine]}>
+            <Text style={MineStyles.contentText}>隐私协议</Text>
+            <Text style={styles.icon}>&#xe61d;</Text>
+          </TouchableOpacity>
           <View style={styles.versionList}>
             <Text style={MineStyles.contentText}>联系跑车</Text>
             <TouchableOpacity onPress={() => this.callService()}>

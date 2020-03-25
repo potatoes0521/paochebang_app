@@ -3,8 +3,8 @@
  * @description: 封装按钮组件
  * @path: 引入路径
  * @Date: 2019-12-20 11:47:21
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-27 10:31:19
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-03-25 18:40:09
  * @mustParam: 必传参数
  *  btnStyle 样式 数组 数组里是类名或者是个对象
  *  type plain 镂空 round 充满

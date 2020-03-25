@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 首页
  * @Date: 2019-11-22 16:48:04
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 15:07:04
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-03-25 19:07:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,6 +20,8 @@ import Storage from '../utils/Storage.js';
 import PushUtil from '../../native/PushUtil';
 import Actions from '../store/action/index.js';
 import api from '../api';
+import FirstRegistrationPopup from '../components/FirstRegistrationPopup/FirstRegistrationPopup';
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -87,6 +89,7 @@ class Home extends Component {
     return (
       <SafeAreaViewPlus topColor={theme.themeColor}>
         <BottomTabBarNavigator {...this.props} />
+        <FirstRegistrationPopup />
       </SafeAreaViewPlus>
     );
   }

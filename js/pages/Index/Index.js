@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 首页
  * @Date: 2019-11-29 15:28:01
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-16 20:36:26
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-03-25 17:45:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -109,8 +109,8 @@ class Index extends Component {
     // }
     NavigationUtil.goPage({type: type}, 'InformationPage');
   }
+
   navigatorToActivity(item) {
-    console.log('item', item);
     if (!item.locationUrl) {
       return;
     }

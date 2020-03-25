@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 注册
  * @Date: 2019-12-04 11:58:23
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-17 10:53:47
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-03-25 17:30:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,7 +27,7 @@ import LoginLogo from '../../assets/image/register/paoche_logo.png';
 // import BackPressComponent from '../../components/BackPressComponent/BackPressComponent';
 import SafeAreaViewPlus from '../../components/SafeAreaViewPlus/SafeAreaViewPlus';
 import NavigationBar from '../../components/NavigatorBar/NavigationBar';
-import Agreement from '../../components/Agreement/Agreement';
+// import Agreement from '../../components/Agreement/Agreement';
 import Actions from '../../store/action/index.js';
 import Storage from '../../utils/Storage.js';
 import Toast from 'react-native-easy-toast';
@@ -40,7 +40,7 @@ class Register extends Component {
       timerFlag: false,
       phoneNumber: '', //手机号
       verificationCode: '', //验证码
-      visible: false,
+      // visible: false,
     };
     // this.backPress = new BackPressComponent({
     //   backPress: () => this.onBackPress(),
@@ -194,20 +194,21 @@ class Register extends Component {
    * 打开用户协议
    * @return void
    */
-  showRegistrationAgreement() {
-    this.setState({
-      visible: true,
-    });
+  showRegistrationAgreement(type) {
+    // this.setState({
+    //   visible: true,
+    // });
+    NavigationUtil.goPage({type}, 'AgreementPage');
   }
   /**
    * 关闭用户协议
    * @return void
    */
-  closeRegistrationAgreement() {
-    this.setState({
-      visible: false,
-    });
-  }
+  // closeRegistrationAgreement() {
+  //   this.setState({
+  //     visible: false,
+  //   });
+  // }
 
   render() {
     let {
@@ -215,7 +216,7 @@ class Register extends Component {
       verificationCode,
       timerFlag,
       countDown,
-      visible,
+      // visible,
       noBack,
     } = this.state;
     let btnBorderStyle = [styles.codeBtn];
@@ -276,8 +277,13 @@ class Register extends Component {
           <View style={styles.agreementTips}>
             <Text style={styles.tipsStyle}>我已阅读并同意跑车帮</Text>
             <TouchableOpacity
-              onPress={this.showRegistrationAgreement.bind(this)}>
+              onPress={this.showRegistrationAgreement.bind(this, 'register')}>
               <Text style={styles.themeColor}>注册服务协议</Text>
+            </TouchableOpacity>
+            <Text style={styles.tipsStyle}>和</Text>
+            <TouchableOpacity
+              onPress={this.showRegistrationAgreement.bind(this, 'privacy')}>
+              <Text style={styles.themeColor}>隐私协议</Text>
             </TouchableOpacity>
           </View>
           <Toast
@@ -285,10 +291,10 @@ class Register extends Component {
             position={'center'}
             defaultCloseDelay={3000}
           />
-          <Agreement
+          {/* <Agreement
             visible={visible}
             onClick={this.closeRegistrationAgreement.bind(this)}
-          />
+          /> */}
         </View>
       </SafeAreaViewPlus>
     );
