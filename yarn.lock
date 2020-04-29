@@ -5368,6 +5368,13 @@ react-navigation-redux-helpers@^4.0.1:
   dependencies:
     invariant "^2.2.2"
 
+react-navigation-redux-helpers@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npm.taobao.org/react-navigation-redux-helpers/download/react-navigation-redux-helpers-4.0.1.tgz#a2da4e403114ddf6438071bba6c2e81dd9ffa269"
+  integrity sha1-otpOQDEU3fZDgHG7psLoHdn/omk=
+  dependencies:
+    invariant "^2.2.2"
+
 react-navigation-stack@^1.10.3:
   version "1.10.3"
   resolved "https://registry.npm.taobao.org/react-navigation-stack/download/react-navigation-stack-1.10.3.tgz#e714e442b20427f0d2d3c18fce1f9e8cfe69be0b"
